@@ -78,7 +78,60 @@ export default function ElitePassPage() {
     }
   ];
 
-  const visiblePasses = isExpanded ? [...initialPasses, ...additionalPasses] : initialPasses;
+  const renderCard = (pass, isExtra = false, extraIndex = 0) => (
+    <div
+      key={pass.id}
+      onClick={() => setSelectedPass(pass)}
+      className={`group cursor-pointer aspect-[16/10] min-h-[350px] sm:min-h-[420px] rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col justify-center items-center text-center relative overflow-hidden transition-all duration-500 hover:shadow-2xl border border-black/10 select-none ${
+        isExtra
+          ? `transform transition-all duration-700 ease-out ${
+              isExpanded
+                ? 'translate-y-0 opacity-100 scale-100'
+                : '-translate-y-10 opacity-0 scale-95 pointer-events-none'
+            }`
+          : ''
+      }`}
+      style={{
+        backgroundColor: '#000000',
+        transitionDelay: isExtra && isExpanded ? `${extraIndex * 150}ms` : '0ms'
+      }}
+    >
+      {/* Fallback Gradient Background */}
+      <div className={`absolute inset-0 opacity-90 ${pass.colorScheme}`} />
+
+      {/* Card Image layer with extension fallbacks (.png -> .jpg -> .jpeg -> .webp) */}
+      {pass.image && (
+        <img
+          src={pass.image}
+          alt={pass.fullTitle}
+          className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:scale-110 transition-transform duration-700 ease-out"
+          onError={(e) => {
+            const img = e.currentTarget;
+            const src = img.src;
+            if (src.endsWith('.png')) {
+              img.src = src.replace('.png', '.jpg');
+            } else if (src.endsWith('.jpg')) {
+              img.src = src.replace('.jpg', '.jpeg');
+            } else if (src.endsWith('.jpeg')) {
+              img.src = src.replace('.jpeg', '.webp');
+            } else {
+              img.style.display = 'none';
+            }
+          }}
+        />
+      )}
+
+      {/* Dark Overlay gradient for high contrast readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30 pointer-events-none" />
+
+      {/* Title Text Content (No captions/subtitles) */}
+      <div className="relative z-10 pointer-events-none">
+        <h2 className="text-3xl sm:text-5xl font-sans font-bold text-white tracking-tight drop-shadow-md">
+          {pass.sansTitle} <em className="italic-serif text-white font-normal block">{pass.serifTitle}</em>
+        </h2>
+      </div>
+    </div>
+  );
 
   return (
     <div className="bg-[#EBEAE6] min-h-screen pt-64 sm:pt-72 pb-28 px-6 sm:px-12">
@@ -94,56 +147,21 @@ export default function ElitePassPage() {
           </p>
         </div>
 
-        {/* 2-Column Card Grid (2 on a line, 3 extra drop when Load More is clicked) */}
-        <div className="animate-hero-fade-3 grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16 lg:gap-20">
-          {visiblePasses.map((pass, idx) => (
-            <div
-              key={pass.id}
-              onClick={() => setSelectedPass(pass)}
-              className={`group cursor-pointer aspect-[16/10] min-h-[350px] sm:min-h-[420px] rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col justify-center items-center text-center relative overflow-hidden transition-shadow duration-300 hover:shadow-2xl border border-black/10 select-none ${
-                idx >= 4 ? 'animate-hero-fade-1' : ''
-              }`}
-              style={{ backgroundColor: '#000000' }}
-            >
-              {/* Fallback Gradient Background */}
-              <div className={`absolute inset-0 opacity-90 ${pass.colorScheme}`} />
-
-              {/* Card Image layer with extension fallbacks (.png -> .jpg -> .jpeg -> .webp) */}
-              {pass.image && (
-                <img
-                  src={pass.image}
-                  alt={pass.fullTitle}
-                  className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:scale-110 transition-transform duration-700 ease-out"
-                  onError={(e) => {
-                    const img = e.currentTarget;
-                    const src = img.src;
-                    if (src.endsWith('.png')) {
-                      img.src = src.replace('.png', '.jpg');
-                    } else if (src.endsWith('.jpg')) {
-                      img.src = src.replace('.jpg', '.jpeg');
-                    } else if (src.endsWith('.jpeg')) {
-                      img.src = src.replace('.jpeg', '.webp');
-                    } else {
-                      img.style.display = 'none';
-                    }
-                  }}
-                />
-              )}
-
-              {/* Dark Overlay gradient for high contrast readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30 pointer-events-none" />
-
-              {/* Title Text Content (No captions/subtitles) */}
-              <div className="relative z-10 pointer-events-none">
-                <h2 className="text-3xl sm:text-5xl font-sans font-bold text-white tracking-tight drop-shadow-md">
-                  {pass.sansTitle} <em className="italic-serif text-white font-normal block">{pass.serifTitle}</em>
-                </h2>
-              </div>
-            </div>
-          ))}
+        {/* Initial 4-Card 2-Column Grid */}
+        <div className="animate-hero-fade-3 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
+          {initialPasses.map((pass) => renderCard(pass, false))}
         </div>
 
-        {/* Load More Button with Text-Roll Hover Animation */}
+        {/* Smooth Accordion Drop-Down for 3 Additional Images */}
+        <div className={isExpanded ? 'accordion-dropdown-open' : 'accordion-dropdown-closed'}>
+          <div className="overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 pb-4">
+              {additionalPasses.map((pass, idx) => renderCard(pass, true, idx))}
+            </div>
+          </div>
+        </div>
+
+        {/* Show More Button with Text-Roll Hover Animation */}
         <div className="text-center pt-8">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
@@ -152,12 +170,12 @@ export default function ElitePassPage() {
             <div className="h-4 relative overflow-hidden flex items-center justify-center min-w-[95px]">
               {/* Default Gray Text (Moves UP out of view on hover) */}
               <span className="text-[#777777] transition-transform duration-300 ease-out group-hover:-translate-y-full block whitespace-nowrap">
-                {isExpanded ? 'Show Less' : 'Load More'}
+                {isExpanded ? 'Show Less' : 'Show More'}
               </span>
 
               {/* Hover Black Text (Moves UP into view from below on hover) */}
               <span className="text-[#111111] absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0 font-extrabold whitespace-nowrap">
-                {isExpanded ? 'Show Less' : 'Load More'}
+                {isExpanded ? 'Show Less' : 'Show More'}
               </span>
             </div>
           </button>
