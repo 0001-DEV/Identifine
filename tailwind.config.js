@@ -22,7 +22,9 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+        sans: ['"Galano Grotesque"', 'Plus Jakarta Sans', 'Inter', 'sans-serif'],
+        galano: ['"Galano Grotesque"', 'Plus Jakarta Sans', 'Inter', 'sans-serif'],
+        swarsh: ['"Swarsh Daisy"', '"Swash Daisy"', 'Playfair Display', 'Georgia', 'serif'],
         serif: ['Playfair Display', 'Georgia', 'serif'],
       },
       animation: {

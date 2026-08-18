@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
   body {
     background-color: #EBEAE6;
     color: #111111;
@@ -15,6 +19,62 @@
   font-family: 'Playfair Display', Georgia, serif;
   font-style: italic;
   font-weight: 400;
+}
+
+/* Galano Grotesque & Swarsh Daisy Exact Font Definitions */
+@font-face {
+  font-family: 'Galano Grotesque';
+  src: url('https://framerusercontent.com/assets/KXqAbJQHjKBNSMQ9yoOAmceWzCw.woff2') format('woff2'),
+       local('Galano Grotesque Bold');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Galano Grotesque';
+  src: url('https://framerusercontent.com/assets/YMtHSoytZLbhFs8u1TWvUpH7VG8.woff2') format('woff2'),
+       local('Galano Grotesque SemiBold');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Galano Grotesque';
+  src: url('https://framerusercontent.com/assets/cQTDT4yFpJWLynvBaOjqAsPRwCE.woff2') format('woff2'),
+       local('Galano Grotesque Medium');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Galano Grotesque';
+  src: url('https://framerusercontent.com/assets/IFD4kkSFWbvxUI0Pmc9PzvakEVs.woff2') format('woff2'),
+       local('Galano Grotesque Regular');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Swarsh Daisy';
+  src: url('https://framerusercontent.com/assets/EgpNUvbse8XjrAqboyyWoQefg.woff2') format('woff2'),
+       url('https://framerusercontent.com/assets/tW3Z5Bvb6xue9F61YvSu1TNitU.woff2') format('woff2'),
+       local('Swarsh Daisy');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+.font-galano {
+  font-family: 'Galano Grotesque', 'Plus Jakarta Sans', sans-serif;
+}
+
+.font-swarsh {
+  font-family: 'Swarsh Daisy', 'Playfair Display', Georgia, serif;
+  font-style: italic;
 }
 
 /* Custom Scrollbar */
@@ -136,6 +196,58 @@
   will-change: opacity, transform, filter;
 }
 
+.animate-hero-fade-4 {
+  animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+  opacity: 0;
+  will-change: opacity, transform, filter;
+}
+
+/* Continuous Marquee Scrolling Animations */
+@keyframes marqueeLeft {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee-left {
+  animation: marqueeLeft 35s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marqueeRight 35s linear infinite;
+}
+
+.animate-marquee-left:hover, .animate-marquee-right:hover {
+  animation-play-state: paused;
+}
+
+/* Scroll Reveal Utilities */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-marquee-left, .animate-marquee-right {
+    animation: none;
+  }
+}
 
 /* Smooth Drop-down Accordion Animation for Show More */
 .accordion-dropdown-closed {
@@ -155,6 +267,7 @@
   pointer-events: auto;
   transition: grid-template-rows 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease-in-out, margin-top 0.75s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 
 
 

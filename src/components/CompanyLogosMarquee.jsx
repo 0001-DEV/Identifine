@@ -18,7 +18,7 @@ import tvcLogo from '../assets/tvc.png';
 import tolaramLogo from '../assets/Tolaram_Group_logo (1).png';
 
 export default function CompanyLogosMarquee() {
-  // LINE 1 (Row 1): 5 Dynamic Popping Slots (ALL slots pop and swap)
+  // LINE 1 (Row 1): 5 Dynamic Popping Slots
   const row1Logos = [
     { dynamicId: 0, name1: 'Rainoil', src1: rainoilLogo, name2: 'Renaissance', src2: renaissanceLogo },
     { dynamicId: 1, name1: 'Seplat', src1: seplatLogo, name2: 'Eunisell', src2: eunisellLogo },
@@ -27,33 +27,32 @@ export default function CompanyLogosMarquee() {
     { dynamicId: 4, name1: 'Invera', src1: inveraLogo, name2: 'Lotus Bank', src2: lotusLogo },
   ];
 
-  // LINE 2 (Row 2): 5 Dynamic Popping Slots (ALL slots pop and swap)
+  // LINE 2 (Row 2): 5 Dynamic Popping Slots
   const row2Logos = [
     { dynamicId: 5, name1: 'TVC News', src1: tvcLogo, name2: 'NECA', src2: necaLogo },
     { dynamicId: 6, name1: 'Ikeja Electric', src1: ikejaLogo, name2: 'Falcon / IOGC', src2: falconLogo },
-    { dynamicId: 7, name1: 'Matee / SAPETRO', src1: mateeLogo, name2: 'Seplat', src2: seplatLogo, isMatee: true },
+    { dynamicId: 7, name1: 'Matee / SAPETRO', src1: mateeLogo, name2: 'Seplat', src2: seplatLogo },
     { dynamicId: 8, name1: 'Renaissance Africa', src1: renaissanceLogo, name2: 'Rainoil', src2: rainoilLogo },
     { dynamicId: 9, name1: 'Eunisell', src1: eunisellLogo, name2: 'First Ally Group', src2: firstAllyLogo },
   ];
 
-  // All 10 slots are dynamic & popping
+  // Dynamic state for each popping slot
   const [dynamicStates, setDynamicStates] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
-    // Fast periodic pop/swap across all 10 slots
+    // Periodic pop and swap animation across company slots
     const interval = setInterval(() => {
       setDynamicStates(prev => {
         const next = [...prev];
-        // Select 2 or 3 random slots to pop/swap rapidly
-        const count = 2 + Math.floor(Math.random() * 2);
+        const count = 1 + Math.floor(Math.random() * 2);
         for (let i = 0; i < count; i++) {
           const targetIdx = Math.floor(Math.random() * next.length);
           next[targetIdx] = next[targetIdx] === 0 ? 1 : 0;
         }
         return next;
       });
-    }, 1000);
+    }, 1500);
 
     return () => clearInterval(interval);
   }, []);
@@ -63,7 +62,6 @@ export default function CompanyLogosMarquee() {
     const currentState = dynamicStates[item.dynamicId];
     const activeState = isHovered ? (currentState === 0 ? 1 : 0) : currentState;
 
-    // Custom width constraint helper for Matee logo
     const getLogoClass = (src) => {
       const isMateeImg = src === mateeLogo;
       return isMateeImg
@@ -76,7 +74,7 @@ export default function CompanyLogosMarquee() {
         key={idx}
         onMouseEnter={() => setHoveredId(item.dynamicId)}
         onMouseLeave={() => setHoveredId(null)}
-        className="relative h-10 sm:h-13 overflow-hidden flex items-center justify-center cursor-pointer select-none shrink-0 px-3 sm:px-6 min-w-[115px] sm:min-w-[155px] [perspective:600px]"
+        className="relative h-10 sm:h-13 overflow-hidden flex items-center justify-center cursor-pointer select-none shrink-0 px-3 sm:px-6 min-w-[110px] sm:min-w-[155px] [perspective:600px]"
       >
         {/* Logo Image 1 (Rolls OUT upward when activeState=1) */}
         <div
@@ -116,16 +114,15 @@ export default function CompanyLogosMarquee() {
   };
 
   return (
-    <div className="py-6 bg-transparent">
-      {/* 2 LINES LAYOUT (All 10 Slots Pop & Swap, Extra Large Vertical Gap) */}
-      <div className="flex flex-col items-center gap-16 sm:gap-24 lg:gap-28 w-full max-w-7xl mx-auto px-4">
+    <div className="py-6 bg-transparent w-full overflow-hidden">
+      <div className="flex flex-col items-center gap-12 sm:gap-20 lg:gap-24 w-full max-w-7xl mx-auto px-4">
         {/* LINE 1 (5 Popping Slots) */}
-        <div className="flex items-center justify-center gap-4 sm:gap-12 md:gap-16 w-full">
+        <div className="flex items-center justify-center gap-4 sm:gap-10 md:gap-16 w-full flex-wrap sm:flex-nowrap overflow-hidden">
           {row1Logos.map((item, idx) => renderLogoItem(item, idx))}
         </div>
 
         {/* LINE 2 (5 Popping Slots) */}
-        <div className="flex items-center justify-center gap-4 sm:gap-12 md:gap-16 w-full">
+        <div className="flex items-center justify-center gap-4 sm:gap-10 md:gap-16 w-full flex-wrap sm:flex-nowrap overflow-hidden">
           {row2Logos.map((item, idx) => renderLogoItem(item, idx))}
         </div>
       </div>
