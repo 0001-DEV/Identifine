@@ -26,7 +26,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Left Details */}
-          <div className="lg:col-span-4 space-y-10">
+          <div className="lg:col-span-4 space-y-10 lg:-ml-8 xl:-ml-12">
             
             {/* Contact us */}
             <div className="space-y-3">
