@@ -247,10 +247,13 @@ export default function HomePage() {
             </h2>
           </div>
 
-          {/* Sticky Stacking Cards Animation */}
-          <JourneyStickyStack journeySteps={journeySteps} />
-
         </div>
+
+        {/* Sticky Stacking Cards — full bleed, breaks out of section padding */}
+        <div className="-mx-6 sm:-mx-12 mt-16">
+          <JourneyStickyStack journeySteps={journeySteps} />
+        </div>
+
       </section>
 
 
