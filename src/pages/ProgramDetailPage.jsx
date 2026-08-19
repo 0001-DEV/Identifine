@@ -160,37 +160,6 @@ export default function ProgramDetailPage() {
               alt={imgObj.title}
               className="w-full h-full object-cover object-center select-none"
             />
-
-            {/* Dark gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10 pointer-events-none" />
-
-            {/* Center-aligned text + CTA */}
-            <div className="absolute bottom-6 sm:bottom-14 inset-x-6 sm:inset-x-12 max-w-3xl mx-auto text-center space-y-3 text-white drop-shadow-lg z-20 pointer-events-auto">
-              <div className="text-xs sm:text-sm font-mono text-[#E2B857] uppercase tracking-widest font-semibold">
-                0{idx + 1} / 0{program.images.length}
-              </div>
-              <h3 className="font-galano font-medium text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight">
-                {imgObj.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-white/80 max-w-xl mx-auto leading-relaxed font-normal">
-                {imgObj.desc}
-              </p>
-              <div className="pt-2">
-                <a
-                  href={program.whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative overflow-hidden inline-flex items-center justify-center text-xs sm:text-sm font-bold px-7 py-3.5 rounded-full bg-white text-black shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:scale-105"
-                >
-                  <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                    <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                      <span className="block">Schedule a call</span>
-                      <span className="block">Schedule a call</span>
-                    </span>
-                  </span>
-                </a>
-              </div>
-            </div>
           </div>
         ))}
 
