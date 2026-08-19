@@ -122,7 +122,7 @@ export default function CompanyLogosMarquee() {
 
     const getLogoClass = (src) => {
       if (src === mateeLogo) {
-        return "h-7 sm:h-9 max-h-9 max-w-[100px] sm:max-w-[125px] w-auto object-contain brightness-95 hover:brightness-110 transition-all duration-200 filter drop-shadow-sm";
+        return "h-8 sm:h-10 max-h-10 max-w-[130px] sm:max-w-[155px] w-auto object-contain brightness-95 hover:brightness-110 transition-all duration-200 filter drop-shadow-sm";
       }
       if (src === inveraLogo) {
         return "h-7 sm:h-10 max-h-10 max-w-[140px] sm:max-w-[175px] w-auto object-contain brightness-95 hover:brightness-110 transition-all duration-200 filter drop-shadow-sm";
