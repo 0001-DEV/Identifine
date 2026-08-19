@@ -7,6 +7,8 @@ import IdentityQuiz from '../components/IdentityQuiz';
 import CardShowcaseModal from '../components/CardShowcaseModal';
 import starIcon from '../assets/SVG@4x.png';
 import JourneyStickyStack from '../components/JourneyStickyStack';
+import ProgramAccordionShowcase from '../components/ProgramAccordionShowcase';
+import CataloguePinnedHorizontalDeck from '../components/CataloguePinnedHorizontalDeck';
 import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.png';
 import elitePassGold from '../assets/ELITE_PASS_GOLD.png';
 import elitePassSilver from '../assets/ELITE_PASS_SILVER.png';
@@ -19,7 +21,6 @@ import elitePassSilver2 from '../assets/ELITE_PASS_SILVER_2.png';
 
 export default function HomePage() {
   const [selectedCardModal, setSelectedCardModal] = useState(null);
-  const [activeStep, setActiveStep] = useState('discover');
 
   // Scroll reveal IntersectionObserver hook
   useEffect(() => {
@@ -39,25 +40,6 @@ export default function HomePage() {
 
     return () => observer.disconnect();
   }, []);
-
-  // Program Services
-  const programs = [
-    {
-      id: 'consultation',
-      title: 'Identity Consultation Services',
-      description: 'We craft distinctive corporate brand identities that speak louder than words. We design bold brand identities that capture your mission and connect across every touchpoint.',
-    },
-    {
-      id: 'corporate-design',
-      title: 'Corporate Identity Design',
-      description: 'Build the clarity, presence, and habits needed to lead with confidence and calm.',
-    },
-    {
-      id: 'creation-experience',
-      title: 'Identity Creation & Experience',
-      description: "Unlock the collective potential in your organization's identity through intentional design and dialogue.",
-    }
-  ];
 
   // Catalogue Cards with Real Assets
   const catalogueCards = [
@@ -138,13 +120,13 @@ export default function HomePage() {
       id: '2',
       date: 'Jul 2, 2026',
       readTime: '5 min read',
-      title: 'Why corporate identity is the future of organizationΓÇÖs success'
+      title: 'Why corporate identity is the future of organization’s success'
     },
     {
       id: '3',
       date: 'Jun 21, 2026',
       readTime: '2 min read',
-      title: 'Identity mistakes you didnΓÇÖt know you were making'
+      title: 'Identity mistakes you didn’t know you were making'
     }
   ];
 
@@ -189,7 +171,7 @@ export default function HomePage() {
 
       {/* 2. DEFINE HOW YOUR ORGANIZATION IS EXPERIENCED */}
       <section className="bg-[#EBEAE6] pt-0 pb-20 px-6 sm:px-12 overflow-hidden -mt-12 sm:-mt-16 relative z-10">
-        <div className="max-w-6xl mx-auto space-y-16">
+        <div className="max-w-7xl mx-auto space-y-16">
           
           <div className="scroll-reveal text-center max-w-4xl mx-auto space-y-4">
             <div className="inline-flex items-center justify-center gap-2.5 max-w-[540px] mx-auto">
@@ -211,96 +193,25 @@ export default function HomePage() {
             </h2>
           </div>
 
-          {/* Client Logos Marquee */}
+          {/* Program Accordion Showcase (CONTAINER BEFORE LOGOS) */}
           <div className="scroll-reveal">
+            <ProgramAccordionShowcase />
+          </div>
+
+          {/* Client Logos Marquee (AFTER CONTAINER) */}
+          <div className="scroll-reveal pt-8">
             <CompanyLogosMarquee />
           </div>
 
-          {/* Program Services Grid */}
-          <div className="space-y-8 pt-2">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {programs.map((prog) => (
-                <div 
-                  key={prog.id}
-                  className="scroll-reveal bg-[#F5F4F0] p-8 rounded-3xl border border-[#DCDAD4] flex flex-col justify-between space-y-6 hover:shadow-lg transition-all hover:-translate-y-1 duration-300"
-                >
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-medium text-[#111111] font-sans">{prog.title}</h3>
-                    <p className="text-xs sm:text-sm text-[#555555] leading-relaxed font-medium">{prog.description}</p>
-                  </div>
-
-                  <a
-                    href="https://wa.me/2349030001851"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group/link inline-flex items-center gap-1.5 text-xs font-medium text-[#111111] hover:underline pt-4 border-t border-[#E5E3DC]"
-                  >
-                    <span>Learn more</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-
         </div>
       </section>
 
 
-      {/* 3. DARK CATALOGUE SECTION */}
-      <section className="bg-[#000000] text-white py-28 px-6 sm:px-12 overflow-hidden">
-        <div className="max-w-6xl mx-auto space-y-16">
-          
-          <div className="scroll-reveal text-center max-w-4xl mx-auto space-y-6">
-            <div className="inline-flex items-center justify-center gap-2.5 max-w-[540px] mx-auto">
-              <img 
-                src={starIcon} 
-                alt="" 
-                className="w-4 h-4 object-contain brightness-200" 
-              />
-              <span 
-                className="font-galano font-normal text-white text-sm sm:text-base md:text-lg capitalize"
-                style={{ letterSpacing: '5.2px' }}
-              >
-                Our identity catalogue
-              </span>
-            </div>
-            
-            <h2 className="text-4xl sm:text-6xl lg:text-[4.25rem] font-galano font-medium leading-tight text-[#E2B857] max-w-5xl mx-auto">
-              Create an <em className="font-swarsh italic font-normal text-[#E2B857]">identity</em> so irresistible it becomes a <em className="font-swarsh italic font-normal text-[#E2B857]">culture</em>.
-            </h2>
-
-            <p className="text-base sm:text-lg text-[#AAAAAA] max-w-2xl mx-auto leading-relaxed font-medium">
-              Skip the powerpoints, frameworks and short term fixes. Choose a partner with real experience instead.
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-              <a
-                href="https://wa.me/2349030001851"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="framer-pill-white text-sm sm:text-base px-8 py-4 font-medium"
-              >
-                Make an identity enquiry
-              </a>
-
-              <NavLink
-                to="/case-studies"
-                className="framer-pill-gold text-sm sm:text-base px-8 py-4 font-medium"
-              >
-                See more identity case studies
-              </NavLink>
-            </div>
-          </div>
-
-          {/* Cards Catalogue Dynamic Scroll Deck */}
-          <CatalogueScrollDeck 
-            catalogueCards={catalogueCards} 
-            onSelectCard={(card) => setSelectedCardModal(card)} 
-          />
-
-        </div>
-      </section>
+      {/* 3. OUR IDENTITY CATALOGUE (STICKY PINNED HORIZONTAL SCROLL DECK) */}
+      <CataloguePinnedHorizontalDeck 
+        catalogueCards={catalogueCards} 
+        onSelectCard={(card) => setSelectedCardModal(card)} 
+      />
 
 
       {/* 4. TRANSFORMATION JOURNEY */}
@@ -401,64 +312,6 @@ export default function HomePage() {
         />
       )}
 
-    </div>
-  );
-}
-
-function CatalogueScrollDeck({ catalogueCards, onSelectCard }) {
-  const containerRef = React.useRef(null);
-  const [scrollProgress, setScrollProgress] = React.useState(0);
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      // Calculate progress from 0 (when entering bottom of viewport) to 1 (when exiting top)
-      const currentScroll = windowHeight - rect.top;
-      const totalRange = windowHeight + rect.height;
-      const clampedProgress = Math.max(0, Math.min(1, currentScroll / totalRange));
-
-      setScrollProgress(clampedProgress);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Starts offset right (+650px) when entering viewport, and rapidly slides faster to the left (-1000px) as you scroll down
-  const translateX = (1 - scrollProgress * 2.8) * 650;
-
-  return (
-    <div ref={containerRef} className="relative w-full py-8 overflow-hidden">
-      <div 
-        style={{
-          transform: `translateX(${translateX}px)`,
-          transition: 'transform 0.12s ease-out'
-        }}
-        className="flex items-center justify-start gap-[8px] w-max mx-auto px-4"
-      >
-        {catalogueCards.map((card) => (
-          <div
-            key={card.id}
-            onClick={() => onSelectCard(card)}
-            className="group cursor-pointer rounded-[40px] overflow-hidden shadow-2xl hover:z-20 hover:scale-[1.03] transition-all duration-300 w-[300px] sm:w-[345px] md:w-[385px] h-[265px] sm:h-[305px] md:h-[345px] shrink-0 relative"
-          >
-            <img 
-              src={card.image} 
-              alt={card.title}
-              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-6 flex flex-col justify-end">
-              <h3 className="font-galano font-normal text-base sm:text-lg text-white group-hover:text-[#E2B857] transition-colors leading-snug">
-                {card.title}
-              </h3>
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
