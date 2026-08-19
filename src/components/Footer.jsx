@@ -254,8 +254,8 @@ export default function Footer() {
             to="/" 
             className={`inline-block pb-2 shrink-0 transition-all duration-700 delay-800 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               isDownloaded 
-                ? 'opacity-100 translate-y-[-48px] scale-100 blur-0' 
-                : 'opacity-0 translate-y-0 scale-95 blur-[4px]'
+                ? 'opacity-100 translate-y-0 md:-translate-y-12 scale-100 blur-0' 
+                : 'opacity-0 translate-y-4 md:translate-y-0 scale-95 blur-[4px]'
             }`}
           >
             <IdentifineWhiteTextLogo className="h-[100px] w-auto" />
