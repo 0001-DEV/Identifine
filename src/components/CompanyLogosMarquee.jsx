@@ -26,16 +26,22 @@ function AnimatedNumber() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          let startTime = Date.now();
-          const duration = 2000;
+          let startTime = null;
+          const duration = 1200; // 1.2 seconds for a fast, snappy animation
           const finalNumber = 86;
 
-          const updateCounter = () => {
-            const now = Date.now();
-            const elapsed = now - startTime;
+          // Smooth deceleration easing function (easeOutQuart)
+          const easeOut = (t) => 1 - Math.pow(1 - t, 4);
 
-            if (elapsed < duration) {
-              setCount(Math.floor(Math.random() * 90) + 10);
+          const updateCounter = (timestamp) => {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            const currentCount = Math.floor(easeOut(progress) * finalNumber);
+            setCount(currentCount);
+
+            if (progress < 1) {
               requestAnimationFrame(updateCounter);
             } else {
               setCount(finalNumber);
