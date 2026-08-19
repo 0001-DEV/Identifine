@@ -107,41 +107,54 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-[65px] h-[calc(100vh-65px)] bg-[#EBEAE6] backdrop-blur-2xl border-b border-[#DCDAD4] p-6 sm:p-8 shadow-2xl z-50 flex flex-col justify-between overflow-y-auto">
-          <div className="flex flex-col gap-6 pt-4">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.name}
-                to={link.path}
-                className={({ isActive }) =>
-                  `text-xl font-bold py-2 border-b border-[#DCDAD4]/40 transition-colors ${
-                    isActive ? 'text-black font-extrabold' : 'text-[#444444] hover:text-black'
-                  }`
-                }
-              >
-                {link.name}
-              </NavLink>
-            ))}
-          </div>
-
-          <div className="pt-8 pb-12">
-            <a
-              href="https://wa.me/2347046367754"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative overflow-hidden w-full inline-flex items-center justify-center text-sm font-semibold py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300"
+      <div 
+        className={`md:hidden fixed inset-x-0 top-[65px] bg-[#EBEAE6] backdrop-blur-2xl border-b border-[#DCDAD4] shadow-2xl z-50 flex flex-col justify-between overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          mobileMenuOpen ? 'max-h-[calc(100vh-65px)] opacity-100 p-6 sm:p-8' : 'max-h-0 opacity-0 px-6 sm:px-8 py-0 pointer-events-none'
+        }`}
+      >
+        <div className="flex flex-col gap-6 pt-4">
+          {navLinks.map((link, idx) => (
+            <NavLink
+              key={link.name}
+              to={link.path}
+              className={({ isActive }) =>
+                `text-xl font-bold py-2 border-b border-[#DCDAD4]/40 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  isActive ? 'text-black font-extrabold' : 'text-[#444444] hover:text-black'
+                }`
+              }
+              style={{ 
+                clipPath: mobileMenuOpen ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)',
+                opacity: mobileMenuOpen ? 1 : 0,
+                transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-10px)',
+                transitionDelay: mobileMenuOpen ? `${150 + (idx * 150)}ms` : '0ms' 
+              }}
             >
-              <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                  <span className="block">Book a consultation</span>
-                  <span className="block">Book a consultation</span>
-                </span>
-              </span>
-            </a>
-          </div>
+              {link.name}
+            </NavLink>
+          ))}
         </div>
-      )}
+
+        <div 
+          className={`pt-8 pb-12 transition-all duration-700 ease-out transform ${
+            mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+          }`}
+          style={{ transitionDelay: mobileMenuOpen ? `${150 + (navLinks.length * 150)}ms` : '0ms' }}
+        >
+          <a
+            href="https://wa.me/2347046367754"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative overflow-hidden w-full inline-flex items-center justify-center text-sm font-semibold py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300"
+          >
+            <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
+              <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
+                <span className="block">Book a consultation</span>
+                <span className="block">Book a consultation</span>
+              </span>
+            </span>
+          </a>
+        </div>
+      </div>
     </header>
   );
 }
