@@ -98,13 +98,13 @@ export default function HomePage() {
       key: 'deploy',
       title: 'Deploy',
       image: elitePassBlack2,
-      description: 'We dive deep into your goals, audience, and brand to uncover insights and define a clear identity direction.'
+      description: 'We seamlessly roll out your physical & digital identity assets with precision manufacturing and secure provisioning.'
     },
     {
       key: 'evolve',
       title: 'Evolve',
       image: elitePassSilver2,
-      description: 'We dive deep into your goals, audience, and brand to uncover insights and define a clear identity direction.'
+      description: 'We continuously refine, maintain, and upgrade your identity ecosystem to stay ahead as your organization grows.'
     }
   ];
 
@@ -114,29 +114,35 @@ export default function HomePage() {
       id: '1',
       date: 'Jul 8, 2026',
       readTime: '2 min read',
-      title: 'Identity design that converts: What really works in 2026'
+      title: 'Identity design that converts: What really works in 2026',
+      image: postProcessImg,
+      category: 'Design Strategy'
     },
     {
       id: '2',
       date: 'Jul 2, 2026',
       readTime: '5 min read',
-      title: 'Why corporate identity is the future of organization’s success'
+      title: 'Why corporate identity is the future of organization’s success',
+      image: renderOne,
+      category: 'Corporate Growth'
     },
     {
       id: '3',
       date: 'Jun 21, 2026',
       readTime: '2 min read',
-      title: 'Identity mistakes you didn’t know you were making'
+      title: 'Identity mistakes you didn’t know you were making',
+      image: blackMatteRender,
+      category: 'Brand Audit'
     }
   ];
 
   return (
     <div className="w-full overflow-hidden">
-      
+
       {/* 1. HERO SECTION (Height min-h-[95vh], pt-48 sm:pt-64 pb-28) */}
       <section className="bg-[#EBEAE6] pt-48 sm:pt-64 pb-28 px-6 sm:px-12 text-center flex flex-col items-center justify-center relative min-h-[95vh] overflow-hidden">
         <div className="max-w-[840px] w-full mx-auto space-y-12 min-h-[301px] flex flex-col justify-center items-center">
-          
+
           <h1 className="animate-hero-fade-1 mt-2 sm:mt-4 text-5xl sm:text-7xl lg:text-[5.25rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.2] text-center">
             Every organization has an <em className="font-swarsh italic font-normal text-[#111111] px-1.5">identity</em>, only few intentionally designed it
           </h1>
@@ -172,15 +178,15 @@ export default function HomePage() {
       {/* 2. DEFINE HOW YOUR ORGANIZATION IS EXPERIENCED */}
       <section className="bg-[#EBEAE6] pt-0 pb-20 px-6 sm:px-12 overflow-hidden -mt-12 sm:-mt-16 relative z-10">
         <div className="max-w-7xl mx-auto space-y-16">
-          
+
           <div className="scroll-reveal text-center max-w-4xl mx-auto space-y-4">
             <div className="inline-flex items-center justify-center gap-2.5 max-w-[540px] mx-auto">
-              <img 
-                src={starIcon} 
-                alt="" 
-                className="w-4 h-4 object-contain brightness-0" 
+              <img
+                src={starIcon}
+                alt=""
+                className="w-4 h-4 object-contain brightness-0"
               />
-              <span 
+              <span
                 className="font-galano font-normal text-[#111111] text-sm sm:text-base"
                 style={{ letterSpacing: '5.2px' }}
               >
@@ -208,24 +214,24 @@ export default function HomePage() {
 
 
       {/* 3. OUR IDENTITY CATALOGUE (STICKY PINNED HORIZONTAL SCROLL DECK) */}
-      <CataloguePinnedHorizontalDeck 
-        catalogueCards={catalogueCards} 
-        onSelectCard={(card) => setSelectedCardModal(card)} 
+      <CataloguePinnedHorizontalDeck
+        catalogueCards={catalogueCards}
+        onSelectCard={(card) => setSelectedCardModal(card)}
       />
 
 
       {/* 4. TRANSFORMATION JOURNEY */}
       <section className="bg-[#EBEAE6] py-28 px-6 sm:px-12">
         <div className="max-w-5xl mx-auto space-y-16">
-          
+
           <div className="scroll-reveal text-center space-y-3">
             <div className="inline-flex items-center justify-center gap-2.5 max-w-[540px] mx-auto">
-              <img 
-                src={starIcon} 
-                alt="" 
-                className="w-4 h-4 object-contain brightness-0" 
+              <img
+                src={starIcon}
+                alt=""
+                className="w-4 h-4 object-contain brightness-0"
               />
-              <span 
+              <span
                 className="font-galano font-normal text-[#111111] text-xs sm:text-sm capitalize"
                 style={{ letterSpacing: '5.2px' }}
               >
@@ -245,49 +251,87 @@ export default function HomePage() {
 
 
       {/* 5. INSIGHTS & INSPIRATION (JOURNAL) */}
-      <section className="bg-[#000000] text-white py-28 px-6 sm:px-12 overflow-hidden">
-        <div className="max-w-6xl mx-auto space-y-12">
-          
-          <div className="scroll-reveal flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-[#222222] pb-8">
-            <div>
-              <span className="text-xs font-mono uppercase tracking-widest text-[#888888]">Insights & Inspiration</span>
-              <h2 className="text-4xl font-sans font-medium mt-1 text-white">journal</h2>
+      <section className="bg-[#000000] text-white py-28 px-6 sm:px-12 overflow-hidden border-t border-[#222222]">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            
+            {/* Left Column: Vertically Arranged Text & Button */}
+            <div className="lg:col-span-5 space-y-6 scroll-reveal lg:sticky lg:top-24">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2.5">
+                  <img
+                    src={starIcon}
+                    alt=""
+                    className="w-4 h-4 object-contain brightness-200"
+                  />
+                  <span
+                    className="font-galano font-normal text-white text-xs sm:text-sm lowercase"
+                    style={{ letterSpacing: '5.2px' }}
+                  >
+                    insights & inspiration
+                  </span>
+                </div>
+
+                <h2 className="text-4xl sm:text-6xl lg:text-[4rem] font-galano font-medium text-white tracking-tight leading-[1.15]">
+                  explore our latest <em className="font-swarsh italic font-normal text-white">journal</em>
+                </h2>
+              </div>
+
+              <div className="pt-2">
+                <NavLink
+                  to="/blog"
+                  className="group relative overflow-hidden inline-flex items-center justify-center text-xs sm:text-sm font-semibold px-7 py-3.5 rounded-full bg-white text-black shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                >
+                  <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
+                    <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
+                      <span className="block">View all blogs</span>
+                      <span className="block">View all blogs</span>
+                    </span>
+                  </span>
+                </NavLink>
+              </div>
             </div>
 
-            <NavLink
-              to="/blog"
-              className="framer-pill-white text-xs px-6 py-3 inline-flex items-center gap-2 self-start sm:self-auto font-medium"
-            >
-              View all blogs
-            </NavLink>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
-              <NavLink
-                key={post.id}
-                to="/blog"
-                className="scroll-reveal group p-6 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#E2B857]/50 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-6"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between text-xs text-[#777777] font-mono">
-                    <span>{post.date}</span>
-                    <span>{post.readTime}</span>
+            {/* Right Column: Blog Containers Arranged Vertically */}
+            <div className="lg:col-span-7 space-y-4 scroll-reveal">
+              {blogPosts.map((post) => (
+                <NavLink
+                  key={post.id}
+                  to="/blog"
+                  className="group p-3.5 sm:p-4 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#E2B857]/50 hover:-translate-y-1 transition-all duration-300 flex flex-col sm:flex-row items-center gap-5 overflow-hidden shadow-xl"
+                >
+                  {/* Inside Container - Dedicated Left Space: Compact Image from Assets */}
+                  <div className="w-full sm:w-44 h-36 sm:h-32 rounded-xl overflow-hidden bg-black/60 relative border border-[#222222] shrink-0">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 select-none"
+                    />
                   </div>
 
-                  <h3 className="font-medium text-lg text-white group-hover:text-[#E2B857] transition-colors leading-snug">
-                    {post.title}
-                  </h3>
-                </div>
+                  {/* Inside Container - Dedicated Right Space: Text Details */}
+                  <div className="w-full sm:flex-1 flex flex-col justify-between py-1 pr-1 space-y-3">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs text-[#777777] font-mono">
+                        <span className="text-[#E2B857]">{post.category}</span>
+                        <span>{post.date} • {post.readTime}</span>
+                      </div>
 
-                <div className="pt-4 border-t border-[#222222] flex items-center gap-2 text-xs font-medium text-[#E2B857]">
-                  <span>Read full blog</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </NavLink>
-            ))}
+                      <h3 className="font-galano font-medium text-base sm:text-lg text-white group-hover:text-[#E2B857] transition-colors leading-snug">
+                        {post.title}
+                      </h3>
+                    </div>
+
+                    <div className="pt-2 border-t border-[#222222] flex items-center gap-2 text-xs font-medium text-[#E2B857]">
+                      <span>Read full blog</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </NavLink>
+              ))}
+            </div>
+
           </div>
-
         </div>
       </section>
 

@@ -5,89 +5,113 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function JourneyStickyStack({ journeySteps }) {
-  const wrapperRef = useRef(null);
+  const containerRef = useRef(null);
   const cardRefs = useRef([]);
-
-  const totalCards = journeySteps.length;
-  // Each card gets 100vh of scroll distance.
-  // Wrapper is totalCards × 100vh so cards have room to slide in one by one.
-  const wrapperHeight = totalCards * 100; // vh
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const cards = cardRefs.current.filter(Boolean);
-      if (!cards.length) return;
+      if (!cards || cards.length === 0) return;
 
-      // Cards 2+ start off-screen below (100vh down from their sticky position)
-      cards.forEach((card, i) => {
-        if (i === 0) return;
-        gsap.set(card, { yPercent: 100 });
+      const totalCards = cards.length;
+
+      // Cards 2+ start below separated by a distinct gap
+      cards.forEach((card, index) => {
+        if (index > 0) {
+          gsap.set(card, { yPercent: 125 + (index - 1) * 35 });
+        }
       });
 
-      cards.forEach((card, i) => {
-        if (i === 0) return; // Card 1 is already in place
-
-        // Slide this card UP from below into position
-        gsap.to(card, {
-          yPercent: 0,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: wrapperRef.current,
-            // start when i-th card's scroll slot begins, end when it finishes
-            start: `${((i - 1) / totalCards) * 100}% top`,
-            end:   `${(i / totalCards) * 100}% top`,
-            scrub: true,
-            invalidateOnRefresh: true,
+      // Pin the section when Card 1 reaches top of viewport
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          pin: true,
+          pinSpacing: true,
+          start: 'top top+=80',
+          end: () => `+=${(totalCards - 1) * 100}%`,
+          scrub: 0.1,
+          snap: {
+            snapTo: 1 / (totalCards - 1),
+            duration: { min: 0.25, max: 0.5 },
+            ease: 'power1.inOut',
           },
-        });
-
-        // Previous card recedes (scale + dim) as this one slides over it
-        gsap.to(cards[i - 1], {
-          scale: 0.93,
-          filter: 'brightness(0.5)',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: wrapperRef.current,
-            start: `${((i - 1) / totalCards) * 100}% top`,
-            end:   `${(i / totalCards) * 100}% top`,
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
+          invalidateOnRefresh: true,
+        },
       });
-    }, wrapperRef);
 
-    return () => ctx.revert();
+      cards.forEach((card, index) => {
+        if (index === 0) return;
+
+        const prevCard = cards[index - 1];
+
+        tl.to(
+          card,
+          {
+            yPercent: 0,
+            ease: 'none',
+            duration: 1,
+          },
+          `step-${index}`
+        ).to(
+          prevCard,
+          {
+            scale: 0.96,
+            ease: 'none',
+            duration: 1,
+          },
+          `step-${index}`
+        );
+      });
+    }, containerRef);
+
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, [journeySteps]);
 
-  const topOffsets = ['top-16', 'top-16', 'top-16', 'top-16'];
+  if (!journeySteps || journeySteps.length === 0) return null;
 
   return (
     <div
-      ref={wrapperRef}
-      className="relative w-full"
-      style={{ height: `${wrapperHeight}vh` }}
+      ref={containerRef}
+      className="relative w-full max-w-5xl mx-auto h-[72vh] sm:h-[78vh] min-h-[480px] max-h-[700px]"
     >
       {journeySteps.map((step, idx) => (
         <div
           key={step.key || idx}
           ref={(el) => (cardRefs.current[idx] = el)}
-          className={`sticky ${topOffsets[idx] || 'top-16'} w-full h-[82vh] rounded-3xl overflow-hidden shadow-2xl bg-black`}
+          className="absolute inset-0 w-full h-full rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl bg-stone-900/10 border border-white/20 transform-gpu"
           style={{ zIndex: idx + 10 }}
         >
+          {/* Full Bright Image */}
           <img
             src={step.image}
             alt={step.title}
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-center select-none"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent p-8 sm:p-14 flex flex-col justify-end">
-            <span className="text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E2B857] mb-2">
-              0{idx + 1} — {step.title}
-            </span>
-            <h3 className="font-galano font-medium text-3xl sm:text-5xl text-white mb-3">
+
+          {/* Floating Glassmorphism Text Card */}
+          <div className="absolute bottom-6 left-6 right-6 sm:bottom-10 sm:left-10 sm:right-10 p-6 sm:p-10 rounded-3xl bg-black/40 backdrop-blur-xl border border-white/25 shadow-2xl select-none">
+            <div className="flex items-center justify-between mb-3">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/30 text-xs font-mono uppercase tracking-widest text-[#E2B857]">
+                Phase 0{idx + 1}
+              </span>
+              <span className="text-xs font-mono text-white/70 tracking-widest font-medium">
+                0{idx + 1} / 0{journeySteps.length}
+              </span>
+            </div>
+
+            <h3 className="font-galano font-medium text-2xl sm:text-4xl lg:text-5xl text-white mb-2 tracking-tight">
               {step.title}
             </h3>
-            <p className="text-base sm:text-lg text-[#D1D5DB] max-w-2xl leading-relaxed font-medium">
+
+            <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-2xl leading-relaxed font-normal">
               {step.description}
             </p>
           </div>
@@ -96,3 +120,7 @@ export default function JourneyStickyStack({ journeySteps }) {
     </div>
   );
 }
+
+
+
+
