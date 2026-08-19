@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
 import blackMatteRender from '../assets/Black matte render 2.png';
 import elitePassGold from '../assets/ELITE_PASS_GOLD.png';
 import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.png';
@@ -32,6 +33,10 @@ export default function ProgramAccordionShowcase() {
   // First container active by default
   const [activeId, setActiveId] = useState('consultation');
 
+  const toggleProgram = (id) => {
+    setActiveId((prev) => (prev === id ? null : id));
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch max-w-7xl mx-auto py-6">
       {/* VERTICAL TEXT CONTAINERS (LEFT COLUMN: 6 Cols on Desktop) */}
@@ -41,28 +46,49 @@ export default function ProgramAccordionShowcase() {
           return (
             <div
               key={prog.id}
-              onMouseEnter={() => setActiveId(prog.id)}
-              onClick={() => setActiveId(prog.id)}
+              onClick={() => toggleProgram(prog.id)}
+              onMouseEnter={() => {
+                // Only trigger on hover for desktop view (screen >= 1024px)
+                if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+                  setActiveId(prog.id);
+                }
+              }}
               className={`group cursor-pointer transition-all duration-500 rounded-3xl select-none ${
                 isOpen
                   ? 'bg-[#F5F4F0] border border-[#DCDAD4] p-6 sm:p-8 shadow-xl scale-[1.01]'
                   : 'bg-transparent border border-transparent p-6 sm:p-7 opacity-80 hover:opacity-100'
               }`}
             >
-              {/* Header Row */}
+              {/* Header Row with Title & Explicit Mobile Collapse Button */}
               <div className="flex items-center justify-between gap-4">
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-galano font-medium tracking-tight text-[#111111]">
                   {prog.title}
                 </h3>
+
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleProgram(prog.id);
+                  }}
+                  className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${
+                    isOpen ? 'bg-black text-white rotate-180' : 'bg-black/5 text-black hover:bg-black/10'
+                  }`}
+                  aria-label="Toggle section"
+                >
+                  <ChevronDown className="w-5 h-5" />
+                </button>
               </div>
 
-              {/* Expandable Description & Link */}
+              {/* Expandable Description & Features Link */}
               <div
-                className={`grid transition-all duration-500 ease-in-out ${
-                  isOpen ? 'grid-rows-[1fr] opacity-100 mt-4 pt-2' : 'grid-rows-[0fr] opacity-0 mt-0 pt-0'
+                className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                  isOpen
+                    ? 'max-h-[500px] opacity-100 mt-4 pt-2'
+                    : 'max-h-0 opacity-0 mt-0 pt-0 pointer-events-none'
                 }`}
               >
-                <div className="overflow-hidden space-y-6">
+                <div className="space-y-6">
                   <p className="text-sm sm:text-base text-[#555555] leading-relaxed font-normal">
                     {prog.description}
                   </p>
@@ -89,7 +115,7 @@ export default function ProgramAccordionShowcase() {
       </div>
 
       {/* DYNAMIC IMAGE (RIGHT COLUMN: 6 Cols on Desktop) */}
-      <div className="lg:col-span-6 order-2 relative w-full h-[400px] sm:h-[500px] lg:h-auto rounded-3xl overflow-hidden bg-[#111111] border border-[#DCDAD4] shadow-2xl min-h-[480px]">
+      <div className="lg:col-span-6 order-2 relative w-full h-[320px] sm:h-[420px] lg:h-auto rounded-3xl overflow-hidden bg-[#111111] border border-[#DCDAD4] shadow-2xl min-h-[320px] lg:min-h-[480px]">
         {programs.map((prog) => {
           const isActive = activeId === prog.id;
           return (
@@ -106,11 +132,11 @@ export default function ProgramAccordionShowcase() {
                 className="w-full h-full object-cover object-center select-none"
               />
               {/* Dark Overlay with Subtitle & Title */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-8 sm:p-10 flex flex-col justify-end">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-6 sm:p-10 flex flex-col justify-end">
                 <span className="text-xs font-mono tracking-widest text-[#E2B857] uppercase mb-2">
                   {prog.subtitle}
                 </span>
-                <h4 className="font-galano font-medium text-2xl sm:text-3xl text-white">
+                <h4 className="font-galano font-medium text-xl sm:text-3xl text-white">
                   {prog.title}
                 </h4>
               </div>

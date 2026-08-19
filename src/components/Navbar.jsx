@@ -108,7 +108,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-[70px] bottom-0 bg-[#EBEAE6]/95 backdrop-blur-xl border-b border-[#DCDAD4] p-6 shadow-2xl z-50 flex flex-col justify-between animate-fade-in overflow-y-auto">
+        <div className="md:hidden fixed inset-x-0 top-[65px] h-[calc(100vh-65px)] bg-[#EBEAE6] backdrop-blur-2xl border-b border-[#DCDAD4] p-6 sm:p-8 shadow-2xl z-50 flex flex-col justify-between overflow-y-auto">
           <div className="flex flex-col gap-6 pt-4">
             {navLinks.map((link) => (
               <NavLink
