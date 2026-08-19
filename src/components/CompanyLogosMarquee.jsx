@@ -16,28 +16,31 @@ import revPlusLogo from '../assets/revolution_plus__1_-removebg-preview.png';
 import seplatLogo from '../assets/seplat (1) (2).png';
 import tvcLogo from '../assets/tvc.png';
 import tolaramLogo from '../assets/Tolaram_Group_logo (1).png';
+import animatedCounterImg from '../assets/AnimatedCounter.png';
 
 export default function CompanyLogosMarquee() {
-  // LINE 1 (Row 1): 5 Dynamic Popping Slots
+  // LINE 1 (Row 1): 6 Items (5 Dynamic Popping Slots + 1 Special Counter at index 3)
   const row1Logos = [
     { dynamicId: 0, name1: 'Rainoil', src1: rainoilLogo, name2: 'Renaissance', src2: renaissanceLogo },
     { dynamicId: 1, name1: 'Seplat', src1: seplatLogo, name2: 'Eunisell', src2: eunisellLogo },
     { dynamicId: 2, name1: 'Revolution Plus', src1: revPlusLogo, name2: 'Tolaram Group', src2: tolaramLogo },
+    { type: 'counter', src: animatedCounterImg }, // 4th item
     { dynamicId: 3, name1: 'First Ally Group', src1: firstAllyLogo, name2: 'Guinness Nigeria', src2: guinnessLogo },
     { dynamicId: 4, name1: 'Invera Energy', src1: inveraLogo, name2: 'Lotus Bank', src2: lotusLogo },
   ];
 
-  // LINE 2 (Row 2): 5 Dynamic Popping Slots
+  // LINE 2 (Row 2): 6 Dynamic Popping Slots
   const row2Logos = [
     { dynamicId: 5, name1: 'TVC News', src1: tvcLogo, name2: 'NECA', src2: necaLogo },
     { dynamicId: 6, name1: 'Ikeja Electric', src1: ikejaLogo, name2: 'Falcon / IOGC', src2: falconLogo },
     { dynamicId: 7, name1: 'Matee / SAPETRO', src1: mateeLogo, name2: 'Seplat', src2: seplatLogo },
     { dynamicId: 8, name1: 'Renaissance Africa', src1: renaissanceLogo, name2: 'Rainoil', src2: rainoilLogo },
     { dynamicId: 9, name1: 'Eunisell', src1: eunisellLogo, name2: 'First Ally Group', src2: firstAllyLogo },
+    { dynamicId: 10, name1: 'Tolaram Group', src1: tolaramLogo, name2: 'Guinness Nigeria', src2: guinnessLogo },
   ];
 
-  // Dynamic state for each popping slot
-  const [dynamicStates, setDynamicStates] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  // Dynamic state for each popping slot (0 to 10)
+  const [dynamicStates, setDynamicStates] = useState(Array(11).fill(0));
   const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
@@ -58,6 +61,15 @@ export default function CompanyLogosMarquee() {
   }, []);
 
   const renderLogoItem = (item, idx) => {
+    if (item.type === 'counter') {
+      return (
+        <div key={`counter-${idx}`} className="flex flex-col items-center justify-center shrink-0 px-2 sm:px-4 min-w-[130px] sm:min-w-[175px] pt-4 sm:pt-6">
+          <img src={item.src} alt="86+" className="h-10 sm:h-14 w-auto object-contain filter drop-shadow-sm mb-1 sm:mb-2" />
+          <span className="text-[10px] sm:text-xs text-[#888888] font-medium tracking-widest uppercase">Trusted Clients</span>
+        </div>
+      );
+    }
+
     const isHovered = hoveredId === item.dynamicId;
     const currentState = dynamicStates[item.dynamicId];
     const activeState = isHovered ? (currentState === 0 ? 1 : 0) : currentState;
@@ -119,13 +131,13 @@ export default function CompanyLogosMarquee() {
   return (
     <div className="py-20 sm:py-28 bg-transparent w-full overflow-hidden">
       <div className="flex flex-col items-center gap-10 sm:gap-16 lg:gap-20 w-full max-w-[94rem] mx-auto px-4 sm:px-8 lg:px-12">
-        {/* LINE 1 (5 Popping Slots) */}
-        <div className="flex items-center justify-center gap-4 sm:gap-8 md:gap-12 lg:gap-14 w-full flex-wrap sm:flex-nowrap">
+        {/* LINE 1 (6 Items) */}
+        <div className="flex items-center justify-center gap-2 sm:gap-6 md:gap-10 lg:gap-12 w-full flex-wrap sm:flex-nowrap">
           {row1Logos.map((item, idx) => renderLogoItem(item, idx))}
         </div>
 
-        {/* LINE 2 (5 Popping Slots) */}
-        <div className="flex items-center justify-center gap-4 sm:gap-8 md:gap-12 lg:gap-14 w-full flex-wrap sm:flex-nowrap">
+        {/* LINE 2 (6 Items) */}
+        <div className="flex items-center justify-center gap-2 sm:gap-6 md:gap-10 lg:gap-12 w-full flex-wrap sm:flex-nowrap">
           {row2Logos.map((item, idx) => renderLogoItem(item, idx))}
         </div>
       </div>
