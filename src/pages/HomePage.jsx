@@ -250,7 +250,7 @@ export default function HomePage() {
         </div>
 
         {/* Sticky Stacking Cards — full bleed, breaks out of section padding */}
-        <div className="-mx-6 sm:-mx-12 mt-16">
+        <div className="-mx-2 sm:-mx-6 mt-16">
           <JourneyStickyStack journeySteps={journeySteps} />
         </div>
 
