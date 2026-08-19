@@ -18,6 +18,36 @@ import tvcLogo from '../assets/tvc.png';
 import tolaramLogo from '../assets/Tolaram_Group_logo (1).png';
 import animatedCounterImg from '../assets/AnimatedCounter.png';
 
+function AnimatedNumber() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTime = Date.now();
+    const duration = 2000;
+    const finalNumber = 86;
+
+    const updateCounter = () => {
+      const now = Date.now();
+      const elapsed = now - startTime;
+
+      if (elapsed < duration) {
+        setCount(Math.floor(Math.random() * 90) + 10);
+        requestAnimationFrame(updateCounter);
+      } else {
+        setCount(finalNumber);
+      }
+    };
+
+    requestAnimationFrame(updateCounter);
+  }, []);
+
+  return (
+    <div className="flex items-start justify-center text-[#111111] font-galano font-bold text-[2.5rem] sm:text-5xl leading-none tracking-tighter mb-1 sm:mb-2 pt-1 h-10 sm:h-14">
+      {count}<span className="text-3xl sm:text-4xl text-[#E2B857] ml-0.5 leading-none">+</span>
+    </div>
+  );
+}
+
 export default function CompanyLogosMarquee() {
   // LINE 1 (Row 1): 6 Items (5 Dynamic Popping Slots + 1 Special Counter at index 3)
   const row1Logos = [
@@ -64,7 +94,7 @@ export default function CompanyLogosMarquee() {
     if (item.type === 'counter') {
       return (
         <div key={`counter-${idx}`} className="flex flex-col items-center justify-center shrink-0 px-2 sm:px-4 min-w-[130px] sm:min-w-[175px] pt-4 sm:pt-6">
-          <img src={item.src} alt="86+" className="h-10 sm:h-14 w-auto object-contain filter drop-shadow-sm mb-1 sm:mb-2" />
+          <AnimatedNumber />
           <span className="text-[10px] sm:text-xs text-[#888888] font-medium tracking-widest uppercase">Trusted Clients</span>
         </div>
       );
