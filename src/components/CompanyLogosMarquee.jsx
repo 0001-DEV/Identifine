@@ -117,7 +117,7 @@ export default function CompanyLogosMarquee() {
   };
 
   return (
-    <div className="py-10 sm:py-16 bg-transparent w-full overflow-hidden">
+    <div className="py-20 sm:py-28 bg-transparent w-full overflow-hidden">
       <div className="flex flex-col items-center gap-10 sm:gap-16 lg:gap-20 w-full max-w-[94rem] mx-auto px-4 sm:px-8 lg:px-12">
         {/* LINE 1 (5 Popping Slots) */}
         <div className="flex items-center justify-center gap-4 sm:gap-8 md:gap-12 lg:gap-14 w-full flex-wrap sm:flex-nowrap">
