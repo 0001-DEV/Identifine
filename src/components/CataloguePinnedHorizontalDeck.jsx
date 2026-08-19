@@ -51,12 +51,12 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
   return (
     <section
       ref={containerRef}
-      className="relative z-10 bg-black text-white w-full h-screen min-h-[550px] sm:min-h-[650px] max-h-[900px] flex flex-col justify-center sm:justify-between gap-10 sm:gap-0 py-12 sm:py-16 overflow-hidden border-t border-white/10 select-none"
+      className="relative z-10 bg-black text-white w-full h-[100dvh] sm:h-screen min-h-[550px] sm:min-h-[650px] max-h-[900px] flex flex-col justify-start sm:justify-between gap-10 sm:gap-0 pt-10 sm:pt-16 pb-12 sm:pb-16 overflow-hidden border-t border-white/10 select-none"
     >
       <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 px-6 sm:px-12 w-full shrink-0">
-        
+
         {/* Header */}
-        <div className="text-center max-w-4xl mx-auto space-y-3 sm:space-y-4">
+        <div className="text-center max-w-4xl mx-auto space-y-5 sm:space-y-4">
           <div className="inline-flex items-center justify-center gap-2.5">
             <img src={starIcon} alt="" className="w-4 h-4 object-contain brightness-200" />
             <span
@@ -67,7 +67,7 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
             </span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl lg:text-[3.5rem] font-galano font-medium leading-tight text-[#E2B857] max-w-5xl mx-auto">
+          <h2 className="text-2xl sm:text-4xl lg:text-[3.5rem] font-galano font-medium leading-relaxed sm:leading-tight text-[#E2B857] max-w-5xl mx-auto">
             Create an <em className="font-swarsh italic font-normal text-[#E2B857]">identity</em> so irresistible it becomes a <em className="font-swarsh italic font-normal text-[#E2B857]">culture</em>.
           </h2>
 
