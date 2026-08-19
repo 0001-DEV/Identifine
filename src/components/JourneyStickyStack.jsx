@@ -20,7 +20,7 @@ export default function JourneyStickyStack({ journeySteps }) {
       cards.forEach((card, index) => {
         if (index > 0) {
           gsap.set(card, {
-            yPercent: 125 + (index - 1) * 35,
+            yPercent: 120 + (index - 1) * 30,
             y: 0,
             scale: 1,
             rotation: index % 2 === 1 ? 1.8 : -1.8,
@@ -39,20 +39,15 @@ export default function JourneyStickyStack({ journeySteps }) {
         }
       });
 
-      // Pin section and animate cards entering the stack
+      // Pin section and animate cards entering the stack seamlessly with buttery smooth scrub
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           pin: true,
           pinSpacing: true,
           start: 'top top+=80',
-          end: () => `+=${(totalCards - 1) * 100}%`,
-          scrub: 0.1,
-          snap: {
-            snapTo: 1 / (totalCards - 1),
-            duration: { min: 0.25, max: 0.5 },
-            ease: 'power1.inOut',
-          },
+          end: () => `+=${(totalCards - 1) * 110}%`,
+          scrub: 0.5,
           invalidateOnRefresh: true,
         },
       });
@@ -142,13 +137,13 @@ export default function JourneyStickyStack({ journeySteps }) {
             className="w-full h-full object-cover object-center select-none"
           />
 
-          {/* Dark gradient + text overlay at bottom */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 px-8 sm:px-12 pb-8 sm:pb-12 space-y-2 pointer-events-none">
+          {/* Dark gradient + center-aligned text overlay at bottom */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 px-6 sm:px-12 pb-6 sm:pb-12 text-center flex flex-col items-center justify-end space-y-2 pointer-events-none">
             <h3 className="font-galano font-semibold text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight drop-shadow-md">
               {step.title}
             </h3>
-            <p className="text-sm sm:text-base text-white/80 max-w-xl leading-relaxed font-normal drop-shadow-sm">
+            <p className="text-sm sm:text-base text-white/80 max-w-xl mx-auto leading-relaxed font-normal drop-shadow-sm">
               {step.description}
             </p>
           </div>
