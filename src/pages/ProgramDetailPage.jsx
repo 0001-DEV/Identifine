@@ -164,8 +164,8 @@ export default function ProgramDetailPage() {
                 className="w-full h-full object-cover object-center select-none"
               />
 
-              {/* Center Aligned Text Overlay (No button wrapper, no card container) */}
-              <div className="absolute bottom-10 inset-x-6 sm:bottom-16 sm:inset-x-12 max-w-3xl mx-auto text-center space-y-2 text-white select-none drop-shadow-md">
+              {/* Center Aligned Text Overlay & Schedule a Call CTA */}
+              <div className="absolute bottom-6 inset-x-6 sm:bottom-12 sm:inset-x-12 max-w-3xl mx-auto text-center space-y-3 text-white drop-shadow-md z-20 pointer-events-auto">
                 <div className="text-xs sm:text-sm font-mono text-[#E2B857] uppercase tracking-widest font-semibold">
                   0{idx + 1} / 0{program.images.length}
                 </div>
@@ -175,6 +175,22 @@ export default function ProgramDetailPage() {
                 <p className="text-xs sm:text-sm text-white/80 max-w-xl mx-auto leading-relaxed font-normal">
                   {imgObj.desc}
                 </p>
+
+                <div className="pt-2">
+                  <a
+                    href={program.whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative overflow-hidden inline-flex items-center justify-center text-xs sm:text-sm font-bold px-7 py-3.5 rounded-full bg-white text-black shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:scale-105 pointer-events-auto"
+                  >
+                    <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
+                      <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
+                        <span className="block">Schedule a call</span>
+                        <span className="block">Schedule a call</span>
+                      </span>
+                    </span>
+                  </a>
+                </div>
               </div>
             </div>
           ))}
