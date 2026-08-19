@@ -127,7 +127,7 @@ export default function CompanyLogosMarquee() {
       if (src === inveraLogo) {
         return "h-7 sm:h-10 max-h-10 max-w-[140px] sm:max-w-[175px] w-auto object-contain brightness-95 hover:brightness-110 transition-all duration-200 filter drop-shadow-sm";
       }
-      if (src === eunisellLogo || src === tolaramLogo || src === firstAllyLogo) {
+      if (src === eunisellLogo || src === tolaramLogo || src === firstAllyLogo || src === lotusLogo) {
         return "h-6 sm:h-9 max-h-9 max-w-[110px] sm:max-w-[135px] w-auto object-contain brightness-95 hover:brightness-110 transition-all duration-200 filter drop-shadow-sm";
       }
       return "h-8 sm:h-12 max-h-12 max-w-[145px] sm:max-w-[185px] w-auto object-contain brightness-90 hover:brightness-110 transition-all duration-200 filter drop-shadow-sm";
