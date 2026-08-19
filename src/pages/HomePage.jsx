@@ -272,7 +272,7 @@ export default function HomePage() {
                     className="w-4 h-4 object-contain brightness-200"
                   />
                   <span
-                    className="font-galano font-normal text-white text-xs sm:text-sm lowercase"
+                    className="font-galano font-medium text-white text-sm sm:text-base uppercase"
                     style={{ letterSpacing: '5.2px' }}
                   >
                     insights & inspiration
@@ -280,8 +280,8 @@ export default function HomePage() {
                 </div>
 
                 <h2 className="text-4xl sm:text-6xl lg:text-[4.25rem] font-galano font-medium text-white tracking-tight leading-[1.1]">
-                  <span className="block">explore</span>
-                  <span className="block">our latest</span>
+                  <span className="block">Explore</span>
+                  <span className="block">our <span className="text-[#E2B857]">latest</span></span>
                   <em className="font-swarsh italic font-normal text-white block">journal</em>
                 </h2>
               </div>
