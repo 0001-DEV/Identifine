@@ -117,7 +117,7 @@ export default function JourneyStickyStack({ journeySteps }) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-5xl mx-auto h-[72vh] sm:h-[78vh] min-h-[480px] max-h-[700px]"
+      className="relative w-full max-w-[1064px] mx-auto h-[72vh] sm:h-[78vh] min-h-[480px] max-h-[700px]"
     >
       {journeySteps.map((step, idx) => (
         <div
