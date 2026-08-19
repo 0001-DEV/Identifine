@@ -1,6 +1,5 @@
 import React, { useRef, useLayoutEffect } from 'react';
-import { useParams, NavLink } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -143,19 +142,9 @@ export default function ProgramDetailPage() {
   }, [activeKey]);
 
   return (
-    <div className="min-h-screen bg-[#080B11] text-white pt-20 pb-12 overflow-x-hidden selection:bg-[#E2B857] selection:text-black">
+    <div className="min-h-screen bg-[#080B11] text-white pt-12 pb-12 overflow-x-hidden selection:bg-[#E2B857] selection:text-black">
       
-      {/* Clean Top Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-12 py-4">
-        <NavLink
-          to="/"
-          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-white/80 hover:text-white transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to Home
-        </NavLink>
-      </div>
-
-      {/* FULL SCREEN WIDTH 5-PICTURE DISSOLVE GALLERY (NO BORDER, FULL SCREEN WIDTH) */}
+      {/* FULL SCREEN WIDTH 5-PICTURE DISSOLVE GALLERY */}
       <section
         ref={galleryRef}
         className="w-screen w-full h-screen min-h-[600px] flex items-center justify-center relative overflow-hidden select-none"
@@ -175,17 +164,15 @@ export default function ProgramDetailPage() {
                 className="w-full h-full object-cover object-center select-none"
               />
 
-              {/* Glassmorphism Overlay Card */}
-              <div className="absolute bottom-8 left-6 right-6 sm:bottom-12 sm:left-12 max-w-xl p-6 sm:p-8 rounded-3xl bg-black/65 backdrop-blur-xl border border-white/20 shadow-2xl text-white">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="px-3 py-1 rounded-full bg-[#E2B857]/20 border border-[#E2B857]/40 text-[#E2B857] text-xs font-mono font-semibold uppercase tracking-wider">
-                    0{idx + 1} / 0{program.images.length}
-                  </span>
+              {/* Center Aligned Text Overlay (No button wrapper, no card container) */}
+              <div className="absolute bottom-10 inset-x-6 sm:bottom-16 sm:inset-x-12 max-w-3xl mx-auto text-center space-y-2 text-white select-none drop-shadow-md">
+                <div className="text-xs sm:text-sm font-mono text-[#E2B857] uppercase tracking-widest font-semibold">
+                  0{idx + 1} / 0{program.images.length}
                 </div>
-                <h3 className="font-galano font-medium text-xl sm:text-3xl text-white mb-2">
+                <h3 className="font-galano font-medium text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight">
                   {imgObj.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-normal">
+                <p className="text-xs sm:text-sm text-white/80 max-w-xl mx-auto leading-relaxed font-normal">
                   {imgObj.desc}
                 </p>
               </div>
