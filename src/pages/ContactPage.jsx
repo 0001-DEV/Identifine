@@ -26,7 +26,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Left Details */}
-          <div className="lg:col-span-5 space-y-10">
+          <div className="lg:col-span-4 space-y-10">
             
             {/* Contact us */}
             <div className="space-y-3">
@@ -72,7 +72,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right Card Form (#F5F4F0 light container) */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-8">
             <div className="bg-[#F5F4F0] p-8 sm:p-12 rounded-3xl border border-[#DCDAD4] shadow-sm space-y-6">
               
               <h2 className="text-3xl font-bold text-[#111111] font-sans">Let’s work together</h2>
