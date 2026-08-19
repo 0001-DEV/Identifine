@@ -4,7 +4,7 @@ import heroVideoFile from '../assets/herovideo.mp4';
 export default function HeroVideoZoom() {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
-  const [scale, setScale] = useState(0.2);
+  const [scale, setScale] = useState(0.05);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -22,20 +22,21 @@ export default function HeroVideoZoom() {
       const windowHeight = window.innerHeight;
       
       const elementTop = rect.top;
-      const startZoom = windowHeight * 0.95; 
-      const endZoom = windowHeight * 0.15;   
+      const startZoom = windowHeight * 1.0; 
+      const endZoom = windowHeight * 0.18;   
 
       if (elementTop <= startZoom && elementTop >= endZoom) {
         const rawProgress = (startZoom - elementTop) / (startZoom - endZoom);
         const clamped = Math.min(Math.max(rawProgress, 0), 1);
         // Easing cubic curve for smooth start/stop
         const eased = 1 - Math.pow(1 - clamped, 3);
-        const newScale = 0.2 + eased * 0.8;
+        const minScale = 0.05;
+        const newScale = minScale + eased * (1 - minScale);
         setScale(newScale);
       } else if (elementTop < endZoom) {
         setScale(1);
       } else {
-        setScale(0.2);
+        setScale(0.05);
       }
 
       if (videoRef.current && videoRef.current.paused) {
@@ -63,7 +64,7 @@ export default function HeroVideoZoom() {
         className="w-full max-w-[92rem] px-2 sm:px-6 transition-transform duration-150 ease-out origin-center"
         style={{ 
           transform: `perspective(1200px) scale(${scale})`,
-          opacity: Math.max(scale, 0.4)
+          opacity: Math.min(1, 0.25 + (scale * 0.75))
         }}
       >
         <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] w-full rounded-[24px] sm:rounded-[44px] bg-[#000000] overflow-hidden shadow-2xl border border-black/10 select-none">
