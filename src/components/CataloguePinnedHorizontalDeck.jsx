@@ -51,7 +51,7 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
   return (
     <section
       ref={containerRef}
-      className="relative z-10 bg-black text-white w-full h-[100dvh] sm:h-screen min-h-[550px] sm:min-h-[650px] max-h-[900px] flex flex-col justify-start sm:justify-between gap-10 sm:gap-0 pt-10 sm:pt-16 pb-12 sm:pb-16 overflow-hidden border-t border-white/10 select-none"
+      className="relative z-10 bg-black text-white w-full h-[100dvh] sm:h-screen min-h-[550px] sm:min-h-[650px] max-h-[900px] flex flex-col justify-start sm:justify-between gap-20 sm:gap-0 pt-10 sm:pt-16 pb-12 sm:pb-16 overflow-hidden border-t border-white/10 select-none"
     >
       <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 px-6 sm:px-12 w-full shrink-0">
 
