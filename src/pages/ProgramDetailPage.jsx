@@ -23,11 +23,11 @@ const programData = {
     subtitle: 'Strategic Brand Alignment',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Consultation%20Services',
     images: [
-      { src: postProcessImg, title: 'Strategic Brand Audit', desc: 'In-depth analysis of your existing identity touchpoints, physical credentials, and market positioning.' },
-      { src: blackMatteRender, title: 'Identity Architecture', desc: 'Structuring a unified physical and digital presence for executive leadership teams.' },
-      { src: elitePassGold, title: 'Executive Credential Strategy', desc: 'Defining high-converting tactile materials that signal trust instantly during corporate introductions.' },
-      { src: renderOne, title: 'Institutional Positioning', desc: 'Aligning internal corporate culture with outward authority for maximum commercial impact.' },
-      { src: elitePassSilver, title: 'Capability Roadmap', desc: 'Full execution blueprint from strategic consultation concept to seamless organizational deployment.' }
+      { src: postProcessImg,   title: 'Strategic Brand Audit',       desc: 'In-depth analysis of your existing identity touchpoints, physical credentials, and market positioning.' },
+      { src: blackMatteRender, title: 'Identity Architecture',        desc: 'Structuring a unified physical and digital presence for executive leadership teams.' },
+      { src: elitePassGold,    title: 'Executive Credential Strategy',desc: 'Defining high-converting tactile materials that signal trust instantly during corporate introductions.' },
+      { src: renderOne,        title: 'Institutional Positioning',    desc: 'Aligning internal corporate culture with outward authority for maximum commercial impact.' },
+      { src: elitePassSilver,  title: 'Capability Roadmap',           desc: 'Full execution blueprint from strategic consultation concept to seamless organizational deployment.' }
     ]
   },
   'corporate-design': {
@@ -36,11 +36,11 @@ const programData = {
     subtitle: 'Visual Systems & Architecture',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Corporate%20Identity%20Design',
     images: [
-      { src: elitePassGold2, title: 'Tactile Material Formulation', desc: 'Crafting bespoke 24K gold electroplated finishes for executive presentation credentials.' },
-      { src: elitePassBlack, title: 'Dual-Tone Hybrid Design', desc: 'Precision engineered finishes balancing ultra-durability with modern matte elegance.' },
-      { src: elitePassSilver2, title: 'Titanium Hardware Precision', desc: 'Laser-etched metal passes forged from high-density aerospace-grade titanium alloy.' },
-      { src: blackMatteRender, title: 'Visual System Hierarchy', desc: 'Cohesive brand architecture across physical pass hardware and digital identity assets.' },
-      { src: postProcessImg, title: 'Corporate Brand Specifications', desc: 'Comprehensive visual design standards for enterprise-wide brand rollout.' }
+      { src: elitePassGold2,   title: 'Tactile Material Formulation', desc: 'Crafting bespoke 24K gold electroplated finishes for executive presentation credentials.' },
+      { src: elitePassBlack,   title: 'Dual-Tone Hybrid Design',      desc: 'Precision engineered finishes balancing ultra-durability with modern matte elegance.' },
+      { src: elitePassSilver2, title: 'Titanium Hardware Precision',   desc: 'Laser-etched metal passes forged from high-density aerospace-grade titanium alloy.' },
+      { src: blackMatteRender, title: 'Visual System Hierarchy',       desc: 'Cohesive brand architecture across physical pass hardware and digital identity assets.' },
+      { src: postProcessImg,   title: 'Corporate Brand Specifications',desc: 'Comprehensive visual design standards for enterprise-wide brand rollout.' }
     ]
   },
   'creation-experience': {
@@ -49,158 +49,156 @@ const programData = {
     subtitle: 'Physical & Digital Touchpoints',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Creation%20%26%20Experience',
     images: [
-      { src: elitePassBlack2, title: 'NFC Smart Provisioning', desc: 'Instant touch-to-share contactless technology integrated seamlessly inside metal smart cards.' },
-      { src: renderOne, title: 'VIP Access Integration', desc: 'Bespoke credentials for private member clubs, luxury resorts, and high-security organizations.' },
-      { src: elitePassGold, title: 'High-Net-Worth Presentation', desc: 'First impressions designed to command respect and close high-value deals effortlessly.' },
-      { src: postProcessImg, title: 'Cloud Profile Ecosystem', desc: 'Centralized real-time cloud management for updating executive contact profiles instantly.' },
-      { src: elitePassSilver, title: 'Continuous Experience Upgrades', desc: 'Regular identity maintenance, analytics, and software upgrades as your firm expands.' }
+      { src: elitePassBlack2, title: 'NFC Smart Provisioning',        desc: 'Instant touch-to-share contactless technology integrated seamlessly inside metal smart cards.' },
+      { src: renderOne,       title: 'VIP Access Integration',        desc: 'Bespoke credentials for private member clubs, luxury resorts, and high-security organizations.' },
+      { src: elitePassGold,   title: 'High-Net-Worth Presentation',   desc: 'First impressions designed to command respect and close high-value deals effortlessly.' },
+      { src: postProcessImg,  title: 'Cloud Profile Ecosystem',       desc: 'Centralized real-time cloud management for updating executive contact profiles instantly.' },
+      { src: elitePassSilver, title: 'Continuous Experience Upgrades',desc: 'Regular identity maintenance, analytics, and software upgrades as your firm expands.' }
     ]
   }
 };
 
 export default function ProgramDetailPage() {
   const { id } = useParams();
-  
-  // Default to 'consultation' if valid ID not matched
+
   const activeKey = (id && programData[id]) ? id : 'consultation';
   const program = programData[activeKey];
 
   const galleryRef = useRef(null);
-  const slideRefs = useRef([]);
+  const slideRefs  = useRef([]);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const slides = slideRefs.current.filter(Boolean);
-      if (!slides || slides.length === 0) return;
+      if (!slides.length) return;
 
-      const totalSlides = slides.length;
+      const total = slides.length;
 
-      // Initial positions: Slide 0 is active (xPercent: 0, opacity: 1), Slides 1+ start off-screen right (xPercent: 80, opacity: 0)
+      // Set initial states
       slides.forEach((slide, idx) => {
         if (idx === 0) {
-          gsap.set(slide, { xPercent: 0, opacity: 1, scale: 1 });
+          gsap.set(slide, { xPercent: 0, opacity: 1, zIndex: idx + 1 });
         } else {
-          gsap.set(slide, { xPercent: 80, opacity: 0, scale: 0.95 });
+          gsap.set(slide, { xPercent: 100, opacity: 0, zIndex: idx + 1 });
         }
       });
 
-      // Pin section and scrub image dissolve transitions from right on scroll
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: galleryRef.current,
-          pin: true,
-          pinSpacing: true,
-          start: 'top top',
-          end: () => `+=${(totalSlides - 1) * 110}%`,
-          scrub: 0.5,
-          snap: {
-            snapTo: 1 / (totalSlides - 1),
-            duration: { min: 0.2, max: 0.4 },
-            ease: 'power1.inOut'
-          },
-          invalidateOnRefresh: true
-        }
-      });
-
+      // One scrollTrigger per transition (slide N-1 → slide N)
       slides.forEach((slide, idx) => {
         if (idx === 0) return;
 
         const prevSlide = slides[idx - 1];
 
-        tl.to(
-          prevSlide,
-          {
-            xPercent: -40,
-            opacity: 0,
-            scale: 0.92,
-            ease: 'power2.inOut',
-            duration: 1
-          },
-          `slide-${idx}`
-        ).to(
-          slide,
-          {
-            xPercent: 0,
-            opacity: 1,
-            scale: 1,
-            ease: 'power2.inOut',
-            duration: 1
-          },
-          `slide-${idx}`
-        );
+        ScrollTrigger.create({
+          trigger: galleryRef.current,
+          // Each transition occupies an equal share of the pinned scroll space
+          start: () => `top+=${(idx - 1) * (window.innerHeight * 0.9)} top`,
+          end:   () => `top+=${idx       * (window.innerHeight * 0.9)} top`,
+          pin: false,
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const p = self.progress; // 0 → 1 as user scrolls through this segment
+
+            // New slide slides in from right
+            gsap.set(slide, {
+              xPercent: 100 - p * 100,
+              opacity: Math.min(1, p * 2),
+            });
+
+            // Old slide fades & drifts left
+            gsap.set(prevSlide, {
+              xPercent: -(p * 30),
+              opacity: Math.max(0, 1 - p * 2),
+            });
+          }
+        });
       });
+
+      // Pin the whole gallery for (total - 1) viewport-heights of scroll
+      ScrollTrigger.create({
+        trigger: galleryRef.current,
+        pin: true,
+        pinSpacing: true,
+        start: 'top top',
+        end: () => `+=${(total - 1) * window.innerHeight * 0.9}`,
+        invalidateOnRefresh: true,
+        scrub: true,
+      });
+
     }, galleryRef);
 
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 250);
-
-    return () => {
-      clearTimeout(timer);
-      ctx.revert();
-    };
+    const t = setTimeout(() => ScrollTrigger.refresh(), 300);
+    return () => { clearTimeout(t); ctx.revert(); };
   }, [activeKey]);
 
   return (
-    <div className="min-h-screen bg-[#080B11] text-white pt-12 pb-12 overflow-x-hidden selection:bg-[#E2B857] selection:text-black">
-      
-      {/* FULL SCREEN WIDTH 5-PICTURE DISSOLVE GALLERY */}
+    <div className="bg-[#080B11] text-white overflow-x-hidden selection:bg-[#E2B857] selection:text-black">
+
+      {/* PINNED FULL-SCREEN SCROLL GALLERY */}
       <section
         ref={galleryRef}
-        className="w-screen w-full h-screen min-h-[600px] flex items-center justify-center relative overflow-hidden select-none"
+        className="w-full h-screen relative overflow-hidden"
       >
-        <div className="w-full h-full relative">
-          {program.images.map((imgObj, idx) => (
-            <div
-              key={idx}
-              ref={(el) => (slideRefs.current[idx] = el)}
-              className="absolute inset-0 w-full h-full overflow-hidden shadow-2xl bg-[#000000] transform-gpu"
-              style={{ zIndex: idx + 1 }}
-            >
-              {/* Picture (Full Screen Width and Height) */}
-              <img
-                src={imgObj.src}
-                alt={imgObj.title}
-                className="w-full h-full object-cover object-center select-none"
-              />
+        {program.images.map((imgObj, idx) => (
+          <div
+            key={idx}
+            ref={(el) => (slideRefs.current[idx] = el)}
+            className="absolute inset-0 w-full h-full will-change-transform"
+            style={{ zIndex: idx + 1 }}
+          >
+            {/* Full-screen image */}
+            <img
+              src={imgObj.src}
+              alt={imgObj.title}
+              className="w-full h-full object-cover object-center select-none"
+            />
 
-              {/* Center Aligned Text Overlay & Schedule a Call CTA */}
-              <div className="absolute bottom-6 inset-x-6 sm:bottom-12 sm:inset-x-12 max-w-3xl mx-auto text-center space-y-3 text-white drop-shadow-md z-20 pointer-events-auto">
-                <div className="text-xs sm:text-sm font-mono text-[#E2B857] uppercase tracking-widest font-semibold">
-                  0{idx + 1} / 0{program.images.length}
-                </div>
-                <h3 className="font-galano font-medium text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight">
-                  {imgObj.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-white/80 max-w-xl mx-auto leading-relaxed font-normal">
-                  {imgObj.desc}
-                </p>
+            {/* Dark gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10 pointer-events-none" />
 
-                <div className="pt-2">
-                  <a
-                    href={program.whatsappLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative overflow-hidden inline-flex items-center justify-center text-xs sm:text-sm font-bold px-7 py-3.5 rounded-full bg-white text-black shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:scale-105 pointer-events-auto"
-                  >
-                    <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                      <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                        <span className="block">Schedule a call</span>
-                        <span className="block">Schedule a call</span>
-                      </span>
+            {/* Center-aligned text + CTA */}
+            <div className="absolute bottom-6 sm:bottom-14 inset-x-6 sm:inset-x-12 max-w-3xl mx-auto text-center space-y-3 text-white drop-shadow-lg z-20 pointer-events-auto">
+              <div className="text-xs sm:text-sm font-mono text-[#E2B857] uppercase tracking-widest font-semibold">
+                0{idx + 1} / 0{program.images.length}
+              </div>
+              <h3 className="font-galano font-medium text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight">
+                {imgObj.title}
+              </h3>
+              <p className="text-xs sm:text-sm text-white/80 max-w-xl mx-auto leading-relaxed font-normal">
+                {imgObj.desc}
+              </p>
+              <div className="pt-2">
+                <a
+                  href={program.whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative overflow-hidden inline-flex items-center justify-center text-xs sm:text-sm font-bold px-7 py-3.5 rounded-full bg-white text-black shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:scale-105"
+                >
+                  <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
+                    <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
+                      <span className="block">Schedule a call</span>
+                      <span className="block">Schedule a call</span>
                     </span>
-                  </a>
-                </div>
+                  </span>
+                </a>
               </div>
             </div>
-          ))}
+          </div>
+        ))}
+
+        {/* Scroll hint on first load */}
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1 opacity-60 pointer-events-none">
+          <span className="text-[10px] text-white/70 font-mono uppercase tracking-widest">Scroll to explore</span>
+          <div className="w-px h-8 bg-white/40 animate-pulse" />
         </div>
       </section>
 
-      {/* Bottom Consultation CTA */}
+      {/* Bottom CTA Section */}
       <div className="max-w-4xl mx-auto text-center px-6 pt-16 pb-12 space-y-6">
         <h3 className="font-galano font-medium text-2xl sm:text-4xl text-white">
-          Ready to elevate your organization with <em className="font-swarsh italic font-normal text-[#E2B857]">{program.title}</em>?
+          Ready to elevate your organization with{' '}
+          <em className="font-swarsh italic font-normal text-[#E2B857]">{program.title}</em>?
         </h3>
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
           <a
