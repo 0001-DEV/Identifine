@@ -272,8 +272,10 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <h2 className="text-4xl sm:text-6xl lg:text-[4rem] font-galano font-medium text-white tracking-tight leading-[1.15]">
-                  explore our latest <em className="font-swarsh italic font-normal text-white">journal</em>
+                <h2 className="text-4xl sm:text-6xl lg:text-[4.25rem] font-galano font-medium text-white tracking-tight leading-[1.1]">
+                  <span className="block">explore</span>
+                  <span className="block">our latest</span>
+                  <em className="font-swarsh italic font-normal text-white block">journal</em>
                 </h2>
               </div>
 

@@ -1,67 +1,62 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import starIcon from '../assets/SVG@4x.png';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelectCard }) {
   const containerRef = useRef(null);
   const trackRef = useRef(null);
-  const [translateX, setTranslateX] = useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => {
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
       if (!containerRef.current || !trackRef.current) return;
 
-      const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const windowWidth = window.innerWidth;
-      
-      const maxScroll = Math.max(0, trackRef.current.scrollWidth - windowWidth + (windowWidth < 640 ? 24 : 48));
-      if (maxScroll <= 0) {
-        setTranslateX(0);
-        return;
-      }
+      const track = trackRef.current;
 
-      // Smooth scroll translation mapping as section passes through viewport
-      // Progress = 0 when section top enters near 85% of viewport
-      // Progress = 1 when section moves up
-      const startPoint = windowHeight * 0.85;
-      const endPoint = -rect.height * 0.25;
-      const totalRange = startPoint - endPoint;
-      const currentPos = startPoint - rect.top;
-      
-      const rawProgress = Math.max(0, Math.min(1, currentPos / totalRange));
-      
-      // Initial delay buffer so cards slide in a little time after getting to section
-      const startBuffer = 0.12;
-      const initialOffset = windowWidth < 640 ? 80 : 140;
+      const getScrollAmount = () => {
+        const trackWidth = track.scrollWidth;
+        const windowWidth = window.innerWidth;
+        const extraOffset = windowWidth < 640 ? 32 : 64;
+        return -(trackWidth - windowWidth + extraOffset);
+      };
 
-      if (rawProgress < startBuffer) {
-        // Soft slide into initial position (+initialOffset -> 0)
-        const p = rawProgress / startBuffer;
-        setTranslateX(initialOffset * (1 - p));
-      } else {
-        // Gentle to fast acceleration across track
-        const activeProgress = (rawProgress - startBuffer) / (1 - startBuffer);
-        const easedProgress = Math.pow(activeProgress, 1.5);
-        setTranslateX(-easedProgress * maxScroll);
-      }
+      gsap.to(track, {
+        x: () => getScrollAmount(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          pin: true,
+          pinSpacing: true,
+          start: 'top top',
+          end: () => `+=${Math.max(250, Math.abs(getScrollAmount()) * 0.45)}`,
+          scrub: 0.2,
+          invalidateOnRefresh: true,
+        },
+      });
+    }, containerRef);
+
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [catalogueCards]);
 
   return (
-    <section 
-      ref={containerRef} 
-      className="relative z-10 bg-black text-white w-full py-20 sm:py-28 overflow-hidden border-t border-white/10 select-none"
+    <section
+      ref={containerRef}
+      className="relative z-10 bg-black text-white w-full h-screen min-h-[650px] max-h-[900px] flex flex-col justify-between py-12 sm:py-16 overflow-hidden border-t border-white/10 select-none"
     >
-      <div className="max-w-7xl mx-auto space-y-12 px-6 sm:px-12">
+      <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 px-6 sm:px-12 w-full shrink-0">
         
         {/* Header */}
-        <div className="text-center max-w-4xl mx-auto space-y-5">
+        <div className="text-center max-w-4xl mx-auto space-y-3 sm:space-y-4">
           <div className="inline-flex items-center justify-center gap-2.5">
             <img src={starIcon} alt="" className="w-4 h-4 object-contain brightness-200" />
             <span
@@ -72,11 +67,11 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl lg:text-[4rem] font-galano font-medium leading-tight text-[#E2B857] max-w-5xl mx-auto">
+          <h2 className="text-2xl sm:text-4xl lg:text-[3.5rem] font-galano font-medium leading-tight text-[#E2B857] max-w-5xl mx-auto">
             Create an <em className="font-swarsh italic font-normal text-[#E2B857]">identity</em> so irresistible it becomes a <em className="font-swarsh italic font-normal text-[#E2B857]">culture</em>.
           </h2>
 
-          <p className="text-sm sm:text-base text-[#AAAAAA] max-w-2xl mx-auto leading-relaxed font-medium hidden sm:block">
+          <p className="text-xs sm:text-sm text-[#AAAAAA] max-w-2xl mx-auto leading-relaxed font-medium hidden sm:block">
             Skip the powerpoints, frameworks and short term fixes. Choose a partner with real experience instead.
           </p>
 
@@ -98,49 +93,36 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
           </div>
         </div>
 
-        {/* Horizontal Cards Slider Track */}
-        <div className="w-full overflow-hidden py-4">
-          <div
-            ref={trackRef}
-            style={{
-              transform: `translateX(${translateX}px)`,
-              willChange: 'transform',
-              transition: 'transform 0.12s ease-out'
-            }}
-            className="flex items-center gap-[8px] w-max pl-6 sm:pl-12 pr-6 sm:pr-12"
-          >
-            {catalogueCards.map((card) => (
-              <div
-                key={card.id}
-                onClick={() => onSelectCard(card)}
-                className="group cursor-pointer rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl hover:scale-[1.03] transition-all duration-300 w-[286px] sm:w-[376px] md:w-[436px] h-[280px] sm:h-[350px] md:h-[390px] shrink-0 relative border border-white/15 bg-[#111111]"
-              >
-                <img
-                  src={card.image}
-                  alt={card.title}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 select-none"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-6 sm:p-8 flex flex-col justify-end">
-                  <span className="text-xs font-mono text-[#E2B857] uppercase tracking-wider mb-1">
-                    {card.subtitle}
-                  </span>
-                  <h3 className="font-galano font-normal text-lg sm:text-2xl text-white group-hover:text-[#E2B857] transition-colors leading-snug">
-                    {card.title}
-                  </h3>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
       </div>
+
+      {/* Horizontal Cards Slider Track */}
+      <div className="w-full overflow-hidden py-2 shrink-0">
+        <div
+          ref={trackRef}
+          className="flex items-center gap-[8px] w-max pl-6 sm:pl-16 pr-12 sm:pr-24"
+          style={{ willChange: 'transform' }}
+        >
+          {catalogueCards.map((card) => (
+            <div
+              key={card.id}
+              onClick={() => onSelectCard(card)}
+              className="group cursor-pointer rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl hover:scale-[1.03] transition-all duration-300 w-[280px] sm:w-[360px] md:w-[420px] h-[260px] sm:h-[330px] md:h-[370px] shrink-0 relative border border-white/15 bg-[#111111]"
+            >
+              <img
+                src={card.image}
+                alt={card.title}
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 select-none"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-6 sm:p-8 flex flex-col justify-end">
+                <h3 className="font-galano font-normal text-lg sm:text-2xl text-white leading-snug">
+                  {card.title}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </section>
   );
 }
-
-
-
-
-
-
-
