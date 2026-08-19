@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import techImg from '../assets/TECH.jpg';
 import card1Img from '../assets/Card 1.png';
 import identityImg from '../assets/IDENTITY.jpg';
+import heroImg from '../assets/Hero@4x.png';
+import scrollSlidImg from '../assets/Scroll Slid.png';
+import scrollSliderImg from '../assets/Scroll Slider.png';
+import scrollSlideImg from '../assets/Scroll Slide.png';
+import scrollImg from '../assets/Scroll.png';
+import scroll4xImg from '../assets/Scroll4x.png';
+
+const consultationGallery = [heroImg, scrollSlidImg, scrollSliderImg, scrollSlideImg, scrollImg, scroll4xImg];
 
 export default function ProgramAccordionShowcase() {
   const programs = [
@@ -46,6 +54,18 @@ export default function ProgramAccordionShowcase() {
 
   // First container active by default
   const [activeId, setActiveId] = useState('consultation');
+  const [galleryIndex, setGalleryIndex] = useState(0);
+
+  // Auto-cycle gallery when consultation is active
+  useEffect(() => {
+    if (activeId === 'consultation') {
+      setGalleryIndex(0);
+      const interval = setInterval(() => {
+        setGalleryIndex(prev => (prev + 1) % consultationGallery.length);
+      }, 2500);
+      return () => clearInterval(interval);
+    }
+  }, [activeId]);
 
   const toggleProgram = (id) => {
     setActiveId((prev) => (prev === id ? null : id));
@@ -123,7 +143,27 @@ export default function ProgramAccordionShowcase() {
 
       {/* DYNAMIC IMAGE (RIGHT COLUMN: 6 Cols on Desktop) */}
       <div className="lg:col-span-6 order-2 relative w-full h-[320px] sm:h-[420px] lg:h-auto rounded-3xl overflow-hidden bg-[#111111] border border-[#DCDAD4] shadow-2xl min-h-[320px] lg:min-h-[480px]">
-        {programs.map((prog) => {
+        
+        {/* Consultation Gallery (auto-cycling 6 images) */}
+        {consultationGallery.map((src, idx) => (
+          <div
+            key={`gallery-${idx}`}
+            className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out ${
+              activeId === 'consultation' && galleryIndex === idx
+                ? 'opacity-100 z-10 scale-100'
+                : 'opacity-0 z-0 scale-105 pointer-events-none'
+            }`}
+          >
+            <img
+              src={src}
+              alt={`Consultation showcase ${idx + 1}`}
+              className="w-full h-full object-cover object-center select-none"
+            />
+          </div>
+        ))}
+
+        {/* Other programs (single images) */}
+        {programs.filter(p => p.id !== 'consultation').map((prog) => {
           const isActive = activeId === prog.id;
           return (
             <NavLink
@@ -137,7 +177,6 @@ export default function ProgramAccordionShowcase() {
                 alt={prog.title}
                 className="w-full h-full object-cover object-center select-none"
               />
-
             </NavLink>
           );
         })}
@@ -145,3 +184,4 @@ export default function ProgramAccordionShowcase() {
     </div>
   );
 }
+
