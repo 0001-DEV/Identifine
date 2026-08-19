@@ -117,16 +117,25 @@ export default function JourneyStickyStack({ journeySteps }) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-[1064px] mx-auto h-[72vh] sm:h-[78vh] min-h-[480px] max-h-[700px]"
+      className="relative w-full mx-auto"
+      style={{
+        /* Fluid width: full on mobile, capped at 1064px on large screens */
+        maxWidth: '1064px',
+        /* Fluid height: clamp between 280px and 720px, scaling with viewport */
+        height: 'clamp(280px, 65vw, 720px)',
+      }}
     >
       {journeySteps.map((step, idx) => (
         <div
           key={step.key || idx}
           ref={(el) => (cardRefs.current[idx] = el)}
-          className="absolute inset-0 w-full h-full rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.55)] border border-white/20 bg-[#111111] transform-gpu transition-opacity duration-300"
-          style={{ zIndex: idx + 10 }}
+          className="absolute inset-0 w-full h-full overflow-hidden bg-[#111111] transform-gpu"
+          style={{
+            zIndex: idx + 10,
+            borderRadius: 'clamp(16px, 3vw, 40px)',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.50)',
+          }}
         >
-          {/* Full Bright Image */}
           <img
             src={step.image}
             alt={step.title}
