@@ -170,29 +170,6 @@ export default function ProgramDetailPage() {
         </div>
       </section>
 
-      {/* Bottom CTA Section */}
-      <div className="max-w-4xl mx-auto text-center px-6 pt-16 pb-12 space-y-6">
-        <h3 className="font-galano font-medium text-2xl sm:text-4xl text-white">
-          Ready to elevate your organization with{' '}
-          <em className="font-swarsh italic font-normal text-[#E2B857]">{program.title}</em>?
-        </h3>
-        <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-          <a
-            href={program.whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative overflow-hidden inline-flex items-center justify-center text-sm font-bold px-8 py-4 rounded-full bg-white text-black shadow-xl hover:scale-105 transition-all duration-300"
-          >
-            <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-              <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                <span className="block">Book a Consultation</span>
-                <span className="block">Book a Consultation</span>
-              </span>
-            </span>
-          </a>
-        </div>
-      </div>
-
     </div>
   );
 }

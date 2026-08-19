@@ -24,6 +24,9 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  const location = useLocation();
+  const hideFooter = location.pathname.startsWith('/program');
+
   return (
     <div className="min-h-screen bg-[#080B11] text-[#F1F5F9] font-sans flex flex-col justify-between selection:bg-[#E2B857] selection:text-black">
       <ScrollToTop />
@@ -55,8 +58,9 @@ export default function App() {
         </Routes>
       </main>
 
-      {/* Footer */}
-      <Footer />
+      {/* Footer (hidden on program detail pages) */}
+      {!hideFooter && <Footer />}
     </div>
   );
 }
+
