@@ -179,14 +179,13 @@ export default function IdentityQuiz() {
     <div className="bg-[#0D0D0D] text-white rounded-[40px] p-8 sm:p-12 lg:p-14 shadow-2xl border border-[#222222] relative overflow-hidden w-full max-w-[1200px] h-[600px] mx-auto flex flex-col justify-center transition-all duration-300">
       {!completed ? (
         /* Entire Grid (Left Question + Right Asset Image Showcase) */
-        <div 
-          className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            isSliding ? 'opacity-0 -translate-x-14 scale-[0.98]' : 'opacity-100 translate-x-0 scale-100'
-          }`}
+        <div
+          className={`grid grid-cols-12 gap-4 sm:gap-8 lg:gap-12 items-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isSliding ? 'opacity-0 -translate-x-14 scale-[0.98]' : 'opacity-100 translate-x-0 scale-100'
+            }`}
         >
-          
+
           {/* Question Side */}
-          <div className="lg:col-span-8 space-y-5 -mt-10 sm:-mt-14">
+          <div className="col-span-7 lg:col-span-8 space-y-4 sm:space-y-5 -mt-6 sm:-mt-14">
             <div className="space-y-4">
               <span className="text-3xl sm:text-4xl lg:text-5xl font-normal font-mono text-[#E2B857] block tracking-wider mb-6 sm:mb-8">
                 {quizQuestions[currentStep].queNum}
@@ -202,9 +201,9 @@ export default function IdentityQuiz() {
                 <button
                   key={idx}
                   onClick={() => handleSelectOption(opt)}
-                  className="w-full text-left py-3.5 sm:py-4 px-6 sm:px-8 rounded-full text-base sm:text-lg font-normal transition-all duration-300 bg-transparent hover:bg-white hover:text-black border-0 text-white flex items-center justify-between group shadow-none hover:shadow-xl hover:scale-[1.01]"
+                  className="w-full text-left py-2.5 sm:py-4 px-4 sm:px-8 rounded-full text-xs sm:text-lg font-normal transition-all duration-300 bg-transparent hover:bg-white hover:text-black border-0 text-white flex items-center justify-between group shadow-none hover:shadow-xl hover:scale-[1.01]"
                 >
-                  <span>{opt}</span>
+                  <span className="leading-tight pr-2">{opt}</span>
                 </button>
               ))}
             </div>
@@ -220,13 +219,12 @@ export default function IdentityQuiz() {
                   <button
                     key={num}
                     onClick={() => changeStep(stepIdx)}
-                    className={`transition-colors duration-200 font-normal ${
-                      isActive
+                    className={`transition-colors duration-200 font-normal ${isActive
                         ? 'text-white font-normal'
                         : isFilled
-                        ? 'text-white/80 hover:text-white'
-                        : 'text-[#555555] hover:text-white'
-                    }`}
+                          ? 'text-white/80 hover:text-white'
+                          : 'text-[#555555] hover:text-white'
+                      }`}
                   >
                     {num}
                   </button>
@@ -236,7 +234,7 @@ export default function IdentityQuiz() {
           </div>
 
           {/* Right Image Side (Asset Renders) */}
-          <div className="lg:col-span-4 hidden lg:flex flex-col items-center justify-center relative w-full h-[380px] rounded-3xl overflow-hidden bg-[#111111] border border-white/15 shadow-2xl">
+          <div className="col-span-5 lg:col-span-4 flex flex-col items-center justify-center relative w-full h-[320px] sm:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#111111] border border-white/15 shadow-2xl mt-0">
             <img
               src={quizStepImages[currentStep % quizStepImages.length]}
               alt="Identifine Diagnostic"
@@ -255,10 +253,9 @@ export default function IdentityQuiz() {
         </div>
       ) : (
         /* Final Completion Screen - Keeps Same 2-Column Grid */
-        <div 
-          className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            isSliding ? 'opacity-0 -translate-x-14 scale-[0.98]' : 'opacity-100 translate-x-0 scale-100'
-          }`}
+        <div
+          className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isSliding ? 'opacity-0 -translate-x-14 scale-[0.98]' : 'opacity-100 translate-x-0 scale-100'
+            }`}
         >
           {/* Left Column: Go back, Heading, Inputs, Reduced Width Submit Button */}
           <div className="lg:col-span-8 space-y-5 -mt-10 sm:-mt-14">
