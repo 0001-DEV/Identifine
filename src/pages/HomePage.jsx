@@ -205,7 +205,7 @@ export default function HomePage() {
           </div>
 
           {/* Client Logos Marquee (AFTER CONTAINER) */}
-          <div className="scroll-reveal pt-8">
+          <div className="scroll-reveal my-16 sm:my-24 lg:my-32">
             <CompanyLogosMarquee />
           </div>
 
