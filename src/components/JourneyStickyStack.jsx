@@ -112,13 +112,7 @@ export default function JourneyStickyStack({ journeySteps }) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full mx-auto"
-      style={{
-        /* Fluid width: full on mobile, capped at 1064px on large screens */
-        maxWidth: '100%',
-        /* Fluid height: clamp between 280px and 720px, scaling with viewport */
-        height: 'clamp(280px, 65vw, 720px)',
-      }}
+      className="relative w-full mx-auto h-[65vh] sm:h-[75vh] min-h-[450px] max-h-[720px]"
     >
       {journeySteps.map((step, idx) => (
         <div
