@@ -29,12 +29,12 @@ const programData = {
     subtitle: 'Strategic Brand Alignment',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Consultation%20Services',
     images: [
-      { src: heroImg,          title: 'Strategic Brand Audit',        desc: 'In-depth analysis of your existing identity touchpoints, physical credentials, and market positioning.' },
-      { src: scrollSlidImg,    title: 'Identity Architecture',        desc: 'Structuring a unified physical and digital presence for executive leadership teams.' },
-      { src: scrollSliderImg,  title: 'Executive Credential Strategy', desc: 'Defining high-converting tactile materials that signal trust instantly during corporate introductions.' },
-      { src: scrollSlideImg,   title: 'Institutional Positioning',    desc: 'Aligning internal corporate culture with outward authority for maximum commercial impact.' },
-      { src: scrollImg,        title: 'Capability Roadmap',           desc: 'Full execution blueprint from strategic consultation concept to seamless organizational deployment.' },
-      { src: scroll4xImg,      title: 'Enterprise Deployment',        desc: 'Comprehensive rollout strategy across all organizational touchpoints and stakeholder channels.' }
+      { src: heroImg, title: 'Strategic Brand Audit', desc: 'In-depth analysis of your existing identity touchpoints, physical credentials, and market positioning.' },
+      { src: scrollSlidImg, title: 'Identity Architecture', desc: 'Structuring a unified physical and digital presence for executive leadership teams.' },
+      { src: scrollSliderImg, title: 'Executive Credential Strategy', desc: 'Defining high-converting tactile materials that signal trust instantly during corporate introductions.' },
+      { src: scrollSlideImg, title: 'Institutional Positioning', desc: 'Aligning internal corporate culture with outward authority for maximum commercial impact.' },
+      { src: scrollImg, title: 'Capability Roadmap', desc: 'Full execution blueprint from strategic consultation concept to seamless organizational deployment.' },
+      { src: scroll4xImg, title: 'Enterprise Deployment', desc: 'Comprehensive rollout strategy across all organizational touchpoints and stakeholder channels.' }
     ]
   },
   'corporate-design': {
@@ -43,11 +43,11 @@ const programData = {
     subtitle: 'Visual Systems & Architecture',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Corporate%20Identity%20Design',
     images: [
-      { src: elitePassGold2,   title: 'Tactile Material Formulation', desc: 'Crafting bespoke 24K gold electroplated finishes for executive presentation credentials.' },
-      { src: elitePassBlack,   title: 'Dual-Tone Hybrid Design',      desc: 'Precision engineered finishes balancing ultra-durability with modern matte elegance.' },
-      { src: elitePassSilver2, title: 'Titanium Hardware Precision',   desc: 'Laser-etched metal passes forged from high-density aerospace-grade titanium alloy.' },
-      { src: blackMatteRender, title: 'Visual System Hierarchy',       desc: 'Cohesive brand architecture across physical pass hardware and digital identity assets.' },
-      { src: postProcessImg,   title: 'Corporate Brand Specifications',desc: 'Comprehensive visual design standards for enterprise-wide brand rollout.' }
+      { src: elitePassGold2, title: 'Tactile Material Formulation', desc: 'Crafting bespoke 24K gold electroplated finishes for executive presentation credentials.' },
+      { src: elitePassBlack, title: 'Dual-Tone Hybrid Design', desc: 'Precision engineered finishes balancing ultra-durability with modern matte elegance.' },
+      { src: elitePassSilver2, title: 'Titanium Hardware Precision', desc: 'Laser-etched metal passes forged from high-density aerospace-grade titanium alloy.' },
+      { src: blackMatteRender, title: 'Visual System Hierarchy', desc: 'Cohesive brand architecture across physical pass hardware and digital identity assets.' },
+      { src: postProcessImg, title: 'Corporate Brand Specifications', desc: 'Comprehensive visual design standards for enterprise-wide brand rollout.' }
     ]
   },
   'creation-experience': {
@@ -56,11 +56,11 @@ const programData = {
     subtitle: 'Physical & Digital Touchpoints',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Creation%20%26%20Experience',
     images: [
-      { src: elitePassBlack2, title: 'NFC Smart Provisioning',        desc: 'Instant touch-to-share contactless technology integrated seamlessly inside metal smart cards.' },
-      { src: renderOne,       title: 'VIP Access Integration',        desc: 'Bespoke credentials for private member clubs, luxury resorts, and high-security organizations.' },
-      { src: elitePassGold,   title: 'High-Net-Worth Presentation',   desc: 'First impressions designed to command respect and close high-value deals effortlessly.' },
-      { src: postProcessImg,  title: 'Cloud Profile Ecosystem',       desc: 'Centralized real-time cloud management for updating executive contact profiles instantly.' },
-      { src: elitePassSilver, title: 'Continuous Experience Upgrades',desc: 'Regular identity maintenance, analytics, and software upgrades as your firm expands.' }
+      { src: elitePassBlack2, title: 'NFC Smart Provisioning', desc: 'Instant touch-to-share contactless technology integrated seamlessly inside metal smart cards.' },
+      { src: renderOne, title: 'VIP Access Integration', desc: 'Bespoke credentials for private member clubs, luxury resorts, and high-security organizations.' },
+      { src: elitePassGold, title: 'High-Net-Worth Presentation', desc: 'First impressions designed to command respect and close high-value deals effortlessly.' },
+      { src: postProcessImg, title: 'Cloud Profile Ecosystem', desc: 'Centralized real-time cloud management for updating executive contact profiles instantly.' },
+      { src: elitePassSilver, title: 'Continuous Experience Upgrades', desc: 'Regular identity maintenance, analytics, and software upgrades as your firm expands.' }
     ]
   }
 };
@@ -72,7 +72,7 @@ export default function ProgramDetailPage() {
   const program = programData[activeKey];
 
   const galleryRef = useRef(null);
-  const slideRefs  = useRef([]);
+  const slideRefs = useRef([]);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -100,7 +100,7 @@ export default function ProgramDetailPage() {
           trigger: galleryRef.current,
           // Each transition occupies an equal share of the pinned scroll space
           start: () => `top+=${(idx - 1) * (window.innerHeight * 0.9)} top`,
-          end:   () => `top+=${idx       * (window.innerHeight * 0.9)} top`,
+          end: () => `top+=${idx * (window.innerHeight * 0.9)} top`,
           pin: false,
           scrub: 0.6,
           invalidateOnRefresh: true,
@@ -148,10 +148,13 @@ export default function ProgramDetailPage() {
         className="w-full h-screen relative overflow-hidden"
       >
         {program.images.map((imgObj, idx) => (
-          <div
+          <a
             key={idx}
             ref={(el) => (slideRefs.current[idx] = el)}
-            className="absolute inset-0 w-full h-full will-change-transform"
+            href={program.whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group/slide absolute inset-0 w-full h-full will-change-transform cursor-pointer"
             style={{ zIndex: idx + 1 }}
           >
             {/* Full-screen image */}
@@ -160,7 +163,10 @@ export default function ProgramDetailPage() {
               alt={imgObj.title}
               className="w-full h-full object-cover object-center select-none"
             />
-          </div>
+
+            {/* Blue hover overlay on the button area */}
+            <div className="absolute bottom-[12%] sm:bottom-[15%] left-1/2 -translate-x-1/2 w-[200px] sm:w-[240px] h-[50px] sm:h-[56px] rounded-full bg-[#0066FF]/0 group-hover/slide:bg-[#0066FF]/60 transition-all duration-300 pointer-events-none" />
+          </a>
         ))}
 
         {/* Scroll hint on first load */}
