@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -22,6 +22,47 @@ import scroll4xImg from '../assets/Scroll4x.png';
 import scrollssImg from '../assets/Scrollss.png';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Helper for random color generation
+const getRandomColor = () => {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
+
+// 4th Slide Animated Interactive Element (Rotate 90deg, Hover scale, Click random color)
+function SlideFourAnimation() {
+  const [background, setBackground] = useState('#0099FF');
+  const [rotated, setRotated] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setRotated(true);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div
+      onClick={(e) => {
+        e.stopPropagation();
+        setBackground(getRandomColor());
+      }}
+      className="absolute top-20 right-6 sm:top-24 sm:right-14 z-30 cursor-pointer select-none rounded-2xl w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shadow-2xl border border-white/30 backdrop-blur-sm hover:scale-105 transition-all"
+      style={{
+        backgroundColor: background,
+        transform: rotated ? 'rotate(90deg)' : 'rotate(0deg)',
+        transition: 'transform 2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, transform 0.3s ease',
+      }}
+      title="Click to change color"
+    >
+      <span className="text-white font-bold text-xl sm:text-2xl drop-shadow-md">✦</span>
+    </div>
+  );
+}
 
 const programData = {
   'consultation': {
@@ -161,6 +202,9 @@ export default function ProgramDetailPage() {
               alt={imgObj.title}
               className="w-full h-full object-cover object-center select-none"
             />
+
+            {/* Animation on top of 4th slide (idx === 3) */}
+            {idx === 3 && <SlideFourAnimation />}
 
             {/* Invisible clickable area over the button in the image */}
             <a
