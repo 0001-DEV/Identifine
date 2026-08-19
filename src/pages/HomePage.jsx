@@ -6,6 +6,7 @@ import CompanyLogosMarquee from '../components/CompanyLogosMarquee';
 import IdentityQuiz from '../components/IdentityQuiz';
 import CardShowcaseModal from '../components/CardShowcaseModal';
 import starIcon from '../assets/SVG@4x.png';
+import JourneyStickyStack from '../components/JourneyStickyStack';
 import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.png';
 import elitePassGold from '../assets/ELITE_PASS_GOLD.png';
 import elitePassSilver from '../assets/ELITE_PASS_SILVER.png';
@@ -137,13 +138,13 @@ export default function HomePage() {
       id: '2',
       date: 'Jul 2, 2026',
       readTime: '5 min read',
-      title: 'Why corporate identity is the future of organization’s success'
+      title: 'Why corporate identity is the future of organizationΓÇÖs success'
     },
     {
       id: '3',
       date: 'Jun 21, 2026',
       readTime: '2 min read',
-      title: 'Identity mistakes you didn’t know you were making'
+      title: 'Identity mistakes you didnΓÇÖt know you were making'
     }
   ];
 
@@ -458,39 +459,6 @@ function CatalogueScrollDeck({ catalogueCards, onSelectCard }) {
           </div>
         ))}
       </div>
-    </div>
-  );
-}
-
-function JourneyStickyStack({ journeySteps }) {
-  const topOffsets = ['top-20', 'top-24', 'top-28', 'top-32'];
-
-  return (
-    <div className="relative w-full max-w-6xl mx-auto space-y-12 pb-16">
-      {journeySteps.map((step, idx) => (
-        <div 
-          key={step.key}
-          className={`sticky ${topOffsets[idx] || 'top-20'} w-full h-[65vh] sm:h-[75vh] rounded-3xl overflow-hidden shadow-2xl bg-black border border-white/10`}
-          style={{ zIndex: idx + 10 }}
-        >
-          <img
-            src={step.image}
-            alt={step.title}
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent p-8 sm:p-14 flex flex-col justify-end">
-            <span className="text-xs sm:text-sm font-mono uppercase tracking-widest text-[#E2B857] mb-1">
-              0{idx + 1} — {step.title}
-            </span>
-            <h3 className="font-galano font-medium text-3xl sm:text-5xl text-white mb-3">
-              {step.title}
-            </h3>
-            <p className="text-base sm:text-lg text-[#D1D5DB] max-w-2xl leading-relaxed font-medium">
-              {step.description}
-            </p>
-          </div>
-        </div>
-      ))}
     </div>
   );
 }

@@ -44,10 +44,8 @@ export default function Navbar() {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'py-4 framer-glass-header border-b border-[#DCDAD4]/70 shadow-sm' 
-        : 'py-6 bg-transparent'
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent ${
+      scrolled ? 'py-4' : 'py-6'
     }`}>
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 flex items-center justify-between">
         
@@ -69,8 +67,8 @@ export default function Navbar() {
               key={link.name}
               to={link.path}
               className={({ isActive }) =>
-                `text-xs font-semibold tracking-wide transition-colors ${
-                  isActive ? 'text-black font-bold' : 'text-[#666666] hover:text-black'
+                `text-[13px] font-semibold tracking-wide transition-colors ${
+                  isActive ? 'text-black font-bold' : 'text-[#555555] hover:text-black'
                 }`
               }
             >
@@ -85,7 +83,7 @@ export default function Navbar() {
             href="https://wa.me/2347046367754"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative overflow-hidden inline-flex items-center justify-center text-sm font-bold px-8 py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="group relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-bold px-8 py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
             <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
               <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
@@ -115,8 +113,8 @@ export default function Navbar() {
                 key={link.name}
                 to={link.path}
                 className={({ isActive }) =>
-                  `text-lg font-bold py-2 border-b border-[#DCDAD4]/40 transition-colors ${
-                    isActive ? 'text-black font-extrabold' : 'text-[#555555] hover:text-black'
+                  `text-xl font-bold py-2 border-b border-[#DCDAD4]/40 transition-colors ${
+                    isActive ? 'text-black font-extrabold' : 'text-[#444444] hover:text-black'
                   }`
                 }
               >

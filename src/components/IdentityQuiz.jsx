@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { CheckCircle2, ChevronRight, RotateCcw, ArrowRight, UserCheck, ArrowLeft } from 'lucide-react';
+import { CheckCircle2, RotateCcw, ArrowRight, ArrowLeft } from 'lucide-react';
+
+// Import Asset Images for Quiz Right Column Showcase
+import postProcessImg from '../assets/Post process 6.jpg';
+import elitePassGold from '../assets/ELITE_PASS_GOLD.png';
+import blackMatteRender from '../assets/Black matte render 2.png';
+import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.png';
+import renderOne from '../assets/RENDER 1.png';
+import elitePassSilver from '../assets/ELITE_PASS_SILVER.png';
 
 export default function IdentityQuiz() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -11,6 +19,17 @@ export default function IdentityQuiz() {
   const [fullName, setFullName] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  // Images assigned per question step
+  const quizStepImages = [
+    postProcessImg,
+    elitePassGold,
+    blackMatteRender,
+    elitePassBlack,
+    renderOne,
+    elitePassSilver,
+    postProcessImg,
+  ];
 
   const quizQuestions = [
     {
@@ -159,7 +178,7 @@ export default function IdentityQuiz() {
   return (
     <div className="bg-[#0D0D0D] text-white rounded-[40px] p-8 sm:p-12 lg:p-14 shadow-2xl border border-[#222222] relative overflow-hidden w-full max-w-[1200px] h-[600px] mx-auto flex flex-col justify-center transition-all duration-300">
       {!completed ? (
-        /* Entire Grid (Left Question + Right Image/Badge) Slides Together */
+        /* Entire Grid (Left Question + Right Asset Image Showcase) */
         <div 
           className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isSliding ? 'opacity-0 -translate-x-14 scale-[0.98]' : 'opacity-100 translate-x-0 scale-100'
@@ -216,19 +235,26 @@ export default function IdentityQuiz() {
             </div>
           </div>
 
-          {/* Right Image / Badge Side */}
-          <div className="lg:col-span-4 hidden lg:flex flex-col items-center justify-center p-8 sm:p-10 text-center space-y-4 min-h-[300px]">
-            <div className="w-20 h-20 rounded-full bg-[#E2B857]/10 flex items-center justify-center text-[#E2B857] border border-[#E2B857]/20 shadow-lg">
-              <UserCheck className="w-10 h-10" />
+          {/* Right Image Side (Asset Renders) */}
+          <div className="lg:col-span-4 hidden lg:flex flex-col items-center justify-center relative w-full h-[380px] rounded-3xl overflow-hidden bg-[#111111] border border-white/15 shadow-2xl">
+            <img
+              src={quizStepImages[currentStep % quizStepImages.length]}
+              alt="Identifine Diagnostic"
+              className="w-full h-full object-cover object-center transition-all duration-500 select-none"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent p-6 flex flex-col justify-end">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#E2B857] mb-1">
+                Identifine Card Diagnostic
+              </span>
+              <span className="text-xs text-[#CCCCCC] font-normal leading-snug">
+                Organizational Identity Solution
+              </span>
             </div>
-            <span className="text-sm text-[#AAAAAA] font-normal leading-relaxed max-w-[200px]">
-              Organizational Assessment Diagnostic
-            </span>
           </div>
 
         </div>
       ) : (
-        /* Final Completion Screen - Keeps Same 2-Column Grid (Left Inputs + Right Image/Badge) */
+        /* Final Completion Screen - Keeps Same 2-Column Grid */
         <div 
           className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isSliding ? 'opacity-0 -translate-x-14 scale-[0.98]' : 'opacity-100 translate-x-0 scale-100'
@@ -310,14 +336,21 @@ export default function IdentityQuiz() {
             )}
           </div>
 
-          {/* Right Image / Badge Side - Matching Question Slides */}
-          <div className="lg:col-span-4 hidden lg:flex flex-col items-center justify-center p-8 sm:p-10 text-center space-y-4 min-h-[300px]">
-            <div className="w-20 h-20 rounded-full bg-[#E2B857]/10 flex items-center justify-center text-[#E2B857] border border-[#E2B857]/20 shadow-lg">
-              <UserCheck className="w-10 h-10" />
+          {/* Right Image Side on Completion */}
+          <div className="lg:col-span-4 hidden lg:flex flex-col items-center justify-center relative w-full h-[380px] rounded-3xl overflow-hidden bg-[#111111] border border-white/15 shadow-2xl">
+            <img
+              src={blackMatteRender}
+              alt="Identifine Completion"
+              className="w-full h-full object-cover object-center select-none"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent p-6 flex flex-col justify-end">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#E2B857] mb-1">
+                Diagnostic Complete
+              </span>
+              <span className="text-xs text-[#CCCCCC] font-normal leading-snug">
+                Ready for Executive Consultation
+              </span>
             </div>
-            <span className="text-sm text-[#AAAAAA] font-normal leading-relaxed max-w-[200px]">
-              Organizational Assessment Diagnostic
-            </span>
           </div>
         </div>
       )}

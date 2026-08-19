@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Temporary tooling & logs
+.playwright-mcp
+live-browser.*
+framer_data.json
+

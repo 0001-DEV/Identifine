@@ -24,7 +24,7 @@ export default function CompanyLogosMarquee() {
     { dynamicId: 1, name1: 'Seplat', src1: seplatLogo, name2: 'Eunisell', src2: eunisellLogo },
     { dynamicId: 2, name1: 'Revolution Plus', src1: revPlusLogo, name2: 'Tolaram Group', src2: tolaramLogo },
     { dynamicId: 3, name1: 'First Ally Group', src1: firstAllyLogo, name2: 'Guinness Nigeria', src2: guinnessLogo },
-    { dynamicId: 4, name1: 'Invera', src1: inveraLogo, name2: 'Lotus Bank', src2: lotusLogo },
+    { dynamicId: 4, name1: 'Invera Energy', src1: inveraLogo, name2: 'Lotus Bank', src2: lotusLogo },
   ];
 
   // LINE 2 (Row 2): 5 Dynamic Popping Slots
@@ -41,7 +41,7 @@ export default function CompanyLogosMarquee() {
   const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
-    // Periodic pop and swap animation across company slots
+    // Pop speed interval 850ms
     const interval = setInterval(() => {
       setDynamicStates(prev => {
         const next = [...prev];
@@ -52,7 +52,7 @@ export default function CompanyLogosMarquee() {
         }
         return next;
       });
-    }, 1500);
+    }, 850);
 
     return () => clearInterval(interval);
   }, []);
@@ -63,10 +63,13 @@ export default function CompanyLogosMarquee() {
     const activeState = isHovered ? (currentState === 0 ? 1 : 0) : currentState;
 
     const getLogoClass = (src) => {
-      const isMateeImg = src === mateeLogo;
-      return isMateeImg
-        ? "h-7 sm:h-8 max-h-8 max-w-[85px] sm:max-w-[105px] w-auto object-contain brightness-95 hover:brightness-110 transition-all duration-200 filter drop-shadow-sm"
-        : "h-8 sm:h-11 max-h-11 max-w-[135px] sm:max-w-[165px] w-auto object-contain brightness-90 hover:brightness-110 transition-all duration-200 filter drop-shadow-sm";
+      if (src === mateeLogo) {
+        return "h-7 sm:h-9 max-h-9 max-w-[100px] sm:max-w-[125px] w-auto object-contain brightness-95 hover:brightness-110 transition-all duration-200 filter drop-shadow-sm";
+      }
+      if (src === inveraLogo) {
+        return "h-7 sm:h-10 max-h-10 max-w-[140px] sm:max-w-[175px] w-auto object-contain brightness-95 hover:brightness-110 transition-all duration-200 filter drop-shadow-sm";
+      }
+      return "h-8 sm:h-12 max-h-12 max-w-[145px] sm:max-w-[185px] w-auto object-contain brightness-90 hover:brightness-110 transition-all duration-200 filter drop-shadow-sm";
     };
 
     return (
@@ -74,11 +77,11 @@ export default function CompanyLogosMarquee() {
         key={idx}
         onMouseEnter={() => setHoveredId(item.dynamicId)}
         onMouseLeave={() => setHoveredId(null)}
-        className="relative h-10 sm:h-13 overflow-hidden flex items-center justify-center cursor-pointer select-none shrink-0 px-3 sm:px-6 min-w-[110px] sm:min-w-[155px] [perspective:600px]"
+        className="relative h-12 sm:h-16 overflow-hidden flex items-center justify-center cursor-pointer select-none shrink-0 px-2 sm:px-4 min-w-[130px] sm:min-w-[175px] [perspective:600px]"
       >
         {/* Logo Image 1 (Rolls OUT upward when activeState=1) */}
         <div
-          className="absolute inset-0 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          className="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{
             transform: activeState === 0 ? 'translateY(0%) rotateX(0deg)' : 'translateY(-100%) rotateX(75deg)',
             opacity: activeState === 0 ? 1 : 0,
@@ -95,7 +98,7 @@ export default function CompanyLogosMarquee() {
 
         {/* Logo Image 2 (Rolls IN from below when activeState=1) */}
         <div
-          className="absolute inset-0 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          className="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{
             transform: activeState === 1 ? 'translateY(0%) rotateX(0deg)' : 'translateY(100%) rotateX(-75deg)',
             opacity: activeState === 1 ? 1 : 0,
@@ -115,14 +118,14 @@ export default function CompanyLogosMarquee() {
 
   return (
     <div className="py-6 bg-transparent w-full overflow-hidden">
-      <div className="flex flex-col items-center gap-12 sm:gap-20 lg:gap-24 w-full max-w-7xl mx-auto px-4">
+      <div className="flex flex-col items-center gap-10 sm:gap-16 lg:gap-20 w-full max-w-[94rem] mx-auto px-4 sm:px-8 lg:px-12">
         {/* LINE 1 (5 Popping Slots) */}
-        <div className="flex items-center justify-center gap-4 sm:gap-10 md:gap-16 w-full flex-wrap sm:flex-nowrap overflow-hidden">
+        <div className="flex items-center justify-center gap-4 sm:gap-8 md:gap-12 lg:gap-14 w-full flex-wrap sm:flex-nowrap">
           {row1Logos.map((item, idx) => renderLogoItem(item, idx))}
         </div>
 
         {/* LINE 2 (5 Popping Slots) */}
-        <div className="flex items-center justify-center gap-4 sm:gap-10 md:gap-16 w-full flex-wrap sm:flex-nowrap overflow-hidden">
+        <div className="flex items-center justify-center gap-4 sm:gap-8 md:gap-12 lg:gap-14 w-full flex-wrap sm:flex-nowrap">
           {row2Logos.map((item, idx) => renderLogoItem(item, idx))}
         </div>
       </div>
