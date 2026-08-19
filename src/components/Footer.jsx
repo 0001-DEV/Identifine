@@ -274,8 +274,8 @@ export default function Footer() {
           <div className="flex items-center gap-3 flex-wrap">
             <span>©2026 Identifine. All rights reserved</span>
             <span className="w-1.5 h-1.5 rounded-full bg-[#AAA9AD] shrink-0 inline-block" aria-hidden="true" />
-            <NavLink to="/contact" className="text-[#AAA9AD] hover:text-white transition-colors">
-              Privacy Policy
+            <NavLink to="/terms" className="text-[#AAA9AD] hover:text-white transition-colors">
+              Terms & Conditions
             </NavLink>
           </div>
         </div>

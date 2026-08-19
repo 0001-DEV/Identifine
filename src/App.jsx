@@ -11,6 +11,7 @@ import AboutUsPage from './pages/AboutUsPage';
 import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
 import ProgramDetailPage from './pages/ProgramDetailPage';
+import TermsPage from './pages/TermsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Scroll To Top on Route Change
@@ -41,6 +42,9 @@ export default function App() {
           <Route path="/about-us" element={<AboutUsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/terms-and-conditions" element={<TermsPage />} />
+          <Route path="/privacy-policy" element={<TermsPage />} />
           <Route path="/program/:id" element={<ProgramDetailPage />} />
           <Route path="/program" element={<ProgramDetailPage />} />
           <Route path="/program-details/:id" element={<ProgramDetailPage />} />
