@@ -18,6 +18,10 @@ import postProcessImg from '../assets/Post process 6.jpg';
 import elitePassGold2 from '../assets/ELITE_PASS_GOLD_2.png';
 import elitePassBlack2 from '../assets/ELITE_PASS_BLACK_MATTE_2.png';
 import elitePassSilver2 from '../assets/ELITE_PASS_SILVER_2.png';
+import discoverImg from '../assets/Discover.jpg';
+import designImg from '../assets/design.jpg';
+import deployImg from '../assets/Deploy.jpg';
+import evolveImg from '../assets/Evolve.png';
 
 export default function HomePage() {
   const [selectedCardModal, setSelectedCardModal] = useState(null);
@@ -85,25 +89,25 @@ export default function HomePage() {
     {
       key: 'discover',
       title: 'Discover',
-      image: postProcessImg,
+      image: discoverImg,
       description: 'We dive deep into your goals, audience, and brand to uncover insights and define a clear identity direction.'
     },
     {
       key: 'design',
       title: 'Design',
-      image: elitePassGold2,
+      image: designImg,
       description: 'With strategy in place, we craft stunning visuals and high-performing identity solutions tailored to your needs.'
     },
     {
       key: 'deploy',
       title: 'Deploy',
-      image: elitePassBlack2,
+      image: deployImg,
       description: 'We seamlessly roll out your physical & digital identity assets with precision manufacturing and secure provisioning.'
     },
     {
       key: 'evolve',
       title: 'Evolve',
-      image: elitePassSilver2,
+      image: evolveImg,
       description: 'We continuously refine, maintain, and upgrade your identity ecosystem to stay ahead as your organization grows.'
     }
   ];
