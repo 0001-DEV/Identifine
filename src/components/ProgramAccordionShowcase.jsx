@@ -68,11 +68,10 @@ export default function ProgramAccordionShowcase() {
                   setActiveId(prog.id);
                 }
               }}
-              className={`group cursor-pointer transition-all duration-500 rounded-3xl select-none ${
-                isOpen
+              className={`group cursor-pointer transition-all duration-500 rounded-3xl select-none ${isOpen
                   ? 'bg-[#F5F4F0] border border-[#DCDAD4] p-6 sm:p-8 shadow-xl scale-[1.01]'
                   : 'bg-transparent border border-transparent p-6 sm:p-7 opacity-80 hover:opacity-100'
-              }`}
+                }`}
             >
               {/* Header Row with Title & Collapse Button */}
               <div className="flex items-center justify-between gap-4">
@@ -86,9 +85,8 @@ export default function ProgramAccordionShowcase() {
                     e.stopPropagation();
                     toggleProgram(prog.id);
                   }}
-                  className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${
-                    isOpen ? 'bg-black text-white rotate-180' : 'bg-black/5 text-black hover:bg-black/10'
-                  }`}
+                  className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? 'bg-black text-white rotate-180' : 'bg-black/5 text-black hover:bg-black/10'
+                    }`}
                   aria-label="Toggle section"
                 >
                   <ChevronDown className="w-5 h-5" />
@@ -97,31 +95,33 @@ export default function ProgramAccordionShowcase() {
 
               {/* Expandable Description & Features List with Staggered Drop-Down */}
               <div
-                className={`transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${
-                  isOpen
+                className={`transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${isOpen
                     ? 'max-h-[600px] opacity-100 mt-4 pt-2'
                     : 'max-h-0 opacity-0 mt-0 pt-0 pointer-events-none'
-                }`}
+                  }`}
               >
                 <div className="space-y-5">
                   {/* Paragraph Drop-Down (Delay 100ms) */}
                   <p
-                    className={`text-sm sm:text-base text-[#555555] leading-relaxed font-normal transform transition-all duration-500 ease-out ${
-                      isOpen ? 'translate-y-0 opacity-100 delay-100' : '-translate-y-3 opacity-0'
-                    }`}
+                    className={`text-sm sm:text-base text-[#555555] leading-relaxed font-normal transform transition-all duration-500 ease-out ${isOpen ? 'translate-y-0 opacity-100 delay-100' : '-translate-y-3 opacity-0'
+                      }`}
                   >
                     {prog.description}
                   </p>
 
-                  {/* Features Bullet List Staggered Drop-Down (Delay 200ms) */}
+                  {/* Features Bullet List - Typewriter/Writing Effect */}
                   {prog.features && (
-                    <div
-                      className={`space-y-2 pt-1 transform transition-all duration-500 ease-out ${
-                        isOpen ? 'translate-y-0 opacity-100 delay-200' : '-translate-y-4 opacity-0'
-                      }`}
-                    >
+                    <div className="space-y-2 pt-1">
                       {prog.features.map((feat, fIdx) => (
-                        <div key={fIdx} className="flex items-center gap-2.5 text-xs sm:text-sm text-[#111111] font-medium">
+                        <div 
+                          key={fIdx} 
+                          className="flex items-center gap-2.5 text-xs sm:text-sm text-[#111111] font-medium transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                          style={{ 
+                            clipPath: isOpen ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)',
+                            opacity: isOpen ? 1 : 0,
+                            transitionDelay: isOpen ? `${200 + (fIdx * 150)}ms` : '0ms' 
+                          }}
+                        >
                           <span className="w-1.5 h-1.5 rounded-full bg-[#E2B857] shrink-0" />
                           <span>{feat}</span>
                         </div>
@@ -131,9 +131,8 @@ export default function ProgramAccordionShowcase() {
 
                   {/* Learn More Button Drop-Down (Delay 300ms) */}
                   <div
-                    className={`pt-2 transform transition-all duration-500 ease-out ${
-                      isOpen ? 'translate-y-0 opacity-100 delay-300' : '-translate-y-4 opacity-0'
-                    }`}
+                    className={`pt-2 transform transition-all duration-500 ease-out ${isOpen ? 'translate-y-0 opacity-100 delay-300' : '-translate-y-4 opacity-0'
+                      }`}
                   >
                     <NavLink
                       to={`/program/${prog.id}`}
@@ -163,9 +162,8 @@ export default function ProgramAccordionShowcase() {
             <NavLink
               key={prog.id}
               to={`/program/${prog.id}`}
-              className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out ${
-                isActive ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-105 pointer-events-none'
-              }`}
+              className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out ${isActive ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-105 pointer-events-none'
+                }`}
             >
               <img
                 src={prog.image}
