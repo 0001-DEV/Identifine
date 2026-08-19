@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
-import blackMatteRender from '../assets/Black matte render 2.png';
-import elitePassGold from '../assets/ELITE_PASS_GOLD.png';
-import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.png';
+import techImg from '../assets/TECH.jpg';
+import card1Img from '../assets/Card 1.png';
+import identityImg from '../assets/IDENTITY.jpg';
 
 export default function ProgramAccordionShowcase() {
   const programs = [
@@ -17,7 +16,7 @@ export default function ProgramAccordionShowcase() {
         'Executive Leadership Identity Architecture',
         'Enterprise Deployment Roadmap'
       ],
-      image: blackMatteRender,
+      image: techImg,
     },
     {
       id: 'corporate-design',
@@ -29,7 +28,7 @@ export default function ProgramAccordionShowcase() {
         'Unified Visual Brand Hierarchy',
         'Precision Aerospace Hardware Manufacturing'
       ],
-      image: elitePassGold,
+      image: card1Img,
     },
     {
       id: 'creation-experience',
@@ -41,7 +40,7 @@ export default function ProgramAccordionShowcase() {
         'VIP Member Access Control Systems',
         'Real-Time Cloud Profile Management'
       ],
-      image: elitePassBlack,
+      image: identityImg,
     }
   ];
 
@@ -73,24 +72,11 @@ export default function ProgramAccordionShowcase() {
                   : 'bg-transparent border border-transparent p-6 sm:p-7 opacity-80 hover:opacity-100'
                 }`}
             >
-              {/* Header Row with Title & Collapse Button */}
+              {/* Header Row with Title */}
               <div className="flex items-center justify-between gap-4">
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-galano font-medium tracking-tight text-[#111111]">
                   {prog.title}
                 </h3>
-
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleProgram(prog.id);
-                  }}
-                  className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? 'bg-black text-white rotate-180' : 'bg-black/5 text-black hover:bg-black/10'
-                    }`}
-                  aria-label="Toggle section"
-                >
-                  <ChevronDown className="w-5 h-5" />
-                </button>
               </div>
 
               {/* Expandable Description & Features List with Staggered Drop-Down */}
