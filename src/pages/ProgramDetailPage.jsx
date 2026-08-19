@@ -13,6 +13,12 @@ import elitePassBlack2 from '../assets/ELITE_PASS_BLACK_MATTE_2.png';
 import elitePassSilver2 from '../assets/ELITE_PASS_SILVER_2.png';
 import postProcessImg from '../assets/Post process 6.jpg';
 import renderOne from '../assets/RENDER 1.png';
+import heroImg from '../assets/Hero@4x.png';
+import scrollSlidImg from '../assets/Scroll Slid.png';
+import scrollSliderImg from '../assets/Scroll Slider.png';
+import scrollSlideImg from '../assets/Scroll Slide.png';
+import scrollImg from '../assets/Scroll.png';
+import scroll4xImg from '../assets/Scroll4x.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,11 +29,12 @@ const programData = {
     subtitle: 'Strategic Brand Alignment',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Consultation%20Services',
     images: [
-      { src: postProcessImg,   title: 'Strategic Brand Audit',       desc: 'In-depth analysis of your existing identity touchpoints, physical credentials, and market positioning.' },
-      { src: blackMatteRender, title: 'Identity Architecture',        desc: 'Structuring a unified physical and digital presence for executive leadership teams.' },
-      { src: elitePassGold,    title: 'Executive Credential Strategy',desc: 'Defining high-converting tactile materials that signal trust instantly during corporate introductions.' },
-      { src: renderOne,        title: 'Institutional Positioning',    desc: 'Aligning internal corporate culture with outward authority for maximum commercial impact.' },
-      { src: elitePassSilver,  title: 'Capability Roadmap',           desc: 'Full execution blueprint from strategic consultation concept to seamless organizational deployment.' }
+      { src: heroImg,          title: 'Strategic Brand Audit',        desc: 'In-depth analysis of your existing identity touchpoints, physical credentials, and market positioning.' },
+      { src: scrollSlidImg,    title: 'Identity Architecture',        desc: 'Structuring a unified physical and digital presence for executive leadership teams.' },
+      { src: scrollSliderImg,  title: 'Executive Credential Strategy', desc: 'Defining high-converting tactile materials that signal trust instantly during corporate introductions.' },
+      { src: scrollSlideImg,   title: 'Institutional Positioning',    desc: 'Aligning internal corporate culture with outward authority for maximum commercial impact.' },
+      { src: scrollImg,        title: 'Capability Roadmap',           desc: 'Full execution blueprint from strategic consultation concept to seamless organizational deployment.' },
+      { src: scroll4xImg,      title: 'Enterprise Deployment',        desc: 'Comprehensive rollout strategy across all organizational touchpoints and stakeholder channels.' }
     ]
   },
   'corporate-design': {
