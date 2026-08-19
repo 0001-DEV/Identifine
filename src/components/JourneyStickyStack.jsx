@@ -120,7 +120,7 @@ export default function JourneyStickyStack({ journeySteps }) {
       className="relative w-full mx-auto"
       style={{
         /* Fluid width: full on mobile, capped at 1064px on large screens */
-        maxWidth: '1064px',
+        maxWidth: '1164px',
         /* Fluid height: clamp between 280px and 720px, scaling with viewport */
         height: 'clamp(280px, 65vw, 720px)',
       }}
