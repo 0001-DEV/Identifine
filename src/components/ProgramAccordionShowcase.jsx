@@ -137,15 +137,7 @@ export default function ProgramAccordionShowcase() {
                 alt={prog.title}
                 className="w-full h-full object-cover object-center select-none"
               />
-              {/* Dark Overlay with Subtitle & Title */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-6 sm:p-10 flex flex-col justify-end">
-                <span className="text-xs font-mono tracking-widest text-[#E2B857] uppercase mb-2">
-                  {prog.subtitle}
-                </span>
-                <h4 className="font-galano font-medium text-xl sm:text-3xl text-white">
-                  {prog.title}
-                </h4>
-              </div>
+
             </NavLink>
           );
         })}
