@@ -35,12 +35,17 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/case-studies" element={<CaseStudiesPage />} />
+          <Route path="/projects" element={<CaseStudiesPage />} />
           <Route path="/elite-pass" element={<ElitePassPage />} />
+          <Route path="/elitepass" element={<ElitePassPage />} />
           <Route path="/about-us" element={<AboutUsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/program/:id" element={<ProgramDetailPage />} />
+          <Route path="/program" element={<ProgramDetailPage />} />
+          <Route path="/program-details/:id" element={<ProgramDetailPage />} />
           <Route path="/program-details" element={<ProgramDetailPage />} />
+          <Route path="/program/*" element={<ProgramDetailPage />} />
           <Route path="/product-catalogue" element={<ElitePassPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
