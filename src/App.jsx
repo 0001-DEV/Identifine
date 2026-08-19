@@ -10,6 +10,7 @@ import ElitePassPage from './pages/ElitePassPage';
 import AboutUsPage from './pages/AboutUsPage';
 import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
+import ProgramDetailPage from './pages/ProgramDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Scroll To Top on Route Change
@@ -38,8 +39,8 @@ export default function App() {
           <Route path="/about-us" element={<AboutUsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
-          {/* Catch-all aliases */}
-          <Route path="/program-details" element={<HomePage />} />
+          <Route path="/program/:id" element={<ProgramDetailPage />} />
+          <Route path="/program-details" element={<ProgramDetailPage />} />
           <Route path="/product-catalogue" element={<ElitePassPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
