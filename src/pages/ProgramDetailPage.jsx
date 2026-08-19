@@ -1,9 +1,8 @@
-import React, { useRef, useLayoutEffect, useState } from 'react';
-import { useParams, NavLink, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Sparkles, CheckCircle, MessageSquare } from 'lucide-react';
+import React, { useRef, useLayoutEffect } from 'react';
+import { useParams, NavLink } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import starIcon from '../assets/SVG@4x.png';
 
 // Import Assets
 import blackMatteRender from '../assets/Black matte render 2.png';
@@ -23,7 +22,6 @@ const programData = {
     id: 'consultation',
     title: 'Identity Consultation Services',
     subtitle: 'Strategic Brand Alignment',
-    description: 'We craft distinctive corporate brand identities that speak louder than words. We design bold brand identities that capture your mission and connect across every touchpoint.',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Consultation%20Services',
     images: [
       { src: postProcessImg, title: 'Strategic Brand Audit', desc: 'In-depth analysis of your existing identity touchpoints, physical credentials, and market positioning.' },
@@ -37,7 +35,6 @@ const programData = {
     id: 'corporate-design',
     title: 'Corporate Identity Design',
     subtitle: 'Visual Systems & Architecture',
-    description: 'Build the clarity, presence, and habits needed to lead with confidence and calm across all corporate assets.',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Corporate%20Identity%20Design',
     images: [
       { src: elitePassGold2, title: 'Tactile Material Formulation', desc: 'Crafting bespoke 24K gold electroplated finishes for executive presentation credentials.' },
@@ -51,7 +48,6 @@ const programData = {
     id: 'creation-experience',
     title: 'Identity Creation & Experience',
     subtitle: 'Physical & Digital Touchpoints',
-    description: 'Unlock the collective potential in your organization’s identity through intentional design, premium materials, and dialogue.',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Creation%20%26%20Experience',
     images: [
       { src: elitePassBlack2, title: 'NFC Smart Provisioning', desc: 'Instant touch-to-share contactless technology integrated seamlessly inside metal smart cards.' },
@@ -65,7 +61,6 @@ const programData = {
 
 export default function ProgramDetailPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   
   // Default to 'consultation' if valid ID not matched
   const activeKey = (id && programData[id]) ? id : 'consultation';
@@ -96,7 +91,7 @@ export default function ProgramDetailPage() {
           trigger: galleryRef.current,
           pin: true,
           pinSpacing: true,
-          start: 'top top+=70',
+          start: 'top top',
           end: () => `+=${(totalSlides - 1) * 110}%`,
           scrub: 0.5,
           snap: {
@@ -148,88 +143,32 @@ export default function ProgramDetailPage() {
   }, [activeKey]);
 
   return (
-    <div className="min-h-screen bg-[#080B11] text-white pt-24 pb-20 overflow-x-hidden selection:bg-[#E2B857] selection:text-black">
+    <div className="min-h-screen bg-[#080B11] text-white pt-20 pb-12 overflow-x-hidden selection:bg-[#E2B857] selection:text-black">
       
-      {/* Header Bar Navigation & Program Selector Tabs */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-12 space-y-8 pt-4">
-        
-        {/* Back Link & CTA */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
-          <NavLink
-            to="/"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-white/70 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back to Home
-          </NavLink>
-
-          <div className="inline-flex items-center gap-2">
-            <span className="text-xs font-mono text-[#E2B857] uppercase tracking-widest hidden sm:inline">
-              Our Identity Experience Program
-            </span>
-          </div>
-
-          <a
-            href={program.whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="framer-pill-gold text-xs sm:text-sm px-6 py-2.5 font-semibold"
-          >
-            Inquire on WhatsApp
-          </a>
-        </div>
-
-        {/* Program Tabs */}
-        <div className="flex flex-wrap justify-center gap-3 py-2">
-          {Object.values(programData).map((prog) => (
-            <button
-              key={prog.id}
-              onClick={() => navigate(`/program/${prog.id}`)}
-              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
-                activeKey === prog.id
-                  ? 'bg-white text-black font-bold shadow-lg scale-105'
-                  : 'bg-white/5 text-white/70 hover:text-white border border-white/10'
-              }`}
-            >
-              {prog.title}
-            </button>
-          ))}
-        </div>
-
-        {/* Hero Title & Subtitle */}
-        <div className="text-center max-w-4xl mx-auto space-y-4 pt-4">
-          <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-[#E2B857]/10 border border-[#E2B857]/30 text-[#E2B857] text-xs font-mono uppercase tracking-widest">
-            <Sparkles className="w-3.5 h-3.5" /> {program.subtitle}
-          </div>
-
-          <h1 className="font-galano font-medium text-3xl sm:text-5xl lg:text-[3.75rem] text-white leading-tight">
-            {program.title}
-          </h1>
-
-          <p className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto leading-relaxed font-normal">
-            {program.description}
-          </p>
-
-          <div className="pt-2 text-xs font-mono text-white/50 tracking-wider">
-            Scroll down to experience the 5 program dimensions dissolve from the right ↓
-          </div>
-        </div>
-
+      {/* Clean Top Navigation Bar */}
+      <div className="max-w-7xl mx-auto px-6 sm:px-12 py-4">
+        <NavLink
+          to="/"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-white/80 hover:text-white transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" /> Back to Home
+        </NavLink>
       </div>
 
-      {/* 5-PICTURE DISSOLVE GALLERY (PINNED ON SCROLL - NEXT IMAGE DISSOLVES IN FROM THE RIGHT) */}
+      {/* FULL SCREEN WIDTH 5-PICTURE DISSOLVE GALLERY (NO BORDER, FULL SCREEN WIDTH) */}
       <section
         ref={galleryRef}
-        className="w-full h-screen min-h-[620px] max-h-[920px] flex items-center justify-center relative overflow-hidden py-6 my-8 select-none"
+        className="w-screen w-full h-screen min-h-[600px] flex items-center justify-center relative overflow-hidden select-none"
       >
-        <div className="w-full max-w-[90rem] mx-auto px-4 sm:px-8 h-[76vh] sm:h-[82vh] relative">
+        <div className="w-full h-full relative">
           {program.images.map((imgObj, idx) => (
             <div
               key={idx}
               ref={(el) => (slideRefs.current[idx] = el)}
-              className="absolute inset-0 w-full h-full rounded-[32px] sm:rounded-[44px] overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.8)] bg-[#111111] border border-white/20 transform-gpu"
+              className="absolute inset-0 w-full h-full overflow-hidden shadow-2xl bg-[#000000] transform-gpu"
               style={{ zIndex: idx + 1 }}
             >
-              {/* Picture (Full Height & Width of Container) */}
+              {/* Picture (Full Screen Width and Height) */}
               <img
                 src={imgObj.src}
                 alt={imgObj.title}
@@ -237,13 +176,10 @@ export default function ProgramDetailPage() {
               />
 
               {/* Glassmorphism Overlay Card */}
-              <div className="absolute bottom-6 left-6 right-6 sm:bottom-10 sm:left-10 max-w-xl p-6 sm:p-8 rounded-3xl bg-black/65 backdrop-blur-xl border border-white/25 shadow-2xl text-white">
+              <div className="absolute bottom-8 left-6 right-6 sm:bottom-12 sm:left-12 max-w-xl p-6 sm:p-8 rounded-3xl bg-black/65 backdrop-blur-xl border border-white/20 shadow-2xl text-white">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="px-3 py-1 rounded-full bg-[#E2B857]/20 border border-[#E2B857]/40 text-[#E2B857] text-xs font-mono font-semibold uppercase tracking-wider">
                     0{idx + 1} / 0{program.images.length}
-                  </span>
-                  <span className="text-xs text-white/70 font-mono">
-                    {program.subtitle}
                   </span>
                 </div>
                 <h3 className="font-galano font-medium text-xl sm:text-3xl text-white mb-2">
@@ -259,7 +195,7 @@ export default function ProgramDetailPage() {
       </section>
 
       {/* Bottom Consultation CTA */}
-      <div className="max-w-4xl mx-auto text-center px-6 pt-12 space-y-6">
+      <div className="max-w-4xl mx-auto text-center px-6 pt-16 pb-12 space-y-6">
         <h3 className="font-galano font-medium text-2xl sm:text-4xl text-white">
           Ready to elevate your organization with <em className="font-swarsh italic font-normal text-[#E2B857]">{program.title}</em>?
         </h3>
