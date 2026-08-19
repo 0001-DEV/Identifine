@@ -64,7 +64,7 @@ function AnimatedNumber() {
   }, []);
 
   return (
-    <div ref={counterRef} className="flex items-start justify-center text-[#888888] italic font-galano font-normal text-[2.5rem] sm:text-5xl leading-none tracking-tighter mb-1 sm:mb-2 pt-1 h-10 sm:h-14">
+    <div ref={counterRef} className="flex items-start justify-center text-[#888888] italic font-swarsh font-normal text-[2.5rem] sm:text-5xl leading-none tracking-tighter mb-1 sm:mb-2 pt-1 h-10 sm:h-14">
       {count}<span className="text-3xl sm:text-4xl text-[#888888] ml-0.5 leading-none">+</span>
     </div>
   );
