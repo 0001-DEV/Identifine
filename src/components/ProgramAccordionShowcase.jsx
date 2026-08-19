@@ -109,25 +109,6 @@ export default function ProgramAccordionShowcase() {
                     {prog.description}
                   </p>
 
-                  {/* Features Bullet List - Typewriter/Writing Effect */}
-                  {prog.features && (
-                    <div className="space-y-2 pt-1">
-                      {prog.features.map((feat, fIdx) => (
-                        <div 
-                          key={fIdx} 
-                          className="flex items-center gap-2.5 text-xs sm:text-sm text-[#111111] font-medium transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                          style={{ 
-                            clipPath: isOpen ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)',
-                            opacity: isOpen ? 1 : 0,
-                            transitionDelay: isOpen ? `${200 + (fIdx * 150)}ms` : '0ms' 
-                          }}
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#E2B857] shrink-0" />
-                          <span>{feat}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
 
                   {/* Learn More Button Drop-Down (Delay 300ms) */}
                   <div
