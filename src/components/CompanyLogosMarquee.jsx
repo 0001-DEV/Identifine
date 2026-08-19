@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Import User's 15 Actual Client Logo Image Assets
 import eunisellLogo from '../assets/eunisell_logo.png';
@@ -20,29 +20,45 @@ import animatedCounterImg from '../assets/AnimatedCounter.png';
 
 function AnimatedNumber() {
   const [count, setCount] = useState(0);
+  const counterRef = useRef(null);
 
   useEffect(() => {
-    let startTime = Date.now();
-    const duration = 2000;
-    const finalNumber = 86;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          let startTime = Date.now();
+          const duration = 2000;
+          const finalNumber = 86;
 
-    const updateCounter = () => {
-      const now = Date.now();
-      const elapsed = now - startTime;
+          const updateCounter = () => {
+            const now = Date.now();
+            const elapsed = now - startTime;
 
-      if (elapsed < duration) {
-        setCount(Math.floor(Math.random() * 90) + 10);
-        requestAnimationFrame(updateCounter);
-      } else {
-        setCount(finalNumber);
-      }
-    };
+            if (elapsed < duration) {
+              setCount(Math.floor(Math.random() * 90) + 10);
+              requestAnimationFrame(updateCounter);
+            } else {
+              setCount(finalNumber);
+            }
+          };
 
-    requestAnimationFrame(updateCounter);
+          requestAnimationFrame(updateCounter);
+        } else {
+          // Reset count when scrolled out of view so it counts again next time
+          setCount(0);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="flex items-start justify-center text-[#111111] font-galano font-bold text-[2.5rem] sm:text-5xl leading-none tracking-tighter mb-1 sm:mb-2 pt-1 h-10 sm:h-14">
+    <div ref={counterRef} className="flex items-start justify-center text-[#E2B857] font-galano font-bold text-[2.5rem] sm:text-5xl leading-none tracking-tighter mb-1 sm:mb-2 pt-1 h-10 sm:h-14">
       {count}<span className="text-3xl sm:text-4xl text-[#E2B857] ml-0.5 leading-none">+</span>
     </div>
   );
