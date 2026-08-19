@@ -1,5 +1,28 @@
-import React, { useState } from 'react';
-import { CheckCircle2 } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { CheckCircle2, ChevronDown } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const faqs = [
+  {
+    question: "What services do you offer?",
+    answer: "We offer comprehensive corporate identity design, strategy, brand audits, executive identity solutions, and premium NFC card ecosystems."
+  },
+  {
+    question: "Do you work with startups or only big brands?",
+    answer: "We work with organizations of all sizes—from ambitious startups looking to establish a strong foundational identity, to enterprise organizations needing comprehensive identity realignment."
+  },
+  {
+    question: "How long does a typical project take?",
+    answer: "A standard identity transformation project typically takes 4 to 8 weeks, depending on the scope, scale, and specific requirements of your organization."
+  },
+  {
+    question: "What’s your pricing structure?",
+    answer: "Our pricing is project-based and tailored to your specific needs. After our initial consultation, we provide a detailed proposal outlining the scope and investment required."
+  }
+];
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -8,6 +31,29 @@ export default function ContactPage() {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [openFaq, setOpenFaq] = useState(null);
+  const faqRef = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.faq-question-text',
+        { clipPath: 'inset(0 100% 0 0)' },
+        {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 1,
+          ease: 'power3.out',
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: faqRef.current,
+            start: 'top 80%',
+          }
+        }
+      );
+    }, faqRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -142,6 +188,56 @@ export default function ContactPage() {
             </div>
           </div>
 
+        </div>
+
+        {/* FAQ Section */}
+        <div ref={faqRef} className="pt-24 border-t border-[#DCDAD4]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            <div className="lg:col-span-4 space-y-4 lg:-ml-16 xl:-ml-24">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-sans font-bold text-[#111111] leading-tight tracking-tight">
+                Have questions? <br/>
+                <span className="text-[#666666] italic-serif font-normal">Clarity start right here</span>
+              </h2>
+            </div>
+
+            <div className="lg:col-span-8">
+              <div className="border-t border-[#DCDAD4]">
+                {faqs.map((faq, index) => {
+                  const isOpen = openFaq === index;
+                  return (
+                    <div key={index} className="border-b border-[#DCDAD4]">
+                      <button
+                        onClick={() => setOpenFaq(isOpen ? null : index)}
+                        className="w-full flex items-center justify-between text-left py-6 sm:py-8 group"
+                      >
+                        <h3 className="faq-question-text text-xl sm:text-2xl lg:text-3xl font-bold text-[#111111] group-hover:text-[#E2B857] transition-colors leading-tight pr-8" style={{ clipPath: 'inset(0 100% 0 0)' }}>
+                          {faq.question}
+                        </h3>
+                        <div className="w-10 h-10 rounded-full bg-[#EBEAE6] group-hover:bg-[#E2B857] text-[#111111] flex items-center justify-center shrink-0 transition-colors">
+                          <ChevronDown
+                            className={`w-5 h-5 transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
+                          />
+                        </div>
+                      </button>
+                      <div
+                        className={`grid transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                          isOpen ? 'grid-rows-[1fr] opacity-100 mb-6' : 'grid-rows-[0fr] opacity-0'
+                        }`}
+                      >
+                        <div className="overflow-hidden">
+                          <p className="text-base sm:text-lg text-[#555555] leading-relaxed max-w-3xl">
+                            {faq.answer}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+          </div>
         </div>
 
       </div>
