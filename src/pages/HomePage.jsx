@@ -250,7 +250,7 @@ export default function HomePage() {
         </div>
 
         {/* Sticky Stacking Cards */}
-        <div className="mt-16 w-full max-w-[800px] mx-auto">
+        <div className="mt-16 mx-0 lg:mx-[200px]">
           <JourneyStickyStack journeySteps={journeySteps} />
         </div>
 
