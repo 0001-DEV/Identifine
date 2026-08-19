@@ -167,7 +167,7 @@ export default function ProgramDetailPage() {
               href={program.whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute bottom-[12%] sm:bottom-[14%] left-1/2 -translate-x-1/2 w-[180px] sm:w-[220px] h-[44px] sm:h-[52px] rounded-full cursor-pointer z-20 hover:bg-[#0066FF]/30 transition-colors duration-300"
+              className="absolute bottom-[12%] sm:bottom-[14%] left-1/2 -translate-x-1/2 w-[180px] sm:w-[220px] h-[44px] sm:h-[52px] rounded-full cursor-pointer z-20"
             />
           </div>
         ))}
