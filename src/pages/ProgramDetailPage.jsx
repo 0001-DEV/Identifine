@@ -19,6 +19,7 @@ import scrollSliderImg from '../assets/Scroll Slider.png';
 import scrollSlideImg from '../assets/Scroll Slide.png';
 import scrollImg from '../assets/Scroll.png';
 import scroll4xImg from '../assets/Scroll4x.png';
+import scrollssImg from '../assets/Scrollss.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,7 +31,7 @@ const programData = {
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Consultation%20Services',
     images: [
       { src: heroImg, title: 'Strategic Brand Audit', desc: 'In-depth analysis of your existing identity touchpoints, physical credentials, and market positioning.' },
-      { src: scrollSlidImg, title: 'Identity Architecture', desc: 'Structuring a unified physical and digital presence for executive leadership teams.' },
+      { src: scrollssImg, title: 'Identity Architecture', desc: 'Structuring a unified physical and digital presence for executive leadership teams.' },
       { src: scrollSliderImg, title: 'Executive Credential Strategy', desc: 'Defining high-converting tactile materials that signal trust instantly during corporate introductions.' },
       { src: scrollSlideImg, title: 'Institutional Positioning', desc: 'Aligning internal corporate culture with outward authority for maximum commercial impact.' },
       { src: scrollImg, title: 'Capability Roadmap', desc: 'Full execution blueprint from strategic consultation concept to seamless organizational deployment.' },
