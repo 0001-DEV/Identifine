@@ -23,47 +23,6 @@ import scrollssImg from '../assets/Scrollss.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Helper for random color generation
-const getRandomColor = () => {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
-
-// 4th Slide Animated Interactive Element (Rotate 90deg, Hover scale, Click random color)
-function SlideFourAnimation() {
-  const [background, setBackground] = useState('#0099FF');
-  const [rotated, setRotated] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setRotated(true);
-    }, 400);
-    return () => clearTimeout(timer);
-  }, []);
-
-  return (
-    <div
-      onClick={(e) => {
-        e.stopPropagation();
-        setBackground(getRandomColor());
-      }}
-      className="absolute top-20 right-6 sm:top-24 sm:right-14 z-30 cursor-pointer select-none rounded-2xl w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shadow-2xl border border-white/30 backdrop-blur-sm hover:scale-105 transition-all"
-      style={{
-        backgroundColor: background,
-        transform: rotated ? 'rotate(90deg)' : 'rotate(0deg)',
-        transition: 'transform 2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, transform 0.3s ease',
-      }}
-      title="Click to change color"
-    >
-      <span className="text-white font-bold text-xl sm:text-2xl drop-shadow-md">✦</span>
-    </div>
-  );
-}
-
 const programData = {
   'consultation': {
     id: 'consultation',
@@ -106,6 +65,46 @@ const programData = {
     ]
   }
 };
+
+// 4th Slide Animated Interactive Element (Rotate 90deg, Hover scale, Click random color)
+function SlideFourAnimation() {
+  const [background, setBackground] = useState('#0099FF');
+  const [rotated, setRotated] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setRotated(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  return (
+    <div
+      onClick={(e) => {
+        e.stopPropagation();
+        setBackground(getRandomColor());
+      }}
+      className="absolute top-20 right-6 sm:top-24 sm:right-14 z-30 cursor-pointer select-none rounded-2xl w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shadow-2xl border border-white/30 backdrop-blur-sm hover:scale-105 pointer-events-auto transition-transform"
+      style={{
+        backgroundColor: background,
+        transform: rotated ? 'rotate(90deg)' : 'rotate(0deg)',
+        transition: 'transform 2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease',
+      }}
+      title="Click to change color"
+    >
+      <span className="text-white font-bold text-xl sm:text-2xl drop-shadow-md">✦</span>
+    </div>
+  );
+}
 
 export default function ProgramDetailPage() {
   const { id } = useParams();
@@ -189,32 +188,72 @@ export default function ProgramDetailPage() {
         ref={galleryRef}
         className="w-full h-screen relative overflow-hidden"
       >
-        {program.images.map((imgObj, idx) => (
-          <div
-            key={idx}
-            ref={(el) => (slideRefs.current[idx] = el)}
-            className="absolute inset-0 w-full h-full will-change-transform"
-            style={{ zIndex: idx + 1 }}
-          >
-            {/* Full-screen image */}
-            <img
-              src={imgObj.src}
-              alt={imgObj.title}
-              className="w-full h-full object-cover object-center select-none"
-            />
+        {program.images.map((imgObj, idx) => {
+          const isConsultation = activeKey === 'consultation';
+          const isFirstSlide = idx === 0;
 
-            {/* Animation on top of 4th slide (idx === 3) */}
-            {idx === 3 && <SlideFourAnimation />}
+          // Align perfectly with visual buttons detected in mockup images
+          const buttonStyle = isFirstSlide
+            ? {
+                left: '79.17%',
+                top: '81.50%',
+                width: '16.39%',
+                height: '6.42%',
+              }
+            : {
+                left: '41.81%',
+                top: '87.26%',
+                width: '16.39%',
+                height: '5.97%',
+              };
 
-            {/* Invisible clickable area over the button in the image */}
-            <a
-              href={program.whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute bottom-[12%] sm:bottom-[14%] left-1/2 -translate-x-1/2 w-[180px] sm:w-[220px] h-[44px] sm:h-[52px] rounded-full cursor-pointer z-20"
-            />
-          </div>
-        ))}
+          return (
+            <div
+              key={idx}
+              ref={(el) => (slideRefs.current[idx] = el)}
+              className="absolute inset-0 w-full h-full will-change-transform overflow-hidden pointer-events-none"
+              style={{ zIndex: idx + 1 }}
+            >
+              {isConsultation ? (
+                <div
+                  className={isFirstSlide ? "cover-container-hero pointer-events-none" : "cover-container-scroll pointer-events-none"}
+                >
+                  <img
+                    src={imgObj.src}
+                    alt={imgObj.title}
+                    className="w-full h-full select-none pointer-events-none"
+                  />
+                  <a
+                    href={program.whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute cursor-pointer z-20 pointer-events-auto"
+                    style={buttonStyle}
+                  />
+                  {idx === 3 && <SlideFourAnimation />}
+                </div>
+              ) : (
+                <>
+                  <img
+                    src={imgObj.src}
+                    alt={imgObj.title}
+                    className="w-full h-full object-cover object-center select-none pointer-events-none"
+                  />
+                  <div className="absolute bottom-[8%] left-1/2 -translate-x-1/2 z-20 pointer-events-auto">
+                    <a
+                      href={program.whatsappLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="framer-pill-gold inline-flex items-center gap-2 px-8 py-3 text-sm font-bold tracking-wider uppercase"
+                    >
+                      Enquire on WhatsApp
+                    </a>
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })}
 
         {/* Scroll hint on first load */}
         <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1 opacity-60 pointer-events-none">
