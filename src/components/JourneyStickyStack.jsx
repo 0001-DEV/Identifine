@@ -16,14 +16,15 @@ export default function JourneyStickyStack({ journeySteps }) {
       const totalCards = cards.length;
       const verticalPeekOffset = 24; // Exposure offset so upper part of previous cards remains visible
 
-      // Set initial positions and rotation angles
+      // Set initial positions, rotation angles, and full opacity
       cards.forEach((card, index) => {
         if (index > 0) {
-          gsap.set(card, { 
+          gsap.set(card, {
             yPercent: 125 + (index - 1) * 35,
             y: 0,
             scale: 1,
             rotation: index % 2 === 1 ? 1.8 : -1.8,
+            opacity: 1,
             transformOrigin: '50% 50%'
           });
         } else {
@@ -32,6 +33,7 @@ export default function JourneyStickyStack({ journeySteps }) {
             y: 0,
             scale: 1,
             rotation: 0,
+            opacity: 1,
             transformOrigin: '50% 50%'
           });
         }
@@ -68,19 +70,21 @@ export default function JourneyStickyStack({ journeySteps }) {
             yPercent: 0,
             y: currentY,
             rotation: currentRot,
+            opacity: 1,
             ease: 'none',
             duration: 1,
           },
           `step-${index}`
         );
 
-        // Animate all underlying cards to scale, shift up, and tilt dynamically
+        // Animate all underlying cards to scale, shift up, tilt, and fade lightly
         for (let i = 0; i < index; i++) {
           const prevCard = cards[i];
           const depth = index - i; // distance beneath top card
           const prevY = i * verticalPeekOffset;
           const prevScale = Math.max(0.86, 1 - depth * 0.045);
           const prevRot = (i % 2 === 0 ? -2.8 : 2.8) * (1 + (depth - 1) * 0.4);
+          const prevOpacity = Math.max(0.45, 0.7 - (depth - 1) * 0.12); // Fades lightly as cards get covered
 
           tl.to(
             prevCard,
@@ -88,6 +92,7 @@ export default function JourneyStickyStack({ journeySteps }) {
               scale: prevScale,
               rotation: prevRot,
               y: prevY,
+              opacity: prevOpacity,
               ease: 'none',
               duration: 1,
             },
@@ -118,7 +123,7 @@ export default function JourneyStickyStack({ journeySteps }) {
         <div
           key={step.key || idx}
           ref={(el) => (cardRefs.current[idx] = el)}
-          className="absolute inset-0 w-full h-full rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.55)] border border-white/20 bg-[#111111] transform-gpu"
+          className="absolute inset-0 w-full h-full rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.55)] border border-white/20 bg-[#111111] transform-gpu transition-opacity duration-300"
           style={{ zIndex: idx + 10 }}
         >
           {/* Full Bright Image */}
