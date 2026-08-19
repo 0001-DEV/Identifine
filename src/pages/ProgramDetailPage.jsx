@@ -163,9 +163,6 @@ export default function ProgramDetailPage() {
               alt={imgObj.title}
               className="w-full h-full object-cover object-center select-none"
             />
-
-            {/* Blue hover overlay on the button area */}
-            <div className="absolute bottom-[12%] sm:bottom-[15%] left-1/2 -translate-x-1/2 w-[200px] sm:w-[240px] h-[50px] sm:h-[56px] rounded-full bg-[#0066FF]/0 group-hover/slide:bg-[#0066FF]/60 transition-all duration-300 pointer-events-none" />
           </a>
         ))}
 
