@@ -64,8 +64,8 @@ function AnimatedNumber() {
   }, []);
 
   return (
-    <div ref={counterRef} className="flex items-start justify-center text-[#888888] italic font-swarsh font-normal text-[2.5rem] sm:text-5xl leading-none tracking-tighter mb-1 sm:mb-2 pt-1 h-10 sm:h-14">
-      {count}<span className="text-3xl sm:text-4xl text-[#888888] ml-0.5 leading-none">+</span>
+    <div ref={counterRef} className="flex items-start justify-center text-[#888888] italic font-swarsh font-normal text-5xl sm:text-6xl lg:text-7xl leading-none tracking-tighter mb-1 sm:mb-2 pt-1 h-14 sm:h-20">
+      {count}<span className="text-4xl sm:text-5xl lg:text-6xl text-[#888888] ml-0.5 leading-none">+</span>
     </div>
   );
 }
