@@ -12,6 +12,11 @@ export default function ProgramAccordionShowcase() {
       title: 'Identity Consultation Services',
       subtitle: 'Strategic Brand Alignment',
       description: 'We craft distinctive corporate brand identities that speak louder than words. We design bold brand identities that capture your mission and connect across every touchpoint.',
+      features: [
+        'Strategic Brand Audit & Positioning',
+        'Executive Leadership Identity Architecture',
+        'Enterprise Deployment Roadmap'
+      ],
       image: blackMatteRender,
     },
     {
@@ -19,6 +24,11 @@ export default function ProgramAccordionShowcase() {
       title: 'Corporate Identity Design',
       subtitle: 'Visual Systems & Architecture',
       description: 'Build the clarity, presence, and habits needed to lead with confidence and calm across all corporate assets.',
+      features: [
+        '24K Gold & Titanium Metal Credentials',
+        'Unified Visual Brand Hierarchy',
+        'Precision Aerospace Hardware Manufacturing'
+      ],
       image: elitePassGold,
     },
     {
@@ -26,6 +36,11 @@ export default function ProgramAccordionShowcase() {
       title: 'Identity Creation & Experience',
       subtitle: 'Physical & Digital Touchpoints',
       description: "Unlock the collective potential in your organization's identity through intentional design, premium materials, and dialogue.",
+      features: [
+        'Touch-to-Share Contactless NFC Provisioning',
+        'VIP Member Access Control Systems',
+        'Real-Time Cloud Profile Management'
+      ],
       image: elitePassBlack,
     }
   ];
@@ -59,7 +74,7 @@ export default function ProgramAccordionShowcase() {
                   : 'bg-transparent border border-transparent p-6 sm:p-7 opacity-80 hover:opacity-100'
               }`}
             >
-              {/* Header Row with Title & Explicit Mobile Collapse Button */}
+              {/* Header Row with Title & Collapse Button */}
               <div className="flex items-center justify-between gap-4">
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-galano font-medium tracking-tight text-[#111111]">
                   {prog.title}
@@ -80,20 +95,46 @@ export default function ProgramAccordionShowcase() {
                 </button>
               </div>
 
-              {/* Expandable Description & Features Link */}
+              {/* Expandable Description & Features List with Staggered Drop-Down */}
               <div
-                className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                className={`transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${
                   isOpen
-                    ? 'max-h-[500px] opacity-100 mt-4 pt-2'
+                    ? 'max-h-[600px] opacity-100 mt-4 pt-2'
                     : 'max-h-0 opacity-0 mt-0 pt-0 pointer-events-none'
                 }`}
               >
-                <div className="space-y-6">
-                  <p className="text-sm sm:text-base text-[#555555] leading-relaxed font-normal">
+                <div className="space-y-5">
+                  {/* Paragraph Drop-Down (Delay 100ms) */}
+                  <p
+                    className={`text-sm sm:text-base text-[#555555] leading-relaxed font-normal transform transition-all duration-500 ease-out ${
+                      isOpen ? 'translate-y-0 opacity-100 delay-100' : '-translate-y-3 opacity-0'
+                    }`}
+                  >
                     {prog.description}
                   </p>
 
-                  <div className="pt-2">
+                  {/* Features Bullet List Staggered Drop-Down (Delay 200ms) */}
+                  {prog.features && (
+                    <div
+                      className={`space-y-2 pt-1 transform transition-all duration-500 ease-out ${
+                        isOpen ? 'translate-y-0 opacity-100 delay-200' : '-translate-y-4 opacity-0'
+                      }`}
+                    >
+                      {prog.features.map((feat, fIdx) => (
+                        <div key={fIdx} className="flex items-center gap-2.5 text-xs sm:text-sm text-[#111111] font-medium">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#E2B857] shrink-0" />
+                          <span>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Learn More Button Drop-Down (Delay 300ms) */}
+                  <div
+                    className={`pt-2 transform transition-all duration-500 ease-out ${
+                      isOpen ? 'translate-y-0 opacity-100 delay-300' : '-translate-y-4 opacity-0'
+                    }`}
+                  >
                     <NavLink
                       to={`/program/${prog.id}`}
                       onClick={(e) => e.stopPropagation()}
