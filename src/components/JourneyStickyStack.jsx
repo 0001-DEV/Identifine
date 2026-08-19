@@ -141,6 +141,17 @@ export default function JourneyStickyStack({ journeySteps }) {
             alt={step.title}
             className="w-full h-full object-cover object-center select-none"
           />
+
+          {/* Dark gradient + text overlay at bottom */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 px-8 sm:px-12 pb-8 sm:pb-12 space-y-2 pointer-events-none">
+            <h3 className="font-galano font-semibold text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight drop-shadow-md">
+              {step.title}
+            </h3>
+            <p className="text-sm sm:text-base text-white/80 max-w-xl leading-relaxed font-normal drop-shadow-sm">
+              {step.description}
+            </p>
+          </div>
         </div>
       ))}
     </div>
