@@ -14,15 +14,30 @@ export default function JourneyStickyStack({ journeySteps }) {
       if (!cards || cards.length === 0) return;
 
       const totalCards = cards.length;
+      const verticalPeekOffset = 24; // Exposure offset so upper part of previous cards remains visible
 
-      // Cards 2+ start below separated by a distinct gap
+      // Set initial positions and rotation angles
       cards.forEach((card, index) => {
         if (index > 0) {
-          gsap.set(card, { yPercent: 125 + (index - 1) * 35 });
+          gsap.set(card, { 
+            yPercent: 125 + (index - 1) * 35,
+            y: 0,
+            scale: 1,
+            rotation: index % 2 === 1 ? 1.8 : -1.8,
+            transformOrigin: '50% 50%'
+          });
+        } else {
+          gsap.set(card, {
+            yPercent: 0,
+            y: 0,
+            scale: 1,
+            rotation: 0,
+            transformOrigin: '50% 50%'
+          });
         }
       });
 
-      // Pin the section when Card 1 reaches top of viewport
+      // Pin section and animate cards entering the stack
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -43,25 +58,42 @@ export default function JourneyStickyStack({ journeySteps }) {
       cards.forEach((card, index) => {
         if (index === 0) return;
 
-        const prevCard = cards[index - 1];
+        // Current incoming card slides up and lands with vertical offset & organic tilt
+        const currentRot = index % 2 === 1 ? 1.5 : -1.5;
+        const currentY = index * verticalPeekOffset;
 
         tl.to(
           card,
           {
             yPercent: 0,
-            ease: 'none',
-            duration: 1,
-          },
-          `step-${index}`
-        ).to(
-          prevCard,
-          {
-            scale: 0.96,
+            y: currentY,
+            rotation: currentRot,
             ease: 'none',
             duration: 1,
           },
           `step-${index}`
         );
+
+        // Animate all underlying cards to scale, shift up, and tilt dynamically
+        for (let i = 0; i < index; i++) {
+          const prevCard = cards[i];
+          const depth = index - i; // distance beneath top card
+          const prevY = i * verticalPeekOffset;
+          const prevScale = Math.max(0.86, 1 - depth * 0.045);
+          const prevRot = (i % 2 === 0 ? -2.8 : 2.8) * (1 + (depth - 1) * 0.4);
+
+          tl.to(
+            prevCard,
+            {
+              scale: prevScale,
+              rotation: prevRot,
+              y: prevY,
+              ease: 'none',
+              duration: 1,
+            },
+            `step-${index}`
+          );
+        }
       });
     }, containerRef);
 
@@ -86,7 +118,7 @@ export default function JourneyStickyStack({ journeySteps }) {
         <div
           key={step.key || idx}
           ref={(el) => (cardRefs.current[idx] = el)}
-          className="absolute inset-0 w-full h-full rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl bg-stone-900/10 border border-white/20 transform-gpu"
+          className="absolute inset-0 w-full h-full rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.55)] border border-white/20 bg-[#111111] transform-gpu"
           style={{ zIndex: idx + 10 }}
         >
           {/* Full Bright Image */}
@@ -100,7 +132,3 @@ export default function JourneyStickyStack({ journeySteps }) {
     </div>
   );
 }
-
-
-
-
