@@ -20,6 +20,12 @@ import scrollSlideImg from '../assets/Scroll Slide.png';
 import scrollImg from '../assets/Scroll.png';
 import scroll4xImg from '../assets/Scroll4x.png';
 import scrollssImg from '../assets/Scrollss.png';
+import ab1 from '../assets/ab1.png';
+import ab2 from '../assets/ab2.png';
+import ab3 from '../assets/ab3.png';
+import ab4 from '../assets/ab4.png';
+import ab5 from '../assets/ab5.png';
+import ab6 from '../assets/ab6.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -44,11 +50,12 @@ const programData = {
     subtitle: 'Visual Systems & Architecture',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Corporate%20Identity%20Design',
     images: [
-      { src: elitePassGold2, title: 'Tactile Material Formulation', desc: 'Crafting bespoke 24K gold electroplated finishes for executive presentation credentials.' },
-      { src: elitePassBlack, title: 'Dual-Tone Hybrid Design', desc: 'Precision engineered finishes balancing ultra-durability with modern matte elegance.' },
-      { src: elitePassSilver2, title: 'Titanium Hardware Precision', desc: 'Laser-etched metal passes forged from high-density aerospace-grade titanium alloy.' },
-      { src: blackMatteRender, title: 'Visual System Hierarchy', desc: 'Cohesive brand architecture across physical pass hardware and digital identity assets.' },
-      { src: postProcessImg, title: 'Corporate Brand Specifications', desc: 'Comprehensive visual design standards for enterprise-wide brand rollout.' }
+      { src: ab1, title: 'Corporate Identity Design 01', desc: 'Tactile material formulation and bespoke executive finishes.' },
+      { src: ab2, title: 'Corporate Identity Design 02', desc: 'Precision engineered finishes balancing ultra-durability with modern elegance.' },
+      { src: ab3, title: 'Corporate Identity Design 03', desc: 'Laser-etched metal credentials forged from high-density materials.' },
+      { src: ab4, title: 'Corporate Identity Design 04', desc: 'Cohesive brand architecture across physical pass hardware.' },
+      { src: ab5, title: 'Corporate Identity Design 05', desc: 'Comprehensive visual design standards for enterprise-wide rollout.' },
+      { src: ab6, title: 'Corporate Identity Design 06', desc: 'Executive leadership credentials and premium presentation.' }
     ]
   },
   'creation-experience': {
@@ -186,7 +193,7 @@ export default function ProgramDetailPage() {
         className="w-full h-screen relative overflow-hidden"
       >
         {program.images.map((imgObj, idx) => {
-          const isConsultation = activeKey === 'consultation';
+          const isMockupLayout = activeKey === 'consultation' || activeKey === 'corporate-design';
           const isFirstSlide = idx === 0;
 
           // Align perfectly with visual buttons detected in mockup images
@@ -211,10 +218,10 @@ export default function ProgramDetailPage() {
               className="absolute inset-0 w-full h-full will-change-transform overflow-hidden pointer-events-none"
               style={{ zIndex: idx + 1 }}
             >
-              {isConsultation && idx === 0 && <FirstImageAnimation />}
-              {isConsultation && idx === 3 && <FourthImageAnimation />}
+              {activeKey === 'consultation' && idx === 0 && <FirstImageAnimation />}
+              {activeKey === 'consultation' && idx === 3 && <FourthImageAnimation />}
 
-              {isConsultation ? (
+              {isMockupLayout ? (
                 <div
                   className={isFirstSlide ? "cover-container-hero pointer-events-none" : "cover-container-scroll pointer-events-none"}
                 >
