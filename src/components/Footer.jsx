@@ -60,7 +60,7 @@ export default function Footer() {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
     );
 
     if (footerRef.current) {
@@ -195,16 +195,16 @@ export default function Footer() {
         {/* Logo & Social List Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 pt-4">
           
-          {/* Social List Rows - Staggered download reveal */}
+          {/* Social List Rows - Staggered scroll-up reveal */}
           <div className="max-w-[284px] w-full space-y-0">
             <a
               href="https://www.linkedin.com/"
               target="_blank"
               rel="noreferrer"
-              className={`flex items-center justify-between py-4 border-b border-white/20 group text-[#AAA9AD] hover:text-white transition-all duration-700 delay-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              className={`flex items-center justify-between py-4 border-b border-white/20 group text-[#AAA9AD] hover:text-white transition-all duration-800 delay-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 isDownloaded 
-                  ? 'opacity-100 translate-y-0 blur-0' 
-                  : 'opacity-0 translate-y-6 blur-[3px]'
+                  ? 'opacity-100 translate-y-0 scale-100 blur-0' 
+                  : 'opacity-0 translate-y-12 scale-95 blur-sm'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -218,10 +218,10 @@ export default function Footer() {
               href="https://x.com/"
               target="_blank"
               rel="noreferrer"
-              className={`flex items-center justify-between py-4 border-b border-white/20 group text-[#AAA9AD] hover:text-white transition-all duration-700 delay-600 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              className={`flex items-center justify-between py-4 border-b border-white/20 group text-[#AAA9AD] hover:text-white transition-all duration-800 delay-350 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 isDownloaded 
-                  ? 'opacity-100 translate-y-0 blur-0' 
-                  : 'opacity-0 translate-y-6 blur-[3px]'
+                  ? 'opacity-100 translate-y-0 scale-100 blur-0' 
+                  : 'opacity-0 translate-y-12 scale-95 blur-sm'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -235,10 +235,10 @@ export default function Footer() {
               href="https://www.instagram.com/"
               target="_blank"
               rel="noreferrer"
-              className={`flex items-center justify-between py-4 border-b border-white/20 group text-[#AAA9AD] hover:text-white transition-all duration-700 delay-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              className={`flex items-center justify-between py-4 border-b border-white/20 group text-[#AAA9AD] hover:text-white transition-all duration-800 delay-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 isDownloaded 
-                  ? 'opacity-100 translate-y-0 blur-0' 
-                  : 'opacity-0 translate-y-6 blur-[3px]'
+                  ? 'opacity-100 translate-y-0 scale-100 blur-0' 
+                  : 'opacity-0 translate-y-12 scale-95 blur-sm'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -252,10 +252,10 @@ export default function Footer() {
           {/* Logo on Right with 100px Height - Staggered Streamed Logo */}
           <NavLink 
             to="/" 
-            className={`inline-block pb-2 shrink-0 transition-all duration-700 delay-800 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            className={`inline-block pb-2 shrink-0 transition-all duration-900 delay-650 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               isDownloaded 
                 ? 'opacity-100 translate-y-0 md:-translate-y-12 scale-100 blur-0' 
-                : 'opacity-0 translate-y-4 md:translate-y-0 scale-95 blur-[4px]'
+                : 'opacity-0 translate-y-16 scale-90 blur-md'
             }`}
           >
             <IdentifineWhiteTextLogo className="h-[100px] w-auto" />
