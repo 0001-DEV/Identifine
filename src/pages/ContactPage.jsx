@@ -148,9 +148,9 @@ export default function ContactPage() {
 
           </div>
 
-          {/* Right Container (Increased height & padding) */}
+          {/* Right Container (No border radius) */}
           <div className="lg:col-span-7">
-            <div className="bg-[#F5F4F0] p-10 sm:p-12 lg:p-14 min-h-[500px] rounded-[32px] border border-[#DCDAD4] shadow-md space-y-7 flex flex-col justify-between h-full">
+            <div className="bg-[#F5F4F0] p-10 sm:p-12 lg:p-14 min-h-[500px] rounded-none border border-[#DCDAD4] shadow-md space-y-7 flex flex-col justify-between h-full">
               
               <h2 className="text-2xl sm:text-3xl font-galano font-medium text-[#111111]">
                 Let’s work together
