@@ -121,8 +121,8 @@ export default function ProgramAccordionShowcase() {
         })}
       </div>
 
-      {/* DYNAMIC IMAGE (RIGHT COLUMN: 6 Cols on Desktop - Sleek reduced height) */}
-      <div className="lg:col-span-6 order-2 relative w-full h-[360px] sm:h-[440px] lg:h-[500px] rounded-3xl overflow-hidden bg-[#111111] border border-[#DCDAD4] shadow-2xl min-h-[360px] sm:min-h-[440px] lg:min-h-[500px]">
+      {/* DYNAMIC IMAGE (RIGHT COLUMN: 6 Cols on Desktop - Height increased by 24px) */}
+      <div className="lg:col-span-6 order-2 relative w-full h-[384px] sm:h-[464px] lg:h-[524px] rounded-3xl overflow-hidden bg-[#111111] border border-[#DCDAD4] shadow-2xl min-h-[384px] sm:min-h-[464px] lg:min-h-[524px]">
         {programs.map((prog) => {
           const isActive = activeId === prog.id;
           return (
