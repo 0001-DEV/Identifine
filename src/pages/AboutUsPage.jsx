@@ -288,9 +288,9 @@ export default function AboutUsPage() {
         <section className="bg-[#000000] text-white py-24 sm:py-28 px-6 sm:px-12 lg:px-16 w-screen relative left-1/2 -translate-x-1/2 border-y border-[#222222] shadow-2xl space-y-16">
           <div className="max-w-[84rem] mx-auto space-y-12">
             
-            {/* Header: Center aligned, bold, 'builds' in Swarsh gold italic */}
-            <div className="scroll-reveal space-y-3 text-center max-w-4xl mx-auto">
-              <div className="inline-flex items-center justify-center gap-2.5 mx-auto">
+            {/* Header: Badge left aligned, Heading centered */}
+            <div className="scroll-reveal space-y-4">
+              <div className="inline-flex items-center justify-start gap-2.5">
                 <img
                   src={starIcon}
                   alt=""
@@ -303,7 +303,7 @@ export default function AboutUsPage() {
                   meet our team
                 </span>
               </div>
-              <h2 className="text-4xl sm:text-6xl lg:text-[4.25rem] font-galano font-bold text-white leading-tight text-center">
+              <h2 className="text-5xl sm:text-7xl lg:text-[4.85rem] font-galano font-bold text-white leading-tight text-center max-w-5xl mx-auto">
                 The team that <em className="font-swarsh italic font-normal text-[#E2B857] px-2">builds</em> bold
               </h2>
             </div>
@@ -323,14 +323,14 @@ export default function AboutUsPage() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-115 transition-transform duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] select-none"
+                    className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.14] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] select-none"
                     loading="lazy"
                   />
 
                   {/* Subtle Gradient Overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/90 transition-opacity duration-600 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/90 transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" />
 
-                  {/* Top Right Floating Vertical Socials - Synchronized Gentle Slide In with matching cubic-bezier easing */}
+                  {/* Top Right Floating Vertical Socials - Synchronized Slide Down from UP with Image Zoom */}
                   <div className="absolute top-5 right-5 z-20 pointer-events-none group-hover:pointer-events-auto">
                     <div className="flex flex-col items-center gap-2.5">
                       {member.socials.map((soc, sIdx) => {
@@ -342,9 +342,9 @@ export default function AboutUsPage() {
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{
-                              transitionDelay: `${sIdx * 60}ms`
+                              transitionDelay: `${sIdx * 70}ms`
                             }}
-                            className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/25 text-white flex items-center justify-center hover:bg-[#E2B857] hover:text-black hover:border-[#E2B857] shadow-xl transform transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-0 -translate-y-5 group-hover:opacity-100 group-hover:translate-y-0"
+                            className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/30 text-white flex items-center justify-center hover:bg-[#E2B857] hover:text-black hover:border-[#E2B857] shadow-2xl transform transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-0 -translate-y-8 scale-90 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100"
                             aria-label={member.name}
                           >
                             <IconComponent className="w-4 h-4" />

@@ -248,11 +248,51 @@
   transform: translateY(0);
 }
 
+/* Deep Slide-Up & Contrast Reveal (Coming Up from Down) */
+.scroll-reveal-deep {
+  opacity: 0;
+  transform: translateY(60px) scale(0.96);
+  filter: blur(6px);
+  transition: opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), 
+              filter 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.scroll-reveal-deep.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* Staggered Delay Helpers */
+.stagger-delay-1 { transition-delay: 0.12s; }
+.stagger-delay-2 { transition-delay: 0.28s; }
+.stagger-delay-3 { transition-delay: 0.45s; }
+
+/* High-Contrast Badge Pill Styling */
+.badge-contrast-pill {
+  background: #111111;
+  color: #FFFFFF;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  box-shadow: 0 10px 30px -5px rgba(17, 17, 17, 0.3);
+  border: 1px solid rgba(226, 184, 87, 0.25);
+  transition: all 0.4s ease;
+}
+
+.badge-contrast-pill:hover {
+  border-color: rgba(226, 184, 87, 0.6);
+  box-shadow: 0 12px 35px -4px rgba(17, 17, 17, 0.4);
+  transform: translateY(-2px);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .scroll-reveal {
+  .scroll-reveal, .scroll-reveal-deep {
     opacity: 1;
     transform: none;
     transition: none;
+    filter: none;
   }
   .animate-marquee-left, .animate-marquee-right {
     animation: none;

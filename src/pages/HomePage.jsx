@@ -36,11 +36,18 @@ export default function HomePage() {
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
     );
 
-    const elements = document.querySelectorAll('.scroll-reveal');
-    elements.forEach((el) => observer.observe(el));
+    const elements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-deep');
+    elements.forEach((el) => {
+      observer.observe(el);
+      // Trigger immediately if already inside viewport on load
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('in-view');
+      }
+    });
 
     return () => observer.disconnect();
   }, []);
@@ -180,31 +187,34 @@ export default function HomePage() {
 
 
       {/* 2. DEFINE HOW YOUR ORGANIZATION IS EXPERIENCED */}
-      <section className="bg-[#EBEAE6] pt-0 pb-20 px-6 sm:px-12 overflow-hidden -mt-12 sm:-mt-16 relative z-10">
+      <section className="bg-[#EBEAE6] pt-4 pb-20 px-6 sm:px-12 overflow-hidden -mt-12 sm:-mt-16 relative z-10">
         <div className="max-w-7xl mx-auto space-y-16">
 
-          <div className="scroll-reveal text-center max-w-4xl mx-auto space-y-4">
-            <div className="inline-flex items-center justify-center gap-2.5 max-w-[540px] mx-auto">
+          <div className="text-center max-w-4xl mx-auto space-y-4">
+            {/* Title Badge - Coming up from down with stagger-delay-1 */}
+            <div className="scroll-reveal-deep stagger-delay-1 inline-flex items-center justify-center gap-2.5 max-w-[540px] mx-auto">
               <img
                 src={starIcon}
                 alt=""
                 className="w-4 h-4 object-contain brightness-0"
               />
               <span
-                className="font-galano font-normal text-[#111111] text-sm sm:text-base"
+                className="font-galano font-normal text-[#111111] text-base sm:text-lg"
                 style={{ letterSpacing: '5.2px' }}
               >
                 Our identity experience program
               </span>
             </div>
-            <h2 className="text-3xl sm:text-5xl lg:text-[4rem] font-galano font-medium text-[#111111] leading-tight max-w-6xl mx-auto">
+
+            {/* Main Heading - Coming up from down with stagger-delay-2 */}
+            <h2 className="scroll-reveal-deep stagger-delay-2 text-3xl sm:text-5xl lg:text-[4rem] font-galano font-medium text-[#111111] leading-tight max-w-6xl mx-auto">
               <span className="inline-block whitespace-nowrap">Define how your organization is</span> <br />
               <em className="italic-serif text-[#111111]">experienced</em>
             </h2>
           </div>
 
-          {/* Program Accordion Showcase (CONTAINER BEFORE LOGOS) */}
-          <div className="scroll-reveal">
+          {/* Program Accordion Showcase - Coming up from down with stagger-delay-3 */}
+          <div className="scroll-reveal-deep stagger-delay-3">
             <ProgramAccordionShowcase />
           </div>
 

@@ -66,42 +66,39 @@ const programData = {
   }
 };
 
-// 4th Slide Animated Interactive Element (Rotate 90deg, Hover scale, Click random color)
-function SlideFourAnimation() {
-  const [background, setBackground] = useState('#0099FF');
-  const [rotated, setRotated] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setRotated(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const getRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
-
+// 1st Slide Top-Center Animated Badge (Strategic Brand Audit Beacon)
+function FirstImageAnimation() {
   return (
-    <div
-      onClick={(e) => {
-        e.stopPropagation();
-        setBackground(getRandomColor());
-      }}
-      className="absolute top-20 right-6 sm:top-24 sm:right-14 z-30 cursor-pointer select-none rounded-2xl w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center shadow-2xl border border-white/30 backdrop-blur-sm hover:scale-105 pointer-events-auto transition-transform"
-      style={{
-        backgroundColor: background,
-        transform: rotated ? 'rotate(90deg)' : 'rotate(0deg)',
-        transition: 'transform 2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease',
-      }}
-      title="Click to change color"
-    >
-      <span className="text-white font-bold text-xl sm:text-2xl drop-shadow-md">✦</span>
+    <div className="absolute top-16 sm:top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-auto select-none">
+      <div className="bg-[#0D1117]/90 border border-[#E2B857]/60 shadow-[0_10px_35px_rgba(226,184,87,0.35)] backdrop-blur-md px-6 py-3 rounded-full flex items-center gap-3.5 transition-all duration-300 hover:scale-105 hover:border-[#E2B857]">
+        {/* Pulsing Radar Beacon */}
+        <div className="relative w-4 h-4 flex items-center justify-center">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E2B857] opacity-80" />
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-[#E2B857]" />
+        </div>
+        <span className="text-xs sm:text-sm font-galano font-bold text-[#E2B857] uppercase tracking-[0.25em] drop-shadow">
+          Strategic Brand Audit
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// 4th Slide Top-Center Animated Badge (Institutional Positioning & Enterprise Signal)
+function FourthImageAnimation() {
+  return (
+    <div className="absolute top-16 sm:top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-auto select-none">
+      <div className="bg-[#0B0E14]/95 border border-white/30 shadow-[0_10px_35px_rgba(0,0,0,0.7)] backdrop-blur-md px-6 py-3 rounded-full flex items-center gap-3.5 transition-all duration-300 hover:scale-105 hover:border-white/60">
+        {/* Animated Signal Bars */}
+        <div className="flex items-end gap-1 h-4 w-4 justify-center">
+          <span className="w-1 bg-[#E2B857] rounded-full h-2.5 animate-bounce" style={{ animationDelay: '0ms' }} />
+          <span className="w-1 bg-[#E2B857] rounded-full h-4 animate-bounce" style={{ animationDelay: '150ms' }} />
+          <span className="w-1 bg-[#E2B857] rounded-full h-3 animate-bounce" style={{ animationDelay: '300ms' }} />
+        </div>
+        <span className="text-xs sm:text-sm font-galano font-bold text-white uppercase tracking-[0.25em] drop-shadow">
+          Institutional Positioning
+        </span>
+      </div>
     </div>
   );
 }
@@ -214,6 +211,9 @@ export default function ProgramDetailPage() {
               className="absolute inset-0 w-full h-full will-change-transform overflow-hidden pointer-events-none"
               style={{ zIndex: idx + 1 }}
             >
+              {isConsultation && idx === 0 && <FirstImageAnimation />}
+              {isConsultation && idx === 3 && <FourthImageAnimation />}
+
               {isConsultation ? (
                 <div
                   className={isFirstSlide ? "cover-container-hero pointer-events-none" : "cover-container-scroll pointer-events-none"}
@@ -230,7 +230,6 @@ export default function ProgramDetailPage() {
                     className="absolute cursor-pointer z-20 pointer-events-auto"
                     style={buttonStyle}
                   />
-                  {idx === 3 && <SlideFourAnimation />}
                 </div>
               ) : (
                 <>
