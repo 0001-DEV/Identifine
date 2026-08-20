@@ -549,7 +549,7 @@ export default function AboutUsPage() {
               </span>
               <div className="flex items-end justify-between gap-2.5 mt-auto pt-6">
                 <div className="text-5xl sm:text-6xl font-galano font-normal italic text-[#111111] leading-none shrink-0 tracking-tight">
-                  <AnimatedNumber target="85" suffix="+" />
+                  <AnimatedNumber target="86" suffix="+" />
                 </div>
                 <div className="text-sm sm:text-base text-[#333333] font-normal text-right leading-relaxed shrink-0">
                   <span className="block whitespace-nowrap">From strategy to</span>
