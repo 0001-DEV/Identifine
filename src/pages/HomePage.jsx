@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import HeroVideoZoom from '../components/HeroVideoZoom';
 import CompanyLogosMarquee from '../components/CompanyLogosMarquee';
@@ -24,6 +24,7 @@ import deployImg from '../assets/Deploy.jpg';
 import evolveImg from '../assets/Evolve.png';
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const [selectedCardModal, setSelectedCardModal] = useState(null);
 
   // Scroll reveal IntersectionObserver hook
@@ -230,7 +231,7 @@ export default function HomePage() {
       {/* 3. OUR IDENTITY CATALOGUE (STICKY PINNED HORIZONTAL SCROLL DECK) */}
       <CataloguePinnedHorizontalDeck
         catalogueCards={catalogueCards}
-        onSelectCard={(card) => setSelectedCardModal(card)}
+        onSelectCard={(card) => navigate(`/product-catalogue?id=${card.id}`)}
       />
 
 

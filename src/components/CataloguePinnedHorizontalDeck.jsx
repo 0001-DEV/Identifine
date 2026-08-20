@@ -103,9 +103,10 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
           style={{ willChange: 'transform' }}
         >
           {catalogueCards.map((card) => (
-            <div
+            <NavLink
               key={card.id}
-              onClick={() => onSelectCard(card)}
+              to={`/product-catalogue?id=${card.id}`}
+              onClick={() => onSelectCard && onSelectCard(card)}
               className="group cursor-pointer rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl hover:scale-[1.03] transition-all duration-300 w-[280px] sm:w-[360px] md:w-[420px] h-[260px] sm:h-[330px] md:h-[370px] shrink-0 relative border border-white/15 bg-[#111111]"
             >
               <img
@@ -118,7 +119,7 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
                   {card.title}
                 </h3>
               </div>
-            </div>
+            </NavLink>
           ))}
         </div>
       </div>

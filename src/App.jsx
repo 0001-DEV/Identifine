@@ -11,6 +11,7 @@ import AboutUsPage from './pages/AboutUsPage';
 import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
 import ProgramDetailPage from './pages/ProgramDetailPage';
+import ProductCataloguePage from './pages/ProductCataloguePage';
 import TermsPage from './pages/TermsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -53,7 +54,9 @@ export default function App() {
           <Route path="/program-details/:id" element={<ProgramDetailPage />} />
           <Route path="/program-details" element={<ProgramDetailPage />} />
           <Route path="/program/*" element={<ProgramDetailPage />} />
-          <Route path="/product-catalogue" element={<ElitePassPage />} />
+          <Route path="/product-catalogue" element={<ProductCataloguePage />} />
+          <Route path="/product-catalogue/:id" element={<ProductCataloguePage />} />
+          <Route path="/catalogue" element={<ProductCataloguePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
