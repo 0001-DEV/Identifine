@@ -99,7 +99,7 @@ export default function ContactPage() {
                   <a href="tel:+2349030001851" className="block text-xl sm:text-2xl font-normal text-[#111111] hover:text-[#E2B857] transition-colors">
                     +234 903 000 1851
                   </a>
-                  <a href="mailto:contact@identifine.com.ng" className="text-2xl sm:text-3xl lg:text-[2.1rem] font-normal text-[#111111] block hover:text-[#E2B857] transition-colors leading-tight">
+                  <a href="mailto:contact@identifine.com.ng" className="text-lg sm:text-xl lg:text-[1.65rem] font-bold text-[#111111] block hover:text-[#E2B857] transition-colors leading-tight max-w-xs sm:max-w-sm">
                     contact@identifine.com.ng
                   </a>
                 </div>
@@ -121,7 +121,7 @@ export default function ContactPage() {
                   </span>
                 </div>
                 <div className="space-y-1 pt-1">
-                  <div className="text-xl sm:text-2xl font-normal text-[#111111]">Identifine studio</div>
+                  <div className="text-xl sm:text-2xl font-bold text-[#111111]">Identifine studio</div>
                   <p className="text-base sm:text-lg text-[#444444] leading-relaxed font-normal max-w-sm">
                     C-close, 3rd avenue, Citiview estate, warewa, Ogun state, Nigeria.
                   </p>
