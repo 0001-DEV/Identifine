@@ -65,7 +65,7 @@ export default function ContactPage() {
       <div className="max-w-6xl mx-auto space-y-16">
         
         {/* Header */}
-        <h1 className="text-5xl sm:text-8xl lg:text-[7.5rem] text-center font-sans font-bold text-[#111111] leading-tight pb-6">
+        <h1 className="text-5xl sm:text-8xl lg:text-[7.5rem] text-center font-galano font-normal text-[#111111] leading-tight pb-6">
           Start <em className="italic-serif text-[#111111] font-normal">something</em> bold
         </h1>
 
@@ -121,7 +121,7 @@ export default function ContactPage() {
           <div className="lg:col-span-8">
             <div className="bg-[#F5F4F0] p-8 sm:p-12 rounded-3xl border border-[#DCDAD4] shadow-sm space-y-6">
               
-              <h2 className="text-3xl font-bold text-[#111111] font-sans">Let’s work together</h2>
+              <h2 className="text-3xl font-normal text-[#111111] font-galano">Let’s work together</h2>
 
               {!submitted ? (
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -195,7 +195,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
             <div className="lg:col-span-4 space-y-4 lg:-ml-16 xl:-ml-24">
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-sans font-bold text-[#111111] leading-tight tracking-tight">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-galano font-normal text-[#111111] leading-tight tracking-tight">
                 Have questions? <br/>
                 <span className="text-[#666666] italic-serif font-normal">Clarity start right here</span>
               </h2>
