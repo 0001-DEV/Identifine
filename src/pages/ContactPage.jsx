@@ -64,7 +64,7 @@ export default function ContactPage() {
 
   return (
     <div className="bg-[#EBEAE6] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 text-[#111111] overflow-hidden">
-      <div className="max-w-[88rem] mx-auto space-y-24 sm:space-y-32">
+      <div className="max-w-[96rem] mx-auto space-y-24 sm:space-y-32">
         
         {/* Header - Reduced width, centered & font-medium */}
         <div className="max-w-4xl mx-auto text-center pb-2">
@@ -81,36 +81,58 @@ export default function ContactPage() {
             
             <div className="space-y-8">
               {/* Contact us */}
-              <div className="space-y-2.5">
-                <div className="text-xs sm:text-sm font-mono uppercase tracking-widest text-[#555555] font-bold flex items-center gap-1.5">
-                  <span>✦</span> Contact us
+              <div className="space-y-3">
+                <div className="inline-flex items-center justify-start gap-2.5">
+                  <img
+                    src={starIcon}
+                    alt=""
+                    className="w-4 h-4 object-contain brightness-0"
+                  />
+                  <span
+                    className="font-galano font-normal text-base sm:text-lg text-[#111111] normal-case"
+                    style={{ letterSpacing: '4px' }}
+                  >
+                    Contact us
+                  </span>
                 </div>
-                <div className="space-y-1">
-                  <a href="tel:+2349030001851" className="block text-lg sm:text-xl font-bold text-[#111111] hover:text-[#E2B857] transition-colors">
+                <div className="space-y-1 pt-1">
+                  <a href="tel:+2349030001851" className="block text-xl sm:text-2xl font-bold text-[#111111] hover:text-[#E2B857] transition-colors">
                     +234 903 000 1851
                   </a>
-                  <a href="mailto:contact@identifine.com.ng" className="text-xl sm:text-2xl lg:text-[1.75rem] font-bold text-[#111111] block hover:text-[#E2B857] transition-colors leading-tight">
+                  <a href="mailto:contact@identifine.com.ng" className="text-2xl sm:text-3xl lg:text-[2.1rem] font-bold text-[#111111] block hover:text-[#E2B857] transition-colors leading-tight">
                     contact@identifine.com.ng
                   </a>
                 </div>
               </div>
 
               {/* Visit us */}
-              <div className="space-y-2.5">
-                <div className="text-xs sm:text-sm font-mono uppercase tracking-widest text-[#555555] font-bold flex items-center gap-1.5">
-                  <span>✦</span> Visit us
+              <div className="space-y-3">
+                <div className="inline-flex items-center justify-start gap-2.5">
+                  <img
+                    src={starIcon}
+                    alt=""
+                    className="w-4 h-4 object-contain brightness-0"
+                  />
+                  <span
+                    className="font-galano font-normal text-base sm:text-lg text-[#111111] normal-case"
+                    style={{ letterSpacing: '4px' }}
+                  >
+                    Visit us
+                  </span>
                 </div>
-                <div className="text-lg sm:text-xl font-bold text-[#111111]">Identifine studio</div>
-                <p className="text-sm sm:text-base text-[#444444] leading-relaxed font-normal max-w-sm">
-                  C-close, 3rd avenue, Citiview estate, warewa, Ogun state, Nigeria.
-                </p>
+                <div className="space-y-1 pt-1">
+                  <div className="text-xl sm:text-2xl font-bold text-[#111111]">Identifine studio</div>
+                  <p className="text-base sm:text-lg text-[#444444] leading-relaxed font-normal max-w-sm">
+                    C-close, 3rd avenue, Citiview estate, warewa, Ogun state, Nigeria.
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* Founder Note - Bottom Aligned to Right Container */}
             <div className="pt-6 border-t border-[#DCDAD4] space-y-3.5 mt-auto">
-              <p className="text-base sm:text-lg font-galano font-medium text-[#111111] leading-relaxed">
-                “Every great project begins with a simple conversation — let’s start yours.”
+              <p className="text-lg sm:text-xl font-galano font-normal text-[#111111] leading-relaxed">
+                “Every great project begins with a simple <br /> conversation — let’s start yours.”
               </p>
               
               <div className="flex items-center gap-3.5 pt-1">
