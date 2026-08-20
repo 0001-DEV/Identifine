@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CheckCircle2, ChevronDown } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import starIcon from '../assets/SVG@4x.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -209,6 +210,11 @@ export default function ContactPage() {
           {/* Center-aligned FAQ Header */}
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center justify-center gap-2.5">
+              <img
+                src={starIcon}
+                alt=""
+                className="w-4 h-4 object-contain brightness-0"
+              />
               <span
                 className="font-galano font-medium text-sm sm:text-base text-[#111111] normal-case"
                 style={{ letterSpacing: '5px' }}
