@@ -148,11 +148,11 @@ export default function ProductCataloguePage() {
   };
 
   return (
-    <div className="bg-[#080B11] text-white min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden">
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden">
       <div className="max-w-[94rem] mx-auto space-y-20 sm:space-y-28">
         
         {/* Top Product Selector Pills */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap max-w-5xl mx-auto pb-4">
+        <div className="flex items-center justify-center gap-2.5 sm:gap-3.5 flex-wrap max-w-5xl mx-auto pb-2">
           {productsData.map((prod) => {
             const isSelected = prod.id === activeProduct.id;
             return (
@@ -161,8 +161,8 @@ export default function ProductCataloguePage() {
                 onClick={() => handleSelectProduct(prod.id)}
                 className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
                   isSelected
-                    ? 'bg-[#E2B857] text-black font-semibold shadow-lg scale-105'
-                    : 'bg-white/5 text-[#AAA9AD] border border-white/10 hover:border-white/30 hover:text-white'
+                    ? 'bg-black text-white font-semibold shadow-lg scale-105'
+                    : 'bg-white text-[#555555] border border-[#DCDAD4] hover:border-[#111111] hover:text-[#111111] shadow-sm'
                 }`}
               >
                 {prod.title}
@@ -182,10 +182,10 @@ export default function ProductCataloguePage() {
               <img
                 src={starIcon}
                 alt=""
-                className="w-4 h-4 object-contain brightness-200"
+                className="w-4 h-4 object-contain brightness-0"
               />
               <span
-                className="font-galano font-normal text-[#AAA9AD] text-xs sm:text-sm uppercase"
+                className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase"
                 style={{ letterSpacing: '4.5px' }}
               >
                 Our identity catalogue
@@ -193,31 +193,31 @@ export default function ProductCataloguePage() {
             </div>
 
             {/* H1 Title */}
-            <h1 className="text-5xl sm:text-7xl lg:text-[6rem] font-galano font-medium tracking-tight text-white leading-[1.05]">
-              {activeProduct.headingStart} <em className="font-swarsh italic font-normal text-[#E2B857] px-1">{activeProduct.headingItalic}</em>
+            <h1 className="text-5xl sm:text-7xl lg:text-[6rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.05]">
+              {activeProduct.headingStart} <em className="font-swarsh italic font-normal text-[#111111] px-1">{activeProduct.headingItalic}</em>
             </h1>
 
             {/* Overview Card */}
-            <div className="bg-white/5 border border-white/10 p-8 sm:p-10 rounded-[28px] shadow-2xl space-y-6 backdrop-blur-md">
+            <div className="bg-white border border-[#DCDAD4] p-8 sm:p-10 rounded-[28px] shadow-sm space-y-6">
               
-              <div className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-xs font-semibold text-[#E2B857] uppercase tracking-wider">
+              <div className="inline-block px-4 py-1.5 rounded-full bg-[#F5F4F0] border border-[#DCDAD4] text-xs font-semibold text-[#111111] uppercase tracking-wider">
                 Overview
               </div>
 
-              <p className="text-base sm:text-lg text-[#CCCCCC] leading-relaxed font-normal">
+              <p className="text-base sm:text-lg text-[#333333] leading-relaxed font-normal">
                 {activeProduct.overview}
               </p>
 
               {/* Specs Grid */}
-              <div className="pt-4 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
+              <div className="pt-4 border-t border-[#DCDAD4] grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
                 <div className="space-y-1">
-                  <div className="text-xs font-mono text-[#888888] uppercase tracking-wider">Category:</div>
-                  <div className="text-base font-bold text-white">{activeProduct.category}</div>
+                  <div className="text-xs font-mono text-[#666666] uppercase tracking-wider">Category:</div>
+                  <div className="text-base font-bold text-[#111111]">{activeProduct.category}</div>
                 </div>
 
                 <div className="space-y-1">
-                  <div className="text-xs font-mono text-[#888888] uppercase tracking-wider">Features:</div>
-                  <div className="text-base font-medium text-[#E2B857]">{activeProduct.features}</div>
+                  <div className="text-xs font-mono text-[#666666] uppercase tracking-wider">Features:</div>
+                  <div className="text-base font-semibold text-[#111111]">{activeProduct.features}</div>
                 </div>
               </div>
 
@@ -227,13 +227,13 @@ export default function ProductCataloguePage() {
                   href="https://wa.me/2349030001851"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="framer-pill-gold text-sm px-8 py-4 font-semibold shadow-xl"
+                  className="framer-pill-button text-sm px-8 py-4 font-semibold shadow-md"
                 >
                   Make an identity enquiry
                 </a>
                 <NavLink
                   to="/contact"
-                  className="framer-pill-white text-sm px-8 py-4 font-semibold shadow-xl"
+                  className="bg-white border border-[#DCDAD4] text-black text-sm px-8 py-4 font-semibold rounded-full hover:bg-black hover:text-white transition-all shadow-sm"
                 >
                   Book a consultation
                 </NavLink>
@@ -245,22 +245,19 @@ export default function ProductCataloguePage() {
 
           {/* Right Column: High-Res Card Image Frame */}
           <div className="lg:col-span-6">
-            <div className="relative rounded-[32px] overflow-hidden bg-gradient-to-b from-white/10 via-black to-black border border-white/15 p-6 sm:p-10 shadow-2xl min-h-[480px] sm:min-h-[580px] flex items-center justify-center group">
+            <div className="relative rounded-[32px] overflow-hidden bg-white border border-[#DCDAD4] p-6 sm:p-10 shadow-md min-h-[480px] sm:min-h-[580px] flex items-center justify-center group">
               
-              {/* Subtle Ambient Glow */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#E2B857]/15 rounded-full blur-[100px] pointer-events-none group-hover:bg-[#E2B857]/25 transition-all duration-700" />
-
               <img
                 src={activeProduct.image}
                 alt={activeProduct.title}
-                className="w-full max-h-[520px] object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.8)] group-hover:scale-[1.03] transition-transform duration-700 ease-out select-none relative z-10"
+                className="w-full max-h-[520px] object-contain drop-shadow-xl group-hover:scale-[1.03] transition-transform duration-700 ease-out select-none relative z-10"
               />
 
               <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between pointer-events-none z-20">
-                <div className="px-4 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-xs font-mono text-[#AAA9AD]">
+                <div className="px-4 py-2 rounded-full bg-[#F5F4F0] border border-[#DCDAD4] text-xs font-mono text-[#444444] shadow-sm">
                   ✦ {activeProduct.subtitle}
                 </div>
-                <div className="w-9 h-9 rounded-full bg-[#E2B857] text-black flex items-center justify-center font-bold text-xs shadow-lg">
+                <div className="w-9 h-9 rounded-full bg-[#111111] text-[#E2B857] flex items-center justify-center font-bold text-xs shadow-md">
                   ID
                 </div>
               </div>
@@ -271,13 +268,13 @@ export default function ProductCataloguePage() {
         </div>
 
         {/* Section 2: Partners using our flagship */}
-        <div className="pt-16 sm:pt-24 border-t border-white/10 space-y-12 text-center">
+        <div className="pt-16 sm:pt-24 border-t border-[#DCDAD4] space-y-12 text-center">
           
           <div className="max-w-3xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-galano font-medium text-white leading-tight">
-              Partners using our <em className="font-swarsh italic font-normal text-[#E2B857]">{activeProduct.title}</em> flagship
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-galano font-medium text-[#111111] leading-tight">
+              Partners using our <em className="font-swarsh italic font-normal text-[#111111]">{activeProduct.title}</em> flagship
             </h2>
-            <p className="text-base sm:text-lg text-[#AAA9AD] max-w-xl mx-auto font-normal">
+            <p className="text-base sm:text-lg text-[#555555] max-w-xl mx-auto font-normal">
               Trusted by leading enterprises, financial institutions, and executive teams across Africa.
             </p>
           </div>
@@ -287,9 +284,9 @@ export default function ProductCataloguePage() {
             {activeProduct.partners.slice(0, displayedPartnersCount).map((partner, idx) => (
               <div
                 key={idx}
-                className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 flex items-center justify-center hover:border-[#E2B857]/50 hover:bg-white/10 transition-all duration-300 group shadow-lg"
+                className="bg-white border border-[#DCDAD4] rounded-2xl p-6 sm:p-8 flex items-center justify-center hover:border-[#111111] hover:shadow-md transition-all duration-300 group shadow-sm"
               >
-                <span className="text-lg sm:text-xl font-bold text-[#EBEAE6] group-hover:text-[#E2B857] transition-colors tracking-tight font-galano">
+                <span className="text-lg sm:text-xl font-bold text-[#111111] transition-colors tracking-tight font-galano">
                   {partner.name}
                 </span>
               </div>
@@ -301,7 +298,7 @@ export default function ProductCataloguePage() {
             <div className="pt-4">
               <button
                 onClick={() => setDisplayedPartnersCount((prev) => prev + 4)}
-                className="framer-pill-white text-sm px-10 py-3.5 font-medium"
+                className="bg-white text-black border border-[#DCDAD4] hover:bg-black hover:text-white transition-all text-sm px-10 py-3.5 font-semibold rounded-full shadow-sm"
               >
                 Load More
               </button>
@@ -312,7 +309,7 @@ export default function ProductCataloguePage() {
                 href="https://wa.me/2349030001851"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="framer-pill-gold text-sm px-10 py-3.5 font-semibold"
+                className="framer-pill-button text-sm px-10 py-3.5 font-semibold"
               >
                 Become a partner
               </a>
