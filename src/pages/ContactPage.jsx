@@ -37,11 +37,12 @@ export default function ContactPage() {
   useEffect(() => {
     let ctx = gsap.context(() => {
       gsap.fromTo(
-        '.faq-question-text',
-        { clipPath: 'inset(0 100% 0 0)' },
+        '.faq-card-item',
+        { opacity: 0, y: 35 },
         {
-          clipPath: 'inset(0 0% 0 0)',
-          duration: 1,
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
           ease: 'power3.out',
           stagger: 0.15,
           scrollTrigger: {
@@ -61,124 +62,136 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="bg-[#EBEAE6] min-h-screen pt-36 pb-28 px-6 sm:px-12">
-      <div className="max-w-6xl mx-auto space-y-16">
+    <div className="bg-[#EBEAE6] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 text-[#111111] overflow-hidden">
+      <div className="max-w-7xl mx-auto space-y-24 sm:space-y-32">
         
-        {/* Header */}
-        <h1 className="text-5xl sm:text-8xl lg:text-[7.5rem] text-center font-galano font-normal text-[#111111] leading-tight pb-6">
-          Start <em className="italic-serif text-[#111111] font-normal">something</em> bold
-        </h1>
+        {/* Header - Reduced width, centered & font-medium */}
+        <div className="max-w-4xl mx-auto text-center pb-2">
+          <h1 className="text-5xl sm:text-7xl lg:text-[6.25rem] font-galano font-medium text-[#111111] leading-[1.08] tracking-tight text-center">
+            Start <em className="font-swarsh italic font-medium text-[#111111] px-1">something</em> bold
+          </h1>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        {/* Contact Grid: Left Details & Right Form Container */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
-          {/* Left Details */}
-          <div className="lg:col-span-4 space-y-10 lg:-ml-16 xl:-ml-24">
+          {/* Left Details - Increased Font Sizes */}
+          <div className="lg:col-span-4 space-y-10 text-left">
             
             {/* Contact us */}
             <div className="space-y-3">
-              <div className="text-sm font-mono uppercase tracking-widest text-[#666666] font-bold flex items-center gap-1">
+              <div className="text-sm sm:text-base font-mono uppercase tracking-widest text-[#555555] font-bold flex items-center gap-1.5">
                 <span>✦</span> Contact us
               </div>
-              <div className="text-base sm:text-lg font-semibold text-[#111111]">
-                <a href="tel:+2349030001851" className="block hover:underline">+234 903 000 1851</a>
-                <a href="mailto:contact@identifine.com.ng" className="text-2xl sm:text-3xl font-bold text-[#111111] block mt-1 hover:underline">
+              <div className="space-y-1.5">
+                <a href="tel:+2349030001851" className="block text-xl sm:text-2xl font-bold text-[#111111] hover:text-[#E2B857] transition-colors">
+                  +234 903 000 1851
+                </a>
+                <a href="mailto:contact@identifine.com.ng" className="text-2xl sm:text-3xl lg:text-[2rem] font-bold text-[#111111] block hover:text-[#E2B857] transition-colors leading-tight">
                   contact@identifine.com.ng
                 </a>
               </div>
             </div>
 
             {/* Visit us */}
-            <div className="space-y-2">
-              <div className="text-sm font-mono uppercase tracking-widest text-[#666666] font-bold flex items-center gap-1">
+            <div className="space-y-3">
+              <div className="text-sm sm:text-base font-mono uppercase tracking-widest text-[#555555] font-bold flex items-center gap-1.5">
                 <span>✦</span> Visit us
               </div>
-              <div className="text-base sm:text-lg font-bold text-[#111111]">Identifine studio</div>
-              <p className="text-sm sm:text-base text-[#555555] leading-relaxed">
+              <div className="text-xl sm:text-2xl font-bold text-[#111111]">Identifine studio</div>
+              <p className="text-base sm:text-lg text-[#444444] leading-relaxed font-normal max-w-sm">
                 C-close, 3rd avenue, Citiview estate, warewa, Ogun state, Nigeria.
               </p>
             </div>
 
             {/* Founder Note */}
-            <div className="pt-6 border-t border-[#DCDAD4] space-y-3">
-              <p className="text-base font-medium text-[#222222] leading-relaxed">
-                Every great project begins with a simple conversation — let’s start yours.
+            <div className="pt-8 border-t border-[#DCDAD4] space-y-4">
+              <p className="text-lg sm:text-xl font-galano font-medium text-[#111111] leading-relaxed">
+                “Every great project begins with a simple conversation — let’s start yours.”
               </p>
               
-              <div className="flex items-center gap-3 pt-2">
-                <div className="w-12 h-12 rounded-full bg-[#111111] text-[#E2B857] flex items-center justify-center font-bold text-sm">
+              <div className="flex items-center gap-3.5 pt-2">
+                <div className="w-13 h-13 rounded-full bg-[#111111] text-[#E2B857] flex items-center justify-center font-bold text-base shadow-md">
                   DA
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-[#111111]">Debo Atiba</div>
-                  <div className="text-xs font-mono text-[#777777]">Founder & CEO</div>
+                  <div className="text-base sm:text-lg font-bold text-[#111111]">Debo Atiba</div>
+                  <div className="text-xs sm:text-sm font-mono text-[#666666]">Founder & CEO</div>
                 </div>
               </div>
             </div>
 
           </div>
 
-          {/* Right Card Form (#F5F4F0 light container) */}
+          {/* Right Container (Increased size form card) */}
           <div className="lg:col-span-8">
-            <div className="bg-[#F5F4F0] p-8 sm:p-12 rounded-3xl border border-[#DCDAD4] shadow-sm space-y-6">
+            <div className="bg-[#F5F4F0] p-10 sm:p-14 lg:p-16 rounded-[32px] border border-[#DCDAD4] shadow-md space-y-8 min-h-[580px] flex flex-col justify-between">
               
-              <h2 className="text-3xl font-normal text-[#111111] font-galano">Let’s work together</h2>
+              <h2 className="text-3xl sm:text-4xl font-galano font-medium text-[#111111]">
+                Let’s work together
+              </h2>
 
               {!submitted ? (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-[#333333]">Full name*</label>
+                    <label className="text-sm sm:text-base font-semibold text-[#333333]">Full name*</label>
                     <input
                       type="text"
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Amanda Ferguson"
-                      className="w-full bg-white border border-[#DCDAD4] rounded-xl px-4 py-3.5 text-sm text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111]"
+                      className="w-full bg-white border border-[#DCDAD4] rounded-2xl px-5 py-4 text-base text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111] shadow-sm transition-all"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-[#333333]">Email address*</label>
+                    <label className="text-sm sm:text-base font-semibold text-[#333333]">Email address*</label>
                     <input
                       type="email"
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="example@gmail.com"
-                      className="w-full bg-white border border-[#DCDAD4] rounded-xl px-4 py-3.5 text-sm text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111]"
+                      className="w-full bg-white border border-[#DCDAD4] rounded-2xl px-5 py-4 text-base text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111] shadow-sm transition-all"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-[#333333]">Message</label>
+                    <label className="text-sm sm:text-base font-semibold text-[#333333]">Message</label>
                     <textarea
                       rows={5}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Tell us the purpose"
-                      className="w-full bg-white border border-[#DCDAD4] rounded-xl px-4 py-3.5 text-sm text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111] resize-none"
+                      className="w-full bg-white border border-[#DCDAD4] rounded-2xl px-5 py-4 text-base text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111] resize-none shadow-sm transition-all"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="framer-pill-button text-sm px-10 py-4"
+                    className="group relative overflow-hidden inline-flex items-center justify-center text-base sm:text-lg font-semibold px-12 py-4.5 sm:py-5 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[58px]"
                   >
-                    Submit
+                    <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
+                      <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
+                        <span className="block">Submit</span>
+                        <span className="block">Submit</span>
+                      </span>
+                    </span>
                   </button>
                 </form>
               ) : (
-                <div className="text-center py-8 space-y-4">
-                  <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-6 h-6" />
+                <div className="text-center py-12 space-y-6">
+                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h3 className="text-xl font-bold text-[#111111]">Enquiry Received!</h3>
-                  <p className="text-xs text-[#555555]">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-[#111111]">Enquiry Received!</h3>
+                  <p className="text-sm sm:text-base text-[#555555] max-w-md mx-auto leading-relaxed">
                     Thank you, Amanda. We will reach out to you within 2 business hours.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="framer-pill-button text-xs px-6 py-2.5"
+                    className="framer-pill-button text-sm px-8 py-3"
                   >
                     Submit another
                   </button>
@@ -190,54 +203,62 @@ export default function ContactPage() {
 
         </div>
 
-        {/* FAQ Section */}
-        <div ref={faqRef} className="pt-24 border-t border-[#DCDAD4]">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            
-            <div className="lg:col-span-4 space-y-4 lg:-ml-16 xl:-ml-24">
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-galano font-normal text-[#111111] leading-tight tracking-tight">
-                Have questions? <br/>
-                <span className="text-[#666666] italic-serif font-normal">Clarity start right here</span>
-              </h2>
+        {/* FAQ Section - Center Aligned Header & White Card Containers */}
+        <div ref={faqRef} className="pt-16 sm:pt-24 border-t border-[#DCDAD4] space-y-12">
+          
+          {/* Center-aligned FAQ Header */}
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <div className="inline-flex items-center justify-center gap-2.5">
+              <span
+                className="font-galano font-medium text-sm sm:text-base text-[#111111] normal-case"
+                style={{ letterSpacing: '5px' }}
+              >
+                Have questions?
+              </span>
             </div>
-
-            <div className="lg:col-span-8">
-              <div className="border-t border-[#DCDAD4]">
-                {faqs.map((faq, index) => {
-                  const isOpen = openFaq === index;
-                  return (
-                    <div key={index} className="border-b border-[#DCDAD4]">
-                      <button
-                        onClick={() => setOpenFaq(isOpen ? null : index)}
-                        className="w-full flex items-center justify-between text-left py-6 sm:py-8 group"
-                      >
-                        <h3 className="faq-question-text text-xl sm:text-2xl lg:text-3xl font-bold text-[#111111] group-hover:text-[#E2B857] transition-colors leading-tight pr-8" style={{ clipPath: 'inset(0 100% 0 0)' }}>
-                          {faq.question}
-                        </h3>
-                        <div className="w-10 h-10 rounded-full bg-[#EBEAE6] group-hover:bg-[#E2B857] text-[#111111] flex items-center justify-center shrink-0 transition-colors">
-                          <ChevronDown
-                            className={`w-5 h-5 transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
-                          />
-                        </div>
-                      </button>
-                      <div
-                        className={`grid transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                          isOpen ? 'grid-rows-[1fr] opacity-100 mb-6' : 'grid-rows-[0fr] opacity-0'
-                        }`}
-                      >
-                        <div className="overflow-hidden">
-                          <p className="text-base sm:text-lg text-[#555555] leading-relaxed max-w-3xl">
-                            {faq.answer}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
+            <h2 className="text-5xl sm:text-6xl lg:text-[4.5rem] font-galano font-medium text-[#111111] leading-[1.12] text-center">
+              Clarity <em className="font-swarsh italic font-medium text-[#111111] px-1">starts</em> right here
+            </h2>
           </div>
+
+          {/* FAQ Accordion Cards */}
+          <div className="max-w-4xl mx-auto space-y-4">
+            {faqs.map((faq, index) => {
+              const isOpen = openFaq === index;
+              return (
+                <div
+                  key={index}
+                  className="faq-card-item bg-white border border-[#DCDAD4] rounded-[24px] sm:rounded-[28px] p-6 sm:p-8 shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? null : index)}
+                    className="w-full flex items-center justify-between text-left group focus:outline-none"
+                  >
+                    <h3 className="text-xl sm:text-2xl font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors leading-snug pr-6">
+                      {faq.question}
+                    </h3>
+                    <div className="w-11 h-11 rounded-full bg-[#F5F4F0] group-hover:bg-[#E2B857] text-[#111111] border border-[#DCDAD4] flex items-center justify-center shrink-0 transition-colors shadow-sm">
+                      <ChevronDown
+                        className={`w-5 h-5 transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
+                      />
+                    </div>
+                  </button>
+                  <div
+                    className={`grid transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isOpen ? 'grid-rows-[1fr] opacity-100 mt-6 pt-6 border-t border-[#DCDAD4]/60' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className={`text-base sm:text-[1.05rem] text-[#444444] leading-relaxed max-w-3xl font-normal ${isOpen ? 'animate-typewriter-text' : ''}`}>
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
         </div>
 
       </div>
