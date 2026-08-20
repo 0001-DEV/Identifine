@@ -96,10 +96,10 @@ export default function ContactPage() {
                   </span>
                 </div>
                 <div className="space-y-1 pt-1">
-                  <a href="tel:+2349030001851" className="block text-xl sm:text-2xl font-bold text-[#111111] hover:text-[#E2B857] transition-colors">
+                  <a href="tel:+2349030001851" className="block text-xl sm:text-2xl font-normal text-[#111111] hover:text-[#E2B857] transition-colors">
                     +234 903 000 1851
                   </a>
-                  <a href="mailto:contact@identifine.com.ng" className="text-2xl sm:text-3xl lg:text-[2.1rem] font-bold text-[#111111] block hover:text-[#E2B857] transition-colors leading-tight">
+                  <a href="mailto:contact@identifine.com.ng" className="text-2xl sm:text-3xl lg:text-[2.1rem] font-normal text-[#111111] block hover:text-[#E2B857] transition-colors leading-tight">
                     contact@identifine.com.ng
                   </a>
                 </div>
@@ -121,7 +121,7 @@ export default function ContactPage() {
                   </span>
                 </div>
                 <div className="space-y-1 pt-1">
-                  <div className="text-xl sm:text-2xl font-bold text-[#111111]">Identifine studio</div>
+                  <div className="text-xl sm:text-2xl font-normal text-[#111111]">Identifine studio</div>
                   <p className="text-base sm:text-lg text-[#444444] leading-relaxed font-normal max-w-sm">
                     C-close, 3rd avenue, Citiview estate, warewa, Ogun state, Nigeria.
                   </p>
@@ -148,9 +148,9 @@ export default function ContactPage() {
 
           </div>
 
-          {/* Right Container (No border radius) */}
+          {/* Right Container (Height & Width increased by 18px) */}
           <div className="lg:col-span-7">
-            <div className="bg-[#F5F4F0] p-10 sm:p-12 lg:p-14 min-h-[500px] rounded-none border border-[#DCDAD4] shadow-md space-y-7 flex flex-col justify-between h-full">
+            <div className="bg-[#F5F4F0] p-10 sm:p-12 lg:p-14 min-h-[518px] rounded-none border border-[#DCDAD4] shadow-md space-y-7 flex flex-col justify-between h-full">
               
               <h2 className="text-2xl sm:text-3xl font-galano font-medium text-[#111111]">
                 Let’s work together
