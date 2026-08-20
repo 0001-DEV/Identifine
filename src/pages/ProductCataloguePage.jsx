@@ -128,26 +128,6 @@ export default function ProductCataloguePage() {
     <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
       <div className="max-w-[94rem] mx-auto space-y-24 sm:space-y-32">
         
-        {/* Top Product Switcher Navigation */}
-        <div className="flex items-center justify-center gap-2.5 sm:gap-3 flex-wrap max-w-5xl mx-auto pb-2">
-          {productsData.map((prod) => {
-            const isSelected = prod.id === activeProduct.id;
-            return (
-              <button
-                key={prod.id}
-                onClick={() => handleSelectProduct(prod.id)}
-                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
-                  isSelected
-                    ? 'bg-black text-white font-semibold shadow-lg scale-105'
-                    : 'bg-white text-[#555555] border border-[#DCDAD4] hover:border-[#111111] hover:text-[#111111] shadow-sm'
-                }`}
-              >
-                {prod.title}
-              </button>
-            );
-          })}
-        </div>
-
         {/* Section 1: Product Title & 2-Column Hero */}
         <div className="space-y-12">
           
