@@ -318,18 +318,18 @@ export default function AboutUsPage() {
                       : 'min-h-[350px] h-full'
                     }`}
                 >
-                  {/* Full-bleed Color Team Photo with Synchronized Zoom Effect */}
+                  {/* Full-bleed Color Team Photo with Slower Synchronized Zoom Effect */}
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.14] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] select-none"
+                    className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.12] transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] select-none"
                     loading="lazy"
                   />
 
                   {/* Subtle Gradient Overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/90 transition-opacity duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/90 transition-opacity duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" />
 
-                  {/* Top Right Floating Vertical Socials - Synchronized Slide Down from UP with Image Zoom */}
+                  {/* Top Right Floating Vertical Socials - Slow Smooth Slide Down from UP with Light Glassmorphism on Hover */}
                   <div className="absolute top-5 right-5 z-20 pointer-events-none group-hover:pointer-events-auto">
                     <div className="flex flex-col items-center gap-2.5">
                       {member.socials.map((soc, sIdx) => {
@@ -341,9 +341,9 @@ export default function AboutUsPage() {
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{
-                              transitionDelay: `${sIdx * 70}ms`
+                              transitionDelay: `${sIdx * 100}ms`
                             }}
-                            className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/30 text-white flex items-center justify-center hover:bg-[#E2B857] hover:text-black hover:border-[#E2B857] shadow-2xl transform transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-0 -translate-y-8 scale-90 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100"
+                            className="w-10 h-10 rounded-full bg-white/15 backdrop-blur-md border border-white/30 text-white flex items-center justify-center hover:bg-white/35 hover:border-white/60 hover:text-white hover:scale-110 shadow-lg backdrop-blur-lg transform transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] opacity-0 -translate-y-10 scale-90 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100"
                             aria-label={member.name}
                           >
                             <IconComponent className="w-4 h-4" />
