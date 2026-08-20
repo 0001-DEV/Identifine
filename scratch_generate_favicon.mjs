@@ -1,0 +1,57 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Golden 'i' paths extracted from original vector logo
+const goldenPathData = `M730.45 725.21v-13.84L776 697.19h43.43v14.15L776 725.14s-32.08.06-45.55.07m.02 22.39v-9.81L776 728h43.39v9.79s-29.53 6.82-43.49 9.81Zm-.02 16.25v-6.69c14.5-2.27 45.6-6.62 45.6-6.62h43.38v6.75l-43.38 6.61Zm88.98 3.08v4.43l-43.39 4.6h-45.59v-4.6l45.59-4.43zm-88.98 18.8v-3.53l45.59-3.04h43.39l.03 2.99-43.42 3.58zm88.98 3.01v2.42l-43.39 2.27h-45.59v-2.27l45.59-2.42zm-88.98 10.51v-1.48L776 796.4s37.27-.12 43.39 0v1.37L776 799.25Zm.01 5.02v-1.79h89v1.79Zm78.13-143.6a59.82 59.82 0 0 1-38.42 19.2 43.8 43.8 0 0 1-21.6-3c-13.87-5.77-19.11-20.74-12.86-34.2 5.64-12.64 17.4-21.75 30.1-26.66 15.13-5.76 35.27-6.43 47 6.41 10.04 11.17 5.19 28.31-4.22 38.25`;
+
+// The coordinates of the 'i' span approximately:
+// X: ~720 to ~825 (width ~105)
+// Y: ~605 to ~810 (height ~205)
+// Center point: X ~772.5, Y ~707.5
+
+// Let's create a perfectly framed SVG favicon
+// viewBox roughly 700 590 145 230, or with rounded background for crisp browser tab rendering:
+
+const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="705 595 135 220" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3D079" />
+      <stop offset="50%" stop-color="#E2B857" />
+      <stop offset="100%" stop-color="#C59328" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  <path d="${goldenPathData}" fill="url(#goldGrad)" filter="url(#glow)"/>
+</svg>`;
+
+const publicDir = path.join(__dirname, 'public');
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir, { recursive: true });
+}
+
+fs.writeFileSync(path.join(publicDir, 'favicon.svg'), faviconSvg);
+console.log('Created public/favicon.svg successfully!');
+
+// Also create a version with a subtle dark background pill/circle for browsers that prefer dark icons:
+const faviconDarkPillSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5D782" />
+      <stop offset="50%" stop-color="#E2B857" />
+      <stop offset="100%" stop-color="#B8861B" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="#0E121A" />
+  <g transform="translate(256, 256) scale(1.9) translate(-772.5, -707.5)">
+    <path d="${goldenPathData}" fill="url(#goldGrad2)" />
+  </g>
+</svg>`;
+
+fs.writeFileSync(path.join(publicDir, 'favicon-app.svg'), faviconDarkPillSvg);
+console.log('Created public/favicon-app.svg successfully!');
