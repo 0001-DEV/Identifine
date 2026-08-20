@@ -248,16 +248,16 @@ export default function AboutUsPage() {
             </div>
 
             <div className="space-y-6 text-base sm:text-lg lg:text-[1.2rem] text-[#111111] leading-relaxed font-bold text-left max-w-3xl">
-              <p className="font-bold">
+              <p className="font-bold animate-typewriter-text [animation-delay:0.15s]">
                 We thought we were building better identity cards, so we obsessed over premium materials, flawless craftsmanship, and technology that could elevate how people represented their organizations. Every card we created was designed to leave a lasting impression. But over time, we noticed something. Our clients rarely talked about cards,
               </p>
-              <p className="font-bold">
+              <p className="font-bold animate-typewriter-text [animation-delay:0.55s]">
                 they talked about Culture. Leadership. Consistency. Trust. They asked how every employee could reflect the same standard of excellence, how every visitor experience could reinforce their brand, and how every interaction could communicate who they truly are. That was our turning point.
               </p>
-              <p className="font-bold">
+              <p className="font-bold animate-typewriter-text [animation-delay:0.95s]">
                 We realized organizations don't have an ID card problem. They have an identity challenge, because identity isn't a product. It's an experience. It's felt through people, workplaces, processes, technology, and every moment that shapes perception. The card is simply one expression of that bigger story. That realization transformed Identifine. Today, we help organizations intentionally design how their identity is represented, experienced, and managed. Our premium credentials, smart NFC technology, executive identity solutions, and branded touchpoints work together as one integrated identity ecosystem, helping organizations build clarity, consistency, trust, and distinction at every level.
               </p>
-              <p className="font-bold">
+              <p className="font-bold animate-typewriter-text [animation-delay:1.35s]">
                 Through our Identity Transformation Journey, Discover. Design. Deploy. Evolve., and our 5P Identity Framework spanning Purpose, People, Places, Processes, and Presence, we help organizations turn identity into a strategic advantage, because every organization tells a story. The question is whether that story is being told by design... or by default.
               </p>
             </div>
