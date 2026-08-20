@@ -64,7 +64,7 @@ export default function ContactPage() {
 
   return (
     <div className="bg-[#EBEAE6] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 text-[#111111] overflow-hidden">
-      <div className="max-w-7xl mx-auto space-y-24 sm:space-y-32">
+      <div className="max-w-[88rem] mx-auto space-y-24 sm:space-y-32">
         
         {/* Header - Reduced width, centered & font-medium */}
         <div className="max-w-4xl mx-auto text-center pb-2">
@@ -74,49 +74,51 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Grid: Left Details & Right Form Container */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
           
-          {/* Left Details - Increased Font Sizes */}
-          <div className="lg:col-span-4 space-y-10 text-left">
+          {/* Left Details - Shifted left, bottom aligned with right form container */}
+          <div className="lg:col-span-5 flex flex-col justify-between h-full text-left lg:-ml-6 xl:-ml-10 space-y-8">
             
-            {/* Contact us */}
-            <div className="space-y-3">
-              <div className="text-sm sm:text-base font-mono uppercase tracking-widest text-[#555555] font-bold flex items-center gap-1.5">
-                <span>✦</span> Contact us
+            <div className="space-y-8">
+              {/* Contact us */}
+              <div className="space-y-2.5">
+                <div className="text-xs sm:text-sm font-mono uppercase tracking-widest text-[#555555] font-bold flex items-center gap-1.5">
+                  <span>✦</span> Contact us
+                </div>
+                <div className="space-y-1">
+                  <a href="tel:+2349030001851" className="block text-lg sm:text-xl font-bold text-[#111111] hover:text-[#E2B857] transition-colors">
+                    +234 903 000 1851
+                  </a>
+                  <a href="mailto:contact@identifine.com.ng" className="text-xl sm:text-2xl lg:text-[1.75rem] font-bold text-[#111111] block hover:text-[#E2B857] transition-colors leading-tight">
+                    contact@identifine.com.ng
+                  </a>
+                </div>
               </div>
-              <div className="space-y-1.5">
-                <a href="tel:+2349030001851" className="block text-xl sm:text-2xl font-bold text-[#111111] hover:text-[#E2B857] transition-colors">
-                  +234 903 000 1851
-                </a>
-                <a href="mailto:contact@identifine.com.ng" className="text-2xl sm:text-3xl lg:text-[2rem] font-bold text-[#111111] block hover:text-[#E2B857] transition-colors leading-tight">
-                  contact@identifine.com.ng
-                </a>
+
+              {/* Visit us */}
+              <div className="space-y-2.5">
+                <div className="text-xs sm:text-sm font-mono uppercase tracking-widest text-[#555555] font-bold flex items-center gap-1.5">
+                  <span>✦</span> Visit us
+                </div>
+                <div className="text-lg sm:text-xl font-bold text-[#111111]">Identifine studio</div>
+                <p className="text-sm sm:text-base text-[#444444] leading-relaxed font-normal max-w-sm">
+                  C-close, 3rd avenue, Citiview estate, warewa, Ogun state, Nigeria.
+                </p>
               </div>
             </div>
 
-            {/* Visit us */}
-            <div className="space-y-3">
-              <div className="text-sm sm:text-base font-mono uppercase tracking-widest text-[#555555] font-bold flex items-center gap-1.5">
-                <span>✦</span> Visit us
-              </div>
-              <div className="text-xl sm:text-2xl font-bold text-[#111111]">Identifine studio</div>
-              <p className="text-base sm:text-lg text-[#444444] leading-relaxed font-normal max-w-sm">
-                C-close, 3rd avenue, Citiview estate, warewa, Ogun state, Nigeria.
-              </p>
-            </div>
-
-            {/* Founder Note */}
-            <div className="pt-8 border-t border-[#DCDAD4] space-y-4">
-              <p className="text-lg sm:text-xl font-galano font-medium text-[#111111] leading-relaxed">
+            {/* Founder Note - Bottom Aligned to Right Container */}
+            <div className="pt-6 border-t border-[#DCDAD4] space-y-3.5 mt-auto">
+              <p className="text-base sm:text-lg font-galano font-medium text-[#111111] leading-relaxed">
                 “Every great project begins with a simple conversation — let’s start yours.”
               </p>
               
-              <div className="flex items-center gap-3.5 pt-2">
-                <div className="w-13 h-13 rounded-full bg-[#111111] text-[#E2B857] flex items-center justify-center font-bold text-base shadow-md">
+              <div className="flex items-center gap-3.5 pt-1">
+                <div className="w-12 h-12 rounded-full bg-[#111111] text-[#E2B857] flex items-center justify-center font-bold text-sm shadow-md shrink-0">
                   DA
                 </div>
                 <div>
-                  <div className="text-base sm:text-lg font-bold text-[#111111]">Debo Atiba</div>
+                  <div className="text-base font-bold text-[#111111]">Debo Atiba</div>
                   <div className="text-xs sm:text-sm font-mono text-[#666666]">Founder & CEO</div>
                 </div>
               </div>
@@ -124,54 +126,54 @@ export default function ContactPage() {
 
           </div>
 
-          {/* Right Container (Increased size form card) */}
-          <div className="lg:col-span-8">
-            <div className="bg-[#F5F4F0] p-10 sm:p-14 lg:p-16 rounded-[32px] border border-[#DCDAD4] shadow-md space-y-8 min-h-[580px] flex flex-col justify-between">
+          {/* Right Container (Reduced height & compact message textarea box) */}
+          <div className="lg:col-span-7">
+            <div className="bg-[#F5F4F0] p-8 sm:p-10 lg:p-12 rounded-[32px] border border-[#DCDAD4] shadow-md space-y-6 flex flex-col justify-between h-full">
               
-              <h2 className="text-3xl sm:text-4xl font-galano font-medium text-[#111111]">
+              <h2 className="text-2xl sm:text-3xl font-galano font-medium text-[#111111]">
                 Let’s work together
               </h2>
 
               {!submitted ? (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <label className="text-sm sm:text-base font-semibold text-[#333333]">Full name*</label>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs sm:text-sm font-semibold text-[#333333]">Full name*</label>
                     <input
                       type="text"
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Amanda Ferguson"
-                      className="w-full bg-white border border-[#DCDAD4] rounded-2xl px-5 py-4 text-base text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111] shadow-sm transition-all"
+                      className="w-full bg-white border border-[#DCDAD4] rounded-xl px-4 py-3 text-sm text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111] shadow-sm transition-all"
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-sm sm:text-base font-semibold text-[#333333]">Email address*</label>
+                  <div className="space-y-1.5">
+                    <label className="text-xs sm:text-sm font-semibold text-[#333333]">Email address*</label>
                     <input
                       type="email"
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="example@gmail.com"
-                      className="w-full bg-white border border-[#DCDAD4] rounded-2xl px-5 py-4 text-base text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111] shadow-sm transition-all"
+                      className="w-full bg-white border border-[#DCDAD4] rounded-xl px-4 py-3 text-sm text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111] shadow-sm transition-all"
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-sm sm:text-base font-semibold text-[#333333]">Message</label>
+                  <div className="space-y-1.5">
+                    <label className="text-xs sm:text-sm font-semibold text-[#333333]">Message</label>
                     <textarea
-                      rows={5}
+                      rows={3}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Tell us the purpose"
-                      className="w-full bg-white border border-[#DCDAD4] rounded-2xl px-5 py-4 text-base text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111] resize-none shadow-sm transition-all"
+                      className="w-full bg-white border border-[#DCDAD4] rounded-xl px-4 py-3 text-sm text-[#111111] placeholder-[#AAAAAA] focus:outline-none focus:border-[#111111] resize-none shadow-sm transition-all"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="group relative overflow-hidden inline-flex items-center justify-center text-base sm:text-lg font-semibold px-12 py-4.5 sm:py-5 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[58px]"
+                    className="group relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-semibold px-10 py-3.5 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[50px] mt-2"
                   >
                     <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
                       <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
@@ -182,17 +184,17 @@ export default function ContactPage() {
                   </button>
                 </form>
               ) : (
-                <div className="text-center py-12 space-y-6">
-                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-8 h-8" />
+                <div className="text-center py-8 space-y-4">
+                  <div className="w-14 h-14 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-[#111111]">Enquiry Received!</h3>
-                  <p className="text-sm sm:text-base text-[#555555] max-w-md mx-auto leading-relaxed">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#111111]">Enquiry Received!</h3>
+                  <p className="text-xs sm:text-sm text-[#555555] max-w-md mx-auto leading-relaxed">
                     Thank you, Amanda. We will reach out to you within 2 business hours.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="framer-pill-button text-sm px-8 py-3"
+                    className="framer-pill-button text-xs px-6 py-2.5"
                   >
                     Submit another
                   </button>
