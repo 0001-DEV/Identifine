@@ -76,8 +76,8 @@ export default function ContactPage() {
         {/* Contact Grid: Left Details & Right Form Container */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
           
-          {/* Left Details - Shifted left, bottom aligned with right form container */}
-          <div className="lg:col-span-5 flex flex-col justify-between h-full text-left lg:-ml-6 xl:-ml-10 space-y-8">
+          {/* Left Details - Indented with margin-left, bottom aligned with right form container */}
+          <div className="lg:col-span-5 flex flex-col justify-between h-full text-left lg:ml-4 xl:ml-8 space-y-8">
             
             <div className="space-y-8">
               {/* Contact us */}
@@ -148,9 +148,9 @@ export default function ContactPage() {
 
           </div>
 
-          {/* Right Container (Reduced height & compact message textarea box) */}
+          {/* Right Container (Increased height & padding) */}
           <div className="lg:col-span-7">
-            <div className="bg-[#F5F4F0] p-8 sm:p-10 lg:p-12 rounded-[32px] border border-[#DCDAD4] shadow-md space-y-6 flex flex-col justify-between h-full">
+            <div className="bg-[#F5F4F0] p-10 sm:p-12 lg:p-14 min-h-[500px] rounded-[32px] border border-[#DCDAD4] shadow-md space-y-7 flex flex-col justify-between h-full">
               
               <h2 className="text-2xl sm:text-3xl font-galano font-medium text-[#111111]">
                 Let’s work together
