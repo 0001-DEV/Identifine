@@ -1,127 +1,104 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, NavLink } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 import starIcon from '../assets/SVG@4x.png';
 
 // Product Assets
+import productHeroImg from '../assets/case-studies/product_catalogue_hero.png';
 import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.png';
 import elitePassGold from '../assets/ELITE_PASS_GOLD.png';
 import elitePassSilver from '../assets/ELITE_PASS_SILVER.png';
-import blackMatteRender from '../assets/Black matte render 2.png';
 import renderOne from '../assets/RENDER 1.png';
 import postProcessImg from '../assets/Post process 6.jpg';
+
+// Partner Case Studies Images
+import rainoilImg from '../assets/case-studies/rainoil.jpg';
+import seplatImg from '../assets/case-studies/seplat.png';
+import revolutionPlusImg from '../assets/case-studies/revolution_plus.png';
+import armImg from '../assets/case-studies/arm.png';
+import sterlingBankImg from '../assets/case-studies/sterling_bank.png';
+import tvcImg from '../assets/case-studies/tvc.jpg';
+import bank78Img from '../assets/case-studies/bank78.jpg';
+import ubaImg from '../assets/case-studies/uba.png';
 
 export const productsData = [
   {
     id: 'black-matte',
     title: 'Black Matte',
     subtitle: 'Executive Stealth Finish',
-    headingStart: 'Black',
-    headingItalic: 'Matte',
+    headingFirst: 'Black',
+    headingSecond: 'Matte',
     overview: 'Some things never need to shout to be noticed. The Black Matte was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
-    image: blackMatteRender,
-    partners: [
-      { name: 'Rainoil' },
-      { name: 'Seplat' },
-      { name: 'Revolution plus' },
-      { name: 'ARM' },
-      { name: 'Sterling bank' },
-      { name: 'TVC' },
-      { name: 'Bank 78' },
-      { name: 'UBA' }
-    ]
+    image: productHeroImg
   },
   {
     id: 'du-plex',
     title: 'Du-plex smart card',
     subtitle: 'Hybrid Dual-Tone Finish',
-    headingStart: 'Du-plex',
-    headingItalic: 'smart card',
-    overview: 'Engineered for executive teams seeking the perfect blend of digital connectivity and tactile distinction. The Du-plex features a dual-layer composite design, seamless NFC integration, and high-contrast branding surfaces that command respect in every corporate meeting.',
-    category: 'Smart Credentials',
-    features: 'Dual-tone finish, Instant NFC Share, Cloud Profile, VIP Access',
-    image: elitePassBlack,
-    partners: [
-      { name: 'Rainoil' },
-      { name: 'Seplat' },
-      { name: 'ARM' },
-      { name: 'Sterling bank' },
-      { name: 'Bank 78' },
-      { name: 'UBA' }
-    ]
+    headingFirst: 'Du-plex',
+    headingSecond: 'smart card',
+    overview: 'Some things never need to shout to be noticed. The Du-plex was created for organizations that believe confidence is quiet. Its deep, dual-layer finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    category: 'Executive Level',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    image: elitePassBlack
   },
   {
     id: 'de-titan',
     title: 'De-titan smart card',
     subtitle: 'Aircraft Titanium Alloy',
-    headingStart: 'De-titan',
-    headingItalic: 'smart card',
-    overview: 'Forged from aerospace-grade titanium alloy. The De-titan offers extraordinary weight, indestructible durability, and effortless contact-free profile sharing. It is built for executives and visionaries who redefine standards.',
-    category: 'Titanium Series',
-    features: 'Aerospace Metal, Encrypted NFC, Custom Laser Engraving, Exclusive Access',
-    image: elitePassSilver,
-    partners: [
-      { name: 'Seplat' },
-      { name: 'TVC' },
-      { name: 'Bank 78' },
-      { name: 'UBA' },
-      { name: 'Rainoil' },
-      { name: 'Sterling bank' }
-    ]
+    headingFirst: 'De-titan',
+    headingSecond: 'smart card',
+    overview: 'Some things never need to shout to be noticed. The De-titan was created for organizations that believe confidence is quiet. Its aerospace titanium structure, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    category: 'Executive Level',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    image: elitePassSilver
   },
   {
     id: 'gold-metal',
     title: 'Gold metal card',
     subtitle: '24K Electroplated Brass',
-    headingStart: 'Gold',
-    headingItalic: 'metal card',
-    overview: 'An exquisite statement card crafted with 24K gold electroplating over solid precision metal. Designed for VIP members, top C-suite leaders, and high-net-worth identity ecosystems where first impressions are paramount.',
-    category: 'Luxury Metal',
-    features: '24K Gold Plating, Tactile Weight, Exclusive NFC Chip, Gift Packaging',
-    image: elitePassGold,
-    partners: [
-      { name: 'Revolution plus' },
-      { name: 'ARM' },
-      { name: 'Sterling bank' },
-      { name: 'Bank 78' },
-      { name: 'UBA' }
-    ]
+    headingFirst: 'Gold',
+    headingSecond: 'metal card',
+    overview: 'Some things never need to shout to be noticed. The Gold Metal was created for organizations that believe confidence is quiet. Its 24K electroplated finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    category: 'Executive Level',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    image: elitePassGold
   },
   {
     id: 'forte-smart',
     title: 'Forte smart card',
     subtitle: 'Carbon Fiber Weave',
-    headingStart: 'Forte',
-    headingItalic: 'smart card',
-    overview: 'Constructed from lightweight high-grade carbon fiber weave. The Forte smart card delivers futuristic style, ultimate scratch resistance, and instantaneous digital profile networking across iOS & Android devices.',
-    category: 'Executive Tech',
-    features: 'Carbon Weave, Scratch Resistance, Cloud NFC, Member Security',
-    image: postProcessImg,
-    partners: [
-      { name: 'Rainoil' },
-      { name: 'TVC' },
-      { name: 'Bank 78' },
-      { name: 'ARM' }
-    ]
+    headingFirst: 'Forte',
+    headingSecond: 'smart card',
+    overview: 'Some things never need to shout to be noticed. The Forte was created for organizations that believe confidence is quiet. Its lightweight carbon fiber weave, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    category: 'Executive Level',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    image: postProcessImg
   },
   {
     id: 'membership-prestige',
     title: 'Membership prestige',
     subtitle: 'Gunmetal VIP Access',
-    headingStart: 'Membership',
-    headingItalic: 'prestige',
-    overview: 'A premier credential created for elite private clubs, executive boards, and exclusive member networks. Blending gunmetal aesthetic with multi-factor RFID/NFC security.',
-    category: 'Prestige Pass',
-    features: 'Gunmetal Alloy, Access Control, Member Portal, Custom Branding',
-    image: renderOne,
-    partners: [
-      { name: 'UBA' },
-      { name: 'Seplat' },
-      { name: 'Revolution plus' },
-      { name: 'Sterling bank' }
-    ]
+    headingFirst: 'Membership',
+    headingSecond: 'prestige',
+    overview: 'Some things never need to shout to be noticed. The Membership Prestige was created for organizations that believe confidence is quiet. Its deep gunmetal finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    category: 'Executive Level',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    image: renderOne
   }
+];
+
+export const partnerCases = [
+  { id: 'rainoil', name: 'Rainoil', image: rainoilImg },
+  { id: 'seplat', name: 'Seplat', image: seplatImg },
+  { id: 'revolution-plus', name: 'Revolution plus', image: revolutionPlusImg },
+  { id: 'arm', name: 'ARM', image: armImg },
+  { id: 'sterling-bank', name: 'Sterling bank', image: sterlingBankImg },
+  { id: 'tvc', name: 'TVC', image: tvcImg },
+  { id: 'bank-78', name: 'Bank 78', image: bank78Img },
+  { id: 'uba', name: 'UBA', image: ubaImg }
 ];
 
 export default function ProductCataloguePage() {
@@ -129,7 +106,7 @@ export default function ProductCataloguePage() {
   const initialId = searchParams.get('id') || searchParams.get('card') || 'black-matte';
   
   const [selectedId, setSelectedId] = useState(initialId);
-  const [displayedPartnersCount, setDisplayedPartnersCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(8);
 
   useEffect(() => {
     const idParam = searchParams.get('id') || searchParams.get('card');
@@ -138,7 +115,7 @@ export default function ProductCataloguePage() {
     }
   }, [searchParams]);
 
-  // Find active product object or fallback to Black Matte
+  // Active product
   const activeProduct = productsData.find((p) => p.id === selectedId) || productsData[0];
 
   const handleSelectProduct = (id) => {
@@ -148,11 +125,11 @@ export default function ProductCataloguePage() {
   };
 
   return (
-    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden">
-      <div className="max-w-[94rem] mx-auto space-y-20 sm:space-y-28">
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
+      <div className="max-w-[94rem] mx-auto space-y-24 sm:space-y-32">
         
-        {/* Top Product Selector Pills */}
-        <div className="flex items-center justify-center gap-2.5 sm:gap-3.5 flex-wrap max-w-5xl mx-auto pb-2">
+        {/* Top Product Switcher Navigation */}
+        <div className="flex items-center justify-center gap-2.5 sm:gap-3 flex-wrap max-w-5xl mx-auto pb-2">
           {productsData.map((prod) => {
             const isSelected = prod.id === activeProduct.id;
             return (
@@ -171,150 +148,120 @@ export default function ProductCataloguePage() {
           })}
         </div>
 
-        {/* Hero Section: Product Title & 2-Column Overview */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        {/* Section 1: Product Title & 2-Column Hero */}
+        <div className="space-y-12">
           
-          {/* Left Column: Product Info & Details */}
-          <div className="lg:col-span-6 space-y-8 text-left">
-            
-            {/* Tagline */}
-            <div className="inline-flex items-center justify-start gap-2.5">
-              <img
-                src={starIcon}
-                alt=""
-                className="w-4 h-4 object-contain brightness-0"
-              />
-              <span
-                className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase"
-                style={{ letterSpacing: '4.5px' }}
-              >
-                Our identity catalogue
-              </span>
-            </div>
-
-            {/* H1 Title */}
-            <h1 className="text-5xl sm:text-7xl lg:text-[6rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.05]">
-              {activeProduct.headingStart} <em className="font-swarsh italic font-normal text-[#111111] px-1">{activeProduct.headingItalic}</em>
+          {/* Main H1 Title (Framer match) */}
+          <div className="text-left space-y-2">
+            <h1 className="text-5xl sm:text-7xl lg:text-[6.5rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.04]">
+              <span>{activeProduct.headingFirst}</span> <br className="hidden sm:block" />
+              <span>{activeProduct.headingSecond}</span>
             </h1>
-
-            {/* Overview Card */}
-            <div className="bg-white border border-[#DCDAD4] p-8 sm:p-10 rounded-[28px] shadow-sm space-y-6">
-              
-              <div className="inline-block px-4 py-1.5 rounded-full bg-[#F5F4F0] border border-[#DCDAD4] text-xs font-semibold text-[#111111] uppercase tracking-wider">
-                Overview
-              </div>
-
-              <p className="text-base sm:text-lg text-[#333333] leading-relaxed font-normal">
-                {activeProduct.overview}
-              </p>
-
-              {/* Specs Grid */}
-              <div className="pt-4 border-t border-[#DCDAD4] grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
-                <div className="space-y-1">
-                  <div className="text-xs font-mono text-[#666666] uppercase tracking-wider">Category:</div>
-                  <div className="text-base font-bold text-[#111111]">{activeProduct.category}</div>
-                </div>
-
-                <div className="space-y-1">
-                  <div className="text-xs font-mono text-[#666666] uppercase tracking-wider">Features:</div>
-                  <div className="text-base font-semibold text-[#111111]">{activeProduct.features}</div>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="pt-4 flex flex-wrap items-center gap-4">
-                <a
-                  href="https://wa.me/2349030001851"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="framer-pill-button text-sm px-8 py-4 font-semibold shadow-md"
-                >
-                  Make an identity enquiry
-                </a>
-                <NavLink
-                  to="/contact"
-                  className="bg-white border border-[#DCDAD4] text-black text-sm px-8 py-4 font-semibold rounded-full hover:bg-black hover:text-white transition-all shadow-sm"
-                >
-                  Book a consultation
-                </NavLink>
-              </div>
-
-            </div>
-
           </div>
 
-          {/* Right Column: High-Res Card Image Frame */}
-          <div className="lg:col-span-6">
-            <div className="relative rounded-[32px] overflow-hidden bg-white border border-[#DCDAD4] p-6 sm:p-10 shadow-md min-h-[480px] sm:min-h-[580px] flex items-center justify-center group">
+          {/* 2-Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            
+            {/* Left Column: Overview Details */}
+            <div className="lg:col-span-6 space-y-8 text-left">
               
-              <img
-                src={activeProduct.image}
-                alt={activeProduct.title}
-                className="w-full max-h-[520px] object-contain drop-shadow-xl group-hover:scale-[1.03] transition-transform duration-700 ease-out select-none relative z-10"
-              />
+              <div className="space-y-6">
+                <h2 className="text-2xl sm:text-3xl font-galano font-medium text-[#111111] tracking-tight">
+                  Overview
+                </h2>
 
-              <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between pointer-events-none z-20">
-                <div className="px-4 py-2 rounded-full bg-[#F5F4F0] border border-[#DCDAD4] text-xs font-mono text-[#444444] shadow-sm">
-                  ✦ {activeProduct.subtitle}
+                <p className="text-base sm:text-lg text-[#333333] leading-relaxed font-normal">
+                  {activeProduct.overview}
+                </p>
+              </div>
+
+              {/* Category & Features */}
+              <div className="space-y-3 pt-2 text-base text-[#111111]">
+                <div>
+                  <span className="font-medium text-[#111111]">Category: </span>
+                  <span className="text-[#555555]">{activeProduct.category}</span>
                 </div>
-                <div className="w-9 h-9 rounded-full bg-[#111111] text-[#E2B857] flex items-center justify-center font-bold text-xs shadow-md">
-                  ID
+                <div>
+                  <span className="font-medium text-[#111111]">Features: </span>
+                  <span className="text-[#555555]">{activeProduct.features}</span>
                 </div>
               </div>
 
             </div>
+
+            {/* Right Column: Hero Card Image Frame */}
+            <div className="lg:col-span-6">
+              <div className="relative rounded-[32px] overflow-hidden bg-white border border-[#DCDAD4] shadow-sm p-6 sm:p-10 min-h-[420px] sm:min-h-[500px] flex items-center justify-center group">
+                <img
+                  src={activeProduct.image}
+                  alt={activeProduct.title}
+                  className="w-full max-h-[460px] object-contain select-none group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+              </div>
+            </div>
+
           </div>
 
         </div>
 
         {/* Section 2: Partners using our flagship */}
-        <div className="pt-16 sm:pt-24 border-t border-[#DCDAD4] space-y-12 text-center">
+        <div className="pt-16 sm:pt-24 border-t border-[#DCDAD4] space-y-12 text-left">
           
-          <div className="max-w-3xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-galano font-medium text-[#111111] leading-tight">
-              Partners using our <em className="font-swarsh italic font-normal text-[#111111]">{activeProduct.title}</em> flagship
+          <div className="space-y-3">
+            <h2 className="text-3xl sm:text-5xl lg:text-[3.5rem] font-galano font-medium text-[#111111] leading-tight tracking-tight">
+              Partners using our {activeProduct.title} flagship
             </h2>
-            <p className="text-base sm:text-lg text-[#555555] max-w-xl mx-auto font-normal">
-              Trusted by leading enterprises, financial institutions, and executive teams across Africa.
-            </p>
           </div>
 
-          {/* Partners Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
-            {activeProduct.partners.slice(0, displayedPartnersCount).map((partner, idx) => (
-              <div
-                key={idx}
-                className="bg-white border border-[#DCDAD4] rounded-2xl p-6 sm:p-8 flex items-center justify-center hover:border-[#111111] hover:shadow-md transition-all duration-300 group shadow-sm"
+          {/* 8 Partner Cards Grid with Real Framer Case Study Assets */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+            {partnerCases.slice(0, visibleCount).map((partner) => (
+              <NavLink
+                key={partner.id}
+                to="/case-studies"
+                className="group cursor-pointer space-y-4 block text-left"
               >
-                <span className="text-lg sm:text-xl font-bold text-[#111111] transition-colors tracking-tight font-galano">
-                  {partner.name}
-                </span>
-              </div>
+                {/* Card Image Container */}
+                <div className="relative aspect-[16/11] rounded-[28px] sm:rounded-[32px] overflow-hidden bg-white border border-[#DCDAD4] shadow-sm group-hover:shadow-xl group-hover:border-[#111111]/40 transition-all duration-500 transform group-hover:-translate-y-1.5">
+                  <img
+                    src={partner.image}
+                    alt={partner.name}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 select-none"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                    <span className="text-white text-xs font-mono tracking-wider uppercase">
+                      ✦ View Case Study
+                    </span>
+                  </div>
+                </div>
+
+                {/* Title & Arrow Row */}
+                <div className="flex items-center justify-between pt-1 px-1">
+                  <h3 className="text-xl sm:text-2xl font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors tracking-tight">
+                    {partner.name}
+                  </h3>
+                  <div className="w-9 h-9 rounded-full bg-white border border-[#DCDAD4] group-hover:bg-black group-hover:text-white group-hover:border-black flex items-center justify-center transition-all duration-300 shadow-sm">
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
+                </div>
+              </NavLink>
             ))}
           </div>
 
           {/* Load More Button */}
-          {activeProduct.partners.length > displayedPartnersCount ? (
-            <div className="pt-4">
-              <button
-                onClick={() => setDisplayedPartnersCount((prev) => prev + 4)}
-                className="bg-white text-black border border-[#DCDAD4] hover:bg-black hover:text-white transition-all text-sm px-10 py-3.5 font-semibold rounded-full shadow-sm"
-              >
-                Load More
-              </button>
-            </div>
-          ) : (
-            <div className="pt-4">
-              <a
-                href="https://wa.me/2349030001851"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="framer-pill-button text-sm px-10 py-3.5 font-semibold"
-              >
-                Become a partner
-              </a>
-            </div>
-          )}
+          <div className="text-center pt-8">
+            <button
+              onClick={() => setVisibleCount((prev) => (prev === 8 ? 8 : 8))}
+              className="group relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-semibold px-10 py-4 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[54px]"
+            >
+              <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
+                <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
+                  <span className="block">Load More</span>
+                  <span className="block">Load More</span>
+                </span>
+              </span>
+            </button>
+          </div>
 
         </div>
 

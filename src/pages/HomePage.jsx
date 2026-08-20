@@ -231,13 +231,7 @@ export default function HomePage() {
       {/* 3. OUR IDENTITY CATALOGUE (STICKY PINNED HORIZONTAL SCROLL DECK) */}
       <CataloguePinnedHorizontalDeck
         catalogueCards={catalogueCards}
-        onSelectCard={(card) => {
-          if (card.id === 'du-plex') {
-            navigate('/case-studies');
-          } else {
-            navigate(`/product-catalogue?id=${card.id}`);
-          }
-        }}
+        onSelectCard={(card) => navigate(`/product-catalogue?id=${card.id}`)}
       />
 
 
