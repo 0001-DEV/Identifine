@@ -231,8 +231,8 @@ export default function AboutUsPage() {
             </h1>
           </div>
 
-          {/* Story Narrative Section - Left Aligned with Straight Left Margin */}
-          <div className="scroll-reveal space-y-8 max-w-4xl mx-auto pt-6 text-left">
+          {/* Story Narrative Section - Shifted further from the left margin */}
+          <div className="scroll-reveal space-y-8 max-w-4xl lg:ml-36 xl:ml-52 pt-6 text-left">
             <div className="inline-flex items-center justify-start gap-2.5">
               <img
                 src={starIcon}
