@@ -86,17 +86,27 @@ export default function IdentityQuiz() {
       ]
     },
     {
-      id: 'teamsize',
-      queNum: 'Que 6',
-      title: "What team size will be equipped with identity credentials?",
+      title: "What is your required deployment timeline?",
       options: [
-        'Executive Leadership (1-10)',
-        'Mid to Large Teams (10-100)',
-        'Enterprise-Wide (100+)'
+        'Immediate (Within 2 Weeks)',
+        '1 - 2 Months',
+        'Next Quarter',
+        'Flexible / Exploration Phase'
       ]
     },
     {
-      id: 'demo',
+      id: 'step_6',
+      queNum: 'Que 6',
+      title: "What is your expected tier of identity consultation?",
+      options: [
+        'Full 5P Strategic Design & Rollout',
+        'Physical Production & NFC Provisioning',
+        'Identity System Audit & Advisory',
+        'Custom Executive Package'
+      ]
+    },
+    {
+      id: 'step_7',
       queNum: 'Que 7',
       title: "Would you like a custom physical prototype demo?",
       options: [
@@ -109,6 +119,7 @@ export default function IdentityQuiz() {
 
   const changeStep = (nextIdx) => {
     if (nextIdx === currentStep || isSliding) return;
+    setActiveHoverIdx(null);
     setIsSliding(true);
     setTimeout(() => {
       setCurrentStep(nextIdx);
@@ -116,21 +127,27 @@ export default function IdentityQuiz() {
     }, 220);
   };
 
-  const handleSelectOption = (opt) => {
+  const handleSelectOption = (opt, idx) => {
     if (isSliding) return;
+    setActiveHoverIdx(idx);
     const updated = { ...answers, [quizQuestions[currentStep].id]: opt };
     setAnswers(updated);
 
-    setIsSliding(true);
+    // Brief highlight preview so mobile users see the white selected state
     setTimeout(() => {
-      if (currentStep < quizQuestions.length - 1) {
-        setCurrentStep(currentStep + 1);
-        setIsSliding(false);
-      } else {
-        setCompleted(true);
-        setIsSliding(false);
-      }
-    }, 220);
+      setIsSliding(true);
+      setTimeout(() => {
+        if (currentStep < quizQuestions.length - 1) {
+          setCurrentStep(currentStep + 1);
+          setActiveHoverIdx(null);
+          setIsSliding(false);
+        } else {
+          setCompleted(true);
+          setActiveHoverIdx(null);
+          setIsSliding(false);
+        }
+      }, 220);
+    }, 180);
   };
 
   const handleGoBack = () => {
@@ -200,15 +217,26 @@ export default function IdentityQuiz() {
 
             {/* Option Buttons */}
             <div className="space-y-2.5 sm:space-y-3 pt-1">
-              {quizQuestions[currentStep].options.map((opt, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleSelectOption(opt)}
-                  className="w-full text-left py-2.5 sm:py-4 px-4 sm:px-8 rounded-full text-xs sm:text-lg font-normal transition-all duration-300 bg-transparent hover:bg-white hover:text-black border-0 text-white flex items-center justify-between group shadow-none hover:shadow-xl hover:scale-[1.01]"
-                >
-                  <span className="leading-tight pr-2">{opt}</span>
-                </button>
-              ))}
+              {quizQuestions[currentStep].options.map((opt, idx) => {
+                const isHovered = activeHoverIdx === idx;
+                return (
+                  <button
+                    key={idx}
+                    onMouseEnter={() => setActiveHoverIdx(idx)}
+                    onMouseLeave={() => setActiveHoverIdx(null)}
+                    onTouchStart={() => setActiveHoverIdx(idx)}
+                    onTouchEnd={() => {}}
+                    onClick={() => handleSelectOption(opt, idx)}
+                    className={`w-full text-left py-2.5 sm:py-4 px-4 sm:px-8 rounded-full text-xs sm:text-lg font-normal transition-all duration-200 border-0 flex items-center justify-between group select-none ${
+                      isHovered
+                        ? 'bg-white text-black font-medium shadow-xl scale-[1.01]'
+                        : 'bg-transparent text-white hover:bg-white hover:text-black active:bg-white active:text-black focus:bg-white focus:text-black shadow-none'
+                    }`}
+                  >
+                    <span className="leading-tight pr-2">{opt}</span>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Steps Indicator: 1 2 3 4 5 6 7 */}
