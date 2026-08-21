@@ -173,24 +173,6 @@ export default function ProductCataloguePage() {
                 <span className="text-[#555555]">{activeProduct.features}</span>
               </div>
             </div>
-
-            {/* Action Buttons */}
-            <div className="pt-4 flex flex-wrap items-center gap-4">
-              <a
-                href="https://wa.me/2349030001851"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="framer-pill-button text-sm px-8 py-4 font-semibold shadow-md"
-              >
-                Make an identity enquiry
-              </a>
-              <NavLink
-                to="/contact"
-                className="bg-white border border-[#DCDAD4] text-black text-sm px-8 py-4 font-semibold rounded-full hover:bg-black hover:text-white transition-all shadow-sm"
-              >
-                Book a consultation
-              </NavLink>
-            </div>
           </div>
 
         </div>
