@@ -107,13 +107,13 @@ export default function ProductCataloguePage() {
   const activeProduct = productsData.find((p) => p.id === selectedId) || productsData[0];
 
   return (
-    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-32 sm:pt-40 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-20 sm:pt-24 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
       <div className="max-w-[94rem] mx-auto space-y-20 sm:space-y-28">
         
         {/* ========================================================================= */}
-        {/* HERO SECTION: FULL SCREEN WIDTH PICTURE (NO BORDER RADIUS, +18PX HEIGHT)   */}
+        {/* HERO SECTION: FULL SCREEN WIDTH PICTURE (NO MARGIN TOP, +12PX HEIGHT)     */}
         {/* ========================================================================= */}
-        <div className="w-screen relative left-1/2 -translate-x-1/2 rounded-none overflow-hidden bg-[#0A0D14] border-y border-[#DCDAD4] shadow-xl h-[358px] sm:h-[458px] lg:h-[518px] flex items-center justify-center group -mt-6 sm:-mt-8">
+        <div className="w-screen relative left-1/2 -translate-x-1/2 rounded-none overflow-hidden bg-[#0A0D14] border-b border-[#DCDAD4] shadow-xl h-[370px] sm:h-[470px] lg:h-[530px] flex items-center justify-center group mt-0">
           
           {/* Hero Product Image */}
           <img
@@ -135,9 +135,9 @@ export default function ProductCataloguePage() {
         </div>
 
         {/* ========================================================================= */}
-        {/* OVERVIEW & SPECIFICATIONS SECTION (MARGIN 80PX FROM LEFT)                 */}
+        {/* OVERVIEW & SPECIFICATIONS SECTION (NO CONTAINER, EXPANDED WIDTH, LEFT)     */}
         {/* ========================================================================= */}
-        <div className="lg:ml-[80px] max-w-5xl bg-white border border-[#DCDAD4] p-8 sm:p-12 lg:p-14 rounded-[32px] shadow-sm space-y-8 text-left">
+        <div className="max-w-6xl space-y-8 text-left">
           
           <div className="space-y-4">
             <div className="inline-flex items-center justify-start gap-2.5">
@@ -148,19 +148,19 @@ export default function ProductCataloguePage() {
               />
               <span
                 className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase"
-                style={{ letterSpacing: '4px' }}
+                style={{ letterSpacing: '6px' }}
               >
                 Overview
               </span>
             </div>
 
-            <p className="text-base sm:text-xl text-[#333333] leading-relaxed font-normal">
+            <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl">
               {activeProduct.overview}
             </p>
           </div>
 
           {/* Specs List */}
-          <div className="pt-6 border-t border-[#DCDAD4] grid grid-cols-1 sm:grid-cols-2 gap-6 text-base">
+          <div className="pt-6 border-t border-[#DCDAD4] grid grid-cols-1 sm:grid-cols-2 gap-6 text-base sm:text-lg max-w-4xl">
             <div>
               <span className="font-semibold text-[#111111]">Category: </span>
               <span className="text-[#555555]">{activeProduct.category}</span>
