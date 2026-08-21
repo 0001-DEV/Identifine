@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { CheckCircle2, RotateCcw, ArrowRight, ArrowLeft } from 'lucide-react';
 
-// Import Asset Images for Quiz Right Column Showcase
-import postProcessImg from '../assets/Post process 6.jpg';
-import elitePassGold from '../assets/ELITE_PASS_GOLD.png';
-import blackMatteRender from '../assets/Black matte render 2.png';
-import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.png';
-import renderOne from '../assets/RENDER 1.png';
-import elitePassSilver from '../assets/ELITE_PASS_SILVER.png';
+// Import Asset Images for Quiz Right Column Showcase (que4, que8, que1, que7, que5, work desktop 1 webp, que2, que6)
+import que4Img from '../assets/QUE4.png';
+import que8Img from '../assets/QUE8.png';
+import que1Img from '../assets/QUE1.png';
+import que7Img from '../assets/QUE7.png';
+import que5Img from '../assets/QUE5.png';
+import workDesktop1Img from '../assets/work-desktop-1.webp.png';
+import que2Img from '../assets/QUE2.png';
+import que6Img from '../assets/QUE6.png';
 
 export default function IdentityQuiz() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -20,15 +22,16 @@ export default function IdentityQuiz() {
   const [emailAddress, setEmailAddress] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  // Images assigned per question step
+  // Images assigned per question step respectively: que4, que8, que1, que7, que5, work desktop 1 webp, que2, que6
   const quizStepImages = [
-    postProcessImg,
-    elitePassGold,
-    blackMatteRender,
-    elitePassBlack,
-    renderOne,
-    elitePassSilver,
-    postProcessImg,
+    que4Img,
+    que8Img,
+    que1Img,
+    que7Img,
+    que5Img,
+    workDesktop1Img,
+    que2Img,
+    que6Img,
   ];
 
   const quizQuestions = [
