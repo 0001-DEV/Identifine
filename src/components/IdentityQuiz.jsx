@@ -236,21 +236,13 @@ export default function IdentityQuiz() {
             </div>
           </div>
 
-          {/* Right Image Side (Asset Renders) */}
-          <div className="col-span-5 lg:col-span-4 flex flex-col items-center justify-center relative w-full h-[320px] sm:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#111111] border border-white/15 shadow-2xl mt-0">
+          {/* Right Image Side (Responsive, No border, No glassmorphism overlay) */}
+          <div className="col-span-5 lg:col-span-4 flex items-center justify-center relative w-full h-[260px] sm:h-[340px] lg:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden bg-transparent mt-0">
             <img
               src={quizStepImages[currentStep % quizStepImages.length]}
               alt="Identifine Diagnostic"
-              className="w-full h-full object-cover object-center transition-all duration-500 select-none"
+              className="w-full h-full object-contain sm:object-cover object-center transition-all duration-500 select-none"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent p-6 flex flex-col justify-end">
-              <span className="text-xs font-mono uppercase tracking-widest text-[#E2B857] mb-1">
-                Identifine Card Diagnostic
-              </span>
-              <span className="text-xs text-[#CCCCCC] font-normal leading-snug">
-                Organizational Identity Solution
-              </span>
-            </div>
           </div>
 
         </div>
@@ -336,21 +328,13 @@ export default function IdentityQuiz() {
             )}
           </div>
 
-          {/* Right Image Side on Completion */}
-          <div className="lg:col-span-4 hidden lg:flex flex-col items-center justify-center relative w-full h-[380px] rounded-3xl overflow-hidden bg-[#111111] border border-white/15 shadow-2xl">
+          {/* Right Image Side on Completion (Responsive, No border, No glassmorphism overlay) */}
+          <div className="lg:col-span-4 hidden lg:flex items-center justify-center relative w-full h-[380px] rounded-3xl overflow-hidden bg-transparent">
             <img
               src={que6Img}
               alt="Identifine Completion"
-              className="w-full h-full object-cover object-center select-none"
+              className="w-full h-full object-contain sm:object-cover object-center select-none"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent p-6 flex flex-col justify-end">
-              <span className="text-xs font-mono uppercase tracking-widest text-[#E2B857] mb-1">
-                Diagnostic Complete
-              </span>
-              <span className="text-xs text-[#CCCCCC] font-normal leading-snug">
-                Ready for Executive Consultation
-              </span>
-            </div>
           </div>
         </div>
       )}
