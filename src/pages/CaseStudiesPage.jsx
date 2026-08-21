@@ -112,7 +112,7 @@ export default function CaseStudiesPage() {
       <div className="max-w-[94rem] mx-auto space-y-16 sm:space-y-24">
         
         {/* Header Section */}
-        <div className="space-y-4 max-w-4xl text-left">
+        <div className="space-y-4 max-w-2xl text-left">
           <div className="inline-flex items-center justify-start gap-2.5">
             <img
               src={starIcon}
@@ -120,15 +120,15 @@ export default function CaseStudiesPage() {
               className="w-4 h-4 object-contain brightness-0"
             />
             <span
-              className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase"
-              style={{ letterSpacing: '4.5px' }}
+              className="font-galano font-normal text-[#555555] text-xs sm:text-sm lowercase"
+              style={{ letterSpacing: '6px' }}
             >
-              Case studies
+              case studies
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl lg:text-[4.75rem] font-galano font-medium text-[#111111] leading-[1.08] tracking-tight">
-            Create an identity that is a <em className="font-swarsh italic font-normal text-[#111111]">voice</em>, and not an <em className="font-swarsh italic font-normal text-[#111111]">echo!</em>
+          <h1 className="text-3xl sm:text-5xl lg:text-[3.5rem] font-galano font-medium text-[#111111] leading-[1.12] tracking-tight">
+            Create an identity that is a voice, and not an echo!
           </h1>
         </div>
 
