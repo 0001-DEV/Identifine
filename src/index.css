@@ -280,7 +280,8 @@
   will-change: opacity, transform, filter;
 }
 
-.scroll-reveal-deep.in-view {
+.scroll-reveal-deep.in-view,
+.scroll-reveal-deep.is-revealed {
   opacity: 1;
   transform: translateY(0) scale(1);
   filter: blur(0);

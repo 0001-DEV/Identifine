@@ -35,7 +35,7 @@ function ScrollRevealObserver() {
 
     const applyObservers = () => {
       const elementsToObserve = document.querySelectorAll(
-        '.scroll-reveal, .reveal-on-scroll, [data-reveal], footer'
+        '.scroll-reveal, .reveal-on-scroll, .scroll-reveal-deep, [data-reveal], footer'
       );
 
       observer = new IntersectionObserver(
