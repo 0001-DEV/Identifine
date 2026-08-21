@@ -216,8 +216,8 @@ export default function ProductCataloguePage() {
                   to="/case-studies"
                   className="group cursor-pointer block w-full"
                 >
-                  {/* Card Image Container (Top Aligned, No border radius, Pure Image) */}
-                  <div className={`relative ${heightClass} w-full rounded-none overflow-hidden bg-white border border-[#DCDAD4] shadow-sm group-hover:shadow-xl group-hover:border-[#111111]/40 transition-all duration-500 transform group-hover:-translate-y-1`}>
+                  {/* Card Image Container (Top Aligned, No border radius, Glassmorphism Background) */}
+                  <div className={`relative ${heightClass} w-full rounded-none overflow-hidden bg-white/40 backdrop-blur-md border border-white/60 shadow-sm group-hover:shadow-xl group-hover:border-black/20 transition-all duration-500 transform group-hover:-translate-y-1`}>
                     <img
                       src={partner.image}
                       alt={partner.name}
@@ -229,11 +229,11 @@ export default function ProductCataloguePage() {
             })}
           </div>
 
-          {/* Load More Button (White Background, Reduced Width, Gray-to-Black Text & Border Hover) */}
+          {/* Load More Button (Reduced Border & Width, White Background, Gray-to-Black Hover) */}
           <div className="text-center pt-8">
             <button
               onClick={() => setVisibleCount((prev) => (prev >= partnerCases.length ? 5 : partnerCases.length))}
-              className="inline-flex items-center justify-center text-xs sm:text-sm font-semibold px-8 py-3 rounded-full bg-white text-[#777777] border border-[#DCDAD4] hover:text-black hover:border-black shadow-sm transition-all duration-300 select-none"
+              className="inline-flex items-center justify-center text-xs font-semibold px-6 py-2.5 rounded-full bg-white text-[#777777] border border-[#DCDAD4]/60 hover:text-black hover:border-black shadow-sm transition-all duration-300 select-none"
             >
               Load More
             </button>
