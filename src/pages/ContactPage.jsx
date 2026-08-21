@@ -82,15 +82,14 @@ export default function ContactPage() {
             <div className="space-y-8">
               {/* Contact us */}
               <div className="space-y-3">
-                <div className="inline-flex items-center justify-start gap-2.5">
+                <div className="inline-flex items-center justify-start gap-2">
                   <img
                     src={starIcon}
                     alt=""
-                    className="w-4 h-4 object-contain brightness-0"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
                   />
                   <span
-                    className="font-galano font-normal text-base sm:text-lg text-[#111111] normal-case"
-                    style={{ letterSpacing: '4px' }}
+                    className="font-galano font-normal text-xs sm:text-sm text-[#111111] uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
                   >
                     Contact us
                   </span>
@@ -107,15 +106,14 @@ export default function ContactPage() {
 
               {/* Visit us */}
               <div className="space-y-3">
-                <div className="inline-flex items-center justify-start gap-2.5">
+                <div className="inline-flex items-center justify-start gap-2">
                   <img
                     src={starIcon}
                     alt=""
-                    className="w-4 h-4 object-contain brightness-0"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
                   />
                   <span
-                    className="font-galano font-normal text-base sm:text-lg text-[#111111] normal-case"
-                    style={{ letterSpacing: '4px' }}
+                    className="font-galano font-normal text-xs sm:text-sm text-[#111111] uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
                   >
                     Visit us
                   </span>
@@ -233,15 +231,14 @@ export default function ContactPage() {
           
           {/* Center-aligned FAQ Header */}
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center justify-center gap-2.5">
+            <div className="inline-flex items-center justify-center gap-2 mx-auto">
               <img
                 src={starIcon}
                 alt=""
-                className="w-4 h-4 object-contain brightness-0"
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
               />
               <span
-                className="font-galano font-medium text-sm sm:text-base text-[#111111] normal-case"
-                style={{ letterSpacing: '5px' }}
+                className="font-galano font-medium text-xs sm:text-sm text-[#111111] uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
               >
                 Have questions?
               </span>

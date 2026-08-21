@@ -58,11 +58,10 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
 
         {/* Header */}
         <div className="text-center max-w-4xl mx-auto space-y-5 sm:space-y-4">
-          <div className="inline-flex items-center justify-center gap-2.5">
-            <img src={starIcon} alt="" className="w-4 h-4 object-contain brightness-200" />
+          <div className="inline-flex items-center justify-center gap-2 mx-auto">
+            <img src={starIcon} alt="" className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-200" />
             <span
-              className="font-galano font-normal text-white text-xs sm:text-sm md:text-base capitalize"
-              style={{ letterSpacing: '5.2px' }}
+              className="font-galano font-normal text-white text-xs sm:text-sm uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
             >
               Our identity catalogue
             </span>

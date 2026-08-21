@@ -10,8 +10,9 @@ export default function TermsPage() {
         
         {/* Top Header */}
         <div className="space-y-5 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center justify-center gap-2.5 px-5 py-2 rounded-full bg-white border border-[#DCDAD4] shadow-sm text-black text-xs font-mono uppercase tracking-[3px] font-semibold">
-            <img src={starIcon} alt="" className="w-3.5 h-3.5 object-contain brightness-0" /> insights
+          <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#DCDAD4] shadow-sm text-black text-xs font-mono uppercase tracking-[2px] font-semibold">
+            <img src={starIcon} alt="" className="w-3.5 h-3.5 object-contain brightness-0 shrink-0" />
+            <span>insights</span>
           </div>
 
           <h1 className="font-galano font-bold text-4xl sm:text-6xl text-[#111111] tracking-tight">

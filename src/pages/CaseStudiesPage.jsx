@@ -114,15 +114,14 @@ export default function CaseStudiesPage() {
         
         {/* Header Section with Page-Open Entry Animation */}
         <div className="space-y-4 max-w-2xl text-left">
-          <div className="animate-hero-fade-1 inline-flex items-center justify-start gap-2.5">
+          <div className="animate-hero-fade-1 inline-flex items-center justify-start gap-2">
             <img
               src={starIcon}
               alt=""
-              className="w-4 h-4 object-contain brightness-0"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
             />
             <span
-              className="font-galano font-normal text-[#555555] text-xs sm:text-sm lowercase"
-              style={{ letterSpacing: '6px' }}
+              className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
             >
               case studies
             </span>

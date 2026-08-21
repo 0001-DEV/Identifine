@@ -167,15 +167,14 @@ export default function HomePage() {
 
           <div className="text-center max-w-4xl mx-auto space-y-4">
             {/* Title Badge - Coming up from down with stagger-delay-1 */}
-            <div className="scroll-reveal-deep stagger-delay-1 inline-flex items-center justify-center gap-2.5 max-w-[540px] mx-auto">
+            <div className="scroll-reveal-deep stagger-delay-1 inline-flex items-center justify-center gap-2 mx-auto">
               <img
                 src={starIcon}
                 alt=""
-                className="w-4 h-4 object-contain brightness-0"
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
               />
               <span
-                className="font-galano font-normal text-[#111111] text-base sm:text-lg"
-                style={{ letterSpacing: '5.2px' }}
+                className="font-galano font-normal text-[#111111] text-xs sm:text-base uppercase tracking-[2px] sm:tracking-[5px] whitespace-nowrap"
               >
                 Our identity experience program
               </span>
@@ -214,15 +213,14 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto space-y-16">
 
           <div className="scroll-reveal text-center space-y-3">
-            <div className="inline-flex items-center justify-center gap-2.5 max-w-[540px] mx-auto">
+            <div className="inline-flex items-center justify-center gap-2 mx-auto">
               <img
                 src={starIcon}
                 alt=""
-                className="w-4 h-4 object-contain brightness-0"
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
               />
               <span
-                className="font-galano font-normal text-[#111111] text-xs sm:text-sm capitalize"
-                style={{ letterSpacing: '5.2px' }}
+                className="font-galano font-normal text-[#111111] text-xs sm:text-sm uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
               >
                 From concept to launch
               </span>
@@ -250,15 +248,14 @@ export default function HomePage() {
             {/* Left Column: Vertically Arranged Text & Button - Shifted Upwards */}
             <div className="lg:col-span-5 space-y-6 scroll-reveal lg:sticky lg:top-24 -mt-8 sm:-mt-12 lg:-mt-16">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2.5">
+                <div className="inline-flex items-center gap-2">
                   <img
                     src={starIcon}
                     alt=""
-                    className="w-4 h-4 object-contain brightness-200"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-200"
                   />
                   <span
-                    className="font-galano font-medium text-white text-sm sm:text-base uppercase"
-                    style={{ letterSpacing: '5.2px' }}
+                    className="font-galano font-medium text-white text-xs sm:text-sm uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
                   >
                     insights & inspiration
                   </span>

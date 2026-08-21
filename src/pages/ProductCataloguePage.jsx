@@ -160,15 +160,14 @@ export default function ProductCataloguePage() {
           
           {/* Overview Tagline Label (Enlarged, Lowercase, Aligned with first line of narrative) */}
           <div className="animate-hero-fade-2 pt-1 shrink-0 min-w-[160px]">
-            <div className="inline-flex items-center justify-start gap-2.5">
+            <div className="inline-flex items-center justify-start gap-2">
               <img
                 src={starIcon}
                 alt=""
-                className="w-4 h-4 sm:w-5 sm:h-5 object-contain brightness-0"
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain brightness-0 shrink-0"
               />
               <span
-                className="font-galano font-normal text-[#555555] text-base sm:text-lg lg:text-xl lowercase"
-                style={{ letterSpacing: '5px' }}
+                className="font-galano font-normal text-[#555555] text-xs sm:text-base uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
               >
                 overview
               </span>

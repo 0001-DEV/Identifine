@@ -233,15 +233,14 @@ export default function AboutUsPage() {
 
           {/* Story Narrative Section - Shifted further from the left margin */}
           <div className="animate-hero-fade-2 space-y-8 max-w-4xl lg:ml-36 xl:ml-52 pt-6 text-left">
-            <div className="inline-flex items-center justify-start gap-2.5">
+            <div className="inline-flex items-center justify-start gap-2">
               <img
                 src={starIcon}
                 alt=""
-                className="w-4 h-4 object-contain brightness-0"
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
               />
               <span
-                className="font-galano font-bold text-xs sm:text-sm text-[#111111] tracking-widest uppercase"
-                style={{ letterSpacing: '4px' }}
+                className="font-galano font-bold text-xs sm:text-sm text-[#111111] uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
               >
                 The Identifine Story
               </span>
@@ -290,15 +289,14 @@ export default function AboutUsPage() {
 
             {/* Header: Badge left aligned, Heading centered */}
             <div className="scroll-reveal space-y-4">
-              <div className="inline-flex items-center justify-start gap-2.5">
+              <div className="inline-flex items-center justify-start gap-2">
                 <img
                   src={starIcon}
                   alt=""
-                  className="w-4 h-4 object-contain brightness-200"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-200"
                 />
                 <span
-                  className="font-galano font-medium text-base sm:text-lg text-white/90 normal-case"
-                  style={{ letterSpacing: '6px' }}
+                  className="font-galano font-medium text-xs sm:text-sm text-white/90 uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
                 >
                   meet our team
                 </span>
@@ -371,20 +369,19 @@ export default function AboutUsPage() {
 
 
         {/* ========================================================= */}
-        {/* 3. TURNING VISION INTO REALITY (MISSION & GOALS)          */}
+        {/* 3. OUR MISSION & GOALS ("TURNING VISION INTO REALITY")  */}
         {/* ========================================================= */}
         <section className="space-y-14 py-4">
           {/* Header: Badge left aligned in lowercase, Heading centered */}
           <div className="scroll-reveal space-y-4">
-            <div className="inline-flex items-center justify-start gap-2.5">
+            <div className="inline-flex items-center justify-start gap-2">
               <img
                 src={starIcon}
                 alt=""
-                className="w-4 h-4 object-contain brightness-0"
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
               />
               <span
-                className="font-galano font-medium text-base sm:text-lg text-[#111111] normal-case"
-                style={{ letterSpacing: '5px' }}
+                className="font-galano font-medium text-xs sm:text-sm text-[#111111] uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
               >
                 not just another agency
               </span>
@@ -570,15 +567,14 @@ export default function AboutUsPage() {
 
             {/* Left Header */}
             <div className="scroll-reveal lg:col-span-4 space-y-4">
-              <div className="inline-flex items-center gap-2.5">
+              <div className="inline-flex items-center gap-2">
                 <img
                   src={starIcon}
                   alt=""
-                  className="w-4 h-4 object-contain brightness-0"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
                 />
                 <span
-                  className="font-galano font-medium text-sm sm:text-base text-[#111111] normal-case"
-                  style={{ letterSpacing: '5px' }}
+                  className="font-galano font-medium text-xs sm:text-sm text-[#111111] uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
                 >
                   Have questions?
                 </span>
