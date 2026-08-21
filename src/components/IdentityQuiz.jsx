@@ -179,27 +179,27 @@ export default function IdentityQuiz() {
   };
 
   return (
-    <div className="bg-[#0D0D0D] text-white rounded-[40px] p-8 sm:p-12 lg:p-14 shadow-2xl border border-[#222222] relative overflow-hidden w-full max-w-[1200px] h-[600px] mx-auto flex flex-col justify-center transition-all duration-300">
+    <div className="bg-[#0D0D0D] text-white rounded-[32px] sm:rounded-[40px] p-6 sm:p-12 lg:p-14 shadow-2xl border border-[#222222] relative overflow-hidden w-full max-w-[1200px] min-h-[580px] h-auto lg:h-[600px] mx-auto flex flex-col justify-center transition-all duration-300">
       {!completed ? (
         /* Entire Grid (Left Question + Right Asset Image Showcase) */
         <div
-          className={`grid grid-cols-12 gap-4 sm:gap-8 lg:gap-12 items-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isSliding ? 'opacity-0 -translate-x-14 scale-[0.98]' : 'opacity-100 translate-x-0 scale-100'
+          className={`grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isSliding ? 'opacity-0 -translate-x-14 scale-[0.98]' : 'opacity-100 translate-x-0 scale-100'
             }`}
         >
 
           {/* Question Side */}
-          <div className="col-span-7 lg:col-span-8 space-y-4 sm:space-y-5 -mt-6 sm:-mt-14">
-            <div className="space-y-4">
-              <span className="text-3xl sm:text-4xl lg:text-5xl font-normal font-mono text-[#E2B857] block tracking-wider mb-6 sm:mb-8">
+          <div className="col-span-1 md:col-span-7 lg:col-span-8 space-y-4 sm:space-y-5 -mt-2 sm:-mt-10 lg:-mt-14">
+            <div className="space-y-3 sm:space-y-4">
+              <span className="text-2xl sm:text-4xl lg:text-5xl font-normal font-mono text-[#E2B857] block tracking-wider mb-3 sm:mb-8">
                 {quizQuestions[currentStep].queNum}
               </span>
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-normal text-white font-galano leading-tight tracking-tight">
+              <h3 className="text-xl sm:text-3xl lg:text-4xl font-normal text-white font-galano leading-tight tracking-tight">
                 {quizQuestions[currentStep].title}
               </h3>
             </div>
 
             {/* Option Buttons */}
-            <div className="space-y-3 pt-1">
+            <div className="space-y-2.5 sm:space-y-3 pt-1">
               {quizQuestions[currentStep].options.map((opt, idx) => (
                 <button
                   key={idx}
@@ -212,7 +212,7 @@ export default function IdentityQuiz() {
             </div>
 
             {/* Steps Indicator: 1 2 3 4 5 6 7 */}
-            <div className="flex items-center gap-5 sm:gap-6 pt-4 text-[22px] font-mono">
+            <div className="flex items-center gap-4 sm:gap-6 pt-3 sm:pt-4 text-lg sm:text-[22px] font-mono">
               {[1, 2, 3, 4, 5, 6, 7].map((num) => {
                 const stepIdx = num - 1;
                 const isActive = stepIdx === currentStep;
@@ -237,7 +237,7 @@ export default function IdentityQuiz() {
           </div>
 
           {/* Right Image Side (Responsive, No border, No glassmorphism overlay) */}
-          <div className="col-span-5 lg:col-span-4 flex items-center justify-center relative w-full h-[260px] sm:h-[340px] lg:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden bg-transparent mt-0">
+          <div className="col-span-1 md:col-span-5 lg:col-span-4 flex items-center justify-center relative w-full h-[220px] sm:h-[340px] lg:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden bg-transparent mt-0">
             <img
               src={quizStepImages[currentStep % quizStepImages.length]}
               alt="Identifine Diagnostic"

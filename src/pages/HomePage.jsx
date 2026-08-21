@@ -209,7 +209,7 @@ export default function HomePage() {
 
             {/* Main Heading - Coming up from down with stagger-delay-2 */}
             <h2 className="scroll-reveal-deep stagger-delay-2 text-3xl sm:text-5xl lg:text-[4rem] font-galano font-medium text-[#111111] leading-tight max-w-6xl mx-auto">
-              <span className="inline-block whitespace-nowrap">Define how your organization is</span> <br />
+              <span className="inline-block">Define how your organization is</span> <br />
               <em className="italic-serif text-[#111111]">experienced</em>
             </h2>
           </div>
