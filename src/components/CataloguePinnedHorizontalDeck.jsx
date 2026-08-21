@@ -30,6 +30,7 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
           trigger: containerRef.current,
           pin: true,
           pinSpacing: true,
+          anticipatePin: 1,
           start: 'top top',
           end: () => `+=${Math.max(250, Math.abs(getScrollAmount()) * 0.45)}`,
           scrub: 0.2,

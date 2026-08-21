@@ -31,16 +31,19 @@ function ScrollRevealObserver() {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    let observer = null;
+
     const applyObservers = () => {
       const elementsToObserve = document.querySelectorAll(
         '.scroll-reveal, .reveal-on-scroll, [data-reveal], footer'
       );
 
-      const observer = new IntersectionObserver(
+      observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add('is-revealed');
+              if (observer) observer.unobserve(entry.target);
             }
           });
         },
@@ -59,14 +62,16 @@ function ScrollRevealObserver() {
         const rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight - 30) {
           el.classList.add('is-revealed');
+          observer.unobserve(el);
         }
       });
-
-      return observer;
     };
 
     const timer = setTimeout(applyObservers, 60);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      if (observer) observer.disconnect();
+    };
   }, [pathname]);
 
   return null;

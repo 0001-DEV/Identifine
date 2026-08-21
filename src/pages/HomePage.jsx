@@ -27,32 +27,6 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [selectedCardModal, setSelectedCardModal] = useState(null);
 
-  // Scroll reveal IntersectionObserver hook
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-          }
-        });
-      },
-      { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
-    );
-
-    const elements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-deep');
-    elements.forEach((el) => {
-      observer.observe(el);
-      // Trigger immediately if already inside viewport on load
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        el.classList.add('in-view');
-      }
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   // Catalogue Cards with Real Assets
   const catalogueCards = [
     {
@@ -149,7 +123,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full">
 
       {/* 1. HERO SECTION (Height min-h-[95vh], pt-48 sm:pt-64 pb-28) */}
       <section className="bg-[#EBEAE6] pt-48 sm:pt-64 pb-28 px-6 sm:px-12 text-center flex flex-col items-center justify-center relative min-h-[95vh] overflow-hidden">

@@ -45,9 +45,10 @@ export default function JourneyStickyStack({ journeySteps }) {
           trigger: containerRef.current,
           pin: true,
           pinSpacing: true,
+          anticipatePin: 1,
           start: 'top top+=80',
-          end: () => `+=${(totalCards - 1) * 110}%`,
-          scrub: 0.5,
+          end: () => `+=${(totalCards - 1) * 100}%`,
+          scrub: 0.35,
           invalidateOnRefresh: true,
         },
       });
