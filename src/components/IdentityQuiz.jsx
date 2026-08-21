@@ -16,6 +16,7 @@ export default function IdentityQuiz() {
   const [answers, setAnswers] = useState({});
   const [completed, setCompleted] = useState(false);
   const [isSliding, setIsSliding] = useState(false);
+  const [activeHoverIdx, setActiveHoverIdx] = useState(null);
 
   // Form Details state for final step
   const [fullName, setFullName] = useState('');
