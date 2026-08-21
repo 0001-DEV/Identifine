@@ -273,8 +273,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
             
-            {/* Left Column: Vertically Arranged Text & Button - Perfectly Aligned with Top Line of the 3 Containers */}
-            <div className="lg:col-span-5 space-y-6 scroll-reveal lg:sticky lg:top-24 pt-0">
+            {/* Left Column: Vertically Arranged Text & Button - Shifted Upwards */}
+            <div className="lg:col-span-5 space-y-6 scroll-reveal lg:sticky lg:top-24 -mt-8 sm:-mt-12 lg:-mt-16">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2.5">
                   <img
@@ -300,14 +300,9 @@ export default function HomePage() {
               <div className="pt-2">
                 <NavLink
                   to="/blog"
-                  className="group relative overflow-hidden inline-flex items-center justify-center text-xs sm:text-sm font-semibold px-7 py-3.5 rounded-full bg-white text-black shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  className="inline-flex items-center justify-center text-xs sm:text-sm font-semibold px-7 py-3.5 rounded-full bg-white text-black shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 >
-                  <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                    <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                      <span className="block">View all blogs</span>
-                      <span className="block">View all blogs</span>
-                    </span>
-                  </span>
+                  View all blogs
                 </NavLink>
               </div>
             </div>
