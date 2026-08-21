@@ -23,33 +23,27 @@ import ubaImg from '../assets/case-studies/uba.png';
 
 export const productsData = [
   {
-    id: 'black-matte',
-    title: 'Black Matte',
-    subtitle: 'Executive Stealth Finish',
-    headingFirst: 'Black',
-    headingSecond: 'Matte',
-    overview: 'Some things never need to shout to be noticed. The Black Matte was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
-    category: 'Executive Level',
-    features: 'NFC, QR code, Access, Exclusive packaging',
-    image: productHeroImg
-  },
-  {
     id: 'du-plex',
     title: 'Du-plex smart card',
     subtitle: 'Hybrid Dual-Tone Finish',
-    headingFirst: 'Du-plex',
-    headingSecond: 'smart card',
     overview: 'Some things never need to shout to be noticed. The Du-plex was created for organizations that believe confidence is quiet. Its deep, dual-layer finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
     image: elitePassBlack
   },
   {
+    id: 'black-matte',
+    title: 'Black Matte',
+    subtitle: 'Executive Stealth Finish',
+    overview: 'Some things never need to shout to be noticed. The Black Matte was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    category: 'Executive Level',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    image: productHeroImg
+  },
+  {
     id: 'de-titan',
     title: 'De-titan smart card',
     subtitle: 'Aircraft Titanium Alloy',
-    headingFirst: 'De-titan',
-    headingSecond: 'smart card',
     overview: 'Some things never need to shout to be noticed. The De-titan was created for organizations that believe confidence is quiet. Its aerospace titanium structure, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
@@ -59,8 +53,6 @@ export const productsData = [
     id: 'gold-metal',
     title: 'Gold metal card',
     subtitle: '24K Electroplated Brass',
-    headingFirst: 'Gold',
-    headingSecond: 'metal card',
     overview: 'Some things never need to shout to be noticed. The Gold Metal was created for organizations that believe confidence is quiet. Its 24K electroplated finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
@@ -70,8 +62,6 @@ export const productsData = [
     id: 'forte-smart',
     title: 'Forte smart card',
     subtitle: 'Carbon Fiber Weave',
-    headingFirst: 'Forte',
-    headingSecond: 'smart card',
     overview: 'Some things never need to shout to be noticed. The Forte was created for organizations that believe confidence is quiet. Its lightweight carbon fiber weave, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
@@ -81,8 +71,6 @@ export const productsData = [
     id: 'membership-prestige',
     title: 'Membership prestige',
     subtitle: 'Gunmetal VIP Access',
-    headingFirst: 'Membership',
-    headingSecond: 'prestige',
     overview: 'Some things never need to shout to be noticed. The Membership Prestige was created for organizations that believe confidence is quiet. Its deep gunmetal finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
@@ -103,7 +91,7 @@ export const partnerCases = [
 
 export default function ProductCataloguePage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialId = searchParams.get('id') || searchParams.get('card') || 'black-matte';
+  const initialId = searchParams.get('id') || searchParams.get('card') || 'du-plex';
   
   const [selectedId, setSelectedId] = useState(initialId);
   const [visibleCount, setVisibleCount] = useState(8);
@@ -118,74 +106,95 @@ export default function ProductCataloguePage() {
   // Active product
   const activeProduct = productsData.find((p) => p.id === selectedId) || productsData[0];
 
-  const handleSelectProduct = (id) => {
-    setSelectedId(id);
-    setSearchParams({ id });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
-    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
-      <div className="max-w-[94rem] mx-auto space-y-24 sm:space-y-32">
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-32 sm:pt-40 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
+      <div className="max-w-[94rem] mx-auto space-y-20 sm:space-y-28">
         
-        {/* Section 1: Product Title & 2-Column Hero */}
-        <div className="space-y-12">
+        {/* ========================================================================= */}
+        {/* HERO SECTION: FULL WIDTH PICTURE WITH PRODUCT NAME AT CENTER BOTTOM     */}
+        {/* ========================================================================= */}
+        <div className="w-full relative rounded-[32px] sm:rounded-[40px] overflow-hidden bg-[#0A0D14] border border-[#DCDAD4] shadow-xl h-[340px] sm:h-[440px] lg:h-[500px] flex items-center justify-center group">
           
-          {/* Main H1 Title (Framer match) */}
-          <div className="text-left space-y-2">
-            <h1 className="text-5xl sm:text-7xl lg:text-[6.5rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.04]">
-              <span>{activeProduct.headingFirst}</span> <br className="hidden sm:block" />
-              <span>{activeProduct.headingSecond}</span>
+          {/* Hero Product Image */}
+          <img
+            src={activeProduct.image}
+            alt={activeProduct.title}
+            className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-1000 ease-out select-none"
+          />
+
+          {/* Bottom Gradient Overlay for High Contrast Text */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
+
+          {/* Product Name at the Center Bottom of the Picture */}
+          <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 text-center w-full px-6 z-10 pointer-events-none">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-galano font-bold text-white tracking-tight drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)]">
+              {activeProduct.title}
             </h1>
-          </div>
-
-          {/* 2-Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            
-            {/* Left Column: Overview Details */}
-            <div className="lg:col-span-6 space-y-8 text-left">
-              
-              <div className="space-y-6">
-                <h2 className="text-2xl sm:text-3xl font-galano font-medium text-[#111111] tracking-tight">
-                  Overview
-                </h2>
-
-                <p className="text-base sm:text-lg text-[#333333] leading-relaxed font-normal">
-                  {activeProduct.overview}
-                </p>
-              </div>
-
-              {/* Category & Features */}
-              <div className="space-y-3 pt-2 text-base text-[#111111]">
-                <div>
-                  <span className="font-medium text-[#111111]">Category: </span>
-                  <span className="text-[#555555]">{activeProduct.category}</span>
-                </div>
-                <div>
-                  <span className="font-medium text-[#111111]">Features: </span>
-                  <span className="text-[#555555]">{activeProduct.features}</span>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Right Column: Hero Card Image Frame */}
-            <div className="lg:col-span-6">
-              <div className="relative rounded-[32px] overflow-hidden bg-white border border-[#DCDAD4] shadow-sm p-6 sm:p-10 min-h-[420px] sm:min-h-[500px] flex items-center justify-center group">
-                <img
-                  src={activeProduct.image}
-                  alt={activeProduct.title}
-                  className="w-full max-h-[460px] object-contain select-none group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-              </div>
-            </div>
-
           </div>
 
         </div>
 
-        {/* Section 2: Partners using our flagship */}
-        <div className="pt-16 sm:pt-24 border-t border-[#DCDAD4] space-y-12 text-left">
+        {/* ========================================================================= */}
+        {/* OVERVIEW & SPECIFICATIONS SECTION                                         */}
+        {/* ========================================================================= */}
+        <div className="bg-white border border-[#DCDAD4] p-8 sm:p-12 lg:p-14 rounded-[32px] shadow-sm space-y-8 text-left">
+          
+          <div className="space-y-4">
+            <div className="inline-flex items-center justify-start gap-2.5">
+              <img
+                src={starIcon}
+                alt=""
+                className="w-4 h-4 object-contain brightness-0"
+              />
+              <span
+                className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase"
+                style={{ letterSpacing: '4px' }}
+              >
+                Overview
+              </span>
+            </div>
+
+            <p className="text-base sm:text-xl text-[#333333] leading-relaxed font-normal max-w-5xl">
+              {activeProduct.overview}
+            </p>
+          </div>
+
+          {/* Specs List */}
+          <div className="pt-6 border-t border-[#DCDAD4] grid grid-cols-1 sm:grid-cols-2 gap-6 text-base">
+            <div>
+              <span className="font-semibold text-[#111111]">Category: </span>
+              <span className="text-[#555555]">{activeProduct.category}</span>
+            </div>
+            <div>
+              <span className="font-semibold text-[#111111]">Features: </span>
+              <span className="text-[#555555]">{activeProduct.features}</span>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="pt-4 flex flex-wrap items-center gap-4">
+            <a
+              href="https://wa.me/2349030001851"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="framer-pill-button text-sm px-8 py-4 font-semibold shadow-md"
+            >
+              Make an identity enquiry
+            </a>
+            <NavLink
+              to="/contact"
+              className="bg-white border border-[#DCDAD4] text-black text-sm px-8 py-4 font-semibold rounded-full hover:bg-black hover:text-white transition-all shadow-sm"
+            >
+              Book a consultation
+            </NavLink>
+          </div>
+
+        </div>
+
+        {/* ========================================================================= */}
+        {/* SECTION: PARTNERS USING OUR FLAGSHIP                                      */}
+        {/* ========================================================================= */}
+        <div className="pt-12 sm:pt-16 border-t border-[#DCDAD4] space-y-12 text-left">
           
           <div className="space-y-3">
             <h2 className="text-3xl sm:text-5xl lg:text-[3.5rem] font-galano font-medium text-[#111111] leading-tight tracking-tight">
