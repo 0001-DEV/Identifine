@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 // Pages
 import HomePage from './pages/HomePage';
 import CaseStudiesPage from './pages/CaseStudiesPage';
+import CaseStudyDetailPage from './pages/CaseStudyDetailPage';
 import ElitePassPage from './pages/ElitePassPage';
 import AboutUsPage from './pages/AboutUsPage';
 import ContactPage from './pages/ContactPage';
@@ -40,7 +41,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/case-studies" element={<CaseStudiesPage />} />
+          <Route path="/case-studies/:id" element={<CaseStudyDetailPage />} />
           <Route path="/projects" element={<CaseStudiesPage />} />
+          <Route path="/projects/:id" element={<CaseStudyDetailPage />} />
           <Route path="/elite-pass" element={<ElitePassPage />} />
           <Route path="/elitepass" element={<ElitePassPage />} />
           <Route path="/about-us" element={<AboutUsPage />} />

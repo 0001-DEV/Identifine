@@ -1,0 +1,58 @@
+{
+  "rainoil": {
+    "url": "https://identifi.framer.website/case-studies/rainoil",
+    "images": [
+      "https://framerusercontent.com/images/D7yHSZ4UO6Phv2GQkBHGzyzd34.jpg",
+      "https://framerusercontent.com/images/noNpD2fR8Da0MQ0ehkSf8BFajA.png",
+      "https://framerusercontent.com/images/G7G8zFXJDYUr4fEE9zrGNcXgL7w.jpg"
+    ]
+  },
+  "seplat": {
+    "url": "https://identifi.framer.website/case-studies/seplat",
+    "images": [
+      "https://framerusercontent.com/images/D7yHSZ4UO6Phv2GQkBHGzyzd34.jpg",
+      "https://framerusercontent.com/images/noNpD2fR8Da0MQ0ehkSf8BFajA.png",
+      "https://framerusercontent.com/images/G7G8zFXJDYUr4fEE9zrGNcXgL7w.jpg"
+    ]
+  },
+  "revolution-plus": {
+    "url": "https://identifi.framer.website/case-studies/revolution-plus",
+    "images": [
+      "https://framerusercontent.com/images/D7yHSZ4UO6Phv2GQkBHGzyzd34.jpg",
+      "https://framerusercontent.com/images/noNpD2fR8Da0MQ0ehkSf8BFajA.png",
+      "https://framerusercontent.com/images/G7G8zFXJDYUr4fEE9zrGNcXgL7w.jpg"
+    ]
+  },
+  "arm": {
+    "url": "https://identifi.framer.website/case-studies/arm",
+    "images": []
+  },
+  "sterling-bank": {
+    "url": "https://identifi.framer.website/case-studies/sterling-bank",
+    "images": [
+      "https://framerusercontent.com/images/D7yHSZ4UO6Phv2GQkBHGzyzd34.jpg",
+      "https://framerusercontent.com/images/noNpD2fR8Da0MQ0ehkSf8BFajA.png",
+      "https://framerusercontent.com/images/G7G8zFXJDYUr4fEE9zrGNcXgL7w.jpg"
+    ]
+  },
+  "tvc": {
+    "url": "https://identifi.framer.website/case-studies/tvc",
+    "images": [
+      "https://framerusercontent.com/images/D7yHSZ4UO6Phv2GQkBHGzyzd34.jpg",
+      "https://framerusercontent.com/images/noNpD2fR8Da0MQ0ehkSf8BFajA.png",
+      "https://framerusercontent.com/images/G7G8zFXJDYUr4fEE9zrGNcXgL7w.jpg"
+    ]
+  },
+  "bank-78": {
+    "url": "https://identifi.framer.website/case-studies/bank-78",
+    "images": []
+  },
+  "uba": {
+    "url": "https://identifi.framer.website/case-studies/uba",
+    "images": [
+      "https://framerusercontent.com/images/D7yHSZ4UO6Phv2GQkBHGzyzd34.jpg",
+      "https://framerusercontent.com/images/noNpD2fR8Da0MQ0ehkSf8BFajA.png",
+      "https://framerusercontent.com/images/G7G8zFXJDYUr4fEE9zrGNcXgL7w.jpg"
+    ]
+  }
+}

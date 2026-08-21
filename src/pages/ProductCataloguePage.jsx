@@ -213,7 +213,7 @@ export default function ProductCataloguePage() {
               return (
                 <NavLink
                   key={partner.id}
-                  to="/case-studies"
+                  to={`/case-studies/${partner.id}`}
                   className="group cursor-pointer block w-full"
                 >
                   {/* Card Image Container (Top Aligned, No border radius, Glassmorphism Background) */}

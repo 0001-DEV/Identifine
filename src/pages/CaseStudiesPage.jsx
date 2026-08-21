@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import starIcon from '../assets/SVG@4x.png';
 import CardShowcaseModal from '../components/CardShowcaseModal';
 
@@ -138,9 +139,9 @@ export default function CaseStudiesPage() {
             const heightClass = heightPattern[idx] || 'h-[200px]';
 
             return (
-              <div
+              <NavLink
                 key={item.id}
-                onClick={() => setSelectedCard(item)}
+                to={`/case-studies/${item.id}`}
                 className="group cursor-pointer block w-full text-left"
               >
                 {/* Card Image Container (Top Aligned, No border radius, Glassmorphism Background) */}
@@ -151,7 +152,7 @@ export default function CaseStudiesPage() {
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 select-none rounded-none"
                   />
                 </div>
-              </div>
+              </NavLink>
             );
           })}
         </div>
