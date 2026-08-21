@@ -128,9 +128,9 @@ export default function ProductCataloguePage() {
       <div className="max-w-[94rem] mx-auto space-y-20 sm:space-y-28">
         
         {/* ========================================================================= */}
-        {/* HERO SECTION: FULL SCREEN WIDTH PICTURE (NO MARGIN TOP, +12PX HEIGHT)     */}
+        {/* HERO SECTION: PICTURE (NO MARGIN TOP, FULL CONTAINER WIDTH)               */}
         {/* ========================================================================= */}
-        <div className="animate-hero-fade-1 w-screen relative left-1/2 -translate-x-1/2 rounded-none overflow-hidden bg-[#0A0D14] border-b border-[#DCDAD4] shadow-xl h-[370px] sm:h-[470px] lg:h-[530px] flex items-center justify-center group mt-0">
+        <div className="animate-hero-fade-1 w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0A0D14] border border-[#DCDAD4] shadow-xl h-[370px] sm:h-[470px] lg:h-[540px] relative flex items-center justify-center group mt-0">
           
           {/* Hero Product Image */}
           <img
@@ -143,7 +143,7 @@ export default function ProductCataloguePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
 
           {/* Product Name at the Center Bottom of the Picture */}
-          <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 text-center w-full px-6 z-10 pointer-events-none">
+          <div className="absolute bottom-8 sm:bottom-12 left-0 text-center w-full px-6 z-10 pointer-events-none">
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-galano font-bold text-white tracking-tight drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)]">
               {activeProduct.title}
             </h1>
