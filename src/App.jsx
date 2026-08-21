@@ -25,6 +25,56 @@ function ScrollToTop() {
   return null;
 }
 
+// Global Scroll Reveal for all sections, pages & footer
+function ScrollRevealObserver() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const applyObservers = () => {
+      const elementsToObserve = document.querySelectorAll(
+        'section, main > div > div, .reveal-on-scroll, [data-reveal]'
+      );
+
+      elementsToObserve.forEach((el) => {
+        if (!el.classList.contains('reveal-on-scroll')) {
+          el.classList.add('reveal-on-scroll');
+        }
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+            }
+          });
+        },
+        {
+          threshold: 0.05,
+          rootMargin: '0px 0px -40px 0px'
+        }
+      );
+
+      elementsToObserve.forEach((el) => observer.observe(el));
+
+      // Trigger elements in view immediately
+      elementsToObserve.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 40) {
+          el.classList.add('is-revealed');
+        }
+      });
+
+      return observer;
+    };
+
+    const timer = setTimeout(applyObservers, 60);
+    return () => clearTimeout(timer);
+  }, [pathname]);
+
+  return null;
+}
+
 export default function App() {
   const location = useLocation();
   const hideFooter = location.pathname.startsWith('/program');
@@ -32,6 +82,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#080B11] text-[#F1F5F9] font-sans flex flex-col justify-between selection:bg-[#E2B857] selection:text-black">
       <ScrollToTop />
+      <ScrollRevealObserver />
       
       {/* Top Navbar */}
       <Navbar />
