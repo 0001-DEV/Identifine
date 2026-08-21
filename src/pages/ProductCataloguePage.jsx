@@ -188,10 +188,10 @@ export default function ProductCataloguePage() {
             </h2>
           </div>
 
-          {/* 5 Partners per line with 200px / 350px heights, 8px gap, top-aligned, no border radius, pure image */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-[8px] items-start">
+          {/* 5 Partners per line with 200px / 300px heights, 8px horizontal gap, 80px vertical gap, top-aligned, no border radius, pure image */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-[8px] gap-y-[80px] items-start">
             {partnerCases.slice(0, visibleCount).map((partner, idx) => {
-              const heightPattern = ['h-[200px]', 'h-[350px]', 'h-[200px]', 'h-[350px]', 'h-[200px]'];
+              const heightPattern = ['h-[200px]', 'h-[300px]', 'h-[200px]', 'h-[300px]', 'h-[200px]'];
               const heightClass = heightPattern[idx % 5];
 
               return (
