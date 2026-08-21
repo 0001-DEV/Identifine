@@ -133,7 +133,7 @@ export default function CaseStudiesPage() {
         </div>
 
         {/* 5-Column Grid with 2 Lines Matching Product Catalogue Arrangement */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-[8px] gap-y-[80px] items-start">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-[8px] gap-y-[140px] items-start">
           {caseStudiesData.slice(0, visibleCount).map((item, idx) => {
             const heightClass = heightPattern[idx] || 'h-[200px]';
 
