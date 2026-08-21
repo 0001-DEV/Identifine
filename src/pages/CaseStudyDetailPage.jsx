@@ -139,8 +139,8 @@ export default function CaseStudyDetailPage() {
                 {study.title}
               </h1>
 
-              {/* Project Type & Year */}
-              <div className="space-y-0.5 text-sm font-medium text-[#464647]">
+              {/* Project Type & Year (Gray Color) */}
+              <div className="space-y-0.5 text-sm font-medium text-[#737378]">
                 <p>{study.type}</p>
                 <p>{study.year}</p>
               </div>
@@ -149,18 +149,6 @@ export default function CaseStudyDetailPage() {
               <p className="font-galano font-medium text-sm text-[#1f1f1f] leading-relaxed pt-2">
                 {study.writeup}
               </p>
-            </div>
-
-            {/* Make Enquiry CTA */}
-            <div className="pt-4">
-              <a
-                href={`https://wa.me/2349030001851?text=Inquiry%20regarding%20${encodeURIComponent(study.title)}%20case%20study`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="framer-pill-button text-xs px-6 py-3 font-semibold shadow-sm inline-block"
-              >
-                Make an enquiry
-              </a>
             </div>
 
           </div>
