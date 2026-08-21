@@ -193,7 +193,7 @@ export default function Footer() {
         </div>
 
         {/* Logo & Social List Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 pt-4">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 pt-4 w-full">
           
           {/* Social List Rows - Staggered scroll-up reveal */}
           <div className="max-w-[284px] w-full space-y-0">
@@ -249,16 +249,16 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* Logo on Right with 100px Height - Staggered Streamed Logo */}
+          {/* Logo on Right - Staggered Streamed Logo (Responsive Height on all screens) */}
           <NavLink 
             to="/" 
-            className={`inline-block pb-2 shrink-0 transition-all duration-900 delay-650 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            className={`inline-block pb-2 shrink-0 max-w-full transition-all duration-900 delay-650 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               isDownloaded 
-                ? 'opacity-100 translate-y-0 md:-translate-y-12 scale-100 blur-0' 
+                ? 'opacity-100 translate-y-0 lg:-translate-y-6 xl:-translate-y-10 scale-100 blur-0' 
                 : 'opacity-0 translate-y-16 scale-90 blur-md'
             }`}
           >
-            <IdentifineWhiteTextLogo className="h-[100px] w-auto" />
+            <IdentifineWhiteTextLogo className="h-[48px] sm:h-[70px] md:h-[84px] lg:h-[100px] max-w-full w-auto object-contain" />
           </NavLink>
 
         </div>

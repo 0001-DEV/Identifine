@@ -62,8 +62,8 @@ export default function Navbar() {
           />
         </NavLink>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8">
+        {/* Desktop Navigation Links (Visible on lg 1024px+ screens) */}
+        <nav className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => (
             <NavLink
               key={link.name}
@@ -79,8 +79,8 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Right CTA Button */}
-        <div className="hidden md:block">
+        {/* Right CTA Button (Visible on lg 1024px+ screens) */}
+        <div className="hidden lg:block">
           <a
             href="https://wa.me/2347046367754"
             target="_blank"
@@ -96,19 +96,19 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* Mobile Hamburger Menu */}
+        {/* Mobile / Split-Screen Hamburger Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg text-black hover:bg-black/5 transition-colors"
+          className="lg:hidden p-2 rounded-lg text-black hover:bg-black/5 transition-colors"
           aria-label="Toggle Menu"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile / Split-Screen Menu Drawer */}
       <div 
-        className={`md:hidden fixed inset-x-0 top-[65px] bg-[#EBEAE6] backdrop-blur-2xl border-b border-[#DCDAD4] shadow-2xl z-50 flex flex-col justify-between overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`lg:hidden fixed inset-x-0 top-[65px] bg-[#EBEAE6] backdrop-blur-2xl border-b border-[#DCDAD4] shadow-2xl z-50 flex flex-col justify-between overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           mobileMenuOpen ? 'max-h-[calc(100vh-65px)] opacity-100 p-6 sm:p-8' : 'max-h-0 opacity-0 px-6 sm:px-8 py-0 pointer-events-none'
         }`}
       >
