@@ -114,19 +114,19 @@ export default function BlogDetailPage() {
       <div className="max-w-5xl mx-auto space-y-12">
 
         {/* Article Header with Page-Open Entry Animation */}
-        <div className="space-y-6 max-w-4xl mx-auto">
-          <h1 className="animate-hero-fade-1 text-3xl sm:text-5xl lg:text-6xl font-galano font-semibold text-[#111111] tracking-tight leading-[1.12]">
+        <div className="space-y-6 max-w-4xl mx-auto text-left sm:text-center">
+          <h1 className="animate-hero-fade-1 text-4xl sm:text-6xl lg:text-[4.75rem] font-galano font-semibold text-[#111111] tracking-tight leading-[1.08]">
             {article.title}
           </h1>
 
-          {/* Meta Info */}
-          <div className="animate-hero-fade-2 flex items-center gap-6 text-sm font-mono text-[#737378] pt-2 border-b border-[#E5E5E5] pb-6">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-[#111111]" />
+          {/* Meta Info (Center-Aligned with Increased Height & Typography) */}
+          <div className="animate-hero-fade-2 flex items-center justify-start sm:justify-center gap-8 text-base sm:text-lg font-mono text-[#737378] pt-4 border-b border-[#E5E5E5] pb-8 w-full">
+            <div className="flex items-center gap-2.5">
+              <Calendar className="w-5 h-5 text-[#111111]" />
               <span>{article.date}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-[#111111]" />
+            <div className="flex items-center gap-2.5">
+              <Clock className="w-5 h-5 text-[#111111]" />
               <span>{article.readTime}</span>
             </div>
           </div>
