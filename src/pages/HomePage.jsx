@@ -236,7 +236,7 @@ export default function HomePage() {
 
 
       {/* 4. TRANSFORMATION JOURNEY */}
-      <section className="bg-[#EBEAE6] py-28 px-6 sm:px-12">
+      <section className="bg-[#EBEAE6] pt-28 pb-48 sm:pb-60 px-6 sm:px-12">
         <div className="max-w-5xl mx-auto space-y-16">
 
           <div className="scroll-reveal text-center space-y-3">
@@ -269,7 +269,7 @@ export default function HomePage() {
 
 
       {/* 5. INSIGHTS & INSPIRATION (JOURNAL) */}
-      <section className="bg-[#000000] text-white py-28 px-6 sm:px-12 overflow-hidden border-t border-[#222222]">
+      <section className="bg-[#000000] text-white py-28 sm:py-36 px-6 sm:px-12 overflow-hidden border-t border-[#222222]">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
             
