@@ -183,8 +183,8 @@ export default function BlogDetailPage() {
         {/* More Stories Section (Centered Header & +40px Larger Containers) */}
         <div className="pt-20 border-t border-[#E5E5E5] space-y-10 max-w-5xl mx-auto">
           <div className="text-center">
-            <h3 className="text-3xl sm:text-4xl font-galano font-medium text-[#111111] tracking-tight">
-              More <span className="font-swarsh italic text-[#111111]">Stories</span>
+            <h3 className="text-4xl sm:text-6xl lg:text-[4.25rem] font-galano font-medium text-[#111111] tracking-tight leading-tight">
+              More <span className="font-swarsh italic font-normal text-[#111111] px-1.5">Stories</span>
             </h3>
           </div>
 
