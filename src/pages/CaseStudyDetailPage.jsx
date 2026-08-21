@@ -111,16 +111,16 @@ export default function CaseStudyDetailPage() {
   const study = caseStudyDetails[currentSlug] || caseStudyDetails['rainoil'];
 
   return (
-    <div className="bg-[#ffffff] text-[#1f1f1f] min-h-screen pt-36 sm:pt-48 pb-28 px-6 sm:px-12 lg:px-20 selection:bg-[#E2B857] selection:text-black font-sans">
-      <div className="max-w-[1200px] mx-auto">
+    <div className="bg-[#ffffff] text-[#1f1f1f] min-h-screen pt-36 sm:pt-48 pb-28 px-6 sm:px-12 lg:px-16 selection:bg-[#E2B857] selection:text-black font-sans">
+      <div className="max-w-[94rem] mx-auto">
         
-        {/* Main 2-Column Content Layout matching Framer */}
-        <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-20">
+        {/* Main 2-Column Content Layout (Left Column moved to left edge, Images to right) */}
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-24">
           
           {/* ========================================================================= */}
           {/* LEFT COLUMN: STICKY INFO PANEL (PROJECT TITLE, TYPE, YEAR, WRITEUP)       */}
           {/* ========================================================================= */}
-          <div className="w-full lg:w-[380px] shrink-0 lg:sticky lg:top-36 space-y-8 text-left">
+          <div className="w-full lg:w-[360px] shrink-0 lg:sticky lg:top-36 space-y-8 text-left">
             
             {/* Back link */}
             <NavLink
@@ -166,9 +166,9 @@ export default function CaseStudyDetailPage() {
           </div>
 
           {/* ========================================================================= */}
-          {/* RIGHT COLUMN: VISUALS & IMAGERY                                          */}
+          {/* RIGHT COLUMN: VISUALS & IMAGERY (MOVED MORE TO THE RIGHT)                 */}
           {/* ========================================================================= */}
-          <div className="flex-1 w-full space-y-4">
+          <div className="flex-1 w-full max-w-4xl space-y-4">
             
             {study.images.map((imgSrc, index) => (
               <div

@@ -142,7 +142,7 @@ export default function CaseStudiesPage() {
               <NavLink
                 key={item.id}
                 to={`/case-studies/${item.id}`}
-                className="group cursor-pointer block w-full text-left"
+                className="group cursor-pointer block w-full space-y-2 text-left"
               >
                 {/* Card Image Container (Top Aligned, No border radius, Glassmorphism Background) */}
                 <div className={`relative ${heightClass} w-full rounded-none overflow-hidden bg-white/40 backdrop-blur-md border border-white/60 shadow-sm group-hover:shadow-xl group-hover:border-black/20 transition-all duration-500 transform group-hover:-translate-y-1`}>
@@ -151,6 +151,13 @@ export default function CaseStudiesPage() {
                     alt={item.name}
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 select-none rounded-none"
                   />
+                </div>
+
+                {/* Company Name */}
+                <div className="pt-1 px-0.5">
+                  <h3 className="text-sm font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors tracking-tight truncate">
+                    {item.name}
+                  </h3>
                 </div>
               </NavLink>
             );
