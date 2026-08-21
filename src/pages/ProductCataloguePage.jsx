@@ -188,8 +188,8 @@ export default function ProductCataloguePage() {
             </h2>
           </div>
 
-          {/* 5 Partners per line with 200px / 350px heights, 8px gap, no border radius */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-[8px] items-end">
+          {/* 5 Partners per line with 200px / 350px heights, 8px gap, top-aligned, no border radius, pure image */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-[8px] items-start">
             {partnerCases.slice(0, visibleCount).map((partner, idx) => {
               const heightPattern = ['h-[200px]', 'h-[350px]', 'h-[200px]', 'h-[350px]', 'h-[200px]'];
               const heightClass = heightPattern[idx % 5];
@@ -198,30 +198,15 @@ export default function ProductCataloguePage() {
                 <NavLink
                   key={partner.id}
                   to="/case-studies"
-                  className="group cursor-pointer space-y-2 block text-left w-full"
+                  className="group cursor-pointer block w-full"
                 >
-                  {/* Card Image Container (No border radius) */}
+                  {/* Card Image Container (Top Aligned, No border radius, Pure Image) */}
                   <div className={`relative ${heightClass} w-full rounded-none overflow-hidden bg-white border border-[#DCDAD4] shadow-sm group-hover:shadow-xl group-hover:border-[#111111]/40 transition-all duration-500 transform group-hover:-translate-y-1`}>
                     <img
                       src={partner.image}
                       alt={partner.name}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 select-none rounded-none"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-3">
-                      <span className="text-white text-[10px] font-mono tracking-wider uppercase">
-                        ✦ Case Study
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Title & Arrow Row */}
-                  <div className="flex items-center justify-between pt-1 px-1">
-                    <h3 className="text-sm sm:text-base font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors tracking-tight truncate">
-                      {partner.name}
-                    </h3>
-                    <div className="w-6 h-6 rounded-full bg-white border border-[#DCDAD4] group-hover:bg-black group-hover:text-white group-hover:border-black flex items-center justify-center transition-all duration-300 shadow-sm shrink-0">
-                      <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </div>
                   </div>
                 </NavLink>
               );
