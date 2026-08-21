@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import starIcon from '../assets/SVG@4x.png';
 import CardShowcaseModal from '../components/CardShowcaseModal';
 
@@ -12,6 +11,7 @@ import sterlingBankImg from '../assets/case-studies/sterling_bank.png';
 import tvcImg from '../assets/case-studies/tvc.jpg';
 import bank78Img from '../assets/case-studies/bank78.jpg';
 import ubaImg from '../assets/case-studies/uba.png';
+import optivaImg from '../assets/case-studies/optiva.png';
 
 export const caseStudiesData = [
   {
@@ -77,18 +77,38 @@ export const caseStudiesData = [
     image: ubaImg,
     description: 'Executive bespoke passes for international board members across 20 African subsidiaries.',
     stats: 'Continental Reach'
+  },
+  {
+    id: 'optiva',
+    name: 'Optiva',
+    category: 'Capital & Investment Architecture',
+    image: optivaImg,
+    description: 'Bespoke corporate identity passes engineered for elite investment management leadership.',
+    stats: 'Private Wealth Ecosystem'
   }
 ];
 
 export default function CaseStudiesPage() {
   const [selectedCard, setSelectedCard] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCount, setVisibleCount] = useState(9);
 
-  const initialItems = caseStudiesData.slice(0, visibleCount);
-  const hasMore = visibleCount < caseStudiesData.length;
+  // Exact height pattern matching the two lines:
+  // Line 1: 200px, 300px, 200px, 300px, 200px
+  // Line 2: 300px, 250px, 200px, 300px
+  const heightPattern = [
+    'h-[200px]', // 1. Rainoil
+    'h-[300px]', // 2. Seplat
+    'h-[200px]', // 3. Revolution plus
+    'h-[300px]', // 4. ARM
+    'h-[200px]', // 5. Sterling bank
+    'h-[300px]', // 6. TVC
+    'h-[250px]', // 7. Bank 78
+    'h-[200px]', // 8. UBA
+    'h-[300px]'  // 9. Optiva
+  ];
 
   return (
-    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden">
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
       <div className="max-w-[94rem] mx-auto space-y-16 sm:space-y-24">
         
         {/* Header Section */}
@@ -112,72 +132,38 @@ export default function CaseStudiesPage() {
           </h1>
         </div>
 
-        {/* Case Studies Visual Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
-          {initialItems.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => setSelectedCard(item)}
-              className="group cursor-pointer space-y-4 text-left"
-            >
-              {/* Card Image Container */}
-              <div className="relative aspect-[16/11] rounded-[28px] sm:rounded-[32px] overflow-hidden bg-white border border-[#DCDAD4] shadow-sm group-hover:shadow-xl group-hover:border-[#111111]/40 transition-all duration-500 transform group-hover:-translate-y-1.5">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 select-none"
-                />
-                
-                {/* Subtle Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                  <span className="text-white text-xs font-mono tracking-wider uppercase">
-                    ✦ View Case Study
-                  </span>
-                </div>
-              </div>
+        {/* 5-Column Grid with 2 Lines Matching Product Catalogue Arrangement */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-[8px] gap-y-[80px] items-start">
+          {caseStudiesData.slice(0, visibleCount).map((item, idx) => {
+            const heightClass = heightPattern[idx] || 'h-[200px]';
 
-              {/* Title & Arrow Row */}
-              <div className="flex items-center justify-between pt-1 px-1">
-                <h3 className="text-xl sm:text-2xl font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors tracking-tight">
-                  {item.name}
-                </h3>
-                <div className="w-9 h-9 rounded-full bg-white border border-[#DCDAD4] group-hover:bg-black group-hover:text-white group-hover:border-black flex items-center justify-center transition-all duration-300 shadow-sm">
-                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            return (
+              <div
+                key={item.id}
+                onClick={() => setSelectedCard(item)}
+                className="group cursor-pointer block w-full text-left"
+              >
+                {/* Card Image Container (Top Aligned, No border radius, Pure Image) */}
+                <div className={`relative ${heightClass} w-full rounded-none overflow-hidden bg-white border border-[#DCDAD4] shadow-sm group-hover:shadow-xl group-hover:border-[#111111]/40 transition-all duration-500 transform group-hover:-translate-y-1`}>
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 select-none rounded-none"
+                  />
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* Load More Button */}
+        {/* Load More Button (White Background, Reduced Width, Gray-to-Black Text & Border Hover) */}
         <div className="text-center pt-8">
-          {hasMore ? (
-            <button
-              onClick={() => setVisibleCount(caseStudiesData.length)}
-              className="group relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-semibold px-10 py-4 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[54px]"
-            >
-              <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                  <span className="block">Load More</span>
-                  <span className="block">Load More</span>
-                </span>
-              </span>
-            </button>
-          ) : (
-            <a
-              href="https://wa.me/2349030001851"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-semibold px-10 py-4 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[54px]"
-            >
-              <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                  <span className="block">Make an identity enquiry</span>
-                  <span className="block">Make an identity enquiry</span>
-                </span>
-              </span>
-            </a>
-          )}
+          <button
+            onClick={() => setVisibleCount((prev) => (prev >= caseStudiesData.length ? 5 : caseStudiesData.length))}
+            className="inline-flex items-center justify-center text-xs sm:text-sm font-semibold px-8 py-3 rounded-full bg-white text-[#777777] border border-[#DCDAD4] hover:text-black hover:border-black shadow-sm transition-all duration-300 select-none"
+          >
+            Load More
+          </button>
         </div>
 
       </div>

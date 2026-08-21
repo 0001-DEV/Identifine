@@ -20,6 +20,7 @@ import sterlingBankImg from '../assets/case-studies/sterling_bank.png';
 import tvcImg from '../assets/case-studies/tvc.jpg';
 import bank78Img from '../assets/case-studies/bank78.jpg';
 import ubaImg from '../assets/case-studies/uba.png';
+import optivaImg from '../assets/case-studies/optiva.png';
 
 export const productsData = [
   {
@@ -86,7 +87,8 @@ export const partnerCases = [
   { id: 'sterling-bank', name: 'Sterling bank', image: sterlingBankImg },
   { id: 'tvc', name: 'TVC', image: tvcImg },
   { id: 'bank-78', name: 'Bank 78', image: bank78Img },
-  { id: 'uba', name: 'UBA', image: ubaImg }
+  { id: 'uba', name: 'UBA', image: ubaImg },
+  { id: 'optiva', name: 'Optiva', image: optivaImg }
 ];
 
 export default function ProductCataloguePage() {
@@ -94,7 +96,7 @@ export default function ProductCataloguePage() {
   const initialId = searchParams.get('id') || searchParams.get('card') || 'du-plex';
   
   const [selectedId, setSelectedId] = useState(initialId);
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(9);
 
   useEffect(() => {
     const idParam = searchParams.get('id') || searchParams.get('card');
@@ -105,6 +107,21 @@ export default function ProductCataloguePage() {
 
   // Active product
   const activeProduct = productsData.find((p) => p.id === selectedId) || productsData[0];
+
+  // Specific height pattern matching the two lines:
+  // Line 1: 200px, 300px, 200px, 300px, 200px
+  // Line 2: 300px, 250px, 200px, 300px
+  const heightPattern = [
+    'h-[200px]', // 1. Rainoil
+    'h-[300px]', // 2. Seplat
+    'h-[200px]', // 3. Revolution plus
+    'h-[300px]', // 4. ARM
+    'h-[200px]', // 5. Sterling bank
+    'h-[300px]', // 6. TVC
+    'h-[250px]', // 7. Bank 78
+    'h-[200px]', // 8. UBA
+    'h-[300px]'  // 9. Optiva
+  ];
 
   return (
     <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-20 sm:pt-24 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
@@ -188,11 +205,10 @@ export default function ProductCataloguePage() {
             </h2>
           </div>
 
-          {/* 5 Partners per line with 200px / 300px heights, 8px horizontal gap, 80px vertical gap, top-aligned, no border radius, pure image */}
+          {/* 5 Partners per line: Line 1 (200, 300, 200, 300, 200), Line 2 (300, 250, 200, 300) */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-[8px] gap-y-[80px] items-start">
             {partnerCases.slice(0, visibleCount).map((partner, idx) => {
-              const heightPattern = ['h-[200px]', 'h-[300px]', 'h-[200px]', 'h-[300px]', 'h-[200px]'];
-              const heightClass = heightPattern[idx % 5];
+              const heightClass = heightPattern[idx] || 'h-[200px]';
 
               return (
                 <NavLink
@@ -213,18 +229,13 @@ export default function ProductCataloguePage() {
             })}
           </div>
 
-          {/* Load More Button */}
+          {/* Load More Button (White Background, Reduced Width, Gray-to-Black Text & Border Hover) */}
           <div className="text-center pt-8">
             <button
-              onClick={() => setVisibleCount((prev) => (prev === 8 ? 8 : 8))}
-              className="group relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-semibold px-10 py-4 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[54px]"
+              onClick={() => setVisibleCount((prev) => (prev >= partnerCases.length ? 5 : partnerCases.length))}
+              className="inline-flex items-center justify-center text-xs sm:text-sm font-semibold px-8 py-3 rounded-full bg-white text-[#777777] border border-[#DCDAD4] hover:text-black hover:border-black shadow-sm transition-all duration-300 select-none"
             >
-              <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                  <span className="block">Load More</span>
-                  <span className="block">Load More</span>
-                </span>
-              </span>
+              Load More
             </button>
           </div>
 
