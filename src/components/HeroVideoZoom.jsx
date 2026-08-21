@@ -34,25 +34,25 @@ export default function HeroVideoZoom() {
       const scrollY = window.scrollY || window.pageYOffset || 0;
       const isMobile = window.innerWidth < 640;
       
-      // Responsive zoom threshold: triggers fast on mobile touch scrolls
-      const zoomDistance = isMobile ? 240 : Math.min(Math.max(window.innerHeight * 0.55, 320), 500);
+      // Zoom scroll travel distance
+      const zoomDistance = isMobile ? 360 : Math.min(Math.max(window.innerHeight * 0.7, 450), 650);
       const rawProgress = scrollY / zoomDistance;
       const progress = Math.min(Math.max(rawProgress, 0), 1);
       
-      // Organic easing curve
-      const easedProgress = Math.pow(progress, 0.95);
+      // Organic smooth easing curve
+      const easedProgress = Math.pow(progress, 0.92);
       
-      // Initial scale: 0.78 on mobile, 0.88 on desktop, expands to 1.0 (100% full width)
-      const minScale = isMobile ? 0.78 : 0.88;
+      // Starts from very tiny (0.18 on mobile, 0.22 on desktop) and smoothly expands to 1.0 (100% full width)
+      const minScale = isMobile ? 0.18 : 0.22;
       const currentScale = minScale + easedProgress * (1 - minScale);
       
-      // Direct GPU transform update
+      // Direct GPU transform update for 60fps/120fps hardware acceleration
       if (zoomWrapperRef.current) {
         zoomWrapperRef.current.style.transform = `scale3d(${currentScale}, ${currentScale}, 1)`;
       }
 
       if (innerCardRef.current) {
-        const radius = Math.round((isMobile ? 20 : 32) - easedProgress * (isMobile ? 8 : 14));
+        const radius = Math.round(12 + easedProgress * (isMobile ? 12 : 24));
         innerCardRef.current.style.borderRadius = `${radius}px`;
       }
       
@@ -86,14 +86,14 @@ export default function HeroVideoZoom() {
         ref={zoomWrapperRef}
         className="w-full max-w-[92rem] px-0 sm:px-2 origin-center will-change-transform bg-transparent"
         style={{ 
-          transform: 'scale3d(0.85, 0.85, 1)'
+          transform: 'scale3d(0.18, 0.18, 1)'
         }}
       >
         <div 
           ref={innerCardRef}
           className="relative aspect-[16/9] w-full overflow-hidden select-none bg-transparent border-0 shadow-none"
           style={{
-            borderRadius: '24px',
+            borderRadius: '12px',
             boxShadow: 'none',
             border: 'none',
             background: 'transparent'
