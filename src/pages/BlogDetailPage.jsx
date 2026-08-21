@@ -111,34 +111,16 @@ export default function BlogDetailPage() {
 
   return (
     <div className="bg-[#ffffff] text-[#111111] min-h-screen pt-36 sm:pt-48 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black font-sans">
-      <div className="max-w-4xl mx-auto space-y-12">
-        
-        {/* Back Link */}
-        <div>
-          <NavLink
-            to="/blog"
-            className="inline-flex items-center gap-2 text-xs font-mono uppercase text-[#737378] hover:text-[#111111] transition-colors"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>All Articles</span>
-          </NavLink>
-        </div>
+      <div className="max-w-5xl mx-auto space-y-12">
 
         {/* Article Header with Page-Open Entry Animation */}
-        <div className="space-y-6">
-          <div className="animate-hero-fade-1 inline-flex items-center gap-2.5">
-            <img src={starIcon} alt="" className="w-4 h-4 object-contain brightness-0" />
-            <span className="font-galano font-medium text-[#737378] text-xs uppercase tracking-widest">
-              {article.category}
-            </span>
-          </div>
-
-          <h1 className="animate-hero-fade-2 text-3xl sm:text-5xl lg:text-6xl font-galano font-semibold text-[#111111] tracking-tight leading-[1.12]">
+        <div className="space-y-6 max-w-4xl mx-auto">
+          <h1 className="animate-hero-fade-1 text-3xl sm:text-5xl lg:text-6xl font-galano font-semibold text-[#111111] tracking-tight leading-[1.12]">
             {article.title}
           </h1>
 
           {/* Meta Info */}
-          <div className="animate-hero-fade-3 flex items-center gap-6 text-sm font-mono text-[#737378] pt-2 border-b border-[#E5E5E5] pb-6">
+          <div className="animate-hero-fade-2 flex items-center gap-6 text-sm font-mono text-[#737378] pt-2 border-b border-[#E5E5E5] pb-6">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-[#111111]" />
               <span>{article.date}</span>
@@ -150,17 +132,17 @@ export default function BlogDetailPage() {
           </div>
         </div>
 
-        {/* Hero Image */}
-        <div className="animate-hero-fade-4 w-full rounded-2xl overflow-hidden border border-[#E5E5E5] shadow-lg bg-[#F5F5F3]">
+        {/* Hero Image (+120px Height) */}
+        <div className="animate-hero-fade-3 w-full h-[440px] sm:h-[560px] lg:h-[640px] rounded-2xl overflow-hidden border border-[#E5E5E5] shadow-lg bg-[#F5F5F3]">
           <img
             src={article.heroImage}
             alt={article.title}
-            className="w-full h-auto object-cover select-none"
+            className="w-full h-full object-cover object-center select-none"
           />
         </div>
 
         {/* Article Body */}
-        <div className="space-y-10 text-[#333333] font-galano text-base sm:text-lg leading-relaxed pt-6">
+        <div className="max-w-4xl mx-auto space-y-10 text-[#333333] font-galano text-base sm:text-lg leading-relaxed pt-6">
           
           {/* Introduction */}
           <div className="space-y-3">
@@ -198,22 +180,15 @@ export default function BlogDetailPage() {
 
         </div>
 
-        {/* More Stories Section */}
-        <div className="pt-20 border-t border-[#E5E5E5] space-y-8">
-          <div className="flex items-center justify-between">
-            <h3 className="text-2xl sm:text-3xl font-galano font-medium text-[#111111]">
+        {/* More Stories Section (Centered Header & +40px Larger Containers) */}
+        <div className="pt-20 border-t border-[#E5E5E5] space-y-10 max-w-5xl mx-auto">
+          <div className="text-center">
+            <h3 className="text-3xl sm:text-4xl font-galano font-medium text-[#111111] tracking-tight">
               More <span className="font-swarsh italic text-[#111111]">Stories</span>
             </h3>
-            <NavLink
-              to="/blog"
-              className="text-xs font-mono uppercase text-[#111111] hover:underline inline-flex items-center gap-1"
-            >
-              <span>View All</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </NavLink>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {moreStories
               .filter(s => s.slug !== slug)
               .slice(0, 2)
@@ -221,18 +196,18 @@ export default function BlogDetailPage() {
                 <NavLink
                   key={i}
                   to={`/blog/${story.slug}`}
-                  className="group rounded-2xl bg-[#F9F9F8] border border-[#E5E5E5] hover:border-black/30 p-4 space-y-4 transition-all duration-300 hover:-translate-y-1 block shadow-sm"
+                  className="group rounded-3xl bg-[#F9F9F8] border border-[#E5E5E5] hover:border-black/30 p-6 space-y-5 transition-all duration-300 hover:-translate-y-1.5 block shadow-sm hover:shadow-md"
                 >
-                  <div className="w-full h-36 rounded-xl overflow-hidden bg-[#EBEAE6] border border-[#E5E5E5]">
+                  <div className="w-full h-48 sm:h-56 rounded-2xl overflow-hidden bg-[#EBEAE6] border border-[#E5E5E5]">
                     <img
                       src={story.image}
                       alt={story.title}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     <span className="text-xs font-mono text-[#737378]">{story.date} • {story.readTime}</span>
-                    <h4 className="text-sm font-galano font-medium text-[#111111] group-hover:text-black transition-colors leading-snug line-clamp-2">
+                    <h4 className="text-base sm:text-lg font-galano font-medium text-[#111111] group-hover:text-black transition-colors leading-snug">
                       {story.title}
                     </h4>
                   </div>
