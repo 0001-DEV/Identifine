@@ -110,14 +110,14 @@ export default function BlogDetailPage() {
   const article = blogArticles[slug] || blogArticles['design-that-converts-what-really-works-in-2025'];
 
   return (
-    <div className="bg-[#000000] text-white min-h-screen pt-36 sm:pt-48 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black font-sans">
+    <div className="bg-[#ffffff] text-[#111111] min-h-screen pt-36 sm:pt-48 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black font-sans">
       <div className="max-w-4xl mx-auto space-y-12">
         
         {/* Back Link */}
         <div>
           <NavLink
             to="/blog"
-            className="inline-flex items-center gap-2 text-xs font-mono uppercase text-[#777777] hover:text-[#E2B857] transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-mono uppercase text-[#737378] hover:text-[#111111] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>All Articles</span>
@@ -127,31 +127,31 @@ export default function BlogDetailPage() {
         {/* Article Header */}
         <div className="space-y-6">
           <div className="inline-flex items-center gap-2.5">
-            <img src={starIcon} alt="" className="w-4 h-4 object-contain brightness-200" />
-            <span className="font-galano font-medium text-[#E2B857] text-xs uppercase tracking-widest">
+            <img src={starIcon} alt="" className="w-4 h-4 object-contain brightness-0" />
+            <span className="font-galano font-medium text-[#737378] text-xs uppercase tracking-widest">
               {article.category}
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-galano font-medium text-white tracking-tight leading-[1.12]">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-galano font-semibold text-[#111111] tracking-tight leading-[1.12]">
             {article.title}
           </h1>
 
           {/* Meta Info */}
-          <div className="flex items-center gap-6 text-sm font-mono text-[#777777] pt-2 border-b border-[#222222] pb-6">
+          <div className="flex items-center gap-6 text-sm font-mono text-[#737378] pt-2 border-b border-[#E5E5E5] pb-6">
             <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-[#E2B857]" />
+              <Calendar className="w-4 h-4 text-[#111111]" />
               <span>{article.date}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-[#E2B857]" />
+              <Clock className="w-4 h-4 text-[#111111]" />
               <span>{article.readTime}</span>
             </div>
           </div>
         </div>
 
         {/* Hero Image */}
-        <div className="w-full rounded-2xl overflow-hidden border border-[#222222] shadow-2xl bg-[#111111]">
+        <div className="w-full rounded-2xl overflow-hidden border border-[#E5E5E5] shadow-lg bg-[#F5F5F3]">
           <img
             src={article.heroImage}
             alt={article.title}
@@ -160,14 +160,14 @@ export default function BlogDetailPage() {
         </div>
 
         {/* Article Body */}
-        <div className="space-y-10 text-[#CCCCCC] font-galano text-base sm:text-lg leading-relaxed pt-6">
+        <div className="space-y-10 text-[#333333] font-galano text-base sm:text-lg leading-relaxed pt-6">
           
           {/* Introduction */}
           <div className="space-y-3">
-            <h2 className="text-xl sm:text-2xl font-galano font-semibold text-white tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-galano font-semibold text-[#111111] tracking-tight">
               Introduction
             </h2>
-            <p className="leading-relaxed text-[#D0D0D0]">
+            <p className="leading-relaxed text-[#444444]">
               {article.intro}
             </p>
           </div>
@@ -175,10 +175,10 @@ export default function BlogDetailPage() {
           {/* Core Sections */}
           {article.sections && article.sections.map((sec, idx) => (
             <div key={idx} className="space-y-3 pt-2">
-              <h3 className="text-xl sm:text-2xl font-galano font-semibold text-white tracking-tight">
+              <h3 className="text-xl sm:text-2xl font-galano font-semibold text-[#111111] tracking-tight">
                 {sec.heading}
               </h3>
-              <p className="leading-relaxed text-[#B8B8B8]">
+              <p className="leading-relaxed text-[#444444]">
                 {sec.body}
               </p>
             </div>
@@ -186,11 +186,11 @@ export default function BlogDetailPage() {
 
           {/* Takeaway Block */}
           {article.takeaway && (
-            <div className="mt-8 p-6 sm:p-8 rounded-2xl bg-[#111111] border-l-4 border-[#E2B857] border-y border-r border-[#222222] space-y-3">
-              <h4 className="text-xl font-galano font-semibold text-white tracking-tight">
+            <div className="mt-8 p-6 sm:p-8 rounded-2xl bg-[#F9F9F8] border-l-4 border-l-[#111111] border-y border-r border-[#E5E5E5] space-y-3">
+              <h4 className="text-xl font-galano font-semibold text-[#111111] tracking-tight">
                 Takeaway
               </h4>
-              <p className="leading-relaxed text-[#D0D0D0]">
+              <p className="leading-relaxed text-[#333333]">
                 {article.takeaway}
               </p>
             </div>
@@ -199,14 +199,14 @@ export default function BlogDetailPage() {
         </div>
 
         {/* More Stories Section */}
-        <div className="pt-20 border-t border-[#222222] space-y-8">
+        <div className="pt-20 border-t border-[#E5E5E5] space-y-8">
           <div className="flex items-center justify-between">
-            <h3 className="text-2xl sm:text-3xl font-galano font-medium text-white">
-              More <span className="font-swarsh italic text-[#E2B857]">Stories</span>
+            <h3 className="text-2xl sm:text-3xl font-galano font-medium text-[#111111]">
+              More <span className="font-swarsh italic text-[#111111]">Stories</span>
             </h3>
             <NavLink
               to="/blog"
-              className="text-xs font-mono uppercase text-[#E2B857] hover:underline inline-flex items-center gap-1"
+              className="text-xs font-mono uppercase text-[#111111] hover:underline inline-flex items-center gap-1"
             >
               <span>View All</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -221,9 +221,9 @@ export default function BlogDetailPage() {
                 <NavLink
                   key={i}
                   to={`/blog/${story.slug}`}
-                  className="group rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#E2B857]/40 p-4 space-y-4 transition-all duration-300 hover:-translate-y-1 block shadow-lg"
+                  className="group rounded-2xl bg-[#F9F9F8] border border-[#E5E5E5] hover:border-black/30 p-4 space-y-4 transition-all duration-300 hover:-translate-y-1 block shadow-sm"
                 >
-                  <div className="w-full h-36 rounded-xl overflow-hidden bg-black/60 border border-[#222222]">
+                  <div className="w-full h-36 rounded-xl overflow-hidden bg-[#EBEAE6] border border-[#E5E5E5]">
                     <img
                       src={story.image}
                       alt={story.title}
@@ -231,8 +231,8 @@ export default function BlogDetailPage() {
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <span className="text-xs font-mono text-[#E2B857]">{story.date} • {story.readTime}</span>
-                    <h4 className="text-sm font-galano font-medium text-white group-hover:text-[#E2B857] transition-colors leading-snug line-clamp-2">
+                    <span className="text-xs font-mono text-[#737378]">{story.date} • {story.readTime}</span>
+                    <h4 className="text-sm font-galano font-medium text-[#111111] group-hover:text-black transition-colors leading-snug line-clamp-2">
                       {story.title}
                     </h4>
                   </div>
