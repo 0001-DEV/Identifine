@@ -19,7 +19,7 @@ import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.png';
 import elitePassGold from '../assets/ELITE_PASS_GOLD.png';
 import elitePassSilver from '../assets/ELITE_PASS_SILVER.png';
 
-export const caseStudyDetails = {
+const caseStudyDetails = {
   'rainoil': {
     title: 'Rainoil',
     type: 'Visual Identity Direction, Touchpoints',
