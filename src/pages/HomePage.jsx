@@ -273,8 +273,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
             
-            {/* Left Column: Vertically Arranged Text & Button - Aligned with Right Image Top Line */}
-            <div className="lg:col-span-5 space-y-6 scroll-reveal lg:sticky lg:top-24 -mt-1 sm:-mt-2 lg:-mt-1.5">
+            {/* Left Column: Vertically Arranged Text & Button - Moved up to align directly with image line */}
+            <div className="lg:col-span-5 space-y-6 scroll-reveal lg:sticky lg:top-20 -mt-4 sm:-mt-8 lg:-mt-10">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2.5">
                   <img
