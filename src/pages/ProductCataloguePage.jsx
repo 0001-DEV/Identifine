@@ -178,34 +178,34 @@ export default function ProductCataloguePage() {
         </div>
 
         {/* ========================================================================= */}
-        {/* SECTION: PARTNERS USING OUR FLAGSHIP (NO TOP LINE, REDUCED WIDTH)         */}
+        {/* SECTION: PARTNERS USING OUR FLAGSHIP (SINGLE LINE HEADING)                 */}
         {/* ========================================================================= */}
-        <div className="space-y-12 text-left">
+        <div className="space-y-10 text-left">
           
-          <div className="space-y-3 max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-galano font-medium text-[#111111] leading-tight tracking-tight">
+          <div className="w-full">
+            <h2 className="text-2xl sm:text-3xl lg:text-[2.5rem] font-galano font-medium text-[#111111] leading-tight tracking-tight whitespace-nowrap">
               Partners using our {activeProduct.title} flagship
             </h2>
           </div>
 
-          {/* 5 Partners per line with 80px / 120px / 80px / 120px / 80px heights */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 items-end">
+          {/* 5 Partners per line with 200px / 350px heights, 8px gap, no border radius */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-[8px] items-end">
             {partnerCases.slice(0, visibleCount).map((partner, idx) => {
-              const heightPattern = ['h-[80px]', 'h-[120px]', 'h-[80px]', 'h-[120px]', 'h-[80px]'];
+              const heightPattern = ['h-[200px]', 'h-[350px]', 'h-[200px]', 'h-[350px]', 'h-[200px]'];
               const heightClass = heightPattern[idx % 5];
 
               return (
                 <NavLink
                   key={partner.id}
                   to="/case-studies"
-                  className="group cursor-pointer space-y-3 block text-left w-full"
+                  className="group cursor-pointer space-y-2 block text-left w-full"
                 >
-                  {/* Card Image Container */}
-                  <div className={`relative ${heightClass} w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-[#DCDAD4] shadow-sm group-hover:shadow-xl group-hover:border-[#111111]/40 transition-all duration-500 transform group-hover:-translate-y-1`}>
+                  {/* Card Image Container (No border radius) */}
+                  <div className={`relative ${heightClass} w-full rounded-none overflow-hidden bg-white border border-[#DCDAD4] shadow-sm group-hover:shadow-xl group-hover:border-[#111111]/40 transition-all duration-500 transform group-hover:-translate-y-1`}>
                     <img
                       src={partner.image}
                       alt={partner.name}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 select-none"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 select-none rounded-none"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-3">
                       <span className="text-white text-[10px] font-mono tracking-wider uppercase">
@@ -219,8 +219,8 @@ export default function ProductCataloguePage() {
                     <h3 className="text-sm sm:text-base font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors tracking-tight truncate">
                       {partner.name}
                     </h3>
-                    <div className="w-7 h-7 rounded-full bg-white border border-[#DCDAD4] group-hover:bg-black group-hover:text-white group-hover:border-black flex items-center justify-center transition-all duration-300 shadow-sm shrink-0">
-                      <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <div className="w-6 h-6 rounded-full bg-white border border-[#DCDAD4] group-hover:bg-black group-hover:text-white group-hover:border-black flex items-center justify-center transition-all duration-300 shadow-sm shrink-0">
+                      <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </div>
                   </div>
                 </NavLink>
