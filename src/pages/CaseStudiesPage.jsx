@@ -164,11 +164,11 @@ export default function CaseStudiesPage() {
           })}
         </div>
 
-        {/* Load More Button (Reduced Border Radius, Glassmorphism Background, Gray-to-Black Hover) */}
+        {/* Load More Button (Pure Glassmorphism Background, Reduced Radius, Gray-to-Black Hover) */}
         <div className="text-center pt-8">
           <button
             onClick={() => setVisibleCount((prev) => (prev >= caseStudiesData.length ? 5 : caseStudiesData.length))}
-            className="inline-flex items-center justify-center text-xs font-semibold px-6 py-2.5 rounded-xl bg-white/50 backdrop-blur-md text-[#555555] border border-white/70 hover:bg-white/80 hover:text-black hover:border-black/30 shadow-sm transition-all duration-300 select-none"
+            className="inline-flex items-center justify-center text-xs font-semibold px-6 py-2.5 rounded-xl bg-black/[0.03] backdrop-blur-xl text-[#444444] border border-[#111111]/20 hover:bg-black/[0.08] hover:text-black hover:border-black/60 shadow-sm transition-all duration-300 select-none"
           >
             Load More
           </button>
