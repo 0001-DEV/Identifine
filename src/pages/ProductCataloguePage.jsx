@@ -154,8 +154,8 @@ export default function ProductCataloguePage() {
             </span>
           </div>
 
-          {/* Narrative Content, Specs & Actions (Indented 80px from Left) */}
-          <div className="lg:ml-[80px] space-y-8">
+          {/* Narrative Content, Specs & Actions (Indented 120px from Left) */}
+          <div className="lg:ml-[120px] space-y-8">
             <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl">
               {activeProduct.overview}
             </p>
