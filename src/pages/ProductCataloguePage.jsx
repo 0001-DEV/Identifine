@@ -135,27 +135,29 @@ export default function ProductCataloguePage() {
         </div>
 
         {/* ========================================================================= */}
-        {/* OVERVIEW & SPECIFICATIONS SECTION                                         */}
+        {/* OVERVIEW & SPECIFICATIONS SECTION (OVERVIEW LABEL ALIGNED ON FIRST LINE)  */}
         {/* ========================================================================= */}
-        <div className="max-w-6xl space-y-8 text-left">
+        <div className="flex flex-col lg:flex-row items-start text-left">
           
-          {/* Overview Tagline Label (Aligned Left) */}
-          <div className="inline-flex items-center justify-start gap-2.5">
-            <img
-              src={starIcon}
-              alt=""
-              className="w-4 h-4 object-contain brightness-0"
-            />
-            <span
-              className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase"
-              style={{ letterSpacing: '6px' }}
-            >
-              Overview
-            </span>
+          {/* Overview Tagline Label (Lowercase, Aligned with first line of narrative) */}
+          <div className="pt-1.5 shrink-0 min-w-[140px]">
+            <div className="inline-flex items-center justify-start gap-2.5">
+              <img
+                src={starIcon}
+                alt=""
+                className="w-4 h-4 object-contain brightness-0"
+              />
+              <span
+                className="font-galano font-normal text-[#555555] text-xs sm:text-sm lowercase"
+                style={{ letterSpacing: '5px' }}
+              >
+                overview
+              </span>
+            </div>
           </div>
 
-          {/* Narrative Content, Specs & Actions (Indented 120px from Left) */}
-          <div className="lg:ml-[120px] space-y-8">
+          {/* Narrative Content, Specs & Actions (Indented 200px from Left Margin) */}
+          <div className="lg:ml-[200px] space-y-8 flex-1 mt-6 lg:mt-0">
             <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl">
               {activeProduct.overview}
             </p>
