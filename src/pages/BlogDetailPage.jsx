@@ -132,8 +132,8 @@ export default function BlogDetailPage() {
           </div>
         </div>
 
-        {/* Hero Image (+120px Height) */}
-        <div className="animate-hero-fade-3 w-full h-[440px] sm:h-[560px] lg:h-[640px] rounded-2xl overflow-hidden border border-[#E5E5E5] shadow-lg bg-[#F5F5F3]">
+        {/* Hero Image (Increased Height) */}
+        <div className="animate-hero-fade-3 w-full h-[580px] sm:h-[720px] lg:h-[860px] rounded-3xl overflow-hidden border border-[#E5E5E5] shadow-xl bg-[#F5F5F3]">
           <img
             src={article.heroImage}
             alt={article.title}
