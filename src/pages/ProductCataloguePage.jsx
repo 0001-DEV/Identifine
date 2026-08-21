@@ -139,16 +139,16 @@ export default function ProductCataloguePage() {
         {/* ========================================================================= */}
         <div className="flex flex-col lg:flex-row items-start text-left">
           
-          {/* Overview Tagline Label (Lowercase, Aligned with first line of narrative) */}
-          <div className="pt-1.5 shrink-0 min-w-[140px]">
+          {/* Overview Tagline Label (Enlarged, Lowercase, Aligned with first line of narrative) */}
+          <div className="pt-1 shrink-0 min-w-[160px]">
             <div className="inline-flex items-center justify-start gap-2.5">
               <img
                 src={starIcon}
                 alt=""
-                className="w-4 h-4 object-contain brightness-0"
+                className="w-4 h-4 sm:w-5 sm:h-5 object-contain brightness-0"
               />
               <span
-                className="font-galano font-normal text-[#555555] text-xs sm:text-sm lowercase"
+                className="font-galano font-normal text-[#555555] text-base sm:text-lg lg:text-xl lowercase"
                 style={{ letterSpacing: '5px' }}
               >
                 overview
@@ -162,13 +162,13 @@ export default function ProductCataloguePage() {
               {activeProduct.overview}
             </p>
 
-            {/* Specs List */}
-            <div className="pt-6 border-t border-[#DCDAD4] grid grid-cols-1 sm:grid-cols-2 gap-6 text-base sm:text-lg max-w-4xl">
+            {/* Specs List - Features shifted to the edge of the full text */}
+            <div className="pt-6 border-t border-[#DCDAD4] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-base sm:text-lg max-w-5xl">
               <div>
                 <span className="font-semibold text-[#111111]">Category: </span>
                 <span className="text-[#555555]">{activeProduct.category}</span>
               </div>
-              <div>
+              <div className="sm:text-right">
                 <span className="font-semibold text-[#111111]">Features: </span>
                 <span className="text-[#555555]">{activeProduct.features}</span>
               </div>
