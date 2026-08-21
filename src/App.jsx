@@ -32,14 +32,8 @@ function ScrollRevealObserver() {
   useEffect(() => {
     const applyObservers = () => {
       const elementsToObserve = document.querySelectorAll(
-        'section, main > div > div, .reveal-on-scroll, [data-reveal]'
+        '.scroll-reveal, .reveal-on-scroll, [data-reveal], footer'
       );
-
-      elementsToObserve.forEach((el) => {
-        if (!el.classList.contains('reveal-on-scroll')) {
-          el.classList.add('reveal-on-scroll');
-        }
-      });
 
       const observer = new IntersectionObserver(
         (entries) => {
@@ -51,16 +45,18 @@ function ScrollRevealObserver() {
         },
         {
           threshold: 0.05,
-          rootMargin: '0px 0px -40px 0px'
+          rootMargin: '0px 0px -30px 0px'
         }
       );
 
-      elementsToObserve.forEach((el) => observer.observe(el));
-
-      // Trigger elements in view immediately
       elementsToObserve.forEach((el) => {
+        if (!el.classList.contains('reveal-on-scroll') && !el.classList.contains('scroll-reveal')) {
+          el.classList.add('reveal-on-scroll');
+        }
+        observer.observe(el);
+
         const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 40) {
+        if (rect.top < window.innerHeight - 30) {
           el.classList.add('is-revealed');
         }
       });
