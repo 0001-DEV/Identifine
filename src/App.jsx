@@ -11,6 +11,7 @@ import ElitePassPage from './pages/ElitePassPage';
 import AboutUsPage from './pages/AboutUsPage';
 import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
+import BlogDetailPage from './pages/BlogDetailPage';
 import ProgramDetailPage from './pages/ProgramDetailPage';
 import ProductCataloguePage from './pages/ProductCataloguePage';
 import TermsPage from './pages/TermsPage';
@@ -96,6 +97,7 @@ export default function App() {
           <Route path="/about-us" element={<AboutUsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogDetailPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/terms-and-conditions" element={<TermsPage />} />
           <Route path="/privacy-policy" element={<TermsPage />} />

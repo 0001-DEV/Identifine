@@ -273,8 +273,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
             
-            {/* Left Column: Vertically Arranged Text & Button - Moved up to align directly with image line */}
-            <div className="lg:col-span-5 space-y-6 scroll-reveal lg:sticky lg:top-20 -mt-4 sm:-mt-8 lg:-mt-10">
+            {/* Left Column: Vertically Arranged Text & Button - Perfectly Aligned with Right Image Top Line */}
+            <div className="lg:col-span-5 space-y-6 scroll-reveal lg:sticky lg:top-24 pt-3.5 sm:pt-4">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2.5">
                   <img
@@ -317,7 +317,7 @@ export default function HomePage() {
               {blogPosts.map((post) => (
                 <NavLink
                   key={post.id}
-                  to="/blog"
+                  to={`/blog/${post.id}`}
                   className="group p-3.5 sm:p-4 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#E2B857]/50 hover:-translate-y-1 transition-all duration-300 flex flex-col sm:flex-row items-center gap-5 overflow-hidden shadow-xl"
                 >
                   {/* Inside Container - Dedicated Left Space: Compact Image from Assets */}
