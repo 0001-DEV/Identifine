@@ -135,58 +135,60 @@ export default function ProductCataloguePage() {
         </div>
 
         {/* ========================================================================= */}
-        {/* OVERVIEW & SPECIFICATIONS SECTION (NO CONTAINER, EXPANDED WIDTH, LEFT)     */}
+        {/* OVERVIEW & SPECIFICATIONS SECTION                                         */}
         {/* ========================================================================= */}
         <div className="max-w-6xl space-y-8 text-left">
           
-          <div className="space-y-4">
-            <div className="inline-flex items-center justify-start gap-2.5">
-              <img
-                src={starIcon}
-                alt=""
-                className="w-4 h-4 object-contain brightness-0"
-              />
-              <span
-                className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase"
-                style={{ letterSpacing: '6px' }}
-              >
-                Overview
-              </span>
-            </div>
+          {/* Overview Tagline Label (Aligned Left) */}
+          <div className="inline-flex items-center justify-start gap-2.5">
+            <img
+              src={starIcon}
+              alt=""
+              className="w-4 h-4 object-contain brightness-0"
+            />
+            <span
+              className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase"
+              style={{ letterSpacing: '6px' }}
+            >
+              Overview
+            </span>
+          </div>
 
+          {/* Narrative Content, Specs & Actions (Indented 80px from Left) */}
+          <div className="lg:ml-[80px] space-y-8">
             <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl">
               {activeProduct.overview}
             </p>
-          </div>
 
-          {/* Specs List */}
-          <div className="pt-6 border-t border-[#DCDAD4] grid grid-cols-1 sm:grid-cols-2 gap-6 text-base sm:text-lg max-w-4xl">
-            <div>
-              <span className="font-semibold text-[#111111]">Category: </span>
-              <span className="text-[#555555]">{activeProduct.category}</span>
+            {/* Specs List */}
+            <div className="pt-6 border-t border-[#DCDAD4] grid grid-cols-1 sm:grid-cols-2 gap-6 text-base sm:text-lg max-w-4xl">
+              <div>
+                <span className="font-semibold text-[#111111]">Category: </span>
+                <span className="text-[#555555]">{activeProduct.category}</span>
+              </div>
+              <div>
+                <span className="font-semibold text-[#111111]">Features: </span>
+                <span className="text-[#555555]">{activeProduct.features}</span>
+              </div>
             </div>
-            <div>
-              <span className="font-semibold text-[#111111]">Features: </span>
-              <span className="text-[#555555]">{activeProduct.features}</span>
-            </div>
-          </div>
 
-          {/* Action Buttons */}
-          <div className="pt-4 flex flex-wrap items-center gap-4">
-            <a
-              href="https://wa.me/2349030001851"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="framer-pill-button text-sm px-8 py-4 font-semibold shadow-md"
-            >
-              Make an identity enquiry
-            </a>
-            <NavLink
-              to="/contact"
-              className="bg-white border border-[#DCDAD4] text-black text-sm px-8 py-4 font-semibold rounded-full hover:bg-black hover:text-white transition-all shadow-sm"
-            >
-              Book a consultation
-            </NavLink>
+            {/* Action Buttons */}
+            <div className="pt-4 flex flex-wrap items-center gap-4">
+              <a
+                href="https://wa.me/2349030001851"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="framer-pill-button text-sm px-8 py-4 font-semibold shadow-md"
+              >
+                Make an identity enquiry
+              </a>
+              <NavLink
+                to="/contact"
+                className="bg-white border border-[#DCDAD4] text-black text-sm px-8 py-4 font-semibold rounded-full hover:bg-black hover:text-white transition-all shadow-sm"
+              >
+                Book a consultation
+              </NavLink>
+            </div>
           </div>
 
         </div>
