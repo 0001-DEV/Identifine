@@ -14,7 +14,7 @@ export default function HeroVideoZoom() {
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
-          // Autoplay was prevented; retry on first user interaction
+          // Autoplay retry on touch/scroll/click
           const handleFirstInteraction = () => {
             if (video) video.play().catch(() => {});
             window.removeEventListener('touchstart', handleFirstInteraction);
@@ -32,17 +32,18 @@ export default function HeroVideoZoom() {
 
     const handleScroll = () => {
       const scrollY = window.scrollY || window.pageYOffset || 0;
+      const isMobile = window.innerWidth < 640;
       
-      // Calculate smooth zoom distance
-      const zoomDistance = Math.min(Math.max(window.innerHeight * 0.6, 350), 550);
+      // Responsive zoom threshold: triggers fast on mobile touch scrolls
+      const zoomDistance = isMobile ? 240 : Math.min(Math.max(window.innerHeight * 0.55, 320), 500);
       const rawProgress = scrollY / zoomDistance;
       const progress = Math.min(Math.max(rawProgress, 0), 1);
       
-      // Organic smooth curve
+      // Organic easing curve
       const easedProgress = Math.pow(progress, 0.95);
       
-      // Starts from a clean 88% width and expands to 100% full-width on scroll
-      const minScale = 0.88;
+      // Initial scale: 0.78 on mobile, 0.88 on desktop, expands to 1.0 (100% full width)
+      const minScale = isMobile ? 0.78 : 0.88;
       const currentScale = minScale + easedProgress * (1 - minScale);
       
       // Direct GPU transform update
@@ -51,10 +52,8 @@ export default function HeroVideoZoom() {
       }
 
       if (innerCardRef.current) {
-        const radius = Math.round(32 - easedProgress * 12);
+        const radius = Math.round((isMobile ? 20 : 32) - easedProgress * (isMobile ? 8 : 14));
         innerCardRef.current.style.borderRadius = `${radius}px`;
-        const shadowAlpha = (0.15 + easedProgress * 0.1).toFixed(2);
-        innerCardRef.current.style.boxShadow = `0 20px 50px rgba(0, 0, 0, ${shadowAlpha})`;
       }
       
       ticking = false;
@@ -68,6 +67,7 @@ export default function HeroVideoZoom() {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('touchmove', onScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
     
     // Initial calculation on mount
@@ -75,24 +75,28 @@ export default function HeroVideoZoom() {
 
     return () => {
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('touchmove', onScroll);
       window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full flex justify-center py-6 sm:py-10 overflow-hidden items-center bg-transparent">
+    <div ref={containerRef} className="w-full flex justify-center py-4 sm:py-8 overflow-hidden items-center bg-transparent">
       <div 
         ref={zoomWrapperRef}
         className="w-full max-w-[92rem] px-0 sm:px-2 origin-center will-change-transform bg-transparent"
         style={{ 
-          transform: 'scale3d(0.88, 0.88, 1)'
+          transform: 'scale3d(0.85, 0.85, 1)'
         }}
       >
         <div 
           ref={innerCardRef}
-          className="relative aspect-[16/9] w-full overflow-hidden select-none bg-[#0D0D0D] border border-black/10 shadow-2xl"
+          className="relative aspect-[16/9] w-full overflow-hidden select-none bg-transparent border-0 shadow-none"
           style={{
-            borderRadius: '32px'
+            borderRadius: '24px',
+            boxShadow: 'none',
+            border: 'none',
+            background: 'transparent'
           }}
         >
           <video
@@ -102,7 +106,7 @@ export default function HeroVideoZoom() {
             loop
             playsInline
             preload="auto"
-            className="w-full h-full object-cover bg-[#0D0D0D]"
+            className="w-full h-full object-cover bg-transparent rounded-none"
           >
             <source src={heroVideoFile} type="video/mp4" />
             <source src="/assets/herovideo.mp4" type="video/mp4" />

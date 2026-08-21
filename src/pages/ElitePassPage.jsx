@@ -82,7 +82,7 @@ export default function ElitePassPage() {
     <div
       key={pass.id}
       onClick={() => setSelectedPass(pass)}
-      className={`group cursor-pointer aspect-[16/10] min-h-[350px] sm:min-h-[420px] rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col justify-center items-center text-center relative overflow-hidden transition-all duration-500 hover:shadow-2xl border border-black/10 select-none ${
+      className={`group cursor-pointer aspect-[16/10] h-[240px] sm:h-[340px] md:h-[400px] lg:h-[440px] rounded-2xl sm:rounded-3xl p-6 sm:p-10 text-white shadow-xl flex flex-col justify-center items-center text-center relative overflow-hidden transition-all duration-500 hover:shadow-2xl border border-black/10 select-none ${
         isExtra
           ? `transform transition-all duration-700 ease-out ${
               isExpanded
@@ -99,7 +99,7 @@ export default function ElitePassPage() {
       {/* Fallback Gradient Background */}
       <div className={`absolute inset-0 opacity-90 ${pass.colorScheme}`} />
 
-      {/* Card Image layer with extension fallbacks (.png -> .jpg -> .jpeg -> .webp) */}
+      {/* Card Image layer with extension fallbacks */}
       {pass.image && (
         <img
           src={pass.image}
@@ -124,9 +124,9 @@ export default function ElitePassPage() {
       {/* Dark Overlay gradient for high contrast readability */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30 pointer-events-none" />
 
-      {/* Title Text Content (No captions/subtitles) */}
+      {/* Title Text Content */}
       <div className="relative z-10 pointer-events-none">
-        <h2 className="text-3xl sm:text-5xl font-sans font-bold text-white tracking-tight drop-shadow-md">
+        <h2 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-bold text-white tracking-tight drop-shadow-md">
           {pass.sansTitle} <em className="italic-serif text-white font-normal block">{pass.serifTitle}</em>
         </h2>
       </div>
@@ -134,46 +134,46 @@ export default function ElitePassPage() {
   );
 
   return (
-    <div className="bg-[#EBEAE6] min-h-screen pt-64 sm:pt-72 pb-28 px-6 sm:px-12">
-      <div className="max-w-[88rem] mx-auto space-y-16">
+    <div className="bg-[#EBEAE6] min-h-screen pt-32 sm:pt-48 lg:pt-60 pb-20 sm:pb-28 px-4 sm:px-8 lg:px-12">
+      <div className="max-w-[88rem] mx-auto space-y-12 sm:space-y-16">
         
         {/* Header with Page-Load Entrance Animation */}
-        <div className="text-center max-w-5xl mx-auto space-y-6 sm:space-y-8 mt-6 sm:mt-10">
-          <h1 className="animate-hero-fade-1 text-5xl sm:text-7xl lg:text-[4.75rem] font-sans font-bold text-[#111111] leading-[1.18] tracking-tight">
+        <div className="text-center max-w-5xl mx-auto space-y-4 sm:space-y-6 mt-4 sm:mt-8">
+          <h1 className="animate-hero-fade-1 text-4xl sm:text-6xl lg:text-[4.75rem] font-sans font-bold text-[#111111] leading-[1.18] tracking-tight">
             Identifine <em className="italic-serif text-[#111111] font-normal">for</em> the elite
           </h1>
-          <p className="animate-hero-fade-2 text-sm sm:text-base text-[#666666] leading-relaxed">
+          <p className="animate-hero-fade-2 text-sm sm:text-base text-[#666666] leading-relaxed max-w-2xl mx-auto">
             A luxury identity collection that transforms the ordinary act of introduction into an unforgettable experience.
           </p>
         </div>
 
         {/* Initial 4-Card 2-Column Grid */}
-        <div className="animate-hero-fade-3 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
+        <div className="animate-hero-fade-3 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 lg:gap-10">
           {initialPasses.map((pass) => renderCard(pass, false))}
         </div>
 
         {/* Smooth Accordion Drop-Down for 3 Additional Images */}
         <div className={isExpanded ? 'accordion-dropdown-open' : 'accordion-dropdown-closed'}>
           <div className="overflow-hidden">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 pb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 lg:gap-10 pb-4">
               {additionalPasses.map((pass, idx) => renderCard(pass, true, idx))}
             </div>
           </div>
         </div>
 
         {/* Show More Button with Text-Roll Hover Animation */}
-        <div className="text-center pt-8">
+        <div className="text-center pt-6 sm:pt-8">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="group relative inline-flex items-center justify-center overflow-hidden bg-white border border-[#CCCCCC] hover:border-[#111111] shadow-sm rounded-2xl px-10 py-4 text-xs font-bold tracking-wider uppercase transition-all duration-300 transform hover:-translate-y-0.5 select-none"
+            className="group relative inline-flex items-center justify-center overflow-hidden bg-white border border-[#CCCCCC] hover:border-[#111111] shadow-sm rounded-2xl px-8 sm:px-10 py-3.5 sm:py-4 text-xs font-bold tracking-wider uppercase transition-all duration-300 transform hover:-translate-y-0.5 select-none"
           >
             <div className="h-4 relative overflow-hidden flex items-center justify-center min-w-[95px]">
-              {/* Default Gray Text (Moves UP out of view on hover) */}
+              {/* Default Gray Text */}
               <span className="text-[#777777] transition-transform duration-300 ease-out group-hover:-translate-y-full block whitespace-nowrap">
                 {isExpanded ? 'Show Less' : 'Show More'}
               </span>
 
-              {/* Hover Black Text (Moves UP into view from below on hover) */}
+              {/* Hover Black Text */}
               <span className="text-[#111111] absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0 font-extrabold whitespace-nowrap">
                 {isExpanded ? 'Show Less' : 'Show More'}
               </span>
