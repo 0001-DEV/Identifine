@@ -111,9 +111,9 @@ export default function ProductCataloguePage() {
       <div className="max-w-[94rem] mx-auto space-y-20 sm:space-y-28">
         
         {/* ========================================================================= */}
-        {/* HERO SECTION: FULL WIDTH PICTURE WITH PRODUCT NAME AT CENTER BOTTOM     */}
+        {/* HERO SECTION: FULL SCREEN WIDTH PICTURE (NO BORDER RADIUS, +18PX HEIGHT)   */}
         {/* ========================================================================= */}
-        <div className="w-full relative rounded-[32px] sm:rounded-[40px] overflow-hidden bg-[#0A0D14] border border-[#DCDAD4] shadow-xl h-[340px] sm:h-[440px] lg:h-[500px] flex items-center justify-center group">
+        <div className="w-screen relative left-1/2 -translate-x-1/2 rounded-none overflow-hidden bg-[#0A0D14] border-y border-[#DCDAD4] shadow-xl h-[358px] sm:h-[458px] lg:h-[518px] flex items-center justify-center group -mt-6 sm:-mt-8">
           
           {/* Hero Product Image */}
           <img
@@ -135,9 +135,9 @@ export default function ProductCataloguePage() {
         </div>
 
         {/* ========================================================================= */}
-        {/* OVERVIEW & SPECIFICATIONS SECTION                                         */}
+        {/* OVERVIEW & SPECIFICATIONS SECTION (MARGIN 80PX FROM LEFT)                 */}
         {/* ========================================================================= */}
-        <div className="bg-white border border-[#DCDAD4] p-8 sm:p-12 lg:p-14 rounded-[32px] shadow-sm space-y-8 text-left">
+        <div className="lg:ml-[80px] max-w-5xl bg-white border border-[#DCDAD4] p-8 sm:p-12 lg:p-14 rounded-[32px] shadow-sm space-y-8 text-left">
           
           <div className="space-y-4">
             <div className="inline-flex items-center justify-start gap-2.5">
@@ -154,7 +154,7 @@ export default function ProductCataloguePage() {
               </span>
             </div>
 
-            <p className="text-base sm:text-xl text-[#333333] leading-relaxed font-normal max-w-5xl">
+            <p className="text-base sm:text-xl text-[#333333] leading-relaxed font-normal">
               {activeProduct.overview}
             </p>
           </div>
