@@ -112,9 +112,9 @@ export default function CaseStudiesPage() {
     <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
       <div className="max-w-[94rem] mx-auto space-y-16 sm:space-y-24">
         
-        {/* Header Section */}
+        {/* Header Section with Page-Open Entry Animation */}
         <div className="space-y-4 max-w-2xl text-left">
-          <div className="inline-flex items-center justify-start gap-2.5">
+          <div className="animate-hero-fade-1 inline-flex items-center justify-start gap-2.5">
             <img
               src={starIcon}
               alt=""
@@ -128,13 +128,13 @@ export default function CaseStudiesPage() {
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-[3.5rem] font-galano font-medium text-[#111111] leading-[1.12] tracking-tight">
+          <h1 className="animate-hero-fade-2 text-3xl sm:text-5xl lg:text-[3.5rem] font-galano font-medium text-[#111111] leading-[1.12] tracking-tight">
             Create an identity that is a voice, and not an echo!
           </h1>
         </div>
 
         {/* 5-Column Grid with 2 Lines Matching Product Catalogue Arrangement */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-[8px] gap-y-[140px] items-start">
+        <div className="animate-hero-fade-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-[8px] gap-y-[140px] items-start">
           {caseStudiesData.slice(0, visibleCount).map((item, idx) => {
             const heightClass = heightPattern[idx] || 'h-[200px]';
 

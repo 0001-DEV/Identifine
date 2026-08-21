@@ -130,7 +130,7 @@ export default function ProductCataloguePage() {
         {/* ========================================================================= */}
         {/* HERO SECTION: FULL SCREEN WIDTH PICTURE (NO MARGIN TOP, +12PX HEIGHT)     */}
         {/* ========================================================================= */}
-        <div className="w-screen relative left-1/2 -translate-x-1/2 rounded-none overflow-hidden bg-[#0A0D14] border-b border-[#DCDAD4] shadow-xl h-[370px] sm:h-[470px] lg:h-[530px] flex items-center justify-center group mt-0">
+        <div className="animate-hero-fade-1 w-screen relative left-1/2 -translate-x-1/2 rounded-none overflow-hidden bg-[#0A0D14] border-b border-[#DCDAD4] shadow-xl h-[370px] sm:h-[470px] lg:h-[530px] flex items-center justify-center group mt-0">
           
           {/* Hero Product Image */}
           <img
@@ -157,7 +157,7 @@ export default function ProductCataloguePage() {
         <div className="flex flex-col lg:flex-row items-start text-left">
           
           {/* Overview Tagline Label (Enlarged, Lowercase, Aligned with first line of narrative) */}
-          <div className="pt-1 shrink-0 min-w-[160px]">
+          <div className="animate-hero-fade-2 pt-1 shrink-0 min-w-[160px]">
             <div className="inline-flex items-center justify-start gap-2.5">
               <img
                 src={starIcon}
@@ -174,7 +174,7 @@ export default function ProductCataloguePage() {
           </div>
 
           {/* Narrative Content, Specs & Actions (Indented 200px from Left Margin) */}
-          <div className="lg:ml-[200px] space-y-8 flex-1 mt-6 lg:mt-0">
+          <div className="animate-hero-fade-3 lg:ml-[200px] space-y-8 flex-1 mt-6 lg:mt-0">
             <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl">
               {activeProduct.overview}
             </p>

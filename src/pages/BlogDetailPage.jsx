@@ -124,21 +124,21 @@ export default function BlogDetailPage() {
           </NavLink>
         </div>
 
-        {/* Article Header */}
+        {/* Article Header with Page-Open Entry Animation */}
         <div className="space-y-6">
-          <div className="inline-flex items-center gap-2.5">
+          <div className="animate-hero-fade-1 inline-flex items-center gap-2.5">
             <img src={starIcon} alt="" className="w-4 h-4 object-contain brightness-0" />
             <span className="font-galano font-medium text-[#737378] text-xs uppercase tracking-widest">
               {article.category}
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-galano font-semibold text-[#111111] tracking-tight leading-[1.12]">
+          <h1 className="animate-hero-fade-2 text-3xl sm:text-5xl lg:text-6xl font-galano font-semibold text-[#111111] tracking-tight leading-[1.12]">
             {article.title}
           </h1>
 
           {/* Meta Info */}
-          <div className="flex items-center gap-6 text-sm font-mono text-[#737378] pt-2 border-b border-[#E5E5E5] pb-6">
+          <div className="animate-hero-fade-3 flex items-center gap-6 text-sm font-mono text-[#737378] pt-2 border-b border-[#E5E5E5] pb-6">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-[#111111]" />
               <span>{article.date}</span>
@@ -151,7 +151,7 @@ export default function BlogDetailPage() {
         </div>
 
         {/* Hero Image */}
-        <div className="w-full rounded-2xl overflow-hidden border border-[#E5E5E5] shadow-lg bg-[#F5F5F3]">
+        <div className="animate-hero-fade-4 w-full rounded-2xl overflow-hidden border border-[#E5E5E5] shadow-lg bg-[#F5F5F3]">
           <img
             src={article.heroImage}
             alt={article.title}

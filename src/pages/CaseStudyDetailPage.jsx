@@ -120,7 +120,7 @@ export default function CaseStudyDetailPage() {
           {/* ========================================================================= */}
           {/* LEFT COLUMN: STICKY INFO PANEL (PROJECT TITLE, TYPE, YEAR, WRITEUP)       */}
           {/* ========================================================================= */}
-          <div className="w-full lg:w-[360px] shrink-0 lg:sticky lg:top-36 space-y-8 text-left">
+          <div className="animate-hero-fade-1 w-full lg:w-[360px] shrink-0 lg:sticky lg:top-36 space-y-8 text-left">
             
             {/* Back link */}
             <NavLink
@@ -156,7 +156,7 @@ export default function CaseStudyDetailPage() {
           {/* ========================================================================= */}
           {/* RIGHT COLUMN: VISUALS & IMAGERY (MOVED MORE TO THE RIGHT)                 */}
           {/* ========================================================================= */}
-          <div className="flex-1 w-full max-w-4xl space-y-4">
+          <div className="animate-hero-fade-2 flex-1 w-full max-w-4xl space-y-4">
             
             {study.images.map((imgSrc, index) => (
               <div

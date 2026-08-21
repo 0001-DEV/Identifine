@@ -80,19 +80,19 @@ Even the most sophisticated organizations fall into hidden traps when presenting
       
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 text-brand-gold text-xs font-semibold uppercase tracking-widest border border-brand-gold/20">
+        <div className="animate-hero-fade-1 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 text-brand-gold text-xs font-semibold uppercase tracking-widest border border-brand-gold/20">
           <Sparkles className="w-3.5 h-3.5" /> Insights & Inspiration
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-white">
+        <h1 className="animate-hero-fade-2 font-display text-4xl sm:text-5xl font-extrabold text-white">
           Identifine <span className="gold-gradient-text">Journal</span>
         </h1>
-        <p className="text-sm sm:text-base text-brand-muted">
+        <p className="animate-hero-fade-3 text-sm sm:text-base text-brand-muted">
           Perspectives on corporate identity design, executive presence, and modern credential engineering.
         </p>
       </div>
 
       {/* Search & Categories Bar */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 glass-panel rounded-2xl p-4 border border-brand-border">
+      <div className="animate-hero-fade-4 flex flex-col md:flex-row items-center justify-between gap-4 glass-panel rounded-2xl p-4 border border-brand-border">
         {/* Search */}
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-brand-muted absolute left-3.5 top-1/2 -translate-y-1/2" />

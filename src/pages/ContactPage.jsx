@@ -67,14 +67,14 @@ export default function ContactPage() {
       <div className="max-w-[96rem] mx-auto space-y-24 sm:space-y-32">
         
         {/* Header - Reduced width, centered & font-medium */}
-        <div className="max-w-4xl mx-auto text-center pb-2">
+        <div className="animate-hero-fade-1 max-w-4xl mx-auto text-center pb-2">
           <h1 className="text-5xl sm:text-7xl lg:text-[6.25rem] font-galano font-medium text-[#111111] leading-[1.08] tracking-tight text-center">
             Start <em className="font-swarsh italic font-medium text-[#111111] px-1">something</em> bold
           </h1>
         </div>
 
         {/* Contact Grid: Left Details & Right Form Container */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
+        <div className="animate-hero-fade-2 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
           
           {/* Left Details - Indented with margin-left, bottom aligned with right form container */}
           <div className="lg:col-span-5 flex flex-col justify-between h-full text-left lg:ml-4 xl:ml-8 space-y-8">

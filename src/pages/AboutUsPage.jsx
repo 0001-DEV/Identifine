@@ -221,7 +221,7 @@ export default function AboutUsPage() {
         <section className="space-y-14 w-full pt-4">
 
           {/* Main Hero Header - 3 Lines Bold Far Left Aligned */}
-          <div className="scroll-reveal space-y-1 text-left w-full">
+          <div className="animate-hero-fade-1 space-y-1 text-left w-full">
             <h1 className="text-5xl sm:text-7xl lg:text-[6.25rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.06] text-left">
               <span className="block">
                 We craft <em className="font-swarsh italic font-medium text-[#111111] px-1.5">identity</em>
@@ -232,7 +232,7 @@ export default function AboutUsPage() {
           </div>
 
           {/* Story Narrative Section - Shifted further from the left margin */}
-          <div className="scroll-reveal space-y-8 max-w-4xl lg:ml-36 xl:ml-52 pt-6 text-left">
+          <div className="animate-hero-fade-2 space-y-8 max-w-4xl lg:ml-36 xl:ml-52 pt-6 text-left">
             <div className="inline-flex items-center justify-start gap-2.5">
               <img
                 src={starIcon}
