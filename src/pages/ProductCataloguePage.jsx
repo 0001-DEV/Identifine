@@ -236,11 +236,11 @@ export default function ProductCataloguePage() {
             })}
           </div>
 
-          {/* Load More Button (Reduced Border & Width, White Background, Gray-to-Black Hover) */}
+          {/* Load More Button (Reduced Border Radius, Glassmorphism Background, Gray-to-Black Hover) */}
           <div className="text-center pt-8">
             <button
               onClick={() => setVisibleCount((prev) => (prev >= partnerCases.length ? 5 : partnerCases.length))}
-              className="inline-flex items-center justify-center text-xs font-semibold px-6 py-2.5 rounded-full bg-white text-[#777777] border border-[#DCDAD4]/60 hover:text-black hover:border-black shadow-sm transition-all duration-300 select-none"
+              className="inline-flex items-center justify-center text-xs font-semibold px-6 py-2.5 rounded-xl bg-white/50 backdrop-blur-md text-[#555555] border border-white/70 hover:bg-white/80 hover:text-black hover:border-black/30 shadow-sm transition-all duration-300 select-none"
             >
               Load More
             </button>
