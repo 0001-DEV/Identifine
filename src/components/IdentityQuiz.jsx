@@ -339,7 +339,7 @@ export default function IdentityQuiz() {
           {/* Right Image Side on Completion */}
           <div className="lg:col-span-4 hidden lg:flex flex-col items-center justify-center relative w-full h-[380px] rounded-3xl overflow-hidden bg-[#111111] border border-white/15 shadow-2xl">
             <img
-              src={blackMatteRender}
+              src={que6Img}
               alt="Identifine Completion"
               className="w-full h-full object-cover object-center select-none"
             />
