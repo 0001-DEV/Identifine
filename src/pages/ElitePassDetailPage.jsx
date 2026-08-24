@@ -198,7 +198,6 @@ export default function ElitePassDetailPage() {
               </div>
             </div>
 
-            </div>
           </div>
 
         </div>
