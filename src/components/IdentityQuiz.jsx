@@ -39,7 +39,7 @@ export default function IdentityQuiz() {
     {
       id: 'challenge',
       queNum: 'Que 1',
-      title: "What's your company's biggest identity challenge?",
+      title: "What's your comapny's biggest identity challenge?",
       options: [
         'Building trust',
         'Managing people',
@@ -47,73 +47,63 @@ export default function IdentityQuiz() {
       ]
     },
     {
-      id: 'scale',
+      id: 'identify_today',
       queNum: 'Que 2',
-      title: "What scale is your organization currently operating at?",
+      title: 'How does your organization identify people today?',
       options: [
-        'High-growth venture startup',
-        'Established mid-market enterprise',
-        'Luxury prestige brand & VIP club'
+        'Basic ID cards',
+        'Digital credentials',
+        'Multiple methods'
       ]
     },
     {
-      id: 'touchpoint',
+      id: 'improvement_area',
       queNum: 'Que 3',
-      title: "Which identity touchpoint requires immediate elevation?",
+      title: 'Which area needs the most improvement?',
       options: [
-        'Physical smart card hardware',
-        'Corporate brand strategy',
-        'Digital identity ecosystem'
+        'Employee identity',
+        'Customer identity',
+        'Visitor management'
       ]
     },
     {
-      id: 'outcome',
+      id: 'security_level',
       queNum: 'Que 4',
-      title: "What primary victory outcome do you expect?",
+      title: 'How secure is your identity system?',
       options: [
-        'Instant 10x first impression & credibility',
-        'Encrypted NFC security & seamless networking',
-        'Unified employee pride & organizational habit'
+        'Very secure',
+        'Needs improvement',
+        'Not sure'
       ]
     },
     {
-      id: 'timeline',
+      id: 'matters_most',
       queNum: 'Que 5',
-      title: "What is your expected timeline for implementation?",
+      title: 'What matters most to your organization?',
       options: [
-        'Immediate (Within 2 weeks)',
-        '1 - 3 Months',
-        'Q3 / Q4 Strategic Planning'
+        'Security',
+        "Brand's image",
+        'Efficiency'
       ]
     },
     {
-      title: "What is your required deployment timeline?",
-      options: [
-        'Immediate (Within 2 Weeks)',
-        '1 - 2 Months',
-        'Next Quarter',
-        'Flexible / Exploration Phase'
-      ]
-    },
-    {
-      id: 'step_6',
+      id: 'current_experience',
       queNum: 'Que 6',
-      title: "What is your expected tier of identity consultation?",
+      title: 'How would you describe your current identity experience?',
       options: [
-        'Full 5P Strategic Design & Rollout',
-        'Physical Production & NFC Provisioning',
-        'Identity System Audit & Advisory',
-        'Custom Executive Package'
+        'Professional',
+        'Inconsistent',
+        'Outdated'
       ]
     },
     {
-      id: 'step_7',
+      id: 'looking_for',
       queNum: 'Que 7',
-      title: "Would you like a custom physical prototype demo?",
+      title: 'What are you looking for today?',
       options: [
-        'Yes, send physical card sample',
-        'Yes, schedule digital demo',
-        'No, send product brochure'
+        'Identity strategy',
+        'Smart credentials',
+        'Complete identity solution'
       ]
     }
   ];
