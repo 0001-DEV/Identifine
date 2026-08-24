@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage';
 import CaseStudiesPage from './pages/CaseStudiesPage';
 import CaseStudyDetailPage from './pages/CaseStudyDetailPage';
 import ElitePassPage from './pages/ElitePassPage';
+import ElitePassDetailPage from './pages/ElitePassDetailPage';
 import AboutUsPage from './pages/AboutUsPage';
 import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
@@ -98,7 +99,9 @@ export default function App() {
           <Route path="/projects" element={<CaseStudiesPage />} />
           <Route path="/projects/:id" element={<CaseStudyDetailPage />} />
           <Route path="/elite-pass" element={<ElitePassPage />} />
+          <Route path="/elite-pass/:id" element={<ElitePassDetailPage />} />
           <Route path="/elitepass" element={<ElitePassPage />} />
+          <Route path="/elitepass/:id" element={<ElitePassDetailPage />} />
           <Route path="/about-us" element={<AboutUsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />

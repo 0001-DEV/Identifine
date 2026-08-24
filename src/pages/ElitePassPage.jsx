@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import CardShowcaseModal from '../components/CardShowcaseModal';
 
 // User's exact render assets from src/assets
@@ -79,10 +80,10 @@ export default function ElitePassPage() {
   ];
 
   const renderCard = (pass, isExtra = false, extraIndex = 0) => (
-    <div
+    <NavLink
       key={pass.id}
-      onClick={() => setSelectedPass(pass)}
-      className={`group cursor-pointer w-full h-[220px] sm:h-[320px] md:h-[380px] lg:h-[420px] rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 text-white shadow-lg flex flex-col justify-center items-center text-center relative overflow-hidden transition-all duration-500 hover:shadow-2xl border border-black/10 select-none ${
+      to={`/elite-pass/${pass.id}`}
+      className={`group cursor-pointer w-full h-[220px] sm:h-[320px] md:h-[380px] lg:h-[420px] rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 text-white shadow-lg flex flex-col justify-center items-center text-center relative overflow-hidden transition-all duration-500 hover:shadow-2xl border border-black/10 select-none block ${
         isExtra
           ? `transform transition-all duration-700 ease-out ${
               isExpanded
@@ -130,7 +131,7 @@ export default function ElitePassPage() {
           {pass.sansTitle} <em className="italic-serif text-white font-normal block">{pass.serifTitle}</em>
         </h2>
       </div>
-    </div>
+    </NavLink>
   );
 
   return (

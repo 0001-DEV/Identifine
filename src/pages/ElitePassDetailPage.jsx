@@ -1,0 +1,286 @@
+import React from 'react';
+import { useParams, NavLink } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import starIcon from '../assets/SVG@4x.png';
+
+// Assets
+import blackMatteImg from '../assets/ELITE_PASS_BLACK_MATTE.png';
+import goldImg from '../assets/ELITE_PASS_GOLD.png';
+import render1Img from '../assets/RENDER 1.png';
+import blackMatte2Img from '../assets/ELITE_PASS_BLACK_MATTE_2.png';
+import silverImg from '../assets/ELITE_PASS_SILVER.png';
+import gunMetalImg from '../assets/Black matte render 2.png';
+import elitePassJpg from '../assets/Elitepass.jpg';
+
+export const elitePassData = {
+  'nova': {
+    id: 'nova',
+    sansTitle: 'Nova',
+    serifTitle: 'Pass',
+    fullTitle: 'Nova Pass',
+    category: 'Executive Level',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    writeup: 'Some things never need to shout to be noticed. The Nova Pass was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    heroImage: blackMatteImg,
+    galleryImages: [blackMatteImg, render1Img, elitePassJpg],
+    colorScheme: 'bg-gradient-to-br from-black via-[#0D0D0D] to-zinc-950 border border-zinc-800'
+  },
+  'black-matte': {
+    id: 'black-matte',
+    sansTitle: 'Black',
+    serifTitle: 'Matte',
+    fullTitle: 'Black Matte',
+    category: 'Executive Level',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    writeup: 'Some things never need to shout to be noticed. The Black Matte was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    heroImage: blackMatteImg,
+    galleryImages: [blackMatteImg, blackMatte2Img, render1Img],
+    colorScheme: 'bg-gradient-to-br from-black via-[#0D0D0D] to-zinc-950 border border-zinc-800'
+  },
+  'elite-gold': {
+    id: 'elite-gold',
+    sansTitle: 'Elite Pass',
+    serifTitle: 'Gold',
+    fullTitle: 'Elite Pass Gold',
+    category: 'VIP Membership Level',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    writeup: 'Some things never need to shout to be noticed. The Elite Pass Gold was created for organizations that believe confidence is quiet. Its 24K electroplated finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    heroImage: goldImg,
+    galleryImages: [goldImg, elitePassJpg, silverImg],
+    colorScheme: 'bg-gradient-to-br from-amber-950 via-yellow-900 to-zinc-950 border border-amber-500/40'
+  },
+  'titanium-steel': {
+    id: 'titanium-steel',
+    sansTitle: 'Titanium',
+    serifTitle: 'Steel',
+    fullTitle: 'Titanium Steel',
+    category: 'Aerospace Grade',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    writeup: 'Some things never need to shout to be noticed. The Titanium Steel pass was created for organizations that believe confidence is quiet. Its aerospace titanium structure, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    heroImage: render1Img,
+    galleryImages: [render1Img, blackMatteImg, gunMetalImg],
+    colorScheme: 'bg-gradient-to-br from-stone-800 via-stone-700 to-zinc-900 border border-amber-600/30'
+  },
+  'gun-metal': {
+    id: 'gun-metal',
+    sansTitle: 'Gun',
+    serifTitle: 'Metal',
+    fullTitle: 'Gun Metal',
+    category: 'Executive Level',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    writeup: 'Some things never need to shout to be noticed. The Gun Metal pass was created for organizations that believe confidence is quiet. Its deep gunmetal finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    heroImage: blackMatte2Img,
+    galleryImages: [blackMatte2Img, gunMetalImg, render1Img],
+    colorScheme: 'bg-gradient-to-br from-[#111827] via-[#0F172A] to-black border border-gray-700/50'
+  },
+  'rose-gold-metal': {
+    id: 'rose-gold-metal',
+    sansTitle: 'Rose Gold',
+    serifTitle: 'Metal',
+    fullTitle: 'Rose Gold Metal',
+    category: 'Prestige VIP Level',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    writeup: 'Some things never need to shout to be noticed. The Rose Gold Metal pass was created for organizations that believe confidence is quiet. Its refined rose gold electroplated finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust.',
+    heroImage: silverImg,
+    galleryImages: [silverImg, goldImg, elitePassJpg],
+    colorScheme: 'bg-gradient-to-br from-amber-900 via-rose-950 to-zinc-950 border border-rose-800/40'
+  },
+  'aircraft-metal': {
+    id: 'aircraft-metal',
+    sansTitle: 'Aircraft Grade',
+    serifTitle: 'Metal',
+    fullTitle: 'Aircraft Grade Metal',
+    category: 'Military & Aerospace',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    writeup: 'Some things never need to shout to be noticed. The Aircraft Grade Metal pass was created for organizations that believe confidence is quiet. Its ultra-lightweight high-durability alloy finish transforms an everyday ID card into a statement of authority.',
+    heroImage: gunMetalImg,
+    galleryImages: [gunMetalImg, render1Img, blackMatteImg],
+    colorScheme: 'bg-gradient-to-br from-slate-800 via-zinc-900 to-black border border-slate-700'
+  },
+  '24k-gold-plated': {
+    id: '24k-gold-plated',
+    sansTitle: '24K Gold',
+    serifTitle: 'Plated',
+    fullTitle: '24K Gold Plated',
+    category: 'Prestige 24K Gold',
+    features: 'NFC, QR code, Access, Exclusive packaging',
+    writeup: 'Some things never need to shout to be noticed. The 24K Gold Plated pass was created for organizations that believe confidence is quiet. Its 24K electroplated gold surface and refined craftsmanship represent the highest tier of organizational identity.',
+    heroImage: elitePassJpg,
+    galleryImages: [elitePassJpg, goldImg, silverImg],
+    colorScheme: 'bg-gradient-to-br from-yellow-950 via-amber-900 to-black border border-yellow-600/40'
+  }
+};
+
+export default function ElitePassDetailPage() {
+  const { id } = useParams();
+  const currentSlug = id || 'nova';
+  const item = elitePassData[currentSlug] || elitePassData['nova'];
+
+  const otherPasses = Object.values(elitePassData).filter((p) => p.id !== item.id);
+
+  return (
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-20 sm:pt-24 pb-28 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans space-y-20 sm:space-y-28">
+      
+      {/* ========================================================================= */}
+      {/* HERO SECTION: 100% FULL BLEED EDGE-TO-EDGE PICTURE (MATCHING FRAMER NOVA) */}
+      {/* ========================================================================= */}
+      <div className="animate-hero-fade-1 w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[400px] sm:h-[500px] lg:h-[600px] relative flex items-center justify-center group mt-0">
+        
+        {/* Back Link Overlay */}
+        <div className="absolute top-28 left-6 sm:left-12 z-20">
+          <NavLink
+            to="/elite-pass"
+            className="inline-flex items-center gap-2 text-xs font-mono uppercase text-white/80 hover:text-white bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 transition-all"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>All Elite Passes</span>
+          </NavLink>
+        </div>
+
+        {/* Hero Product Image */}
+        <img
+          src={item.heroImage}
+          alt={item.fullTitle}
+          className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-1000 ease-out select-none"
+        />
+
+        {/* Bottom Gradient Overlay for High Contrast Text */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
+
+        {/* Product Name at Center Bottom */}
+        <div className="absolute bottom-8 sm:bottom-12 left-0 text-center w-full px-6 z-10 pointer-events-none">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-galano font-bold text-white tracking-tight drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)]">
+            {item.sansTitle} <em className="font-swarsh italic font-normal text-white">{item.serifTitle}</em>
+          </h1>
+        </div>
+
+      </div>
+
+      {/* Main Page Content: Padded Container */}
+      <div className="max-w-[94rem] mx-auto px-6 sm:px-12 space-y-20 sm:space-y-28">
+        
+        {/* ========================================================================= */}
+        {/* OVERVIEW & SPECIFICATIONS SECTION (EXACT ALIGNMENT AS FRAMER NOVA)         */}
+        {/* ========================================================================= */}
+        <div className="flex flex-col lg:flex-row items-start text-left">
+          
+          {/* Overview Tagline Label */}
+          <div className="animate-hero-fade-2 pt-1 shrink-0 min-w-[160px]">
+            <div className="inline-flex items-center justify-start gap-2">
+              <img
+                src={starIcon}
+                alt=""
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain brightness-0 shrink-0"
+              />
+              <span
+                className="font-galano font-normal text-[#555555] text-xs sm:text-base uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
+              >
+                overview
+              </span>
+            </div>
+          </div>
+
+          {/* Narrative Content, Specs & Actions (Indented 200px from Left Margin) */}
+          <div className="animate-hero-fade-3 lg:ml-[200px] space-y-8 flex-1 mt-6 lg:mt-0">
+            <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl">
+              {item.writeup}
+            </p>
+
+            {/* Specs List - Bottom line directly under category and features */}
+            <div className="pt-6 pb-6 border-t border-b border-[#DCDAD4] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-base sm:text-lg max-w-5xl">
+              <div>
+                <span className="font-semibold text-[#111111]">Category: </span>
+                <span className="text-[#555555]">{item.category}</span>
+              </div>
+              <div className="sm:text-right">
+                <span className="font-semibold text-[#111111]">Features: </span>
+                <span className="text-[#555555]">{item.features}</span>
+              </div>
+            </div>
+
+            {/* CTA Button */}
+            <div className="pt-2">
+              <a
+                href={`https://wa.me/2349030001851?text=Inquiry%20regarding%20${encodeURIComponent(item.fullTitle)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center text-sm sm:text-base font-semibold px-8 py-4 rounded-full bg-black text-white hover:bg-[#E2B857] hover:text-black transition-all duration-300 shadow-md"
+              >
+                Make an identity enquiry
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ========================================================================= */}
+        {/* GALLERY SHOWCASE IMAGE CONTAINER                                           */}
+        {/* ========================================================================= */}
+        {item.galleryImages && item.galleryImages.length > 0 && (
+          <div className="space-y-8">
+            {item.galleryImages.map((imgSrc, idx) => (
+              <div
+                key={idx}
+                className="w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-white/40 backdrop-blur-md border border-white/60 shadow-sm"
+              >
+                <img
+                  src={imgSrc}
+                  alt={`${item.fullTitle} render ${idx + 1}`}
+                  className="w-full h-auto object-cover select-none"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* SECTION: MORE ELITE PASS (CONTAINER CARDS AS ON FRAMER NOVA)               */}
+        {/* ========================================================================= */}
+        <div className="space-y-12 text-left">
+          
+          <div className="w-full">
+            <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-galano font-medium text-[#111111] leading-tight tracking-tight">
+              More elite <em className="font-swarsh italic font-normal text-[#111111]">pass</em>
+            </h2>
+          </div>
+
+          {/* Grid of Elite Pass Container Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10">
+            {otherPasses.map((pass) => (
+              <NavLink
+                key={pass.id}
+                to={`/elite-pass/${pass.id}`}
+                className="group cursor-pointer block w-full rounded-2xl sm:rounded-3xl p-6 sm:p-10 text-white shadow-lg relative overflow-hidden transition-all duration-500 hover:shadow-2xl border border-black/10 select-none bg-black h-[280px] sm:h-[360px] lg:h-[400px]"
+              >
+                {/* Fallback Gradient Background */}
+                <div className={`absolute inset-0 opacity-90 ${pass.colorScheme}`} />
+
+                {/* Card Image */}
+                {pass.heroImage && (
+                  <img
+                    src={pass.heroImage}
+                    alt={pass.fullTitle}
+                    className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                )}
+
+                {/* Dark Overlay gradient for contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20 pointer-events-none" />
+
+                {/* Card Title at Center */}
+                <div className="relative z-10 h-full flex flex-col justify-center items-center text-center pointer-events-none">
+                  <h3 className="text-2xl sm:text-4xl font-sans font-bold text-white tracking-tight drop-shadow-md">
+                    {pass.sansTitle} <em className="italic-serif text-white font-normal block">{pass.serifTitle}</em>
+                  </h3>
+                </div>
+              </NavLink>
+            ))}
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  );
+}
