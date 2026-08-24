@@ -1,218 +1,127 @@
 import React from 'react';
 import { useParams, NavLink } from 'react-router-dom';
-import { ArrowLeft, Clock, Calendar, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import starIcon from '../assets/SVG@4x.png';
-
-// Images
-import blogHeroConverts from '../assets/blog_hero_converts.jpg';
-import cardOneImg from '../assets/Card 1.png';
-import postProcessImg from '../assets/Post process 6.jpg';
-import blackMatteRender from '../assets/Black matte render 2.png';
-
-const blogArticles = {
-  'design-that-converts-what-really-works-in-2025': {
-    title: 'Identity design that converts: What really works in 2025',
-    date: 'Jul 8, 2026',
-    readTime: '2 min read',
-    category: 'Design Strategy',
-    heroImage: blogHeroConverts,
-    intro: 'Conversion-focused design in 2026 is no longer about flashy CTAs or aggressive funnels. It’s about trust, clarity, and creating seamless experiences that guide users naturally. The best-converting websites today don’t just look good — they communicate value instantly and intuitively. Let’s break down what’s working now.',
-    sections: [
-      {
-        heading: '1. Clarity over cleverness',
-        body: 'In a noisy digital space, clarity wins. High-converting designs prioritize straightforward messaging, scannable layouts, and intuitive interactions. Users should know what you do, who it’s for, and what to do next — in under five seconds.'
-      },
-      {
-        heading: '2. Story-led UX',
-        body: 'Rather than pushing users toward an action, leading websites use narrative structure. They guide visitors through a journey: establishing a problem, showing empathy, presenting the solution, and ending with a compelling offer. This builds emotional investment before the ask.'
-      },
-      {
-        heading: '3. Visual hierarchy that drives action',
-        body: 'Every section of a converting page has a clear role — headlines grab, subtext supports, buttons lead. In 2025, smart use of size, contrast, and whitespace creates flow that nudges users toward conversion without overwhelming them.'
-      },
-      {
-        heading: '4. Interactive micro-moments',
-        body: 'Subtle animations, hover states, and scroll-triggered effects create engagement and reduce bounce. These aren’t distractions — they serve a purpose: to reward curiosity, show progress, or build anticipation.'
-      },
-      {
-        heading: '5. Social proof with personality',
-        body: 'Testimonies, logos, and reviews still matter — but it’s not about quantity. In 2025, what converts is authenticity. Real faces, honest words, and context-rich case studies create the kind of trust that moves users to act.'
-      }
-    ],
-    takeaway: 'Design that converts in 2025 is human-first, story-driven, and intentional at every step. It’s not about adding more elements — it’s about removing friction and making every interaction feel natural, relevant, and credible.'
-  },
-  'future-of-corporate-identity-2026': {
-    title: 'Why corporate identity is the future of organization’s success',
-    date: 'Jul 2, 2026',
-    readTime: '5 min read',
-    category: 'Brand Strategy',
-    heroImage: postProcessImg,
-    intro: 'In an increasingly decentralized commercial landscape, physical and digital identity touchpoints define institutional prestige and executive credibility.',
-    sections: [
-      {
-        heading: '1. Physical presence in a digital world',
-        body: 'Tangible leadership credentials like precision metal smart cards create lasting first impressions that digital apps alone cannot match.'
-      },
-      {
-        heading: '2. Security meets luxury',
-        body: 'Modern enterprises require encrypted access protocols packaged inside bespoke architectural craftsmanship.'
-      }
-    ],
-    takeaway: 'Organizations that invest in unified prestige identity assets command greater market authority and partnership trust.'
-  },
-  'identity-mistakes-you-are-making': {
-    title: 'Identity mistakes you didn’t know you were making',
-    date: 'Jun 21, 2026',
-    readTime: '2 min read',
-    category: 'Leadership',
-    heroImage: blackMatteRender,
-    intro: 'Many high-growth firms treat identity credentials as an administrative afterthought rather than a strategic branding weapon.',
-    sections: [
-      {
-        heading: '1. Inconsistent executive touchpoints',
-        body: 'When leadership exchanges disparate or flimsy paper cards, it dilutes brand valuation during critical investor and client meetings.'
-      },
-      {
-        heading: '2. Ignoring contactless intelligence',
-        body: 'Failing to leverage embedded NFC and digital profile ecosystems causes missed connection opportunities.'
-      }
-    ],
-    takeaway: 'Auditing your identity touchpoints is the fastest way to upgrade your executive market presence.'
-  }
-};
-
-const moreStories = [
-  {
-    slug: 'design-that-converts-what-really-works-in-2025',
-    title: 'Identity design that converts: What really works in 2026',
-    date: 'Jul 8, 2026',
-    readTime: '2 min read',
-    image: cardOneImg
-  },
-  {
-    slug: 'future-of-corporate-identity-2026',
-    title: 'Why corporate identity is the future of organization’s success',
-    date: 'Jul 2, 2026',
-    readTime: '5 min read',
-    image: postProcessImg
-  },
-  {
-    slug: 'identity-mistakes-you-are-making',
-    title: 'Identity mistakes you didn’t know you were making',
-    date: 'Jun 21, 2026',
-    readTime: '2 min read',
-    image: blackMatteRender
-  }
-];
+import { blogPostsData } from './BlogPage';
 
 export default function BlogDetailPage() {
   const { slug } = useParams();
-  const article = blogArticles[slug] || blogArticles['design-that-converts-what-really-works-in-2025'];
+
+  // Find post by slug or default to first post
+  const article = blogPostsData.find(
+    (p) => p.slug === slug || p.id === slug
+  ) || blogPostsData[0];
+
+  // Get other stories excluding current article
+  const moreStories = blogPostsData.filter((p) => p.id !== article.id).slice(0, 3);
 
   return (
-    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-48 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black font-sans">
-      <div className="max-w-5xl mx-auto space-y-12">
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
+      <div className="max-w-4xl mx-auto space-y-12 sm:space-y-16">
+        
+        {/* Back Link */}
+        <NavLink
+          to="/blog"
+          className="inline-flex items-center gap-2 text-xs sm:text-sm font-galano font-semibold text-[#555555] hover:text-[#111111] transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to all stories</span>
+        </NavLink>
 
-        {/* Article Header with Page-Open Entry Animation */}
-        <div className="space-y-6 max-w-4xl mx-auto text-left sm:text-center">
-          <h1 className="animate-hero-fade-1 text-4xl sm:text-6xl lg:text-[4.75rem] font-galano font-semibold text-[#111111] tracking-tight leading-[1.08]">
+        {/* Header Title & Meta */}
+        <div className="space-y-4 text-left">
+          <div className="inline-flex items-center justify-start gap-2">
+            <img
+              src={starIcon}
+              alt=""
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
+            />
+            <span className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap">
+              {article.category || 'Article'}
+            </span>
+          </div>
+
+          <h1 className="text-3xl sm:text-5xl lg:text-[4rem] font-galano font-medium text-[#111111] leading-[1.12] tracking-tight">
             {article.title}
           </h1>
 
-          {/* Meta Info (Center-Aligned with Increased Height & Typography) */}
-          <div className="animate-hero-fade-2 flex items-center justify-start sm:justify-center gap-8 text-base sm:text-lg font-mono text-[#737378] pt-4 border-b border-[#E5E5E5] pb-8 w-full">
-            <div className="flex items-center gap-2.5">
-              <Calendar className="w-5 h-5 text-[#111111]" />
-              <span>{article.date}</span>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <Clock className="w-5 h-5 text-[#111111]" />
-              <span>{article.readTime}</span>
-            </div>
+          <div className="flex items-center gap-3 text-xs sm:text-sm font-galano font-medium text-[#666666] pt-2">
+            <span>{article.date}</span>
+            <span>•</span>
+            <span>{article.readTime}</span>
           </div>
         </div>
 
-        {/* Hero Image (Increased Height) */}
-        <div className="animate-hero-fade-3 w-full h-[580px] sm:h-[720px] lg:h-[860px] rounded-3xl overflow-hidden border border-[#E5E5E5] shadow-xl bg-[#F5F5F3]">
+        {/* Featured Hero Image */}
+        <div className="w-full h-[280px] sm:h-[450px] rounded-[28px] sm:rounded-[36px] overflow-hidden bg-[#F5F4F0] border border-[#DCDAD4] shadow-sm">
           <img
-            src={article.heroImage}
+            src={article.image}
             alt={article.title}
-            className="w-full h-full object-cover object-center select-none"
+            className="w-full h-full object-cover select-none"
           />
         </div>
 
-        {/* Article Body */}
-        <div className="max-w-4xl mx-auto space-y-10 text-[#333333] font-galano text-base sm:text-lg leading-relaxed pt-6">
-          
-          {/* Introduction */}
-          <div className="space-y-3">
-            <h2 className="text-xl sm:text-2xl font-galano font-semibold text-[#111111] tracking-tight">
-              Introduction
-            </h2>
-            <p className="leading-relaxed text-[#444444]">
-              {article.intro}
-            </p>
-          </div>
+        {/* Article Content */}
+        <div className="space-y-8 text-left text-base sm:text-lg text-[#333333] font-normal leading-relaxed">
+          <p className="text-lg sm:text-xl font-medium text-[#111111] leading-relaxed border-l-2 border-[#E2B857] pl-4 sm:pl-6">
+            {article.intro}
+          </p>
 
-          {/* Core Sections */}
-          {article.sections && article.sections.map((sec, idx) => (
-            <div key={idx} className="space-y-3 pt-2">
-              <h3 className="text-xl sm:text-2xl font-galano font-semibold text-[#111111] tracking-tight">
-                {sec.heading}
+          {article.sections && article.sections.map((section, idx) => (
+            <div key={idx} className="space-y-3 pt-4">
+              <h3 className="text-xl sm:text-2xl font-galano font-medium text-[#111111]">
+                {section.heading}
               </h3>
-              <p className="leading-relaxed text-[#444444]">
-                {sec.body}
+              <p className="text-base sm:text-lg text-[#444444] leading-relaxed">
+                {section.body}
               </p>
             </div>
           ))}
 
-          {/* Takeaway Block */}
           {article.takeaway && (
-            <div className="mt-8 p-6 sm:p-8 rounded-2xl bg-[#F9F9F8] border-l-4 border-l-[#111111] border-y border-r border-[#E5E5E5] space-y-3">
-              <h4 className="text-xl font-galano font-semibold text-[#111111] tracking-tight">
-                Takeaway
+            <div className="bg-white border border-[#DCDAD4] rounded-2xl p-6 sm:p-8 space-y-2 mt-8 shadow-sm">
+              <h4 className="text-sm font-galano font-bold text-[#111111] uppercase tracking-wider">
+                Key Takeaway
               </h4>
-              <p className="leading-relaxed text-[#333333]">
+              <p className="text-base sm:text-lg text-[#222222] font-medium leading-relaxed">
                 {article.takeaway}
               </p>
             </div>
           )}
-
         </div>
 
-        {/* More Stories Section (Centered Header & +40px Larger Containers) */}
-        <div className="pt-20 border-t border-[#E5E5E5] space-y-10 max-w-5xl mx-auto">
-          <div className="text-center">
-            <h3 className="text-4xl sm:text-6xl lg:text-[4.25rem] font-galano font-medium text-[#111111] tracking-tight leading-tight">
-              More <span className="font-swarsh italic font-normal text-[#111111] px-1.5">Stories</span>
-            </h3>
+        {/* Bottom Section: More Stories */}
+        <div className="pt-16 sm:pt-24 border-t border-[#DCDAD4] space-y-10">
+          <div className="text-left space-y-2">
+            <h2 className="text-3xl sm:text-4xl font-galano font-medium text-[#111111]">
+              More <em className="font-swarsh italic font-normal text-[#111111] px-1">stories</em>
+            </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {moreStories
-              .filter(s => s.slug !== slug)
-              .slice(0, 2)
-              .map((story, i) => (
-                <NavLink
-                  key={i}
-                  to={`/blog/${story.slug}`}
-                  className="group rounded-3xl bg-[#F9F9F8] border border-[#E5E5E5] hover:border-black/30 p-6 space-y-5 transition-all duration-300 hover:-translate-y-1.5 block shadow-sm hover:shadow-md"
-                >
-                  <div className="w-full h-48 sm:h-56 rounded-2xl overflow-hidden bg-[#EBEAE6] border border-[#E5E5E5]">
-                    <img
-                      src={story.image}
-                      alt={story.title}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <span className="text-xs font-mono text-[#737378]">{story.date} • {story.readTime}</span>
-                    <h4 className="text-base sm:text-lg font-galano font-medium text-[#111111] group-hover:text-black transition-colors leading-snug">
-                      {story.title}
-                    </h4>
-                  </div>
-                </NavLink>
-              ))}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+            {moreStories.map((story) => (
+              <NavLink
+                key={story.id}
+                to={`/blog/${story.slug}`}
+                className="group block bg-white border border-[#DCDAD4] rounded-2xl p-5 space-y-4 shadow-sm hover:shadow-md transition-all text-left"
+              >
+                <div className="h-40 rounded-xl overflow-hidden bg-[#F5F4F0]">
+                  <img
+                    src={story.image}
+                    alt={story.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="flex items-center gap-2 text-xs font-galano text-[#666666]">
+                  <span>{story.date}</span>
+                  <span>•</span>
+                  <span>{story.readTime}</span>
+                </div>
+                <h4 className="text-base font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors leading-snug line-clamp-2">
+                  {story.title}
+                </h4>
+              </NavLink>
+            ))}
           </div>
         </div>
 

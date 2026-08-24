@@ -1,216 +1,284 @@
 import React, { useState } from 'react';
-import { Sparkles, Search, Clock, ArrowUpRight, BookOpen, X, Share2, Tag } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+import starIcon from '../assets/SVG@4x.png';
+
+// Local Blog Images from Framer Site
+import blog1Img from '../assets/blog/blog_1.jpg';
+import blog2Img from '../assets/blog/blog_2.jpg';
+import blog3Img from '../assets/blog/blog_3.jpg';
+import blog4Img from '../assets/blog/blog_4.jpg';
+import blog5Img from '../assets/blog/blog_5.jpg';
+
+export const blogPostsData = [
+  {
+    id: 'design-that-converts-what-really-works-in-2025',
+    slug: 'design-that-converts-what-really-works-in-2025',
+    title: 'Identity design that converts: What really works in 2026',
+    date: 'Jul 8, 2026',
+    readTime: '2 min read',
+    category: 'Design Strategy',
+    featured: true,
+    image: blog1Img,
+    summary: 'Conversion-focused design in 2026 is no longer about flashy CTAs or aggressive funnels. It’s about trust, clarity, and creating seamless experiences that guide users naturally.',
+    intro: 'Conversion-focused design in 2026 is no longer about flashy CTAs or aggressive funnels. It’s about trust, clarity, and creating seamless experiences that guide users naturally. The best-converting websites today don’t just look good — they communicate value instantly and intuitively. Let’s break down what’s working now.',
+    sections: [
+      {
+        heading: '1. Clarity over cleverness',
+        body: 'In a noisy digital space, clarity wins. High-converting designs prioritize straightforward messaging, scannable layouts, and intuitive interactions. Users should know what you do, who it’s for, and what to do next — in under five seconds.'
+      },
+      {
+        heading: '2. Story-led UX',
+        body: 'Rather than pushing users toward an action, leading websites use narrative structure. They guide visitors through a journey: establishing a problem, showing empathy, presenting the solution, and ending with a compelling offer. This builds emotional investment before the ask.'
+      },
+      {
+        heading: '3. Visual hierarchy that drives action',
+        body: 'Every section of a converting page has a clear role — headlines grab, subtext supports, buttons lead. In 2025, smart use of size, contrast, and whitespace creates flow that nudges users toward conversion without overwhelming them.'
+      },
+      {
+        heading: '4. Interactive micro-moments',
+        body: 'Subtle animations, hover states, and scroll-triggered effects create engagement and reduce bounce. These aren’t distractions — they serve a purpose: to reward curiosity, show progress, or build anticipation.'
+      },
+      {
+        heading: '5. Social proof with personality',
+        body: 'Testimonies, logos, and reviews still matter — but it’s not about quantity. In 2025, what converts is authenticity. Real faces, honest words, and context-rich case studies create the kind of trust that moves users to act.'
+      }
+    ],
+    takeaway: 'Design that converts in 2025 is human-first, story-driven, and intentional at every step. It’s not about adding more elements — it’s about removing friction and making every interaction feel natural, relevant, and credible.'
+  },
+  {
+    id: 'why-corporate-identity-is-the-future-of-organizations-success',
+    slug: 'why-corporate-identity-is-the-future-of-organizations-success',
+    title: 'Why corporate identity is the future of organization’s success',
+    date: 'Jul 2, 2026',
+    readTime: '5 min read',
+    category: 'Corporate Growth',
+    featured: false,
+    image: blog2Img,
+    summary: 'Identity is an administrative necessity turned strategic organizational capability. Explore why leading firms are overhauling their credential infrastructure.',
+    intro: 'In an increasingly decentralized commercial landscape, physical and digital identity touchpoints define institutional prestige and executive credibility. Organizations that invest in unified prestige identity assets command greater market authority.',
+    sections: [
+      {
+        heading: '1. Physical presence in a digital world',
+        body: 'Tangible leadership credentials like precision metal smart cards create lasting first impressions that digital apps alone cannot match.'
+      },
+      {
+        heading: '2. Security meets luxury',
+        body: 'Modern enterprises require encrypted access protocols packaged inside bespoke architectural craftsmanship.'
+      }
+    ],
+    takeaway: 'Organizations that invest in unified prestige identity assets command greater market authority and partnership trust.'
+  },
+  {
+    id: 'identity-mistakes-you-didnt-know-you-were-making',
+    slug: 'identity-mistakes-you-didnt-know-you-were-making',
+    title: 'Identity mistakes you didn’t know you were making',
+    date: 'Jun 21, 2026',
+    readTime: '2 min read',
+    category: 'Brand Audit',
+    featured: false,
+    image: blog3Img,
+    summary: 'From cheap paper cards to fragmented digital links, discover the subtle identity blunders sabotaging executive credibility.',
+    intro: 'Many high-growth firms treat identity credentials as an administrative afterthought rather than a strategic branding weapon.',
+    sections: [
+      {
+        heading: '1. Inconsistent executive touchpoints',
+        body: 'When leadership exchanges disparate or flimsy paper cards, it dilutes brand valuation during critical investor and client meetings.'
+      },
+      {
+        heading: '2. Ignoring contactless intelligence',
+        body: 'Failing to leverage embedded NFC and digital profile ecosystems causes missed connection opportunities.'
+      }
+    ],
+    takeaway: 'Auditing your identity touchpoints is the fastest way to upgrade your executive market presence.'
+  },
+  {
+    id: 'building-trust-through-thoughtful-web-design',
+    slug: 'building-trust-through-thoughtful-web-design',
+    title: 'Building trust through thoughtful web design',
+    date: 'Jun 12, 2025',
+    readTime: '4 min read',
+    category: 'Web Experience',
+    featured: false,
+    image: blog4Img,
+    summary: 'High-converting digital experiences prioritize straightforward messaging, scannable layouts, and intuitive interactions.',
+    intro: 'In a noisy digital space, clarity wins. High-converting designs prioritize straightforward messaging, scannable layouts, and intuitive interactions.',
+    sections: [
+      {
+        heading: '1. Scannable Visual Hierarchy',
+        body: 'Users evaluate brand credibility within seconds. Clean typography, generous spacing, and crisp imagery immediately command respect.'
+      },
+      {
+        heading: '2. Frictionless Navigation',
+        body: 'Eliminating navigation confusion keeps visitors engaged longer, leading to higher conversion rates across all entry points.'
+      }
+    ],
+    takeaway: 'Thoughtful web design builds emotional connection and institutional authority before a conversation even begins.'
+  },
+  {
+    id: 'landing-page-tips-that-drive-more-bookings',
+    slug: 'landing-page-tips-that-drive-more-bookings',
+    title: 'Landing page tips that drive more bookings',
+    date: 'May 23, 2025',
+    readTime: '6 min read',
+    category: 'Conversion Strategy',
+    featured: false,
+    image: blog5Img,
+    summary: 'Discover the exact visual hierarchy, headline structures, and interactive micro-moments that maximize user bookings.',
+    intro: 'Conversion-focused landing pages balance compelling headlines with seamless CTA touchpoints. Learn how to structure pages that convert.',
+    sections: [
+      {
+        heading: '1. Single Clear Primary Action',
+        body: 'Remove competing calls-to-action to give visitors a clear, unambiguous path forward.'
+      },
+      {
+        heading: '2. Social Proof Placed Strategically',
+        body: 'Position client logos, metrics, and testimonials right where users make key decisions.'
+      }
+    ],
+    takeaway: 'A well-structured landing page turns passive traffic into qualified consultations effortlessly.'
+  },
+  {
+    id: 'how-to-craft-a-bio-that-works-on-every-platform',
+    slug: 'how-to-craft-a-bio-that-works-on-every-platform',
+    title: 'How to craft a bio that works on every platform',
+    date: 'May 14, 2025',
+    readTime: '3 min read',
+    category: 'Personal Branding',
+    featured: false,
+    image: blog1Img,
+    summary: 'A cohesive bio strategy across web, NFC passes, and executive press kits ensures your leadership narrative is crystal clear.',
+    intro: 'Your bio is often your digital elevator pitch. Learn how to craft a succinct executive summary that resonates across all channels.',
+    sections: [
+      {
+        heading: '1. Lead with Impact',
+        body: 'Start with your core mission and key achievements rather than a chronological resume.'
+      },
+      {
+        heading: '2. Adapt for Format Widths',
+        body: 'Maintain core brand messaging whether in a 140-character bio or a full executive profile page.'
+      }
+    ],
+    takeaway: 'A sharp, unified bio ensures consistent authority wherever your audience encounters you.'
+  }
+];
 
 export default function BlogPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [activeArticle, setActiveArticle] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(6);
 
-  const categories = ['All', 'Identity Strategy', 'Design & Aesthetics', 'Leadership', 'Smart Hardware'];
-
-  const articles = [
-    {
-      id: 'design-that-converts-2026',
-      date: 'Jul 8, 2026',
-      readTime: '2 min read',
-      category: 'Design & Aesthetics',
-      title: 'Identity design that converts: What really works in 2026',
-      summary: 'In 2026, identity is no longer static. Learn how tactile metal credentials paired with dynamic NFC profiles increase high-value deal conversions by over 140%.',
-      content: `
-### The Evolution of Executive Introductions
-
-For decades, the standard paper business card served as the de facto tool for corporate networking. However, in modern high-stakes environments, standard paper credentials are often discarded or forgotten within hours.
-
-#### Key Principles of High-Converting Identity Design:
-
-1. **Tactile Gravitas:** Heavy aircraft-grade metal or gold finishes immediately signal substance before a single word is spoken.
-2. **Instant Digital Frictionlessness:** Tapping a metal card to transfer encrypted dynamic portfolios eliminates manual typing and ensures instant contact save.
-3. **Centralized Brand Authority:** Organizations maintain real-time cloud control over executive digital profiles, ensuring pitch decks and credentials are always up to date.
-
-Choosing an identity partner with real hardware engineering capabilities transforms your team's outward confidence.
-      `
-    },
-    {
-      id: 'future-corporate-identity',
-      date: 'Jul 2, 2026',
-      readTime: '5 min read',
-      category: 'Identity Strategy',
-      title: 'Why corporate identity is the future of organization’s success',
-      summary: 'Identity is an administrative necessity turned strategic organizational capability. Explore why leading firms are overhauling their credential infrastructure.',
-      content: `
-### Strategic Organizational Capability
-
-When organizations think about identity, they frequently mistake it for a visual emblem or brand logo. In reality, identity encompasses the total experience of how an organization presents its authority, values, and security to the world.
-
-#### The 3 Pillars of Organizational Identity:
-- **Internal Alignment:** Inspiring employees with unified pride and clear culture.
-- **External Authority:** Command instant trust with high-net-worth clients and institutional partners.
-- **Hardware Integration:** Security passes and access credentials that embody luxury rather than plastic friction.
-      `
-    },
-    {
-      id: 'branding-mistakes-2026',
-      date: 'Jun 21, 2026',
-      readTime: '2 min read',
-      category: 'Leadership',
-      title: 'Identity mistakes you didn’t know you were making',
-      summary: 'From cheap paper cards to fragmented digital links, discover the subtle identity blunders sabotaging executive credibility.',
-      content: `
-### Common Identity Pitfalls to Avoid
-
-Even the most sophisticated organizations fall into hidden traps when presenting their brand identity.
-
-#### Top 3 Mistakes:
-1. **Using Low-Grade Plastic/Paper Credentials:** Cheap cards diminish high-ticket service pricing.
-2. **Outdated Contact Links:** Broken website URLs or old PDF pitch decks linked in email signatures.
-3. **Inconsistent Team Credentials:** Each executive using a different style or format, diluting brand coherence.
-      `
-    }
-  ];
-
-  const filteredArticles = articles.filter(a => {
-    const matchesCat = selectedCategory === 'All' || a.category === selectedCategory;
-    const matchesSearch = a.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          a.summary.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCat && matchesSearch;
-  });
+  const featuredPost = blogPostsData.find(p => p.featured) || blogPostsData[0];
+  const gridPosts = blogPostsData.filter(p => p.id !== featuredPost.id);
 
   return (
-    <div className="min-h-screen pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-      
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <div className="animate-hero-fade-1 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 text-brand-gold text-xs font-semibold uppercase tracking-widest border border-brand-gold/20">
-          <Sparkles className="w-3.5 h-3.5" /> Insights & Inspiration
-        </div>
-        <h1 className="animate-hero-fade-2 font-display text-4xl sm:text-5xl font-extrabold text-white">
-          Identifine <span className="gold-gradient-text">Journal</span>
-        </h1>
-        <p className="animate-hero-fade-3 text-sm sm:text-base text-brand-muted">
-          Perspectives on corporate identity design, executive presence, and modern credential engineering.
-        </p>
-      </div>
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
+      <div className="max-w-[94rem] mx-auto space-y-16 sm:space-y-20">
+        
+        {/* Header Section */}
+        <div className="text-center max-w-4xl mx-auto space-y-4">
+          <div className="animate-hero-fade-1 inline-flex items-center justify-center gap-2 mx-auto">
+            <img
+              src={starIcon}
+              alt=""
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
+            />
+            <span className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap">
+              our blog
+            </span>
+          </div>
 
-      {/* Search & Categories Bar */}
-      <div className="animate-hero-fade-4 flex flex-col md:flex-row items-center justify-between gap-4 glass-panel rounded-2xl p-4 border border-brand-border">
-        {/* Search */}
-        <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-brand-muted absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search articles..."
-            className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-brand-darkMuted focus:outline-none focus:border-brand-gold transition-colors"
-          />
+          <h1 className="animate-hero-fade-2 text-5xl sm:text-7xl lg:text-[5.5rem] font-galano font-medium text-[#111111] leading-[1.08] text-center tracking-tight">
+            Explore <em className="font-swarsh italic font-normal text-[#111111] px-1.5 sm:px-2">our</em> top stories
+          </h1>
         </div>
 
-        {/* Category Pills */}
-        <div className="flex flex-wrap gap-2 w-full md:w-auto">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                selectedCategory === cat
-                  ? 'bg-gold-gradient text-black font-bold'
-                  : 'bg-white/5 text-brand-muted hover:text-white border border-white/10'
-              }`}
+        {/* Featured Post (Hero Card Container) */}
+        <div className="animate-hero-fade-3">
+          <NavLink
+            to={`/blog/${featuredPost.slug}`}
+            className="group block bg-white border border-[#DCDAD4] rounded-[28px] sm:rounded-[36px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 text-left"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
+              
+              {/* Left Image */}
+              <div className="lg:col-span-7 h-[260px] sm:h-[380px] lg:h-[480px] overflow-hidden bg-[#F5F4F0] relative">
+                <img
+                  src={featuredPost.image}
+                  alt={featuredPost.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                />
+              </div>
+
+              {/* Right Content */}
+              <div className="lg:col-span-5 p-8 sm:p-12 space-y-5">
+                <span className="inline-block bg-[#111111] text-white text-xs font-semibold px-4 py-1.5 rounded-full shadow-sm">
+                  Featured post
+                </span>
+
+                <div className="flex items-center gap-3 text-xs sm:text-sm font-galano font-medium text-[#666666]">
+                  <span>{featuredPost.date}</span>
+                  <span>•</span>
+                  <span>{featuredPost.readTime}</span>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors leading-tight">
+                  {featuredPost.title}
+                </h2>
+
+                <p className="text-sm sm:text-base text-[#555555] font-normal leading-relaxed line-clamp-3">
+                  {featuredPost.summary}
+                </p>
+              </div>
+
+            </div>
+          </NavLink>
+        </div>
+
+        {/* 3-Column Grid of Stories */}
+        <div className="animate-hero-fade-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 pt-4">
+          {gridPosts.slice(0, visibleCount).map((article) => (
+            <NavLink
+              key={article.id}
+              to={`/blog/${article.slug}`}
+              className="scroll-reveal group block bg-white border border-[#DCDAD4] rounded-[28px] p-6 sm:p-8 space-y-5 shadow-sm hover:shadow-xl hover:border-[#111111]/30 transition-all duration-500 text-left flex flex-col justify-between"
             >
-              {cat}
-            </button>
+              <div className="space-y-5">
+                {/* Article Image */}
+                <div className="h-52 sm:h-60 rounded-2xl overflow-hidden bg-[#F5F4F0] relative">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                  />
+                </div>
+
+                {/* Article Meta */}
+                <div className="flex items-center gap-3 text-xs sm:text-sm font-galano font-medium text-[#666666]">
+                  <span>{article.date}</span>
+                  <span>•</span>
+                  <span>{article.readTime}</span>
+                </div>
+
+                {/* Article Title */}
+                <h3 className="text-xl sm:text-2xl font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors leading-snug">
+                  {article.title}
+                </h3>
+              </div>
+            </NavLink>
           ))}
         </div>
-      </div>
 
-      {/* Articles Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {filteredArticles.map((article) => (
-          <div
-            key={article.id}
-            onClick={() => setActiveArticle(article)}
-            className="group cursor-pointer glass-panel glass-panel-hover rounded-3xl p-8 flex flex-col justify-between space-y-6 border border-white/10"
-          >
-            <div className="space-y-4">
-              <div className="flex items-center justify-between text-xs text-brand-muted font-mono">
-                <span>{article.date}</span>
-                <span className="flex items-center gap-1 text-brand-gold">
-                  <Clock className="w-3.5 h-3.5" /> {article.readTime}
-                </span>
-              </div>
-
-              <span className="inline-block text-[10px] uppercase font-semibold px-2.5 py-0.5 rounded-full bg-white/5 text-brand-gold border border-white/10">
-                {article.category}
-              </span>
-
-              <h2 className="font-display text-xl font-bold text-white group-hover:text-brand-gold transition-colors leading-snug">
-                {article.title}
-              </h2>
-
-              <p className="text-xs text-brand-muted leading-relaxed">
-                {article.summary}
-              </p>
-            </div>
-
-            <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-bold text-brand-gold">
-              <span>Read Article</span>
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Article Drawer / Modal */}
-      {activeArticle && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-          <div 
-            className="relative w-full max-w-3xl glass-panel rounded-3xl p-8 md:p-12 border border-brand-border bg-[#0B0F17] text-white max-h-[85vh] overflow-y-auto space-y-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button 
-              onClick={() => setActiveArticle(null)}
-              className="absolute top-6 right-6 p-2 text-brand-muted hover:text-white rounded-full bg-white/5 border border-white/10"
+        {/* Load More Button */}
+        {visibleCount < gridPosts.length && (
+          <div className="text-center pt-8">
+            <button
+              onClick={() => setVisibleCount(gridPosts.length)}
+              className="inline-flex items-center justify-center text-xs font-semibold px-8 py-3.5 rounded-xl bg-black/[0.03] backdrop-blur-xl text-[#444444] border border-[#111111]/20 hover:bg-black/[0.08] hover:text-black hover:border-black/60 shadow-sm transition-all duration-300 select-none"
             >
-              <X className="w-5 h-5" />
+              Load More
             </button>
-
-            <div className="space-y-3 pt-2">
-              <div className="flex items-center gap-4 text-xs font-mono text-brand-gold">
-                <span>{activeArticle.category}</span>
-                <span>•</span>
-                <span>{activeArticle.date}</span>
-                <span>•</span>
-                <span>{activeArticle.readTime}</span>
-              </div>
-              <h1 className="font-display text-2xl md:text-3xl font-extrabold">{activeArticle.title}</h1>
-            </div>
-
-            <div className="prose prose-invert prose-xs sm:prose-sm max-w-none text-brand-muted leading-relaxed whitespace-pre-line border-t border-brand-border pt-6">
-              {activeArticle.content}
-            </div>
-
-            <div className="pt-6 border-t border-brand-border flex items-center justify-between">
-              <a
-                href="https://wa.me/2349030001851"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 bg-gold-gradient text-black font-extrabold rounded-xl text-xs flex items-center gap-2"
-              >
-                <span>Discuss Article Topic</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
-
-              <button
-                onClick={() => setActiveArticle(null)}
-                className="px-4 py-2.5 bg-white/5 text-brand-muted hover:text-white rounded-xl text-xs font-medium"
-              >
-                Close Article
-              </button>
-            </div>
           </div>
-        </div>
-      )}
+        )}
 
+      </div>
     </div>
   );
 }
