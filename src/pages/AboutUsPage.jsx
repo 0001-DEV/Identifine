@@ -306,14 +306,14 @@ export default function AboutUsPage() {
               </h2>
             </div>
 
-            {/* Team Grid Layout - 4-Column Asymmetric Layout with Founder Card Featured */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr] gap-3 sm:gap-3.5 lg:gap-4 auto-rows-fr items-stretch">
+            {/* Team Grid Layout - 2-Column on Mobile, 4-Column Asymmetric Layout on Large Screens */}
+            <div className="grid grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr] gap-2.5 sm:gap-3.5 lg:gap-4 auto-rows-fr items-stretch">
               {teamMembers.map((member, idx) => (
                 <div
                   key={member.id}
-                  className={`scroll-reveal group relative rounded-[28px] overflow-hidden bg-[#111111] border border-[#222222] shadow-md transition-all duration-500 hover:border-[#E2B857]/40 hover:shadow-2xl ${idx === 0
-                      ? 'sm:col-span-2 lg:col-span-1 lg:row-span-2 min-h-[520px] lg:min-h-[720px] h-full'
-                      : 'min-h-[350px] h-full'
+                  className={`scroll-reveal group relative rounded-2xl sm:rounded-[28px] overflow-hidden bg-[#111111] border border-[#222222] shadow-md transition-all duration-500 hover:border-[#E2B857]/40 hover:shadow-2xl ${idx === 0
+                      ? 'col-span-2 lg:col-span-1 lg:row-span-2 min-h-[300px] sm:min-h-[440px] lg:min-h-[720px] h-full'
+                      : 'col-span-1 min-h-[200px] sm:min-h-[320px] h-full'
                     }`}
                 >
                   {/* Full-bleed Color Team Photo with Slower Synchronized Zoom Effect */}
@@ -325,11 +325,11 @@ export default function AboutUsPage() {
                   />
 
                   {/* Subtle Gradient Overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/90 transition-opacity duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90 transition-opacity duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" />
 
-                  {/* Top Right Floating Vertical Socials - Slow Smooth Slide Down from UP with Light Glassmorphism on Hover */}
-                  <div className="absolute top-5 right-5 z-20 pointer-events-none group-hover:pointer-events-auto">
-                    <div className="flex flex-col items-center gap-2.5">
+                  {/* Top Right Floating Vertical Socials - Mobile Touch & Desktop Hover Glassmorphism */}
+                  <div className="absolute top-3 right-3 sm:top-5 sm:right-5 z-20 pointer-events-none group-hover:pointer-events-auto">
+                    <div className="flex flex-col items-center gap-2">
                       {member.socials.map((soc, sIdx) => {
                         const IconComponent = soc.icon;
                         return (
@@ -341,10 +341,10 @@ export default function AboutUsPage() {
                             style={{
                               transitionDelay: `${sIdx * 100}ms`
                             }}
-                            className="w-10 h-10 rounded-full bg-white/15 backdrop-blur-md border border-white/30 text-white flex items-center justify-center hover:bg-white/35 hover:border-white/60 hover:text-white hover:scale-110 shadow-lg backdrop-blur-lg transform transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] opacity-0 -translate-y-10 scale-90 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100"
+                            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/15 backdrop-blur-md border border-white/30 text-white flex items-center justify-center hover:bg-white/35 hover:border-white/60 hover:text-white hover:scale-110 shadow-lg backdrop-blur-lg transform transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] opacity-0 -translate-y-10 scale-90 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100"
                             aria-label={member.name}
                           >
-                            <IconComponent className="w-4 h-4" />
+                            <IconComponent className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                           </a>
                         );
                       })}
@@ -352,11 +352,11 @@ export default function AboutUsPage() {
                   </div>
 
                   {/* Bottom Left Corner: Name and Role */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-7 z-10 text-left">
-                    <h3 className="font-galano font-bold text-2xl sm:text-3xl text-white group-hover:text-[#E2B857] transition-colors leading-tight">
+                  <div className="absolute bottom-0 left-0 right-0 p-3.5 sm:p-7 z-10 text-left">
+                    <h3 className="font-galano font-bold text-base sm:text-3xl text-white group-hover:text-[#E2B857] transition-colors leading-tight">
                       {member.name}
                     </h3>
-                    <p className="text-sm text-white/80 font-normal mt-1 tracking-wide">
+                    <p className="text-[11px] sm:text-sm text-white/80 font-normal mt-0.5 sm:mt-1 tracking-wide">
                       {member.role}
                     </p>
                   </div>
