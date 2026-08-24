@@ -384,8 +384,8 @@ export default function AboutUsPage() {
                 Not just another agency
               </span>
             </div>
-            <h2 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-galano font-medium text-[#111111] leading-[1.08] text-left max-w-4xl lg:ml-[200px]">
-              <span className="block">Turning <em className="font-swarsh italic font-medium text-[#111111] px-1">vision</em> into</span>
+            <h2 className="text-4xl sm:text-6xl lg:text-[5.25rem] font-galano font-medium text-[#111111] leading-[1.08] text-left max-w-none lg:ml-[160px]">
+              <span className="block whitespace-nowrap">Turning <em className="font-swarsh italic font-medium text-[#111111] px-1">vision</em> into</span>
               <span className="block font-galano font-medium">reality</span>
             </h2>
           </div>
