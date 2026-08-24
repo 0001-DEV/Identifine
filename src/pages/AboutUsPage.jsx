@@ -380,10 +380,8 @@ export default function AboutUsPage() {
                 alt=""
                 className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
               />
-              <span
-                className="font-galano font-medium text-xs sm:text-sm text-[#111111] uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
-              >
-                not just another agency
+              <span className="font-galano font-medium text-xs sm:text-sm text-[#111111] whitespace-nowrap">
+                Not just another agency
               </span>
             </div>
             <h2 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-galano font-medium text-[#111111] leading-[1.08] text-left max-w-4xl">
