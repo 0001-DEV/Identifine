@@ -27,6 +27,7 @@ import evolveImg from '../assets/Evolve.png';
 export default function HomePage() {
   const navigate = useNavigate();
   const [selectedCardModal, setSelectedCardModal] = useState(null);
+  const [consultationModalOpen, setConsultationModalOpen] = useState(false);
 
   // Catalogue Cards with Real Assets
   const catalogueCards = [
