@@ -378,9 +378,9 @@ export default function AboutUsPage() {
               <img
                 src={starIcon}
                 alt=""
-                className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
+                className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 object-contain brightness-0"
               />
-              <span className="font-galano font-medium text-xs sm:text-sm text-[#111111] whitespace-nowrap">
+              <span className="font-galano font-medium text-sm sm:text-base lg:text-lg text-[#111111] tracking-[2px] sm:tracking-[3px] whitespace-nowrap">
                 Not just another agency
               </span>
             </div>
