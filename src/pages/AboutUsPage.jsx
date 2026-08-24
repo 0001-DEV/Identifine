@@ -372,9 +372,9 @@ export default function AboutUsPage() {
         {/* 3. OUR MISSION & GOALS ("TURNING VISION INTO REALITY")  */}
         {/* ========================================================= */}
         <section className="space-y-14 py-4">
-          {/* Header: Badge on far left edge, Heading left aligned with 500px left margin */}
-          <div className="scroll-reveal space-y-4">
-            <div className="inline-flex items-center justify-start gap-2 pt-4 sm:pt-6">
+          {/* Header: Badge on left aligned with line 1 of Turning vision into heading */}
+          <div className="scroll-reveal flex flex-col lg:flex-row lg:items-start justify-between gap-6 lg:gap-12">
+            <div className="inline-flex items-center justify-start gap-2 pt-2 sm:pt-3.5 shrink-0">
               <img
                 src={starIcon}
                 alt=""
@@ -386,7 +386,7 @@ export default function AboutUsPage() {
                 not just another agency
               </span>
             </div>
-            <h2 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-galano font-medium text-[#111111] leading-[1.08] text-left max-w-5xl py-2 lg:ml-[500px]">
+            <h2 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-galano font-medium text-[#111111] leading-[1.08] text-left max-w-4xl">
               <span className="block">Turning <em className="font-swarsh italic font-medium text-[#111111] px-1">vision</em> into</span>
               <span className="block font-galano font-medium">reality</span>
             </h2>
