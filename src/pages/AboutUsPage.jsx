@@ -516,8 +516,8 @@ export default function AboutUsPage() {
                   <AnimatedNumber target="98" suffix="%" />
                 </div>
                 <div className="text-xs sm:text-base text-white/90 font-normal text-right leading-snug sm:leading-relaxed">
-                  <span className="block">Happy clients worldwide</span>
-                  <span className="block">staying for quality.</span>
+                  <span className="block">Clients stay for our</span>
+                  <span className="block">quality and results.</span>
                 </div>
               </div>
             </div>
