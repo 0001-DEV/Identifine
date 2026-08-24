@@ -46,11 +46,11 @@ export default function ConsultationModal({ isOpen, onClose }) {
     
     const message = 
       `Hello Identifine! I would like to book an executive consultation.\n\n` +
-      `👤 *Name:* ${formData.name || 'Not specified'}\n` +
-      `🏢 *Organization:* ${formData.company || 'Not specified'}\n` +
-      `💎 *Identity Interest:* ${formData.solution}\n` +
-      `⏱️ *Timeline:* ${formData.timeline}\n` +
-      (formData.notes ? `📝 *Notes/Requirements:* ${formData.notes}\n` : '');
+      `- *Name:* ${formData.name || 'Not specified'}\n` +
+      `- *Organization:* ${formData.company || 'Not specified'}\n` +
+      `- *Identity Interest:* ${formData.solution}\n` +
+      `- *Timeline:* ${formData.timeline}\n` +
+      (formData.notes ? `- *Notes/Requirements:* ${formData.notes}\n` : '');
 
     const whatsappUrl = `https://wa.me/2347046367754?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
