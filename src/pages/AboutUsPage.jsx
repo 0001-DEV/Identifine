@@ -480,7 +480,7 @@ export default function AboutUsPage() {
           <div className="max-w-[96rem] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
 
             {/* Card 1: Experience */}
-            <div className="scroll-reveal bg-[#F5F4F0] border border-[#DCDAD4] rounded-[32px] p-8 sm:p-10 flex flex-col justify-between min-h-[328px] sm:min-h-[358px] shadow-sm hover:border-[#111111]/30 transition-all">
+            <div className="scroll-reveal bg-[#F5F4F0] border border-[#DCDAD4] rounded-[32px] p-8 sm:p-10 flex flex-col justify-between min-h-[328px] sm:min-h-[358px] shadow-sm transition-all">
               <span className="text-sm sm:text-base font-galano font-semibold text-black">
                 Years of experience
               </span>
@@ -496,7 +496,7 @@ export default function AboutUsPage() {
             </div>
 
             {/* Card 2: Clients Worldwide (BLACK BACKGROUND) */}
-            <div className="scroll-reveal bg-[#111111] border border-[#222222] text-white rounded-[32px] p-8 sm:p-10 flex flex-col justify-between min-h-[328px] sm:min-h-[358px] shadow-xl hover:border-[#E2B857]/40 transition-all">
+            <div className="scroll-reveal bg-[#111111] border border-[#222222] text-white rounded-[32px] p-8 sm:p-10 flex flex-col justify-between min-h-[328px] sm:min-h-[358px] shadow-xl transition-all">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-2 overflow-hidden">
@@ -523,7 +523,7 @@ export default function AboutUsPage() {
             </div>
 
             {/* Card 3: Projects Delivered */}
-            <div className="scroll-reveal bg-[#F5F4F0] border border-[#DCDAD4] rounded-[32px] p-8 sm:p-10 flex flex-col justify-between min-h-[328px] sm:min-h-[358px] shadow-sm hover:border-[#111111]/30 transition-all">
+            <div className="scroll-reveal bg-[#F5F4F0] border border-[#DCDAD4] rounded-[32px] p-8 sm:p-10 flex flex-col justify-between min-h-[328px] sm:min-h-[358px] shadow-sm transition-all">
               <span className="text-sm sm:text-base font-galano font-semibold text-black">
                 Projects delivered
               </span>
@@ -539,7 +539,7 @@ export default function AboutUsPage() {
             </div>
 
             {/* Card 4: Brands Transformed */}
-            <div className="scroll-reveal bg-[#F5F4F0] border border-[#DCDAD4] rounded-[32px] p-8 sm:p-10 flex flex-col justify-between min-h-[328px] sm:min-h-[358px] shadow-sm hover:border-[#111111]/30 transition-all">
+            <div className="scroll-reveal bg-[#F5F4F0] border border-[#DCDAD4] rounded-[32px] p-8 sm:p-10 flex flex-col justify-between min-h-[328px] sm:min-h-[358px] shadow-sm transition-all">
               <span className="text-sm sm:text-base font-galano font-semibold text-black">
                 Brands transformed
               </span>
