@@ -255,7 +255,7 @@ export default function ContactPage() {
               return (
                 <div
                   key={index}
-                  className="faq-card-item bg-white border border-[#DCDAD4] rounded-[24px] sm:rounded-[28px] p-6 sm:p-8 shadow-sm hover:shadow-md transition-all duration-300"
+                  className="faq-card-item bg-[#EBEAE6] border border-[#DCDAD4] rounded-[24px] sm:rounded-[28px] p-6 sm:p-8 shadow-sm hover:shadow-md transition-all duration-300"
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : index)}
@@ -264,7 +264,7 @@ export default function ContactPage() {
                     <h3 className="text-xl sm:text-2xl font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors leading-snug pr-6">
                       {faq.question}
                     </h3>
-                    <div className="w-11 h-11 rounded-full bg-[#F5F4F0] group-hover:bg-[#E2B857] text-[#111111] border border-[#DCDAD4] flex items-center justify-center shrink-0 transition-colors shadow-sm">
+                    <div className="w-11 h-11 rounded-full bg-[#DCDAD4]/40 group-hover:bg-[#E2B857] text-[#111111] border border-[#DCDAD4] flex items-center justify-center shrink-0 transition-colors shadow-sm">
                       <ChevronDown
                         className={`w-5 h-5 transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
                       />
