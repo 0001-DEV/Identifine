@@ -204,12 +204,12 @@ export default function BlogPage() {
         <div className="animate-hero-fade-3">
           <NavLink
             to={`/blog/${featuredPost.slug}`}
-            className="group block bg-white border border-[#DCDAD4] rounded-[28px] sm:rounded-[36px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 text-left"
+            className="group block bg-white border border-[#DCDAD4] rounded-none overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 text-left"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
               
               {/* Left Image */}
-              <div className="lg:col-span-7 h-[260px] sm:h-[380px] lg:h-[480px] overflow-hidden bg-[#F5F4F0] relative">
+              <div className="lg:col-span-7 h-[360px] sm:h-[500px] lg:h-[620px] overflow-hidden bg-[#F5F4F0] relative">
                 <img
                   src={featuredPost.image}
                   alt={featuredPost.title}
@@ -248,11 +248,11 @@ export default function BlogPage() {
             <NavLink
               key={article.id}
               to={`/blog/${article.slug}`}
-              className="scroll-reveal group block bg-white border border-[#DCDAD4] rounded-[28px] p-6 sm:p-8 space-y-5 shadow-sm hover:shadow-xl hover:border-[#111111]/30 transition-all duration-500 text-left flex flex-col justify-between"
+              className="scroll-reveal group block bg-white border border-[#DCDAD4] rounded-none p-6 sm:p-8 space-y-5 shadow-sm hover:shadow-xl hover:border-[#111111]/30 transition-all duration-500 text-left flex flex-col justify-between"
             >
               <div className="space-y-5">
                 {/* Article Image */}
-                <div className="h-52 sm:h-60 rounded-2xl overflow-hidden bg-[#F5F4F0] relative">
+                <div className="h-60 sm:h-72 rounded-none overflow-hidden bg-[#F5F4F0] relative">
                   <img
                     src={article.image}
                     alt={article.title}

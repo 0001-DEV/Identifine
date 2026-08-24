@@ -53,7 +53,7 @@ export default function BlogDetailPage() {
         </div>
 
         {/* Featured Hero Image */}
-        <div className="w-full h-[280px] sm:h-[450px] rounded-[28px] sm:rounded-[36px] overflow-hidden bg-[#F5F4F0] border border-[#DCDAD4] shadow-sm">
+        <div className="w-full h-[380px] sm:h-[580px] lg:h-[680px] rounded-none overflow-hidden bg-[#F5F4F0] border border-[#DCDAD4] shadow-sm">
           <img
             src={article.image}
             alt={article.title}
@@ -79,7 +79,7 @@ export default function BlogDetailPage() {
           ))}
 
           {article.takeaway && (
-            <div className="bg-white border border-[#DCDAD4] rounded-2xl p-6 sm:p-8 space-y-2 mt-8 shadow-sm">
+            <div className="bg-white border border-[#DCDAD4] rounded-none p-6 sm:p-8 space-y-2 mt-8 shadow-sm">
               <h4 className="text-sm font-galano font-bold text-[#111111] uppercase tracking-wider">
                 Key Takeaway
               </h4>
@@ -103,9 +103,9 @@ export default function BlogDetailPage() {
               <NavLink
                 key={story.id}
                 to={`/blog/${story.slug}`}
-                className="group block bg-white border border-[#DCDAD4] rounded-2xl p-5 space-y-4 shadow-sm hover:shadow-md transition-all text-left"
+                className="group block bg-white border border-[#DCDAD4] rounded-none p-5 space-y-4 shadow-sm hover:shadow-md transition-all text-left"
               >
-                <div className="h-40 rounded-xl overflow-hidden bg-[#F5F4F0]">
+                <div className="h-44 sm:h-48 rounded-none overflow-hidden bg-[#F5F4F0]">
                   <img
                     src={story.image}
                     alt={story.title}
