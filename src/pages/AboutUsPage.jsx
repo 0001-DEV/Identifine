@@ -386,7 +386,7 @@ export default function AboutUsPage() {
                 not just another agency
               </span>
             </div>
-            <h2 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-galano font-medium text-[#111111] leading-[1.08] text-left max-w-5xl py-2 lg:ml-[500px]">
+            <h2 className="text-5xl sm:text-7xl lg:text-[5.5rem] font-galano font-medium text-[#111111] leading-[1.08] text-left max-w-5xl py-2 pt-6 lg:pt-8 lg:ml-[500px]">
               <span className="block">Turning <em className="font-swarsh italic font-medium text-[#111111] px-1">vision</em> into</span>
               <span className="block font-galano font-medium">reality</span>
             </h2>
