@@ -141,7 +141,7 @@ export default function Navbar() {
             }`}
             style={{ transitionDelay: mobileMenuOpen ? `${150 + (navLinks.length * 150)}ms` : '0ms' }}
           >
-            <div className="flex justify-center w-full">
+            <div className="flex justify-start w-full">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
