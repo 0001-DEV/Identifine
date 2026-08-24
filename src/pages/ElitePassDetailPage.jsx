@@ -198,41 +198,59 @@ export default function ElitePassDetailPage() {
               </div>
             </div>
 
-            {/* CTA Button */}
-            <div className="pt-2">
-              <a
-                href={`https://wa.me/2349030001851?text=Inquiry%20regarding%20${encodeURIComponent(item.fullTitle)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center text-sm sm:text-base font-semibold px-8 py-4 rounded-full bg-black text-white hover:bg-[#E2B857] hover:text-black transition-all duration-300 shadow-md"
-              >
-                Make an identity enquiry
-              </a>
             </div>
           </div>
 
         </div>
 
         {/* ========================================================================= */}
-        {/* GALLERY SHOWCASE IMAGE CONTAINER                                           */}
+        {/* GALLERY SHOWCASE EXACT FRAMER NOVA LAYOUT                                  */}
         {/* ========================================================================= */}
-        {item.galleryImages && item.galleryImages.length > 0 && (
-          <div className="space-y-8">
-            {item.galleryImages.map((imgSrc, idx) => (
-              <div
-                key={idx}
-                className="w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-white/40 backdrop-blur-md border border-white/60 shadow-sm"
-              >
+        <div className="space-y-12 sm:space-y-16">
+          
+          {/* 1. Full-width picture with reduced height */}
+          <div className="w-full h-[320px] sm:h-[450px] lg:h-[520px] overflow-hidden rounded-2xl sm:rounded-3xl border border-[#DCDAD4] shadow-sm bg-white/40 backdrop-blur-md">
+            <img
+              src={item.galleryImages[0] || item.heroImage}
+              alt={`${item.fullTitle} gallery full width`}
+              className="w-full h-full object-cover select-none"
+              loading="lazy"
+            />
+          </div>
+
+          {/* 2. Two images side by side with NO GAP and NOT full width of screen (max-w-[1140px]) */}
+          <div className="max-w-[1140px] mx-auto w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 overflow-hidden rounded-2xl sm:rounded-3xl border border-[#DCDAD4] shadow-sm bg-white/40 backdrop-blur-md">
+              <div className="w-full h-[280px] sm:h-[400px] lg:h-[500px] overflow-hidden border-b sm:border-b-0 sm:border-r border-[#DCDAD4]">
                 <img
-                  src={imgSrc}
-                  alt={`${item.fullTitle} render ${idx + 1}`}
-                  className="w-full h-auto object-cover select-none"
+                  src={item.galleryImages[1] || item.heroImage}
+                  alt={`${item.fullTitle} render left`}
+                  className="w-full h-full object-cover select-none"
                   loading="lazy"
                 />
               </div>
-            ))}
+              <div className="w-full h-[280px] sm:h-[400px] lg:h-[500px] overflow-hidden">
+                <img
+                  src={item.galleryImages[2] || item.heroImage}
+                  alt={`${item.fullTitle} render right`}
+                  className="w-full h-full object-cover select-none"
+                  loading="lazy"
+                />
+              </div>
+            </div>
           </div>
-        )}
+
+          {/* 3. Single image with the exact width of the two cards (max-w-[1140px]) */}
+          <div className="max-w-[1140px] mx-auto w-full h-[320px] sm:h-[450px] lg:h-[520px] overflow-hidden rounded-2xl sm:rounded-3xl border border-[#DCDAD4] shadow-sm bg-white/40 backdrop-blur-md">
+            <img
+              src={item.galleryImages[0] || item.heroImage}
+              alt={`${item.fullTitle} render full width cards match`}
+              className="w-full h-full object-cover select-none"
+              loading="lazy"
+            />
+          </div>
+
+        </div>
 
         {/* ========================================================================= */}
         {/* SECTION: MORE ELITE PASS (CONTAINER CARDS AS ON FRAMER NOVA)               */}
