@@ -311,7 +311,7 @@ export default function AboutUsPage() {
               {teamMembers.map((member, idx) => (
                 <div
                   key={member.id}
-                  className={`scroll-reveal group relative rounded-2xl sm:rounded-[28px] overflow-hidden bg-[#111111] border border-[#222222] shadow-md transition-all duration-500 hover:border-white/30 hover:shadow-2xl ${idx === 0
+                  className={`scroll-reveal group relative rounded-2xl sm:rounded-[28px] overflow-hidden bg-[#111111] border-0 border-none shadow-md transition-all duration-500 hover:shadow-2xl ${idx === 0
                       ? 'col-span-2 lg:col-span-1 lg:row-span-2 min-h-[480px] sm:min-h-[580px] lg:min-h-[720px] h-full'
                       : 'col-span-1 min-h-[240px] sm:min-h-[320px] lg:min-h-[350px] h-full'
                     }`}
