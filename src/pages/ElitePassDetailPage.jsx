@@ -144,12 +144,12 @@ export default function ElitePassDetailPage() {
           className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-1000 ease-out select-none"
         />
 
-        {/* Bottom Gradient Overlay for High Contrast Text */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
+        {/* Center Gradient Overlay for High Contrast Text */}
+        <div className="absolute inset-0 bg-black/35 pointer-events-none" />
 
-        {/* Product Name at Center Bottom */}
-        <div className="absolute bottom-8 sm:bottom-12 inset-x-0 mx-auto text-center w-full px-6 z-10 pointer-events-none flex items-center justify-center">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-galano font-bold text-white tracking-tight drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)] text-center">
+        {/* Product Name at Exact Middle of Image */}
+        <div className="absolute inset-0 text-center w-full px-6 z-10 pointer-events-none flex items-center justify-center">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-galano font-bold text-white tracking-tight drop-shadow-[0_8px_25px_rgba(0,0,0,0.9)] text-center">
             {item.sansTitle} <em className="font-swarsh italic font-normal text-white">{item.serifTitle}</em>
           </h1>
         </div>
