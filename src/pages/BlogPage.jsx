@@ -159,6 +159,144 @@ export const blogPostsData = [
       }
     ],
     takeaway: 'A sharp, unified bio ensures consistent authority wherever your audience encounters you.'
+  },
+  {
+    id: 'the-roi-of-premium-nfc-business-credentials',
+    slug: 'the-roi-of-premium-nfc-business-credentials',
+    title: 'The ROI of premium NFC business credentials for executive teams',
+    date: 'Jan 18, 2025',
+    readTime: '4 min read',
+    category: 'Smart Hardware',
+    featured: false,
+    image: blog2Img,
+    summary: 'Discover how upgrading executive team networking assets to precision metal NFC cards delivers measurable ROI in partnership acquisition.',
+    intro: 'Executive credentials are an active conversion tool. Measuring the return on investment of premium metal NFC passes reveals a striking impact on executive deal velocity.',
+    sections: [
+      {
+        heading: '1. Instant Contact Capture',
+        body: 'Zero friction contact save means 98% of executive interactions lead to immediate follow-up entries in CRM systems.'
+      },
+      {
+        heading: '2. Unforgettable Brand Differentiation',
+        body: 'Handing over a heavy 24k gold or aerospace-grade metal pass instantly elevates brand perception during high-stakes negotiations.'
+      }
+    ],
+    takeaway: 'Investing in luxury credential hardware pays for itself in a single closed high-net-worth contract.'
+  },
+  {
+    id: 'crafting-a-timeless-brand-identity-system',
+    slug: 'crafting-a-timeless-brand-identity-system',
+    title: 'Crafting a timeless brand identity system in an evolving digital age',
+    date: 'Dec 28, 2024',
+    readTime: '5 min read',
+    category: 'Brand Architecture',
+    featured: false,
+    image: blog3Img,
+    summary: 'How to build enduring visual identity frameworks that remain iconic across physical cards, digital portals, and corporate environments.',
+    intro: 'Trends fade, but timeless identity systems endure. Building a brand framework that scales seamlessly requires balance between heritage and innovation.',
+    sections: [
+      {
+        heading: '1. Foundational Design Tokens',
+        body: 'Establish rigid typography scales and harmonious color systems that translate perfectly from metal engravings to high-res OLED screens.'
+      },
+      {
+        heading: '2. Modular Brand Guidelines',
+        body: 'Equip your internal design teams with reusable components that maintain absolute consistency across global offices.'
+      }
+    ],
+    takeaway: 'Timeless brand architecture protects your organization against design fatigue and frequent costly rebrands.'
+  },
+  {
+    id: 'why-paper-business-cards-are-costing-you-deals',
+    slug: 'why-paper-business-cards-are-costing-you-deals',
+    title: 'Why paper business cards are costing you high-ticket deals',
+    date: 'Dec 14, 2024',
+    readTime: '3 min read',
+    category: 'Executive Strategy',
+    featured: false,
+    image: blog4Img,
+    summary: 'The hidden cost of outdated paper credentials and why modern enterprise leaders are eliminating paper cards entirely.',
+    intro: 'Over 88% of paper business cards are thrown away within 7 days. In high-value B2B sales, paper credentials communicate an outdated approach.',
+    sections: [
+      {
+        heading: '1. The Environmental & Brand Friction',
+        body: 'Repetitive paper ordering creates unnecessary environmental waste while offering zero analytics or digital connectivity.'
+      },
+      {
+        heading: '2. Seamless NFC Intelligence',
+        body: 'One smart metal pass replaces thousands of paper cards while automatically syncing real-time executive profile updates.'
+      }
+    ],
+    takeaway: 'Retiring paper cards is the simplest high-impact upgrade an executive team can make.'
+  },
+  {
+    id: 'nfc-security-protocols-for-enterprise-leadership',
+    slug: 'nfc-security-protocols-for-enterprise-leadership',
+    title: 'NFC security protocols & encryption for enterprise leadership',
+    date: 'Nov 30, 2024',
+    readTime: '6 min read',
+    category: 'Security & Hardware',
+    featured: false,
+    image: blog5Img,
+    summary: 'An technical deep dive into bank-grade NFC chip security, dynamic profile encryption, and cloud access control for corporate passes.',
+    intro: 'As executive passes incorporate smart hardware, data security becomes paramount. Learn how Identifine protects executive contact data with enterprise encryption.',
+    sections: [
+      {
+        heading: '1. Bank-Grade Encryption',
+        body: 'AES-128 hardware encryption guarantees that contactless data transfer is protected against eavesdropping and spoofing.'
+      },
+      {
+        heading: '2. Remote Credential Revocation',
+        body: 'Enterprise IT administrators can remotely lock or update stolen or lost cards instantly via the cloud dashboard.'
+      }
+    ],
+    takeaway: 'Security and luxury can coexist without sacrificing speed or user convenience.'
+  },
+  {
+    id: 'the-psychology-of-tactile-luxury-in-b2b-networking',
+    slug: 'the-psychology-of-tactile-luxury-in-b2b-networking',
+    title: 'The psychology of tactile luxury in high-stakes B2B networking',
+    date: 'Nov 12, 2024',
+    readTime: '4 min read',
+    category: 'Neuromarketing',
+    featured: false,
+    image: blog1Img,
+    summary: 'How weight, texture, and metallic feel trigger psychological trust and subconscious authority during face-to-face introductions.',
+    intro: 'Human psychology places immense sub-conscious value on weight and tactile warmth. The moment a client holds a solid metal card, their brain registers prestige.',
+    sections: [
+      {
+        heading: '1. Haptic Perception',
+        body: 'Tactile weight triggers neurological associations of stability, durability, and institutional wealth.'
+      },
+      {
+        heading: '2. Sensory Memory Anchoring',
+        body: 'Prospects remember physical interactions involving distinct tactile feedback 4x longer than standard digital exchanges.'
+      }
+    ],
+    takeaway: 'Designing for touch creates unforgettable memory anchors that differentiate your leadership.'
+  },
+  {
+    id: 'centralized-credential-management-for-global-firms',
+    slug: 'centralized-credential-management-for-global-firms',
+    title: 'Centralized credential management for global corporate firms',
+    date: 'Oct 25, 2024',
+    readTime: '5 min read',
+    category: 'Enterprise Tech',
+    featured: false,
+    image: blog2Img,
+    summary: 'Streamlining executive onboarding, profile management, and brand compliance across international team deployments.',
+    intro: 'Managing corporate credentials for hundreds of executives across multiple continents requires a centralized cloud platform.',
+    sections: [
+      {
+        heading: '1. Single-Sign-On (SSO) Integration',
+        body: 'Connect executive digital passes directly to Okta, Azure AD, or Google Workspace for automated user provisioning.'
+      },
+      {
+        heading: '2. Real-Time Marketing Banners',
+        body: 'Push new product campaign announcements to all executive digital profiles simultaneously with one click.'
+      }
+    ],
+    takeaway: 'Centralized identity administration saves hundreds of hours while enforcing global brand alignment.'
   }
 ];
 
@@ -174,7 +312,7 @@ export default function BlogPage() {
     if (isExpanded) {
       setVisibleCount(3);
     } else {
-      setVisibleCount(gridPosts.length);
+      setVisibleCount(prev => Math.min(prev + 3, gridPosts.length));
     }
   };
 
