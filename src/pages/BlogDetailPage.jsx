@@ -110,7 +110,7 @@ export default function BlogDetailPage() {
   const article = blogArticles[slug] || blogArticles['design-that-converts-what-really-works-in-2025'];
 
   return (
-    <div className="bg-[#ffffff] text-[#111111] min-h-screen pt-36 sm:pt-48 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black font-sans">
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-48 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black font-sans">
       <div className="max-w-5xl mx-auto space-y-12">
 
         {/* Article Header with Page-Open Entry Animation */}

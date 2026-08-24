@@ -104,7 +104,7 @@ export default function ProgramAccordionShowcase() {
                     <NavLink
                       to={`/program/${prog.id}`}
                       onClick={(e) => e.stopPropagation()}
-                      className="group/btn relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-semibold px-7 py-3.5 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105"
+                      className="group/btn relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-semibold px-7 py-3.5 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300"
                     >
                       <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
                         <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:-translate-y-1/2">

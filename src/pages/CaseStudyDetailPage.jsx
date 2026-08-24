@@ -111,7 +111,7 @@ export default function CaseStudyDetailPage() {
   const study = caseStudyDetails[currentSlug] || caseStudyDetails['rainoil'];
 
   return (
-    <div className="bg-[#ffffff] text-[#1f1f1f] min-h-screen pt-36 sm:pt-48 pb-28 px-6 sm:px-12 lg:px-16 selection:bg-[#E2B857] selection:text-black font-sans">
+    <div className="bg-[#EBEAE6] text-[#1f1f1f] min-h-screen pt-36 sm:pt-48 pb-28 px-6 sm:px-12 lg:px-16 selection:bg-[#E2B857] selection:text-black font-sans">
       <div className="max-w-[94rem] mx-auto">
         
         {/* Main 2-Column Content Layout (Left Column moved to left edge, Images to right) */}

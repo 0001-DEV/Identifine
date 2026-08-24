@@ -70,7 +70,7 @@ export default function Navbar() {
               to={link.path}
               className={({ isActive }) =>
                 `text-[13px] font-semibold tracking-wide transition-colors ${
-                  isActive ? 'text-black font-bold' : 'text-[#555555] hover:text-black'
+                  isActive ? 'text-[#E2B857] font-bold' : 'text-[#555555] hover:text-[#E2B857]'
                 }`
               }
             >
@@ -119,7 +119,7 @@ export default function Navbar() {
               to={link.path}
               className={({ isActive }) =>
                 `text-xl font-bold py-2 border-b border-[#DCDAD4]/40 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                  isActive ? 'text-black font-extrabold' : 'text-[#444444] hover:text-black'
+                  isActive ? 'text-[#E2B857] font-extrabold' : 'text-[#444444] hover:text-[#E2B857]'
                 }`
               }
               style={{ 

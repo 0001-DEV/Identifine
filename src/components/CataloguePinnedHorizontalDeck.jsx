@@ -52,12 +52,12 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
   return (
     <section
       ref={containerRef}
-      className="relative z-10 bg-black text-white w-full h-[100dvh] sm:h-screen min-h-[550px] sm:min-h-[650px] max-h-[900px] flex flex-col justify-start sm:justify-between gap-20 sm:gap-0 pt-10 sm:pt-16 pb-12 sm:pb-16 overflow-hidden border-t border-white/10 select-none"
+      className="relative z-10 bg-black text-white w-full min-h-[660px] sm:min-h-[720px] lg:min-h-screen lg:max-h-[960px] flex flex-col justify-between pt-10 sm:pt-14 pb-8 sm:pb-12 overflow-hidden border-t border-white/10 select-none gap-6 sm:gap-8"
     >
-      <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 px-6 sm:px-12 w-full shrink-0">
+      <div className="max-w-7xl mx-auto space-y-5 sm:space-y-6 px-6 sm:px-12 w-full shrink-0">
 
         {/* Header */}
-        <div className="text-center max-w-4xl mx-auto space-y-5 sm:space-y-4">
+        <div className="text-center max-w-4xl mx-auto space-y-4 sm:space-y-5">
           <div className="inline-flex items-center justify-center gap-2 mx-auto">
             <img src={starIcon} alt="" className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-200" />
             <span
@@ -75,7 +75,7 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
             Skip the powerpoints, frameworks and short term fixes. Choose a partner with real experience instead.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-1">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 pb-4 sm:pb-6">
             <a
               href="https://wa.me/2349030001851"
               target="_blank"
@@ -107,7 +107,7 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
               key={card.id}
               to={`/product-catalogue?id=${card.id}`}
               onClick={() => onSelectCard && onSelectCard(card)}
-              className="group cursor-pointer rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl hover:scale-[1.03] transition-all duration-300 w-[280px] sm:w-[360px] md:w-[420px] h-[260px] sm:h-[330px] md:h-[370px] shrink-0 relative border border-white/15 bg-[#111111]"
+              className="group cursor-pointer rounded-[28px] sm:rounded-[36px] overflow-hidden shadow-2xl hover:scale-[1.03] transition-all duration-300 w-[260px] sm:w-[320px] md:w-[380px] lg:w-[420px] h-[220px] sm:h-[260px] md:h-[300px] lg:h-[340px] shrink-0 relative border border-white/15 bg-[#111111]"
             >
               <img
                 src={card.image}
