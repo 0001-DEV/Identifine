@@ -141,7 +141,7 @@ export const blogPostsData = [
     id: 'how-to-craft-a-bio-that-works-on-every-platform',
     slug: 'how-to-craft-a-bio-that-works-on-every-platform',
     title: 'How to craft a bio that works on every platform',
-    date: 'May 14, 2025',
+    date: 'Feb 1, 2025',
     readTime: '3 min read',
     category: 'Personal Branding',
     featured: false,
