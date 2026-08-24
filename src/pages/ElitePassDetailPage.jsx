@@ -148,8 +148,8 @@ export default function ElitePassDetailPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
 
         {/* Product Name at Center Bottom */}
-        <div className="absolute bottom-8 sm:bottom-12 left-0 text-center w-full px-6 z-10 pointer-events-none">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-galano font-bold text-white tracking-tight drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)]">
+        <div className="absolute bottom-8 sm:bottom-12 inset-x-0 mx-auto text-center w-full px-6 z-10 pointer-events-none flex items-center justify-center">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-galano font-bold text-white tracking-tight drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)] text-center">
             {item.sansTitle} <em className="font-swarsh italic font-normal text-white">{item.serifTitle}</em>
           </h1>
         </div>
@@ -261,10 +261,10 @@ export default function ElitePassDetailPage() {
         {/* ========================================================================= */}
         {/* SECTION: MORE ELITE PASS (CONTAINER CARDS AS ON FRAMER NOVA)               */}
         {/* ========================================================================= */}
-        <div className="space-y-12 text-left">
+        <div className="space-y-12 text-center">
           
-          <div className="w-full">
-            <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-galano font-medium text-[#111111] leading-tight tracking-tight">
+          <div className="w-full text-center">
+            <h2 className="text-4xl sm:text-6xl lg:text-[4.5rem] font-galano font-medium text-[#111111] leading-tight tracking-tight text-center">
               More elite <em className="font-swarsh italic font-normal text-[#111111]">pass</em>
             </h2>
           </div>
