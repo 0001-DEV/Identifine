@@ -515,9 +515,9 @@ export default function AboutUsPage() {
                 <div className="text-5xl sm:text-6xl font-galano font-normal italic text-white leading-none shrink-0 tracking-tight">
                   <AnimatedNumber target="98" suffix="%" />
                 </div>
-                <div className="text-xs sm:text-base text-white/90 font-normal text-right leading-snug sm:leading-relaxed">
-                  <span className="block">Clients stay for our</span>
-                  <span className="block">quality and results.</span>
+                <div className="text-[11px] xs:text-xs sm:text-base text-white/90 font-normal text-right leading-snug sm:leading-relaxed">
+                  <span className="block whitespace-nowrap">Clients stay for our</span>
+                  <span className="block whitespace-nowrap">quality and results.</span>
                 </div>
               </div>
             </div>
@@ -531,9 +531,9 @@ export default function AboutUsPage() {
                 <div className="text-5xl sm:text-6xl font-galano font-normal italic text-[#111111] leading-none shrink-0 tracking-tight">
                   <AnimatedNumber target="100" suffix="+" />
                 </div>
-                <div className="text-xs sm:text-base text-[#333333] font-normal text-right leading-snug sm:leading-relaxed">
-                  <span className="block">Creative solutions</span>
-                  <span className="block">built with purpose.</span>
+                <div className="text-[11px] xs:text-xs sm:text-base text-[#333333] font-normal text-right leading-snug sm:leading-relaxed">
+                  <span className="block whitespace-nowrap">Creative solutions</span>
+                  <span className="block whitespace-nowrap">built with purpose.</span>
                 </div>
               </div>
             </div>
@@ -547,9 +547,9 @@ export default function AboutUsPage() {
                 <div className="text-5xl sm:text-6xl font-galano font-normal italic text-[#111111] leading-none shrink-0 tracking-tight">
                   <AnimatedNumber target="86" suffix="+" />
                 </div>
-                <div className="text-xs sm:text-base text-[#333333] font-normal text-right leading-snug sm:leading-relaxed">
-                  <span className="block">From strategy to</span>
-                  <span className="block">standout identity.</span>
+                <div className="text-[11px] xs:text-xs sm:text-base text-[#333333] font-normal text-right leading-snug sm:leading-relaxed">
+                  <span className="block whitespace-nowrap">From strategy to</span>
+                  <span className="block whitespace-nowrap">standout identity.</span>
                 </div>
               </div>
             </div>
