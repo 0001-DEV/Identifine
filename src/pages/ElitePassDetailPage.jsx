@@ -201,20 +201,29 @@ export default function ElitePassDetailPage() {
             </div>
           </div>
 
+        </div>
+
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 1. FULL-BLEED REDUCED-HEIGHT BANNER (EXACT SAME FULL BLEED WIDTH AS HERO) */}
+      {/* ========================================================================= */}
+      <div className="w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[300px] sm:h-[400px] lg:h-[480px] relative select-none">
+        <img
+          src={item.galleryImages[0] || item.heroImage}
+          alt={`${item.fullTitle} full bleed banner`}
+          className="w-full h-full object-cover object-center select-none"
+          loading="lazy"
+        />
+      </div>
+
+      {/* Main Page Content Container for Cards & More Elite Pass */}
+      <div className="max-w-[94rem] mx-auto px-6 sm:px-12 space-y-20 sm:space-y-28">
+
         {/* ========================================================================= */}
-        {/* GALLERY SHOWCASE EXACT FRAMER NOVA LAYOUT                                  */}
+        {/* GALLERY SHOWCASE: SIDE-BY-SIDE CARDS & MATCHING COMBINED WIDTH CARD       */}
         {/* ========================================================================= */}
         <div className="space-y-12 sm:space-y-16">
-          
-          {/* 1. Full-width picture with reduced height */}
-          <div className="w-full h-[320px] sm:h-[450px] lg:h-[520px] overflow-hidden rounded-2xl sm:rounded-3xl border border-[#DCDAD4] shadow-sm bg-white/40 backdrop-blur-md">
-            <img
-              src={item.galleryImages[0] || item.heroImage}
-              alt={`${item.fullTitle} gallery full width`}
-              className="w-full h-full object-cover select-none"
-              loading="lazy"
-            />
-          </div>
 
           {/* 2. Two images side by side with NO GAP and NOT full width of screen (max-w-[1140px]) */}
           <div className="max-w-[1140px] mx-auto w-full">
