@@ -131,7 +131,7 @@ export default function HomePage() {
       <section className="bg-[#EBEAE6] pt-48 sm:pt-64 pb-28 px-6 sm:px-12 text-center flex flex-col items-center justify-center relative min-h-[95vh] overflow-hidden">
         <div className="max-w-[840px] w-full mx-auto space-y-12 min-h-[301px] flex flex-col justify-center items-center">
 
-          <h1 className="animate-hero-fade-1 mt-2 sm:mt-4 text-5xl sm:text-7xl lg:text-[5.25rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.2] text-center">
+          <h1 className="animate-hero-fade-1 mt-2 sm:mt-4 text-4xl sm:text-7xl lg:text-[5.25rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.2] text-center">
             Every organization has an <em className="font-swarsh italic font-normal text-[#111111] px-1.5">identity</em>, only few intentionally designed it
           </h1>
 
