@@ -217,8 +217,9 @@ export default function IdentityQuiz() {
             {/* Option Buttons */}
             <div className="space-y-2.5 sm:space-y-3 pt-1">
               {quizQuestions[currentStep].options.map((opt, idx) => {
-                const isSelected = selectedOptIdx === idx;
-                const isHovered = activeHoverIdx === idx && selectedOptIdx === null;
+                const currentSavedAnswer = answers[quizQuestions[currentStep].id];
+                const isSelected = selectedOptIdx === idx || (selectedOptIdx === null && currentSavedAnswer === opt);
+                const isHovered = activeHoverIdx === idx && !isSelected;
 
                 return (
                   <button
@@ -251,20 +252,24 @@ export default function IdentityQuiz() {
               {[1, 2, 3, 4, 5, 6, 7].map((num) => {
                 const stepIdx = num - 1;
                 const isActive = stepIdx === currentStep;
-                const isFilled = stepIdx < currentStep;
+                const isFilled = Boolean(answers[quizQuestions[stepIdx]?.id]);
 
                 return (
                   <button
                     key={num}
                     onClick={() => changeStep(stepIdx)}
-                    className={`transition-colors duration-200 font-normal ${isActive
-                        ? 'text-white font-normal'
+                    className={`transition-all duration-200 font-normal relative ${
+                      isActive
+                        ? 'text-[#E2B857] font-bold scale-110'
                         : isFilled
-                          ? 'text-white/80 hover:text-white'
-                          : 'text-[#555555] hover:text-white'
-                      }`}
+                        ? 'text-white font-semibold hover:text-[#E2B857]'
+                        : 'text-[#555555] hover:text-white'
+                    }`}
                   >
                     {num}
+                    {isFilled && !isActive && (
+                      <span className="absolute -top-1 -right-1 w-1.5 h-1.5 rounded-full bg-[#E2B857]" />
+                    )}
                   </button>
                 );
               })}
