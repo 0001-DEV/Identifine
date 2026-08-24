@@ -124,13 +124,13 @@ export default function ElitePassDetailPage() {
       {/* ========================================================================= */}
       {/* HERO SECTION: 100% FULL BLEED EDGE-TO-EDGE PICTURE (MATCHING FRAMER NOVA) */}
       {/* ========================================================================= */}
-      <div className="animate-hero-fade-1 w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[400px] sm:h-[500px] lg:h-[600px] relative flex items-center justify-center group mt-0">
+      <div className="animate-hero-fade-1 w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[260px] sm:h-[480px] lg:h-[600px] relative flex items-center justify-center group mt-0">
         
         {/* Back Link Overlay */}
-        <div className="absolute top-28 left-6 sm:left-12 z-20">
+        <div className="absolute top-20 sm:top-28 left-4 sm:left-12 z-20">
           <NavLink
             to="/elite-pass"
-            className="inline-flex items-center gap-2 text-xs font-mono uppercase text-white/80 hover:text-white bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 transition-all"
+            className="inline-flex items-center gap-2 text-xs font-mono uppercase text-white/80 hover:text-white bg-black/40 backdrop-blur-md px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/20 transition-all"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>All Elite Passes</span>
@@ -148,8 +148,8 @@ export default function ElitePassDetailPage() {
         <div className="absolute inset-0 bg-black/35 pointer-events-none" />
 
         {/* Product Name at Exact Middle of Image */}
-        <div className="absolute inset-0 text-center w-full px-6 z-10 pointer-events-none flex items-center justify-center">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-galano font-bold text-white tracking-tight drop-shadow-[0_8px_25px_rgba(0,0,0,0.9)] text-center">
+        <div className="absolute inset-0 text-center w-full px-4 sm:px-6 z-10 pointer-events-none flex items-center justify-center">
+          <h1 className="text-3xl sm:text-6xl lg:text-7xl font-galano font-bold text-white tracking-tight drop-shadow-[0_8px_25px_rgba(0,0,0,0.9)] text-center">
             {item.sansTitle} <em className="font-swarsh italic font-normal text-white">{item.serifTitle}</em>
           </h1>
         </div>
@@ -157,7 +157,7 @@ export default function ElitePassDetailPage() {
       </div>
 
       {/* Main Page Content: Padded Container */}
-      <div className="max-w-[94rem] mx-auto px-6 sm:px-12 space-y-20 sm:space-y-28">
+      <div className="max-w-[94rem] mx-auto px-4 sm:px-12 space-y-16 sm:space-y-28">
         
         {/* ========================================================================= */}
         {/* OVERVIEW & SPECIFICATIONS SECTION (EXACT ALIGNMENT AS FRAMER NOVA)         */}
@@ -207,7 +207,7 @@ export default function ElitePassDetailPage() {
       {/* ========================================================================= */}
       {/* 1. FULL-BLEED REDUCED-HEIGHT BANNER (EXACT SAME FULL BLEED WIDTH AS HERO) */}
       {/* ========================================================================= */}
-      <div className="w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[300px] sm:h-[400px] lg:h-[480px] relative select-none">
+      <div className="w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[200px] sm:h-[380px] lg:h-[480px] relative select-none my-12 sm:my-20">
         <img
           src={item.galleryImages[0] || item.heroImage}
           alt={`${item.fullTitle} full bleed banner`}
@@ -217,17 +217,17 @@ export default function ElitePassDetailPage() {
       </div>
 
       {/* Main Page Content Container for Cards & More Elite Pass */}
-      <div className="max-w-[94rem] mx-auto px-6 sm:px-12 space-y-20 sm:space-y-28">
+      <div className="max-w-[94rem] mx-auto px-4 sm:px-12 space-y-16 sm:space-y-28">
 
         {/* ========================================================================= */}
         {/* GALLERY SHOWCASE: SIDE-BY-SIDE CARDS & MATCHING COMBINED WIDTH CARD       */}
         {/* ========================================================================= */}
-        <div className="space-y-12 sm:space-y-16">
+        <div className="space-y-8 sm:space-y-16">
 
           {/* 2. Two images side by side with NO GAP and NOT full width of screen (max-w-[1140px]) */}
           <div className="max-w-[1140px] mx-auto w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 overflow-hidden rounded-2xl sm:rounded-3xl border border-[#DCDAD4] shadow-sm bg-white/40 backdrop-blur-md">
-              <div className="w-full h-[280px] sm:h-[400px] lg:h-[500px] overflow-hidden border-b sm:border-b-0 sm:border-r border-[#DCDAD4]">
+              <div className="w-full h-[220px] sm:h-[400px] lg:h-[500px] overflow-hidden border-b sm:border-b-0 sm:border-r border-[#DCDAD4]">
                 <img
                   src={item.galleryImages[1] || item.heroImage}
                   alt={`${item.fullTitle} render left`}
@@ -235,7 +235,7 @@ export default function ElitePassDetailPage() {
                   loading="lazy"
                 />
               </div>
-              <div className="w-full h-[280px] sm:h-[400px] lg:h-[500px] overflow-hidden">
+              <div className="w-full h-[220px] sm:h-[400px] lg:h-[500px] overflow-hidden">
                 <img
                   src={item.galleryImages[2] || item.heroImage}
                   alt={`${item.fullTitle} render right`}
@@ -247,7 +247,7 @@ export default function ElitePassDetailPage() {
           </div>
 
           {/* 3. Single image with the exact width of the two cards (max-w-[1140px]) */}
-          <div className="max-w-[1140px] mx-auto w-full h-[320px] sm:h-[450px] lg:h-[520px] overflow-hidden rounded-2xl sm:rounded-3xl border border-[#DCDAD4] shadow-sm bg-white/40 backdrop-blur-md">
+          <div className="max-w-[1140px] mx-auto w-full h-[220px] sm:h-[450px] lg:h-[520px] overflow-hidden rounded-2xl sm:rounded-3xl border border-[#DCDAD4] shadow-sm bg-white/40 backdrop-blur-md">
             <img
               src={item.galleryImages[0] || item.heroImage}
               alt={`${item.fullTitle} render full width cards match`}

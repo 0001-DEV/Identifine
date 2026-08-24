@@ -129,7 +129,7 @@ export default function ProductCataloguePage() {
       {/* ========================================================================= */}
       {/* HERO SECTION: 100% FULL BLEED EDGE-TO-EDGE PICTURE (NO BORDER, NO RADIUS) */}
       {/* ========================================================================= */}
-      <div className="animate-hero-fade-1 w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[400px] sm:h-[500px] lg:h-[600px] relative flex items-center justify-center group mt-0">
+      <div className="animate-hero-fade-1 w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[260px] sm:h-[480px] lg:h-[600px] relative flex items-center justify-center group mt-0">
         
         {/* Hero Product Image */}
         <img
