@@ -141,20 +141,22 @@ export default function Navbar() {
             }`}
             style={{ transitionDelay: mobileMenuOpen ? `${150 + (navLinks.length * 150)}ms` : '0ms' }}
           >
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                setConsultationModalOpen(true);
-              }}
-              className="group relative overflow-hidden inline-flex items-center justify-center text-sm font-semibold px-8 py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 w-full"
-            >
-              <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                  <span className="block">Book a consultation</span>
-                  <span className="block">Book a consultation</span>
+            <div className="flex justify-center w-full">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setConsultationModalOpen(true);
+                }}
+                className="group relative overflow-hidden inline-flex items-center justify-center text-xs sm:text-sm font-bold px-6 py-3 sm:px-8 sm:py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 w-auto"
+              >
+                <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
+                  <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
+                    <span className="block">Book a consultation</span>
+                    <span className="block">Book a consultation</span>
+                  </span>
                 </span>
-              </span>
-            </button>
+              </button>
+            </div>
           </div>
         </div>
       </header>

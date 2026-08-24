@@ -5,6 +5,7 @@ import HeroVideoZoom from '../components/HeroVideoZoom';
 import CompanyLogosMarquee from '../components/CompanyLogosMarquee';
 import IdentityQuiz from '../components/IdentityQuiz';
 import CardShowcaseModal from '../components/CardShowcaseModal';
+import ConsultationModal from '../components/ConsultationModal';
 import starIcon from '../assets/SVG@4x.png';
 import JourneyStickyStack from '../components/JourneyStickyStack';
 import ProgramAccordionShowcase from '../components/ProgramAccordionShowcase';
@@ -138,11 +139,9 @@ export default function HomePage() {
           </p>
 
           <div className="animate-hero-fade-3 pt-4">
-            <a
-              href="https://wa.me/2347046367754"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-bold px-8 py-4 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+            <button
+              onClick={() => setConsultationModalOpen(true)}
+              className="group relative overflow-hidden inline-flex items-center justify-center text-xs sm:text-base font-bold px-5 py-3 sm:px-8 sm:py-4 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
             >
               <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
                 <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
@@ -150,7 +149,7 @@ export default function HomePage() {
                   <span className="block">Book a consultation</span>
                 </span>
               </span>
-            </a>
+            </button>
           </div>
         </div>
 
@@ -341,6 +340,12 @@ export default function HomePage() {
           }}
         />
       )}
+
+      {/* CONSULTATION MODAL */}
+      <ConsultationModal
+        isOpen={consultationModalOpen}
+        onClose={() => setConsultationModalOpen(false)}
+      />
 
     </div>
   );
