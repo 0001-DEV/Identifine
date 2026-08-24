@@ -372,8 +372,8 @@ export default function AboutUsPage() {
         {/* 3. OUR MISSION & GOALS ("TURNING VISION INTO REALITY")  */}
         {/* ========================================================= */}
         <section className="space-y-14 py-4">
-          {/* Header: Badge left aligned in lowercase, Heading left aligned with 800px left margin */}
-          <div className="scroll-reveal space-y-4 lg:ml-[800px]">
+          {/* Header: Badge left aligned in lowercase, Heading left aligned with 400px left margin */}
+          <div className="scroll-reveal space-y-4 lg:ml-[400px]">
             <div className="inline-flex items-center justify-start gap-2">
               <img
                 src={starIcon}
