@@ -163,10 +163,20 @@ export const blogPostsData = [
 ];
 
 export default function BlogPage() {
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCount, setVisibleCount] = useState(3);
 
   const featuredPost = blogPostsData.find(p => p.featured) || blogPostsData[0];
   const gridPosts = blogPostsData.filter(p => p.id !== featuredPost.id);
+
+  const isExpanded = visibleCount >= gridPosts.length;
+
+  const toggleLoadMore = () => {
+    if (isExpanded) {
+      setVisibleCount(3);
+    } else {
+      setVisibleCount(gridPosts.length);
+    }
+  };
 
   return (
     <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
@@ -267,16 +277,24 @@ export default function BlogPage() {
         </div>
 
         {/* Load More Button */}
-        {visibleCount < gridPosts.length && (
-          <div className="text-center pt-8">
-            <button
-              onClick={() => setVisibleCount(gridPosts.length)}
-              className="inline-flex items-center justify-center text-xs font-semibold px-8 py-3.5 rounded-xl bg-black/[0.03] backdrop-blur-xl text-[#444444] border border-[#111111]/20 hover:bg-black/[0.08] hover:text-black hover:border-black/60 shadow-sm transition-all duration-300 select-none"
-            >
-              Load More
-            </button>
-          </div>
-        )}
+        <div className="text-center pt-8">
+          <button
+            onClick={toggleLoadMore}
+            className="group relative inline-flex items-center justify-center overflow-hidden bg-white border border-[#CCCCCC] hover:border-[#111111] shadow-sm rounded-2xl px-8 sm:px-10 py-3.5 sm:py-4 text-xs font-bold tracking-wider uppercase transition-all duration-300 transform hover:-translate-y-0.5 select-none cursor-pointer"
+          >
+            <div className="h-4 relative overflow-hidden flex items-center justify-center min-w-[95px]">
+              {/* Default Gray Text */}
+              <span className="text-[#777777] transition-transform duration-300 ease-out group-hover:-translate-y-full block whitespace-nowrap">
+                {isExpanded ? 'Show Less' : 'Load More'}
+              </span>
+
+              {/* Hover Black Text */}
+              <span className="text-[#111111] absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0 font-extrabold whitespace-nowrap">
+                {isExpanded ? 'Show Less' : 'Load More'}
+              </span>
+            </div>
+          </button>
+        </div>
 
       </div>
     </div>
