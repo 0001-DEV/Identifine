@@ -228,20 +228,12 @@ export default function IdentityQuiz() {
                     onMouseLeave={() => setActiveHoverIdx(null)}
                     onClick={() => handleSelectOption(opt, idx)}
                     className={`w-full text-left py-2.5 sm:py-4 px-4 sm:px-8 rounded-full text-xs sm:text-lg font-normal transition-all duration-200 flex items-center justify-between group select-none ${
-                      isSelected
-                        ? 'bg-white text-black font-bold shadow-2xl scale-[1.02] border-2 border-[#E2B857]'
-                        : isHovered
-                        ? 'bg-white text-black font-medium shadow-xl scale-[1.01]'
+                      isSelected || isHovered
+                        ? 'bg-white text-black font-semibold shadow-2xl scale-[1.01]'
                         : 'bg-transparent text-white/90 border border-transparent shadow-none hover:text-white'
                     }`}
                   >
                     <span className="leading-tight pr-2 font-galano">{opt}</span>
-                    {isSelected && (
-                      <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-black bg-[#E2B857] px-3 py-1 rounded-full animate-hero-fade-1 shrink-0">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-black" />
-                        <span>Selected</span>
-                      </span>
-                    )}
                   </button>
                 );
               })}
