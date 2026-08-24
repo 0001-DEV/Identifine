@@ -515,9 +515,9 @@ export default function AboutUsPage() {
                 <div className="text-5xl sm:text-6xl font-galano font-normal italic text-white leading-none shrink-0 tracking-tight">
                   <AnimatedNumber target="98" suffix="%" />
                 </div>
-                <div className="text-sm sm:text-base text-white/90 font-normal text-right leading-relaxed shrink-0">
-                  <span className="block whitespace-nowrap">Happy clients worldwide</span>
-                  <span className="block whitespace-nowrap">staying for quality.</span>
+                <div className="text-xs sm:text-base text-white/90 font-normal text-right leading-snug sm:leading-relaxed">
+                  <span className="block">Happy clients worldwide</span>
+                  <span className="block">staying for quality.</span>
                 </div>
               </div>
             </div>
@@ -531,9 +531,9 @@ export default function AboutUsPage() {
                 <div className="text-5xl sm:text-6xl font-galano font-normal italic text-[#111111] leading-none shrink-0 tracking-tight">
                   <AnimatedNumber target="100" suffix="+" />
                 </div>
-                <div className="text-sm sm:text-base text-[#333333] font-normal text-right leading-relaxed shrink-0">
-                  <span className="block whitespace-nowrap">Creative solutions</span>
-                  <span className="block whitespace-nowrap">built with purpose.</span>
+                <div className="text-xs sm:text-base text-[#333333] font-normal text-right leading-snug sm:leading-relaxed">
+                  <span className="block">Creative solutions</span>
+                  <span className="block">built with purpose.</span>
                 </div>
               </div>
             </div>
@@ -547,9 +547,9 @@ export default function AboutUsPage() {
                 <div className="text-5xl sm:text-6xl font-galano font-normal italic text-[#111111] leading-none shrink-0 tracking-tight">
                   <AnimatedNumber target="86" suffix="+" />
                 </div>
-                <div className="text-sm sm:text-base text-[#333333] font-normal text-right leading-relaxed shrink-0">
-                  <span className="block whitespace-nowrap">From strategy to</span>
-                  <span className="block whitespace-nowrap">standout identity.</span>
+                <div className="text-xs sm:text-base text-[#333333] font-normal text-right leading-snug sm:leading-relaxed">
+                  <span className="block">From strategy to</span>
+                  <span className="block">standout identity.</span>
                 </div>
               </div>
             </div>
@@ -584,7 +584,7 @@ export default function AboutUsPage() {
               </h2>
             </div>
 
-            {/* Right Accordion (White Container Cards wrapping to the Arrow Button) */}
+            {/* Right Accordion (Header matching bg #EBEAE6 Container Cards) */}
             <div className="scroll-reveal lg:col-span-8">
               <div className="space-y-4">
                 {faqs.map((faq, index) => {
@@ -592,7 +592,7 @@ export default function AboutUsPage() {
                   return (
                     <div
                       key={index}
-                      className="bg-white border border-[#DCDAD4] rounded-[24px] sm:rounded-[28px] p-6 sm:p-8 shadow-sm hover:shadow-md transition-all duration-300"
+                      className="bg-[#EBEAE6] border border-[#DCDAD4] rounded-[24px] sm:rounded-[28px] p-6 sm:p-8 shadow-sm hover:shadow-md transition-all duration-300"
                     >
                       <button
                         onClick={() => setOpenFaq(isOpen ? null : index)}
@@ -601,7 +601,7 @@ export default function AboutUsPage() {
                         <h3 className="text-xl sm:text-2xl font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors leading-snug pr-6">
                           {faq.question}
                         </h3>
-                        <div className="w-11 h-11 rounded-full bg-[#F5F4F0] group-hover:bg-[#E2B857] text-[#111111] border border-[#DCDAD4] flex items-center justify-center shrink-0 transition-colors shadow-sm">
+                        <div className="w-11 h-11 rounded-full bg-[#DCDAD4]/40 group-hover:bg-[#E2B857] text-[#111111] border border-[#DCDAD4] flex items-center justify-center shrink-0 transition-colors shadow-sm">
                           <ChevronDown
                             className={`w-5 h-5 transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
                           />
