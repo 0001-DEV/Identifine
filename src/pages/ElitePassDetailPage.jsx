@@ -186,15 +186,15 @@ export default function ElitePassDetailPage() {
               {item.writeup}
             </p>
 
-            {/* Specs List - Bottom line directly under category and features */}
-            <div className="pt-6 pb-6 border-t border-b border-[#DCDAD4] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-base sm:text-lg max-w-5xl">
-              <div>
-                <span className="font-semibold text-[#111111]">Category: </span>
-                <span className="text-[#555555]">{item.category}</span>
+            {/* Specs List (Category & Features stacked in separate rows as Framer Nova) */}
+            <div className="space-y-1 max-w-5xl pt-2">
+              <div className="py-4 border-b border-[#DCDAD4] flex items-center justify-between text-base sm:text-lg">
+                <span className="font-galano font-medium text-[#737378]">Category:</span>
+                <span className="font-galano font-semibold text-[#111111]">{item.category}</span>
               </div>
-              <div className="sm:text-right">
-                <span className="font-semibold text-[#111111]">Features: </span>
-                <span className="text-[#555555]">{item.features}</span>
+              <div className="py-4 border-b border-[#DCDAD4] flex items-center justify-between text-base sm:text-lg">
+                <span className="font-galano font-medium text-[#737378]">Features:</span>
+                <span className="font-galano font-semibold text-[#111111] text-right">{item.features}</span>
               </div>
             </div>
 
