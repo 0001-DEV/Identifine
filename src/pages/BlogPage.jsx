@@ -317,8 +317,8 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
-      <div className="max-w-[94rem] mx-auto space-y-16 sm:space-y-20">
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-20 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
+      <div className="max-w-[94rem] mx-auto space-y-10 sm:space-y-14">
         
         {/* Header Section */}
         <div className="text-center max-w-4xl mx-auto space-y-4">
@@ -346,8 +346,8 @@ export default function BlogPage() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
               
-              {/* Left Image */}
-              <div className="lg:col-span-7 h-[360px] sm:h-[500px] lg:h-[620px] overflow-hidden bg-[#F5F4F0] relative">
+              {/* Left Image - Increased Height */}
+              <div className="lg:col-span-7 h-[420px] sm:h-[580px] lg:h-[720px] overflow-hidden bg-[#F5F4F0] relative">
                 <img
                   src={featuredPost.image}
                   alt={featuredPost.title}
@@ -356,7 +356,7 @@ export default function BlogPage() {
               </div>
 
               {/* Right Content */}
-              <div className="lg:col-span-5 p-8 sm:p-12 space-y-5">
+              <div className="lg:col-span-5 p-8 sm:p-12 space-y-6">
                 <span className="inline-block bg-[#111111] text-white text-xs font-semibold px-4 py-1.5 rounded-full shadow-sm">
                   Featured post
                 </span>
@@ -371,7 +371,7 @@ export default function BlogPage() {
                   {featuredPost.title}
                 </h2>
 
-                <p className="text-sm sm:text-base text-[#555555] font-normal leading-relaxed line-clamp-3">
+                <p className="text-sm sm:text-base text-[#555555] font-normal leading-relaxed line-clamp-4">
                   {featuredPost.summary}
                 </p>
               </div>
@@ -381,57 +381,59 @@ export default function BlogPage() {
         </div>
 
         {/* 3-Column Grid of Stories */}
-        <div className="animate-hero-fade-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 pt-4">
-          {gridPosts.slice(0, visibleCount).map((article) => (
-            <NavLink
-              key={article.id}
-              to={`/blog/${article.slug}`}
-              className="scroll-reveal group block bg-white border border-[#DCDAD4] rounded-none p-6 sm:p-8 space-y-5 shadow-sm hover:shadow-xl hover:border-[#111111]/30 transition-all duration-500 text-left flex flex-col justify-between"
+        <div>
+          <div className="animate-hero-fade-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+            {gridPosts.slice(0, visibleCount).map((article) => (
+              <NavLink
+                key={article.id}
+                to={`/blog/${article.slug}`}
+                className="scroll-reveal group block bg-white border border-[#DCDAD4] rounded-none p-6 sm:p-8 space-y-5 shadow-sm hover:shadow-xl hover:border-[#111111]/30 transition-all duration-500 text-left flex flex-col justify-between"
+              >
+                <div className="space-y-5">
+                  {/* Article Image */}
+                  <div className="h-64 sm:h-76 rounded-none overflow-hidden bg-[#F5F4F0] relative">
+                    <img
+                      src={article.image}
+                      alt={article.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                    />
+                  </div>
+
+                  {/* Article Meta */}
+                  <div className="flex items-center gap-3 text-xs sm:text-sm font-galano font-medium text-[#666666]">
+                    <span>{article.date}</span>
+                    <span>•</span>
+                    <span>{article.readTime}</span>
+                  </div>
+
+                  {/* Article Title */}
+                  <h3 className="text-xl sm:text-2xl font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors leading-snug">
+                    {article.title}
+                  </h3>
+                </div>
+              </NavLink>
+            ))}
+          </div>
+
+          {/* Load More Button - Integrated Tightly */}
+          <div className="text-center mt-10 sm:mt-14">
+            <button
+              onClick={toggleLoadMore}
+              className="group relative inline-flex items-center justify-center overflow-hidden bg-white border border-[#CCCCCC] hover:border-[#111111] shadow-sm rounded-2xl px-8 sm:px-10 py-3.5 sm:py-4 text-xs font-bold tracking-wider uppercase transition-all duration-300 transform hover:-translate-y-0.5 select-none cursor-pointer"
             >
-              <div className="space-y-5">
-                {/* Article Image */}
-                <div className="h-60 sm:h-72 rounded-none overflow-hidden bg-[#F5F4F0] relative">
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
-                  />
-                </div>
+              <div className="h-4 relative overflow-hidden flex items-center justify-center min-w-[95px]">
+                {/* Default Gray Text */}
+                <span className="text-[#777777] transition-transform duration-300 ease-out group-hover:-translate-y-full block whitespace-nowrap">
+                  {isExpanded ? 'Show Less' : 'Load More'}
+                </span>
 
-                {/* Article Meta */}
-                <div className="flex items-center gap-3 text-xs sm:text-sm font-galano font-medium text-[#666666]">
-                  <span>{article.date}</span>
-                  <span>•</span>
-                  <span>{article.readTime}</span>
-                </div>
-
-                {/* Article Title */}
-                <h3 className="text-xl sm:text-2xl font-galano font-medium text-[#111111] group-hover:text-[#E2B857] transition-colors leading-snug">
-                  {article.title}
-                </h3>
+                {/* Hover Black Text */}
+                <span className="text-[#111111] absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0 font-extrabold whitespace-nowrap">
+                  {isExpanded ? 'Show Less' : 'Load More'}
+                </span>
               </div>
-            </NavLink>
-          ))}
-        </div>
-
-        {/* Load More Button */}
-        <div className="text-center pt-8">
-          <button
-            onClick={toggleLoadMore}
-            className="group relative inline-flex items-center justify-center overflow-hidden bg-white border border-[#CCCCCC] hover:border-[#111111] shadow-sm rounded-2xl px-8 sm:px-10 py-3.5 sm:py-4 text-xs font-bold tracking-wider uppercase transition-all duration-300 transform hover:-translate-y-0.5 select-none cursor-pointer"
-          >
-            <div className="h-4 relative overflow-hidden flex items-center justify-center min-w-[95px]">
-              {/* Default Gray Text */}
-              <span className="text-[#777777] transition-transform duration-300 ease-out group-hover:-translate-y-full block whitespace-nowrap">
-                {isExpanded ? 'Show Less' : 'Load More'}
-              </span>
-
-              {/* Hover Black Text */}
-              <span className="text-[#111111] absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0 font-extrabold whitespace-nowrap">
-                {isExpanded ? 'Show Less' : 'Load More'}
-              </span>
-            </div>
-          </button>
+            </button>
+          </div>
         </div>
 
       </div>

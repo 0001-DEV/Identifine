@@ -53,7 +53,7 @@ export default function BlogDetailPage() {
         </div>
 
         {/* Featured Hero Image */}
-        <div className="w-full h-[380px] sm:h-[580px] lg:h-[680px] rounded-none overflow-hidden bg-[#F5F4F0] border border-[#DCDAD4] shadow-sm">
+        <div className="w-full h-[480px] sm:h-[680px] lg:h-[780px] rounded-none overflow-hidden bg-[#F5F4F0] border border-[#DCDAD4] shadow-sm">
           <img
             src={article.image}
             alt={article.title}
