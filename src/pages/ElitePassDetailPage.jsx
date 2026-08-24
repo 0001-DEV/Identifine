@@ -201,8 +201,6 @@ export default function ElitePassDetailPage() {
             </div>
           </div>
 
-        </div>
-
         {/* ========================================================================= */}
         {/* GALLERY SHOWCASE EXACT FRAMER NOVA LAYOUT                                  */}
         {/* ========================================================================= */}
