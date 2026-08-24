@@ -17,6 +17,7 @@ export default function IdentityQuiz() {
   const [completed, setCompleted] = useState(false);
   const [isSliding, setIsSliding] = useState(false);
   const [activeHoverIdx, setActiveHoverIdx] = useState(null);
+  const [selectedOptIdx, setSelectedOptIdx] = useState(null);
 
   // Form Details state for final step
   const [fullName, setFullName] = useState('');
@@ -111,6 +112,7 @@ export default function IdentityQuiz() {
   const changeStep = (nextIdx) => {
     if (nextIdx === currentStep || isSliding) return;
     setActiveHoverIdx(null);
+    setSelectedOptIdx(null);
     setIsSliding(true);
     setTimeout(() => {
       setCurrentStep(nextIdx);
@@ -119,32 +121,37 @@ export default function IdentityQuiz() {
   };
 
   const handleSelectOption = (opt, idx) => {
-    if (isSliding) return;
-    setActiveHoverIdx(idx);
+    if (isSliding || selectedOptIdx !== null) return;
+    
+    // Highlight selected option immediately so user sees visual feedback
+    setSelectedOptIdx(idx);
     const updated = { ...answers, [quizQuestions[currentStep].id]: opt };
     setAnswers(updated);
 
-    // Brief highlight preview so mobile users see the white selected state
+    // Pause for 450ms so user reads and sees their selected answer with checkmark feedback
     setTimeout(() => {
       setIsSliding(true);
       setTimeout(() => {
         if (currentStep < quizQuestions.length - 1) {
           setCurrentStep(currentStep + 1);
+          setSelectedOptIdx(null);
           setActiveHoverIdx(null);
           setIsSliding(false);
         } else {
           setCompleted(true);
+          setSelectedOptIdx(null);
           setActiveHoverIdx(null);
           setIsSliding(false);
         }
       }, 220);
-    }, 180);
+    }, 450);
   };
 
   const handleGoBack = () => {
     setIsSliding(true);
     setTimeout(() => {
       setCompleted(false);
+      setSelectedOptIdx(null);
       setCurrentStep(quizQuestions.length - 1);
       setIsSliding(false);
     }, 200);
@@ -155,6 +162,7 @@ export default function IdentityQuiz() {
     setTimeout(() => {
       setCurrentStep(0);
       setAnswers({});
+      setSelectedOptIdx(null);
       setCompleted(false);
       setSubmitted(false);
       setFullName('');
@@ -209,22 +217,30 @@ export default function IdentityQuiz() {
             {/* Option Buttons */}
             <div className="space-y-2.5 sm:space-y-3 pt-1">
               {quizQuestions[currentStep].options.map((opt, idx) => {
-                const isHovered = activeHoverIdx === idx;
+                const isSelected = selectedOptIdx === idx;
+                const isHovered = activeHoverIdx === idx && selectedOptIdx === null;
+
                 return (
                   <button
                     key={idx}
                     onMouseEnter={() => setActiveHoverIdx(idx)}
                     onMouseLeave={() => setActiveHoverIdx(null)}
-                    onTouchStart={() => setActiveHoverIdx(idx)}
-                    onTouchEnd={() => {}}
                     onClick={() => handleSelectOption(opt, idx)}
-                    className={`w-full text-left py-2.5 sm:py-4 px-4 sm:px-8 rounded-full text-xs sm:text-lg font-normal transition-all duration-200 border-0 flex items-center justify-between group select-none ${
-                      isHovered
+                    className={`w-full text-left py-2.5 sm:py-4 px-4 sm:px-8 rounded-full text-xs sm:text-lg font-normal transition-all duration-200 flex items-center justify-between group select-none ${
+                      isSelected
+                        ? 'bg-white text-black font-bold shadow-2xl scale-[1.02] border-2 border-[#E2B857]'
+                        : isHovered
                         ? 'bg-white text-black font-medium shadow-xl scale-[1.01]'
-                        : 'bg-transparent text-white hover:bg-white hover:text-black active:bg-white active:text-black focus:bg-white focus:text-black shadow-none'
+                        : 'bg-transparent text-white/90 border border-transparent shadow-none hover:text-white'
                     }`}
                   >
-                    <span className="leading-tight pr-2">{opt}</span>
+                    <span className="leading-tight pr-2 font-galano">{opt}</span>
+                    {isSelected && (
+                      <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-black bg-[#E2B857] px-3 py-1 rounded-full animate-hero-fade-1 shrink-0">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-black" />
+                        <span>Selected</span>
+                      </span>
+                    )}
                   </button>
                 );
               })}

@@ -26,6 +26,8 @@ export default function ConsultationModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const solutionOptions = [
+    'Smart ID Card',
+    'Smart Business Card',
     'Executive Metal Passes',
     'VIP Membership Credentials',
     'Smart Hardware & NFC Access',
