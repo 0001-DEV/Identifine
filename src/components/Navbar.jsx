@@ -72,7 +72,7 @@ export default function Navbar() {
                 key={link.name}
                 to={link.path}
                 className={({ isActive }) =>
-                  `text-[13px] font-semibold tracking-wide transition-colors ${
+                  `text-base font-semibold tracking-wide transition-colors ${
                     isActive ? 'text-[#E2B857] font-bold' : 'text-[#555555] hover:text-[#E2B857]'
                   }`
                 }
