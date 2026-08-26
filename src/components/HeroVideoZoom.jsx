@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import heroVideoFile from '../assets/herovideo.mp4';
 
 /**
- * HeroVideoZoom — Direct 1:1 Scroll-Linked Video Expansion & Shrink.
- * Zero timers, zero delays. Responds instantly to scroll movement in real-time.
+ * HeroVideoZoom — Sticky 1:1 Scroll-Linked Video Zoom
+ * 180vh section height with sticky centering.
+ * As you scroll down, video expands 200px -> 1280px.
+ * As you scroll up, video shrinks 1280px -> 200px.
  */
 export default function HeroVideoZoom() {
   const sectionRef   = useRef(null);
@@ -31,7 +33,7 @@ export default function HeroVideoZoom() {
     video.play().catch(() => {});
   }, []);
 
-  /* ── Direct 1:1 Scroll-Linked Zoom (Instant, zero lag) ── */
+  /* ── Sticky 1:1 Scroll-Linked Zoom ── */
   useEffect(() => {
     const section = sectionRef.current;
     const wrap    = videoWrapRef.current;
@@ -42,15 +44,12 @@ export default function HeroVideoZoom() {
     const updateZoom = () => {
       const rect = section.getBoundingClientRect();
       const windowHeight = window.innerHeight;
+      const totalScrollableDistance = rect.height - windowHeight;
 
-      // Expansion starts as section enters screen, completes as it centers
-      const startPoint = windowHeight;
-      const endPoint = windowHeight * 0.15; // Reaches full width near top
+      if (totalScrollableDistance <= 0) return;
 
-      const totalDistance = startPoint - endPoint;
-      const currentDistance = startPoint - rect.top;
-
-      let progress = currentDistance / totalDistance;
+      // rect.top goes from 0 (when sticky begins) to -totalScrollableDistance (when sticky ends)
+      let progress = -rect.top / totalScrollableDistance;
       progress = Math.max(0, Math.min(1, progress));
 
       const { startPx, endPx } = getResponsiveBounds();
@@ -78,34 +77,37 @@ export default function HeroVideoZoom() {
   return (
     <div
       ref={sectionRef}
-      className="w-full flex items-center justify-center px-4 sm:px-6 relative z-10"
-      style={{ minHeight: '80vh', background: '#EBEAE6', padding: '6rem 0' }}
+      className="w-full relative z-10"
+      style={{ height: '180vh', background: '#EBEAE6' }}
     >
-      <div
-        ref={videoWrapRef}
-        className="overflow-hidden"
-        style={{
-          width:        '200px',
-          maxWidth:     'calc(100vw - 32px)',
-          borderRadius: '16px',
-          aspectRatio:  '16 / 9',
-          border:       '2px solid rgba(0,0,0,0.15)',
-          transition:   'none', // Direct scroll linking, no CSS delay
-          willChange:   'width',
-        }}
-      >
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="w-full h-full object-cover block"
+      {/* Sticky Centered Viewport Container */}
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-4 sm:px-6">
+        <div
+          ref={videoWrapRef}
+          className="overflow-hidden shadow-2xl"
+          style={{
+            width:        '200px',
+            maxWidth:     'calc(100vw - 32px)',
+            borderRadius: '16px',
+            aspectRatio:  '16 / 9',
+            border:       '2px solid rgba(0,0,0,0.15)',
+            transition:   'none', // Direct scroll linking, zero lag
+            willChange:   'width',
+          }}
         >
-          <source src={heroVideoFile} type="video/mp4" />
-          <source src="/assets/herovideo.mp4" type="video/mp4" />
-        </video>
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover block"
+          >
+            <source src={heroVideoFile} type="video/mp4" />
+            <source src="/assets/herovideo.mp4" type="video/mp4" />
+          </video>
+        </div>
       </div>
     </div>
   );
