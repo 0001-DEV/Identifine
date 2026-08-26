@@ -1,0 +1,681 @@
+./rolldown-runtime.Dh6celcD.mjs
+./react.CMn14Ob3.mjs
+./motion.SH1DhrTI.mjs
+./framer.D0-NULzs.mjs
+./F1Lg2Xl1f.CxjLFqKJ.mjs
+./kSz0Rh5TC.g6N0qROs.mjs
+./Dg4o7er_th77MZQ9ZSmc6NLBZWgIyMbSdsje8M_oMbA.unBMg57s.mjs
+u96PNbgzu
+RzwqX50Q7
+framer-sRpzS
+framer-v-wmzbrx
+framer-v-p1mk1x
+spring
+object
+string
+string
+Project Item - Phone
+RzwqX50Q7
+Project Item
+u96PNbgzu
+Project Image
+https://framerusercontent.com/images/4eXiDxT5P0HNaL6mi8w2INMOHQ.jpg?width=1920&height=850
+},HPnYpktkY:n??s.HPnYpktkY,iyOaM2jYb:a??s.iyOaM2jYb??
+,uySUWRra3:i??s.uySUWRra3??
+,variant:Ee[s.variant]??s.variant??
+}),ke=(e,t)=>e.layoutDependency?t.join(
+)+e.layoutDependency:t.join(
+u96PNbgzu
+u96PNbgzu
+MZ8MkXXWd
+${v(A,
+,m,T)} framer-pjuaq
+data-framer-name
+Project Item
+u96PNbgzu
+u96PNbgzu-hover
+data-framer-name
+data-framer-name
+Project Item - Phone
+framer-8ow2vz
+data-framer-name
+Project Image Wrap
+wZBmV8r3L
+framer-j5dssw
+data-framer-name
+Title
+WAEELvCeR
+auto
+--font-selector
+R0Y7R2Vpc3QtNTAw
+--framer-font-family
+Geist
+Geist Placeholder
+--framer-font-open-type-features
+blwf
+cv09
+cv03
+cv04
+cv11
+--framer-font-size
+60px
+--framer-font-weight
+500
+--framer-letter-spacing
+-0.04em
+--framer-line-height
+1.1em
+--framer-text-alignment
+center
+--framer-text-color
+var(--extracted-1of0zx5, var(--token-2116835f-eb87-454b-b6b2-e9e1351f2533, rgb(255, 255, 255)))
+Nova
+framer-y9g0i6
+GF;Geist-500
+LvnX9P6om
+--extracted-1of0zx5
+var(--token-2116835f-eb87-454b-b6b2-e9e1351f2533, rgb(255, 255, 255))
+--framer-link-text-color
+rgb(0, 153, 255)
+--framer-link-text-decoration
+underline
+top
+auto
+--font-selector
+Q1VTVE9NVjI7U3dhcnNoIERhaXN5IEl0YWxpYw==
+--framer-font-family
+Swarsh Daisy Italic
+Swarsh Daisy Italic Placeholder
+--framer-font-open-type-features
+blwf
+cv09
+cv03
+cv04
+cv11
+--framer-font-size
+62px
+--framer-font-style
+italic
+--framer-letter-spacing
+-0.04em
+--framer-line-height
+1em
+--framer-text-alignment
+center
+--framer-text-color
+var(--extracted-1of0zx5, var(--token-2116835f-eb87-454b-b6b2-e9e1351f2533, rgb(255, 255, 255)))
+Wallet
+framer-xjn3v3
+CUSTOMV2;Swarsh Daisy Italic
+IELPcafGC
+--extracted-1of0zx5
+var(--token-2116835f-eb87-454b-b6b2-e9e1351f2533, rgb(255, 255, 255))
+--framer-link-text-color
+rgb(0, 153, 255)
+--framer-link-text-decoration
+underline
+top
+framer-i2ass2
+data-framer-name
+,layoutDependency:k,layoutId:
+,style:{scale:1.15},variants:{
+:{scale:1.02}},children:[r(E,{background:{alt:
+,fit:
+,loading:S((u?.y||0)+0+0+0+0+0),sizes:u?.width||
+,...we(y)},className:
+,layoutDependency:k,layoutId:
+}),r(p.div,{className:
+data-framer-name
+Overlay
+pQ5Av0wQv
+var(--token-b8896b7a-5685-4e33-abc9-187783f9a22f, rgb(5, 8, 12))
+.framer-sRpzS.framer-pjuaq, .framer-sRpzS .framer-pjuaq { display: block; }
+.framer-sRpzS .framer-y9g0i6, .framer-sRpzS .framer-xjn3v3 { flex: none; height: auto; position: relative; white-space: pre; width: auto; }
+.framer-sRpzS .framer-zvovo5 { flex: 1 0 0px; height: 1px; overflow: visible; position: relative; width: 100%; }
+.framer-sRpzS .framer-vedjmp { flex: none; height: 100%; left: calc(50.08849557522126% - 100% / 2); overflow: visible; position: absolute; top: calc(50.00000000000002% - 100% / 2); width: 100%; }
+.framer-sRpzS.framer-v-wmzbrx.framer-p1mk1x { cursor: unset; }
+.framer-sRpzS.framer-v-wmzbrx .framer-8ow2vz { padding: 80px 50px 80px 50px; }
+framer-sRpzS
+Project Item 2
+u96PNbgzu
+RzwqX50Q7
+Project Item
+Project Item - Phone
+Variant
+Nova
+Title
+uySUWRra3
+Wallet
+Title Secondary
+iyOaM2jYb
+data:framer/asset-reference,4eXiDxT5P0HNaL6mi8w2INMOHQ.jpg?originalFilename=pr-01.jpg&preferredSize=auto
+Project Image
+data:framer/asset-reference,4eXiDxT5P0HNaL6mi8w2INMOHQ.jpg?originalFilename=pr-01.jpg&preferredSize=auto
+Thumbnail
+Link
+Geist
+google
+normal
+Geist
+https://fonts.gstatic.com/s/geist/v5/gyBhhwUxId8gMGYQMKR3pzfaWI_RruM4mJPby1QNtA.woff2
+500
+Swarsh Daisy Italic
+custom
+italic
+Swarsh Daisy
+https://framerusercontent.com/assets/EgpNUvbse8XjrAqboyyWoQefg.woff2
+400
+framer-wcyAG
+framer-v-11gbouo
+position
+spring
+spring
+spring
+spring
+spring
+spring
+spring
+spring
+object
+string
+string
+string
+LOCd2AwOV
+Collection
+LiteralValue
+LOCd2AwOV
+ElXRAm3ip
+Identifier
+LOCd2AwOV
+Y37R0Vm_j
+Identifier
+LOCd2AwOV
+a5UlmT3Qv
+Identifier
+LOCd2AwOV
+ThFoa2w_I
+Identifier
+LOCd2AwOV
+,type:
+}],where:{operator:
+,type:
+,value:{left:{collection:
+,name:
+,type:
+},operator:
+,right:{type:
+,value:
+},type:
+}}}),tt=({query:e,pageSize:t,children:n})=>n(he(e)),nt=({value:e})=>O()?null:r(
+,{dangerouslySetInnerHTML:{__html:e},
+}),Z=e=>({from:{alias:
+,data:P,type:
+},select:[{collection:
+,name:
+,type:
+}],where:e}),rt=({height:e,id:t,width:n,...r})=>({...r}),Q=x(i(function(e,i){let c=o(null),l=i??c,f=te(),{activeLocale:m,setLocale:h}=re(),g=ie(),y=ue(),[x]=he(Z(_(y,
+))),S=e=>{if(!x)throw new se(
+);return x[e]},{style:C,className:w,layoutId:T,variant:ce,ElXRAm3ip:D=S(
+)??
+UVCTPFmLI
+html body { background: var(--token-21e7fd7e-6fff-42a9-a372-c1d8090de6c3, rgb(255, 255, 255)); }
+framer-11gbouo
+section
+,fit:
+,intrinsicHeight:2160,intrinsicWidth:3840,pixelHeight:2160,pixelWidth:3840,sizes:
+100vw
+,src:
+,srcSet:
+},className:
+data-framer-name
+Hero Section
+div
+framer-1kwu1hr
+data-framer-name
+Container
+div
+framer-k42qqa
+data-framer-name
+Section Title
+,{dir:
+,style:{
+Q1VTVE9NVjI7R2FsYW5vIEdyb3Rlc3F1ZSBNZWRpdW0=
+--framer-font-family
+Galano Grotesque Medium
+Galano Grotesque Medium Placeholder
+--framer-font-open-type-features
+blwf
+cv09
+cv03
+cv04
+cv11
+--framer-font-size
+100px
+--framer-font-weight
+500
+--framer-letter-spacing
+-0.04em
+--framer-line-height
+1.1em
+--framer-text-alignment
+center
+--framer-text-color
+var(--token-2116835f-eb87-454b-b6b2-e9e1351f2533, rgb(255, 255, 255))
+Black
+framer-2k8h29
+data-framer-appear-id
+2k8h29
+CUSTOMV2;Galano Grotesque Medium
+top
+,{dir:
+,style:{
+Q1VTVE9NVjI7U3dhcnNoIERhaXN5IEl0YWxpYw==
+--framer-font-family
+Swarsh Daisy Italic
+Swarsh Daisy Italic Placeholder
+--framer-font-open-type-features
+blwf
+cv09
+cv03
+cv04
+cv11
+--framer-font-size
+100px
+--framer-font-style
+italic
+--framer-letter-spacing
+-0.04em
+--framer-line-height
+0.8em
+--framer-text-alignment
+center
+--framer-text-color
+var(--token-2116835f-eb87-454b-b6b2-e9e1351f2533, rgb(255, 255, 255))
+Matte
+framer-19yhypk
+data-framer-appear-id
+19yhypk
+CUSTOMV2;Swarsh Daisy Italic
+top
+framer-x8ahml
+data-framer-appear-id
+x8ahml
+data-framer-name
+BG Item
+div
+framer-gipwi3
+data-framer-name
+Overlay
+,fit:
+,sizes:
+100vw
+},className:
+})]})]}),r(p.div,{className:
+data-framer-name
+Container
+div
+framer-16r1u7i
+data-framer-name
+Grid Info
+framer-1ttrg5b-container
+sZxTnxOKF
+jz4SAUKSh
+<svg id=
+ height=
+ viewBox=
+ width=
+ xmlns=
+ data-name=
+><path d=
+/></svg>
+100%
+sZxTnxOKF
+sZxTnxOKF
+Overview
+100%
+var(--token-b8896b7a-5685-4e33-abc9-187783f9a22f, rgb(5, 8, 12))
+div
+framer-1p2yp55
+data-framer-name
+Info Content
+,{dir:
+,style:{
+Q1VTVE9NVjI7R2FsYW5vIEdyb3Rlc3F1ZSBNZWRpdW0=
+--framer-font-family
+Galano Grotesque Medium
+Galano Grotesque Medium Placeholder
+--framer-font-open-type-features
+blwf
+cv09
+cv03
+cv04
+cv11
+--framer-font-size
+20px
+--framer-font-weight
+500
+--framer-letter-spacing
+-0.02em
+--framer-text-color
+var(--token-035a296d-e601-45ff-83e7-e15bb017890e, rgb(91, 91, 91))
+Some things never need to shout to be noticed. The 
+strong
+Black Matte
+]})}),className:
+,fonts:[
+CUSTOMV2;Galano Grotesque Bold
+top
+div
+framer-i83nya
+data-framer-name
+Meta List
+framer-uiy6x6
+data-border
+data-framer-name
+Meta Item
+,{dir:
+,style:{
+Q1VTVE9NVjI7R2FsYW5vIEdyb3Rlc3F1ZSBNZWRpdW0=
+--framer-font-family
+Galano Grotesque Medium
+Galano Grotesque Medium Placeholder
+--framer-font-open-type-features
+blwf
+cv09
+cv03
+cv04
+cv11
+--framer-font-size
+18px
+--framer-font-weight
+500
+--framer-letter-spacing
+-0.02em
+--framer-text-alignment
+left
+--framer-text-color
+var(--token-035a296d-e601-45ff-83e7-e15bb017890e, rgb(91, 91, 91))
+Category:
+framer-96g9v9
+CUSTOMV2;Galano Grotesque Medium
+top
+div
+framer-hte3l2
+data-framer-name
+Meta Info
+,{dir:
+,style:{
+Q1VTVE9NVjI7R2FsYW5vIEdyb3Rlc3F1ZSBNZWRpdW0=
+--framer-font-family
+Galano Grotesque Medium
+Galano Grotesque Medium Placeholder
+--framer-font-open-type-features
+blwf
+cv09
+cv03
+cv04
+cv11
+--framer-font-size
+18px
+--framer-font-weight
+500
+--framer-letter-spacing
+-0.02em
+--framer-text-alignment
+right
+--framer-text-color
+var(--token-b8896b7a-5685-4e33-abc9-187783f9a22f, rgb(5, 8, 12))
+Executive Level
+framer-1g76yey
+CUSTOMV2;Galano Grotesque Medium
+top
+framer-1u01cur
+data-border
+data-framer-name
+Meta Item
+,{dir:
+,style:{
+Q1VTVE9NVjI7R2FsYW5vIEdyb3Rlc3F1ZSBNZWRpdW0=
+--framer-font-family
+Galano Grotesque Medium
+Galano Grotesque Medium Placeholder
+--framer-font-open-type-features
+blwf
+cv09
+cv03
+cv04
+cv11
+--framer-font-size
+18px
+--framer-font-weight
+500
+--framer-letter-spacing
+-0.02em
+--framer-text-alignment
+left
+--framer-text-color
+var(--token-035a296d-e601-45ff-83e7-e15bb017890e, rgb(91, 91, 91))
+Features:
+framer-1udsle8
+CUSTOMV2;Galano Grotesque Medium
+top
+div
+framer-jyutqo
+data-framer-name
+Meta Info
+,{dir:
+,style:{
+Q1VTVE9NVjI7R2FsYW5vIEdyb3Rlc3F1ZSBNZWRpdW0=
+--framer-font-family
+Galano Grotesque Medium
+Galano Grotesque Medium Placeholder
+--framer-font-open-type-features
+blwf
+cv09
+cv03
+cv04
+cv11
+--framer-font-size
+18px
+--framer-font-weight
+500
+--framer-letter-spacing
+-0.02em
+--framer-text-alignment
+right
+--framer-text-color
+var(--token-b8896b7a-5685-4e33-abc9-187783f9a22f, rgb(5, 8, 12))
+NFC, QR code, Access, Exclusive packaging
+framer-123ziw1
+CUSTOMV2;Galano Grotesque Medium
+top
+BG Image
+fill
+calc(${g?.width||
+} - 40px)
+https://framerusercontent.com/images/uZw7JfP2571wmEcR1LNquw0HpI.png?width=2300&height=1600
+},className:
+,layout:P}),s(p.div,{className:
+,layout:P,children:[r(
+,{className:
+,children:r(
+,{className:
+data-framer-name
+Image
+div
+framer-1tg4q7j
+data-framer-name
+Gallery Image
+,fit:
+,intrinsicHeight:2160,intrinsicWidth:2700,pixelHeight:2160,pixelWidth:2700,sizes:
+,src:
+,srcSet:
+},className:
+,id:
+,lightbox:{backdrop:
+,maxWidth:800,padding:20,transition:J,zIndex:10},lightboxClassName:j,style:{scale:1.07}}),r(E,{background:{alt:
+,fit:
+,intrinsicHeight:2160,intrinsicWidth:3840,pixelHeight:2160,pixelWidth:3840,sizes:
+,src:
+,srcSet:
+},className:
+,id:
+,lightbox:{backdrop:
+,maxWidth:800,padding:20,transition:J,zIndex:10},lightboxClassName:j,style:{scale:1.07}})]})})}),r(
+,{className:
+data-framer-name
+Gallery Image
+,fit:
+,intrinsicHeight:2160,intrinsicWidth:3840,pixelHeight:2160,pixelWidth:3840,sizes:
+,src:
+,srcSet:
+},className:
+,id:
+,lightbox:{backdrop:
+,maxWidth:800,padding:20,transition:J,zIndex:10},lightboxClassName:j,style:{scale:1.07}})})]}),r(p.section,{className:
+data-framer-name
+Project Section
+div
+framer-3rmio3
+data-framer-name
+Container
+framer-1n6rswy
+data-framer-name
+Section Title
+,{dir:
+,style:{
+Q1VTVE9NVjI7R2FsYW5vIEdyb3Rlc3F1ZSBNZWRpdW0=
+--framer-font-family
+Galano Grotesque Medium
+Galano Grotesque Medium Placeholder
+--framer-font-open-type-features
+blwf
+cv09
+cv03
+cv04
+cv11
+--framer-font-size
+84px
+--framer-font-weight
+500
+--framer-letter-spacing
+-0.04em
+--framer-line-height
+1.1em
+--framer-text-alignment
+center
+--framer-text-color
+var(--token-b8896b7a-5685-4e33-abc9-187783f9a22f, rgb(5, 8, 12))
+More elite
+framer-t5h34f
+CUSTOMV2;Galano Grotesque Medium
+top
+div
+framer-cvoti7
+data-framer-name
+Title
+,{dir:
+,style:{
+Q1VTVE9NVjI7U3dhcnNoIERhaXN5IEl0YWxpYw==
+--framer-font-family
+Swarsh Daisy Italic
+Swarsh Daisy Italic Placeholder
+--framer-font-open-type-features
+blwf
+cv09
+cv03
+cv04
+cv11
+--framer-font-size
+84px
+--framer-font-style
+italic
+--framer-letter-spacing
+-0.04em
+--framer-line-height
+0.8em
+--framer-text-alignment
+center
+--framer-text-color
+var(--token-b8896b7a-5685-4e33-abc9-187783f9a22f, rgb(5, 8, 12))
+pass
+framer-tqwuev
+CUSTOMV2;Swarsh Daisy Italic
+top
+div
+framer-aakz1v
+,a??=
+,i??=
+,r(d,{id:
+,children:r(ge.Provider,{value:{ThFoa2w_I:i},children:r(
+,{className:
+,children:r(me,{links:[{href:{pathVariables:{ThFoa2w_I:i},webPageId:
+},implicitPathVariables:void 0}],children:n=>r(le,{height:434,width:
+,children:r(Le,{animate:{opacity:1,rotate:0,rotateX:0,rotateY:0,scale:1,skewX:0,skewY:0,transition:Qe(V,o*.1),x:0,y:0},className:
+data-framer-appear-id
+8ywsq5-${o}
+ZOWoRKivS
+jz4SAUKSh
+100%
+ZOWoRKivS
+ZOWoRKivS
+100%
+u96PNbgzu
+100%
+div
+overlay
+.framer-wcyAG.framer-t0g5xf, .framer-wcyAG .framer-t0g5xf { display: block; }
+.framer-wcyAG .framer-f9iq9d { flex: 1 0 0px; height: 1px; overflow: hidden; position: relative; width: 100%; will-change: var(--framer-will-change-filter-override, filter); }
+.framer-wcyAG .framer-1ttrg5b-container { flex: none; height: auto; position: relative; width: auto; }
+.framer-wcyAG .framer-3bw0jl { flex: none; gap: 10px; height: 527px; overflow: hidden; position: relative; width: 100%; will-change: var(--framer-will-change-filter-override, filter); }
+.framer-wcyAG .framer-8ywsq5-container { flex: 1 0 0px; height: auto; position: relative; width: 1px; will-change: var(--framer-will-change-effect-override, transform); }
+.framer-wcyAG[data-border=
+]::after, .framer-wcyAG [data-border=
+]::after { content: 
+framer-wcyAG
+elite pass
+Galano Grotesque Medium
+custom
+normal
+Galano Grotesque
+https://framerusercontent.com/assets/cQTDT4yFpJWLynvBaOjqAsPRwCE.woff2
+500
+Swarsh Daisy Italic
+custom
+italic
+Swarsh Daisy
+https://framerusercontent.com/assets/EgpNUvbse8XjrAqboyyWoQefg.woff2
+400
+Galano Grotesque Bold
+custom
+normal
+Galano Grotesque
+https://framerusercontent.com/assets/KXqAbJQHjKBNSMQ9yoOAmceWzCw.woff2
+700
+jz4SAUKSh
+variable
+}},Props:{type:
+,annotations:{framerContractVersion:
+}},default:{type:
+,name:
+,slots:[],annotations:{framerContractVersion:
+,framerIntrinsicHeight:
+,framerComponentViewportWidth:
+,framerCanvasComponentVariantDetails:
+propertyName
+variant
+data
+default
+layout
+fixed
+auto
+,framerLayoutTemplateFlowEffect:
+,framerAutoSizeImages:
+,framerScrollSections:
+,framerAcceptsLayoutTemplate:
+,framerColorSyntax:
+,framerDisplayContentsDiv:
+,framerIntrinsicWidth:
+,framerImmutableVariables:
+,framerResponsiveScreen:
+}},__FramerMetadata__:{type:

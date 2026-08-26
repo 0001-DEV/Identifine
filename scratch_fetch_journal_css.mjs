@@ -1,15 +1,13 @@
 import fs from 'fs';
 
-async function fetchCss() {
-  const url = 'https://framerusercontent.com/sites/1CM8YwuzS4OncBb65X4Dov/IiQROz5iwH_4HoyootFdULC_jMwORi3edTfh_hLjdqM.JQaWwSWW.mjs';
-  const res = await fetch(url);
-  const text = await res.text();
-  
-  // Find css strings
-  const cssMatches = [...text.matchAll(/\.framer-[a-zA-Z0-9_-]+[^{]*\{[^}]+\}/g)].map(m => m[0]);
-  console.log("CSS rules found:", cssMatches.length);
-  fs.writeFileSync('framer_journal_css.txt', cssMatches.join('\n'));
-  console.log("Written framer_journal_css.txt");
-}
+const html = fs.readFileSync('scratch/framer_blog.html', 'utf8');
 
-fetchCss();
+// Find all CSS variable declarations or framer styles
+const styles = html.match(/style="([^"]+)"/g);
+console.log('STYLES COUNT:', styles ? styles.length : 0);
+
+if (styles) {
+  const fontStyles = styles.filter(s => s.includes('font-family') || s.includes('font-size') || s.includes('color'));
+  console.log('SAMPLE FONT STYLES (first 15):');
+  fontStyles.slice(0, 15).forEach(s => console.log(s));
+}
