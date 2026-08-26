@@ -2,10 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import heroVideoFile from '../assets/herovideo.mp4';
 
 /**
- * HeroVideoZoom — Sticky 1:1 Scroll-Linked Video Zoom
- * 180vh section height with sticky centering.
- * As you scroll down, video expands 200px -> 1280px.
- * As you scroll up, video shrinks 1280px -> 200px.
+ * HeroVideoZoom — Direct 1:1 Scroll-Linked Video Expansion & Shrink.
+ * Zero timers, zero delays. Responds instantly to scroll movement in real-time.
  */
 export default function HeroVideoZoom() {
   const sectionRef   = useRef(null);
@@ -20,7 +18,7 @@ export default function HeroVideoZoom() {
 
     const margin = isMobile ? 32 : isTablet ? 48 : 64;
     const endPx = Math.min(1280, screenWidth - margin);
-    const startPx = isMobile ? Math.min(160, Math.floor(screenWidth * 0.45)) : 200;
+    const startPx = isMobile ? Math.min(140, Math.floor(screenWidth * 0.45)) : 150;
 
     return { startPx, endPx };
   };
@@ -33,7 +31,7 @@ export default function HeroVideoZoom() {
     video.play().catch(() => {});
   }, []);
 
-  /* ── Sticky 1:1 Scroll-Linked Zoom ── */
+  /* ── Direct 1:1 Scroll-Linked Zoom (Instant, zero lag) ── */
   useEffect(() => {
     const section = sectionRef.current;
     const wrap    = videoWrapRef.current;
@@ -44,12 +42,15 @@ export default function HeroVideoZoom() {
     const updateZoom = () => {
       const rect = section.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-      const totalScrollableDistance = rect.height - windowHeight;
 
-      if (totalScrollableDistance <= 0) return;
+      // Expansion starts after section enters screen so initial 200px size is clearly visible
+      const startPoint = windowHeight * 0.75;
+      const endPoint = windowHeight * 0.15; // Reaches full width near top
 
-      // rect.top goes from 0 (when sticky begins) to -totalScrollableDistance (when sticky ends)
-      let progress = -rect.top / totalScrollableDistance;
+      const totalDistance = startPoint - endPoint;
+      const currentDistance = startPoint - rect.top;
+
+      let progress = currentDistance / totalDistance;
       progress = Math.max(0, Math.min(1, progress));
 
       const { startPx, endPx } = getResponsiveBounds();
@@ -77,37 +78,34 @@ export default function HeroVideoZoom() {
   return (
     <div
       ref={sectionRef}
-      className="w-full relative z-10"
-      style={{ height: '180vh', background: '#EBEAE6' }}
+      className="w-full flex items-center justify-center px-4 sm:px-6 relative z-10"
+      style={{ minHeight: '80vh', background: '#EBEAE6', padding: '6rem 0' }}
     >
-      {/* Sticky Centered Viewport Container */}
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-4 sm:px-6">
-        <div
-          ref={videoWrapRef}
-          className="overflow-hidden shadow-2xl"
-          style={{
-            width:        '200px',
-            maxWidth:     'calc(100vw - 32px)',
-            borderRadius: '16px',
-            aspectRatio:  '16 / 9',
-            border:       '2px solid rgba(0,0,0,0.15)',
-            transition:   'none', // Direct scroll linking, zero lag
-            willChange:   'width',
-          }}
+      <div
+        ref={videoWrapRef}
+        className="overflow-hidden"
+        style={{
+          width:        '150px',
+          maxWidth:     'calc(100vw - 32px)',
+          borderRadius: '16px',
+          aspectRatio:  '16 / 9',
+          border:       '2px solid rgba(0,0,0,0.15)',
+          transition:   'none', // Direct scroll linking, no CSS delay
+          willChange:   'width',
+        }}
+      >
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover block"
         >
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="w-full h-full object-cover block"
-          >
-            <source src={heroVideoFile} type="video/mp4" />
-            <source src="/assets/herovideo.mp4" type="video/mp4" />
-          </video>
-        </div>
+          <source src={heroVideoFile} type="video/mp4" />
+          <source src="/assets/herovideo.mp4" type="video/mp4" />
+        </video>
       </div>
     </div>
   );
