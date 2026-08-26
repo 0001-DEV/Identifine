@@ -33,6 +33,7 @@ function ScrollRevealObserver() {
 
   useEffect(() => {
     let observer = null;
+    let mutationObserver = null;
 
     const applyObservers = () => {
       const elementsToObserve = document.querySelectorAll(
@@ -69,9 +70,17 @@ function ScrollRevealObserver() {
     };
 
     const timer = setTimeout(applyObservers, 60);
+
+    // Watch for dynamic DOM additions (e.g. clicking Load More)
+    mutationObserver = new MutationObserver(() => {
+      applyObservers();
+    });
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
     return () => {
       clearTimeout(timer);
       if (observer) observer.disconnect();
+      if (mutationObserver) mutationObserver.disconnect();
     };
   }, [pathname]);
 

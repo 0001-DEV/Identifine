@@ -387,7 +387,7 @@ export default function BlogPage() {
               <NavLink
                 key={article.id}
                 to={`/blog/${article.slug}`}
-                className="scroll-reveal group block bg-white border border-[#DCDAD4] rounded-none p-6 sm:p-8 space-y-5 shadow-sm hover:shadow-xl hover:border-[#111111]/30 transition-all duration-500 text-left flex flex-col justify-between"
+                className="group block bg-white border border-[#DCDAD4] rounded-none p-6 sm:p-8 space-y-5 shadow-sm hover:shadow-xl hover:border-[#111111]/30 transition-all duration-500 text-left flex flex-col justify-between animate-hero-fade-4"
               >
                 <div className="space-y-5">
                   {/* Article Image */}
