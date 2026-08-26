@@ -2,12 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import heroVideoFile from '../assets/herovideo.mp4';
 
 /**
- * HeroVideoZoom — Authentic Framer-Style Lerp Physics Hero Zoom
- * Features:
- *  1. Smooth Lerp Spring Physics (0.24 factor) for buttery Framer motion
- *  2. Container Width Expansion: 200px -> 1280px
- *  3. Border Radius Morphing: 24px -> 12px
- *  4. Inner Camera Lens Zoom-Out Reveal: Scale 1.30x -> 1.00x
+ * HeroVideoZoom — Lerp Physics Hero Zoom with 2 Initial Increments + Accelerated Zoom Out.
+ * Removes all background box-shadows.
+ * Shows 2 distinct initial width increments from 200px before zooming out faster to full width.
  */
 export default function HeroVideoZoom() {
   const sectionRef   = useRef(null);
@@ -35,7 +32,7 @@ export default function HeroVideoZoom() {
     video.play().catch(() => {});
   }, []);
 
-  /* ── Authentic Framer-Style Lerp Physics Scroll Zoom ── */
+  /* ── 2 Increments + Accelerated Zoom Out Lerp Physics ── */
   useEffect(() => {
     const section = sectionRef.current;
     const wrap    = videoWrapRef.current;
@@ -50,9 +47,9 @@ export default function HeroVideoZoom() {
       const rect = section.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      // Expansion starts at 0.85 * windowHeight and reaches full width faster at 0.20 * windowHeight
+      // Starts as section enters screen (0.85 * windowHeight) and completes near top (0.15 * windowHeight)
       const startPoint = windowHeight * 0.85;
-      const endPoint = windowHeight * 0.20;
+      const endPoint = windowHeight * 0.15;
 
       const totalDistance = startPoint - endPoint;
       const currentDistance = startPoint - rect.top;
@@ -61,31 +58,36 @@ export default function HeroVideoZoom() {
       targetProgress = Math.max(0, Math.min(1, progress));
     };
 
-    // Silky Smooth Lerp Physics Render Loop (Framer Spring Motion)
+    // Smooth Lerp Physics Render Loop
     const renderLoop = () => {
       const diff = targetProgress - currentProgress;
       if (Math.abs(diff) < 0.0001) {
         currentProgress = targetProgress;
       } else {
-        // 0.10 lerp factor for buttery, liquid-smooth physics tracking
-        currentProgress += diff * 0.10;
+        currentProgress += diff * 0.18;
       }
 
-      // Apply gentle easeOutCubic curve for silky smooth expansion/shrink
-      const eased = 1 - Math.pow(1 - currentProgress, 2.5);
+      // Curve: Shows 2 clear initial increments from 200px before accelerating faster into full width
+      let curveProgress = currentProgress;
+      if (currentProgress < 0.35) {
+        curveProgress = currentProgress * 0.85; // Initial 2 distinct step increments
+      } else {
+        const t = (currentProgress - 0.35) / 0.65;
+        curveProgress = 0.30 + Math.pow(t, 2.2) * 0.70; // Faster acceleration rate
+      }
 
       const { startPx, endPx } = getResponsiveBounds();
 
-      // 1. Container Width: startPx -> endPx
-      const width = startPx + eased * (endPx - startPx);
+      // 1. Container Width: 200px -> 2 initial increments -> 1280px
+      const width = startPx + curveProgress * (endPx - startPx);
       wrap.style.width = `${width}px`;
 
-      // 2. Border Radius Morph: 24px -> 12px
-      const borderRadius = 24 - eased * 12;
+      // 2. Border Radius Morph: 32px -> 20px (More rounded radius after expanding)
+      const borderRadius = 32 - curveProgress * 12;
       wrap.style.borderRadius = `${borderRadius}px`;
 
-      // 3. Inner Video Scale: 1.24 -> 1.00 (Silky camera reveal zoom-out)
-      const scale = 1.24 - eased * 0.24;
+      // 3. Inner Video Scale: 1.24 -> 1.00 (Camera reveal zoom-out)
+      const scale = 1.24 - curveProgress * 0.24;
       video.style.transform = `scale(${scale})`;
 
       animationFrameId = requestAnimationFrame(renderLoop);
@@ -120,13 +122,14 @@ export default function HeroVideoZoom() {
     >
       <div
         ref={videoWrapRef}
-        className="overflow-hidden shadow-2xl"
+        className="overflow-hidden"
         style={{
           width:        '200px',
           maxWidth:     'calc(100vw - 32px)',
-          borderRadius: '24px',
+          borderRadius: '32px',
           aspectRatio:  '16 / 9',
           border:       'none',
+          boxShadow:    'none',
           willChange:   'width, border-radius',
         }}
       >
@@ -139,7 +142,7 @@ export default function HeroVideoZoom() {
           preload="auto"
           className="w-full h-full object-cover block"
           style={{
-            transform:  'scale(1.30)',
+            transform:  'scale(1.24)',
             willChange: 'transform',
           }}
         >
