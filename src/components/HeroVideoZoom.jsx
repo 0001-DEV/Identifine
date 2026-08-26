@@ -1,117 +1,111 @@
 import React, { useEffect, useRef } from 'react';
 import heroVideoFile from '../assets/herovideo.mp4';
 
+/**
+ * HeroVideoZoom — Direct 1:1 Scroll-Linked Video Expansion & Shrink.
+ * Zero timers, zero delays. Responds instantly to scroll movement in real-time.
+ */
 export default function HeroVideoZoom() {
-  const containerRef = useRef(null);
-  const zoomWrapperRef = useRef(null);
-  const innerCardRef = useRef(null);
-  const videoRef = useRef(null);
+  const sectionRef   = useRef(null);
+  const videoWrapRef = useRef(null);
+  const videoRef     = useRef(null);
 
+  // Calculates initial starting width and max target width based on viewport
+  const getResponsiveBounds = () => {
+    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1280;
+    const isMobile = screenWidth < 640;
+    const isTablet = screenWidth < 1024;
+
+    const margin = isMobile ? 32 : isTablet ? 48 : 64;
+    const endPx = Math.min(1280, screenWidth - margin);
+    const startPx = isMobile ? Math.min(160, Math.floor(screenWidth * 0.45)) : 200;
+
+    return { startPx, endPx };
+  };
+
+  /* ── Autoplay video ── */
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Autoplay retry on touch/scroll/click
-          const handleFirstInteraction = () => {
-            if (video) video.play().catch(() => {});
-            window.removeEventListener('touchstart', handleFirstInteraction);
-            window.removeEventListener('scroll', handleFirstInteraction);
-            window.removeEventListener('click', handleFirstInteraction);
-          };
-          window.addEventListener('touchstart', handleFirstInteraction, { passive: true });
-          window.addEventListener('scroll', handleFirstInteraction, { passive: true });
-          window.addEventListener('click', handleFirstInteraction, { passive: true });
-        });
-      }
-    }
+    if (!video) return;
+    video.muted = true;
+    video.play().catch(() => {});
+  }, []);
 
-    let ticking = false;
+  /* ── Direct 1:1 Scroll-Linked Zoom (Instant, zero lag) ── */
+  useEffect(() => {
+    const section = sectionRef.current;
+    const wrap    = videoWrapRef.current;
+    if (!section || !wrap) return;
+
+    let animationFrameId = null;
+
+    const updateZoom = () => {
+      const rect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Expansion starts as section enters screen, completes as it centers
+      const startPoint = windowHeight;
+      const endPoint = windowHeight * 0.15; // Reaches full width near top
+
+      const totalDistance = startPoint - endPoint;
+      const currentDistance = startPoint - rect.top;
+
+      let progress = currentDistance / totalDistance;
+      progress = Math.max(0, Math.min(1, progress));
+
+      const { startPx, endPx } = getResponsiveBounds();
+      const currentWidth = startPx + progress * (endPx - startPx);
+
+      wrap.style.width = `${currentWidth}px`;
+    };
 
     const handleScroll = () => {
-      const scrollY = window.scrollY || window.pageYOffset || 0;
-      const isMobile = window.innerWidth < 640;
-      
-      // Zoom scroll travel distance
-      const zoomDistance = isMobile ? 360 : Math.min(Math.max(window.innerHeight * 0.7, 450), 650);
-      const rawProgress = scrollY / zoomDistance;
-      const progress = Math.min(Math.max(rawProgress, 0), 1);
-      
-      // Organic smooth easing curve
-      const easedProgress = Math.pow(progress, 0.92);
-      
-      // Starts from very tiny (0.18 on mobile, 0.22 on desktop) and smoothly expands to 1.0 (100% full width)
-      const minScale = isMobile ? 0.18 : 0.22;
-      const currentScale = minScale + easedProgress * (1 - minScale);
-      
-      // Direct GPU transform update for 60fps/120fps hardware acceleration
-      if (zoomWrapperRef.current) {
-        zoomWrapperRef.current.style.transform = `scale3d(${currentScale}, ${currentScale}, 1)`;
-      }
-
-      if (innerCardRef.current) {
-        const radius = Math.round(12 + easedProgress * (isMobile ? 12 : 24));
-        innerCardRef.current.style.borderRadius = `${radius}px`;
-      }
-      
-      ticking = false;
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(updateZoom);
     };
 
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(handleScroll);
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('touchmove', onScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
-    
-    // Initial calculation on mount
-    handleScroll();
+    updateZoom(); // Initial calculation
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('touchmove', onScroll);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full flex justify-center py-4 sm:py-8 overflow-hidden items-center bg-transparent">
-      <div 
-        ref={zoomWrapperRef}
-        className="w-full max-w-[92rem] px-0 sm:px-2 origin-center will-change-transform bg-transparent"
-        style={{ 
-          transform: 'scale3d(0.18, 0.18, 1)'
+    <div
+      ref={sectionRef}
+      className="w-full flex items-center justify-center px-4 sm:px-6 relative z-10"
+      style={{ minHeight: '80vh', background: '#EBEAE6', padding: '6rem 0' }}
+    >
+      <div
+        ref={videoWrapRef}
+        className="overflow-hidden"
+        style={{
+          width:        '200px',
+          maxWidth:     'calc(100vw - 32px)',
+          borderRadius: '16px',
+          aspectRatio:  '16 / 9',
+          border:       '2px solid rgba(0,0,0,0.15)',
+          transition:   'none', // Direct scroll linking, no CSS delay
+          willChange:   'width',
         }}
       >
-        <div 
-          ref={innerCardRef}
-          className="relative aspect-[16/9] w-full overflow-hidden select-none bg-transparent border-0 shadow-none"
-          style={{
-            borderRadius: '12px',
-            boxShadow: 'none',
-            border: 'none',
-            background: 'transparent'
-          }}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover block"
         >
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="w-full h-full object-cover bg-transparent rounded-none"
-          >
-            <source src={heroVideoFile} type="video/mp4" />
-            <source src="/assets/herovideo.mp4" type="video/mp4" />
-          </video>
-        </div>
+          <source src={heroVideoFile} type="video/mp4" />
+          <source src="/assets/herovideo.mp4" type="video/mp4" />
+        </video>
       </div>
     </div>
   );

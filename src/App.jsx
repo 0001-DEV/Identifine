@@ -92,7 +92,7 @@ export default function App() {
   const hideFooter = location.pathname.startsWith('/program');
 
   return (
-    <div className="min-h-screen bg-[#080B11] text-[#F1F5F9] font-sans flex flex-col justify-between selection:bg-[#E2B857] selection:text-black">
+    <div className="min-h-screen bg-[#080B11] text-[#F1F5F9] font-sans flex flex-col justify-between selection:bg-[#E2B857] selection:text-black overflow-x-hidden">
       <ScrollToTop />
       <ScrollRevealObserver />
       

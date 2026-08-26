@@ -154,15 +154,14 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Full Width Dynamic Scroll Zoom Video Section (herovideo.mp4) */}
-        <div className="animate-hero-fade-4 w-full max-w-[92rem] mx-auto pt-12 overflow-hidden">
-          <HeroVideoZoom />
-        </div>
       </section>
+
+      {/* Full Width Scroll Zoom Video Section */}
+      <HeroVideoZoom />
 
 
       {/* 2. DEFINE HOW YOUR ORGANIZATION IS EXPERIENCED */}
-      <section className="bg-[#EBEAE6] pt-4 pb-20 px-6 sm:px-12 overflow-hidden -mt-12 sm:-mt-16 relative z-10">
+      <section className="bg-[#EBEAE6] pt-4 pb-20 px-6 sm:px-12 overflow-hidden relative z-10">
         <div className="max-w-7xl mx-auto space-y-16">
 
           <div className="text-center max-w-4xl mx-auto space-y-4">
@@ -171,19 +170,19 @@ export default function HomePage() {
               <img
                 src={starIcon}
                 alt=""
-                className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 object-contain brightness-0"
+                className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 object-contain brightness-0"
               />
               <span
-                className="font-galano font-normal text-[#111111] text-xs sm:text-base uppercase tracking-[2px] sm:tracking-[5px] whitespace-nowrap"
+                className="font-galano font-normal text-[#111111] text-sm sm:text-lg tracking-[3px] sm:tracking-[5px] whitespace-nowrap"
               >
                 Our identity experience program
               </span>
             </div>
 
             {/* Main Heading - Coming up from down with stagger-delay-2 */}
-            <h2 className="scroll-reveal-deep stagger-delay-2 text-3xl sm:text-5xl lg:text-[4rem] font-galano font-medium text-[#111111] leading-tight max-w-6xl mx-auto">
-              <span className="inline-block">Define how your organization is</span> <br />
-              <em className="italic-serif text-[#111111]">experienced</em>
+            <h2 className="scroll-reveal-deep stagger-delay-2 text-2xl sm:text-4xl md:text-5xl lg:text-[4rem] font-galano font-medium text-[#111111] leading-tight max-w-6xl mx-auto">
+              <span className="inline-block whitespace-nowrap">Define how your organization is</span> <br />
+              <em className="font-swarsh italic font-normal text-[#111111]">experienced</em>
             </h2>
           </div>
 
