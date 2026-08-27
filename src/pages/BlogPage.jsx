@@ -390,12 +390,12 @@ export default function BlogPage() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
               
-              {/* Left Image - Full Bleed Card Hero */}
-              <div className="lg:col-span-7 h-[360px] sm:h-[480px] lg:h-[540px] overflow-hidden bg-[#F5F4F0] relative">
+              {/* Left Image - Increased Height */}
+              <div className="lg:col-span-7 h-[420px] sm:h-[580px] lg:h-[720px] overflow-hidden bg-[#F5F4F0] relative">
                 <img
                   src={featuredPost.image}
                   alt={featuredPost.title}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
                 />
               </div>
 
@@ -435,11 +435,11 @@ export default function BlogPage() {
               >
                 <div className="space-y-5">
                   {/* Article Image */}
-                  <div className="h-60 sm:h-64 w-full rounded-none overflow-hidden bg-[#F5F4F0] relative">
+                  <div className="h-64 sm:h-76 rounded-none overflow-hidden bg-[#F5F4F0] relative">
                     <img
                       src={article.image}
                       alt={article.title}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
                     />
                   </div>
 

@@ -96,11 +96,11 @@ export default function BlogDetailPage() {
 
         {/* Featured Hero Image if available */}
         {article.image && (
-          <div className="w-full aspect-[16/9] sm:aspect-[21/9] max-h-[550px] rounded-xl overflow-hidden bg-[#F5F4F0] border border-[#DCDAD4] shadow-sm relative">
+          <div className="w-full h-[480px] sm:h-[680px] lg:h-[780px] rounded-none overflow-hidden bg-[#F5F4F0] border border-[#DCDAD4] shadow-sm">
             <img
               src={article.image}
               alt={article.title}
-              className="w-full h-full object-cover object-center select-none"
+              className="w-full h-full object-cover select-none"
             />
           </div>
         )}
