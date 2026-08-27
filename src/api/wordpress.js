@@ -78,11 +78,41 @@ function formatPost(post) {
   };
 }
 
+// In-memory cache for instant response within session
+const memoryCache = {};
+
 /**
  * Fetch list of published posts from WordPress (Latest updated/modified first)
+ * Uses instant cache + background revalidation for maximum speed
  */
 export async function fetchWpPosts(page = 1, perPage = 12) {
+  const cacheKey = `wp_posts_${page}_${perPage}`;
   const query = `/posts?_embed=true&page=${page}&per_page=${perPage}&status=publish&orderby=modified&order=desc`;
+
+  // 1. Check in-memory or sessionStorage cache first for instant load
+  if (memoryCache[cacheKey]) {
+    // Return cached immediately, trigger background refresh silently
+    revalidateWpPosts(cacheKey, query);
+    return memoryCache[cacheKey];
+  }
+
+  try {
+    const saved = sessionStorage.getItem(cacheKey);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      memoryCache[cacheKey] = parsed;
+      revalidateWpPosts(cacheKey, query);
+      return parsed;
+    }
+  } catch (e) {
+    // Ignore storage quota errors
+  }
+
+  // 2. Network fetch if no cache exists
+  return await revalidateWpPosts(cacheKey, query);
+}
+
+async function revalidateWpPosts(cacheKey, query) {
   try {
     let res = await fetch(`${WP_BASE_URL}${query}`);
     if (!res.ok && WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {
@@ -90,27 +120,59 @@ export async function fetchWpPosts(page = 1, perPage = 12) {
     }
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     const data = await res.json();
-    return data.map(formatPost);
+    const formatted = data.map(formatPost);
+    
+    memoryCache[cacheKey] = formatted;
+    try {
+      sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
+    } catch (e) {}
+
+    return formatted;
   } catch (error) {
-    // Retry with direct production URL if local proxy failed
     try {
       const directRes = await fetch(`https://identifine.com.ng/wp-json/wp/v2${query}`);
       if (directRes.ok) {
         const data = await directRes.json();
-        return data.map(formatPost);
+        const formatted = data.map(formatPost);
+        memoryCache[cacheKey] = formatted;
+        try {
+          sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
+        } catch (e) {}
+        return formatted;
       }
     } catch (err) {
       console.warn('Could not fetch posts from WordPress API:', err);
     }
-    return null;
+    return memoryCache[cacheKey] || null;
   }
 }
 
 /**
- * Fetch a single post by slug from WordPress
+ * Fetch a single post by slug from WordPress with instant cache
  */
 export async function fetchWpPostBySlug(slug) {
+  const cacheKey = `wp_post_${slug}`;
   const query = `/posts?_embed=true&slug=${encodeURIComponent(slug)}`;
+
+  if (memoryCache[cacheKey]) {
+    revalidateWpPostBySlug(cacheKey, query, slug);
+    return memoryCache[cacheKey];
+  }
+
+  try {
+    const saved = sessionStorage.getItem(cacheKey);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      memoryCache[cacheKey] = parsed;
+      revalidateWpPostBySlug(cacheKey, query, slug);
+      return parsed;
+    }
+  } catch (e) {}
+
+  return await revalidateWpPostBySlug(cacheKey, query, slug);
+}
+
+async function revalidateWpPostBySlug(cacheKey, query, slug) {
   try {
     let res = await fetch(`${WP_BASE_URL}${query}`);
     if (!res.ok && WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {
@@ -119,19 +181,31 @@ export async function fetchWpPostBySlug(slug) {
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     const data = await res.json();
     if (data && data.length > 0) {
-      return formatPost(data[0]);
+      const formatted = formatPost(data[0]);
+      memoryCache[cacheKey] = formatted;
+      try {
+        sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
+      } catch (e) {}
+      return formatted;
     }
-    return null;
+    return memoryCache[cacheKey] || null;
   } catch (error) {
     try {
       const directRes = await fetch(`https://identifine.com.ng/wp-json/wp/v2${query}`);
       if (directRes.ok) {
         const data = await directRes.json();
-        if (data && data.length > 0) return formatPost(data[0]);
+        if (data && data.length > 0) {
+          const formatted = formatPost(data[0]);
+          memoryCache[cacheKey] = formatted;
+          try {
+            sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
+          } catch (e) {}
+          return formatted;
+        }
       }
     } catch (err) {
       console.warn(`Could not fetch post '${slug}' from WordPress API:`, err);
     }
-    return null;
+    return memoryCache[cacheKey] || null;
   }
 }
