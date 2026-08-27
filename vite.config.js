@@ -13,5 +13,15 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/wp-api/, '')
       }
     }
+  },
+  preview: {
+    port: 4173,
+    proxy: {
+      '/wp-api': {
+        target: 'https://identifine.com.ng/wp-json/wp/v2',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/wp-api/, '')
+      }
+    }
   }
 });

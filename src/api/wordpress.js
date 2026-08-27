@@ -80,14 +80,27 @@ function formatPost(post) {
  * Fetch list of published posts from WordPress
  */
 export async function fetchWpPosts(page = 1, perPage = 12) {
+  const query = `/posts?_embed=true&page=${page}&per_page=${perPage}&status=publish`;
   try {
-    const res = await fetch(`${WP_BASE_URL}/posts?_embed=true&page=${page}&per_page=${perPage}&status=publish`);
+    let res = await fetch(`${WP_BASE_URL}${query}`);
+    if (!res.ok && WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {
+      res = await fetch(`https://identifine.com.ng/wp-json/wp/v2${query}`);
+    }
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     const data = await res.json();
     return data.map(formatPost);
   } catch (error) {
-    console.warn('Could not fetch posts from WordPress API, using fallback data.', error);
-    return null; // Return null so UI can fallback
+    // Retry with direct production URL if local proxy failed
+    try {
+      const directRes = await fetch(`https://identifine.com.ng/wp-json/wp/v2${query}`);
+      if (directRes.ok) {
+        const data = await directRes.json();
+        return data.map(formatPost);
+      }
+    } catch (err) {
+      console.warn('Could not fetch posts from WordPress API:', err);
+    }
+    return null;
   }
 }
 
@@ -95,8 +108,12 @@ export async function fetchWpPosts(page = 1, perPage = 12) {
  * Fetch a single post by slug from WordPress
  */
 export async function fetchWpPostBySlug(slug) {
+  const query = `/posts?_embed=true&slug=${encodeURIComponent(slug)}`;
   try {
-    const res = await fetch(`${WP_BASE_URL}/posts?_embed=true&slug=${encodeURIComponent(slug)}`);
+    let res = await fetch(`${WP_BASE_URL}${query}`);
+    if (!res.ok && WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {
+      res = await fetch(`https://identifine.com.ng/wp-json/wp/v2${query}`);
+    }
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     const data = await res.json();
     if (data && data.length > 0) {
@@ -104,7 +121,15 @@ export async function fetchWpPostBySlug(slug) {
     }
     return null;
   } catch (error) {
-    console.warn(`Could not fetch post '${slug}' from WordPress API:`, error);
+    try {
+      const directRes = await fetch(`https://identifine.com.ng/wp-json/wp/v2${query}`);
+      if (directRes.ok) {
+        const data = await directRes.json();
+        if (data && data.length > 0) return formatPost(data[0]);
+      }
+    } catch (err) {
+      console.warn(`Could not fetch post '${slug}' from WordPress API:`, err);
+    }
     return null;
   }
 }
