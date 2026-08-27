@@ -390,8 +390,8 @@ export default function BlogPage() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
               
-              {/* Left Image - Grand Full Bleed Hero */}
-              <div className="lg:col-span-7 h-[480px] sm:h-[640px] lg:h-[800px] overflow-hidden bg-[#F5F4F0] relative">
+              {/* Left Image - Full Bleed Image */}
+              <div className="lg:col-span-7 h-[480px] sm:h-[640px] lg:h-[800px] overflow-hidden relative">
                 <img
                   src={featuredPost.image}
                   alt={featuredPost.title}
@@ -435,7 +435,7 @@ export default function BlogPage() {
               >
                 <div className="space-y-5">
                   {/* Article Image */}
-                  <div className="h-72 sm:h-84 lg:h-96 rounded-none overflow-hidden bg-[#F5F4F0] relative">
+                  <div className="h-72 sm:h-84 lg:h-96 rounded-none overflow-hidden relative">
                     <img
                       src={article.image}
                       alt={article.title}
