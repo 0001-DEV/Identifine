@@ -390,12 +390,12 @@ export default function BlogPage() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
               
-              {/* Left Image - Increased Height */}
-              <div className="lg:col-span-7 h-[420px] sm:h-[580px] lg:h-[720px] overflow-hidden bg-[#F5F4F0] relative">
+              {/* Left Image - Responsive Aspect Ratio without cropping */}
+              <div className="lg:col-span-7 min-h-[320px] sm:min-h-[440px] max-h-[560px] overflow-hidden bg-[#F5F4F0] relative flex items-center justify-center p-4">
                 <img
                   src={featuredPost.image}
                   alt={featuredPost.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                  className="w-full h-auto max-h-[520px] object-contain group-hover:scale-105 transition-transform duration-700 ease-out select-none"
                 />
               </div>
 
@@ -435,11 +435,11 @@ export default function BlogPage() {
               >
                 <div className="space-y-5">
                   {/* Article Image */}
-                  <div className="h-64 sm:h-76 rounded-none overflow-hidden bg-[#F5F4F0] relative">
+                  <div className="aspect-[16/9] w-full rounded-none overflow-hidden bg-[#F5F4F0] relative flex items-center justify-center p-2 border border-[#EBEAE6]">
                     <img
                       src={article.image}
                       alt={article.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out select-none"
                     />
                   </div>
 

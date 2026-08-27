@@ -306,11 +306,11 @@ export default function HomePage() {
                   className="group p-3.5 sm:p-4 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#E2B857]/50 hover:-translate-y-1 transition-all duration-300 flex flex-col sm:flex-row items-center gap-5 overflow-hidden shadow-xl"
                 >
                   {/* Inside Container - Dedicated Left Space: Compact Image from Assets */}
-                  <div className="w-full sm:w-44 h-36 sm:h-32 rounded-xl overflow-hidden bg-black/60 relative border border-[#222222] shrink-0">
+                  <div className="w-full sm:w-44 h-36 sm:h-32 rounded-xl overflow-hidden bg-black/60 relative border border-[#222222] shrink-0 flex items-center justify-center p-1">
                     <img
                       src={post.image}
                       alt={post.title}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 select-none"
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 select-none"
                     />
                   </div>
 
