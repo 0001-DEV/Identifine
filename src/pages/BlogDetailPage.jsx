@@ -96,11 +96,11 @@ export default function BlogDetailPage() {
 
         {/* Featured Hero Image if available */}
         {article.image && (
-          <div className="w-full overflow-hidden">
+          <div className="w-full rounded-none overflow-hidden">
             <img
               src={article.image}
               alt={article.title}
-              className="w-full h-auto max-h-[700px] sm:max-h-[850px] object-cover rounded-2xl select-none"
+              className="w-full h-auto max-h-[700px] sm:max-h-[850px] object-cover rounded-none select-none"
             />
           </div>
         )}
@@ -109,7 +109,7 @@ export default function BlogDetailPage() {
         <div className="space-y-8 text-left text-base sm:text-lg text-[#333333] font-normal leading-relaxed">
           {article.contentHtml ? (
             <div
-              className="wp-rendered-content space-y-6 text-base sm:text-lg text-[#333333] leading-relaxed font-sans [&_p]:mb-4 [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-galano [&_h2]:font-medium [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-galano [&_h3]:font-medium [&_h3]:mt-6 [&_h3]:mb-3 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_a]:text-[#111111] [&_a]:underline [&_a]:font-medium [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-xl [&_img]:my-6 [&_img]:mx-auto [&_img]:block [&_figure]:max-w-full [&_figure]:h-auto [&_figure]:my-6 [&_figure]:mx-auto [&_iframe]:max-w-full [&_iframe]:w-full [&_iframe]:rounded-xl [&_iframe]:my-6 [&_video]:max-w-full [&_video]:h-auto [&_video]:rounded-xl [&_figcaption]:text-xs [&_figcaption]:text-center [&_figcaption]:text-[#666666] [&_figcaption]:mt-2"
+              className="wp-rendered-content space-y-6 text-base sm:text-lg text-[#333333] leading-relaxed font-sans [&_p]:mb-4 [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-galano [&_h2]:font-medium [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-galano [&_h3]:font-medium [&_h3]:mt-6 [&_h3]:mb-3 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_a]:text-[#111111] [&_a]:underline [&_a]:font-medium [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-none [&_img]:my-6 [&_img]:mx-auto [&_img]:block [&_figure]:max-w-full [&_figure]:h-auto [&_figure]:my-6 [&_figure]:mx-auto [&_iframe]:max-w-full [&_iframe]:w-full [&_iframe]:rounded-none [&_iframe]:my-6 [&_video]:max-w-full [&_video]:h-auto [&_video]:rounded-none [&_figcaption]:text-xs [&_figcaption]:text-center [&_figcaption]:text-[#666666] [&_figcaption]:mt-2 [&_#ez-toc-container]:!bg-[#EBEAE6] [&_#ez-toc-container]:border [&_#ez-toc-container]:border-[#DCDAD4] [&_#ez-toc-container]:p-6 [&_#ez-toc-container]:rounded-none [&_#ez-toc-container]:my-8 [&_#ez-toc-container]:shadow-none [&_.ez-toc-title]:font-galano [&_.ez-toc-title]:font-medium [&_.ez-toc-title]:text-[#111111] [&_.ez-toc-title]:text-lg [&_.ez-toc-list_a]:text-[#333333] [&_.ez-toc-list_a]:no-underline [&_.ez-toc-list_a:hover]:text-[#E2B857]"
               dangerouslySetInnerHTML={{ __html: article.contentHtml }}
             />
           ) : (
