@@ -63,6 +63,7 @@ function formatPost(post) {
     title: cleanTitle,
     date: postDate,
     rawDate: post.date,
+    modifiedDate: post.modified || post.date,
     readTime: `${readTimeMinutes} min read`,
     category: decodeEntities(categoryName),
     featured: false,
@@ -78,10 +79,10 @@ function formatPost(post) {
 }
 
 /**
- * Fetch list of published posts from WordPress (Newest first)
+ * Fetch list of published posts from WordPress (Latest updated/modified first)
  */
 export async function fetchWpPosts(page = 1, perPage = 12) {
-  const query = `/posts?_embed=true&page=${page}&per_page=${perPage}&status=publish&orderby=date&order=desc`;
+  const query = `/posts?_embed=true&page=${page}&per_page=${perPage}&status=publish&orderby=modified&order=desc`;
   try {
     let res = await fetch(`${WP_BASE_URL}${query}`);
     if (!res.ok && WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {

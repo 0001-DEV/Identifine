@@ -319,8 +319,8 @@ export default function BlogPage() {
             image: p.image || [blog1Img, blog2Img, blog3Img, blog4Img, blog5Img][idx % 5]
           }));
 
-          // Ensure newest posts (by rawDate) are sorted first
-          formatted.sort((a, b) => new Date(b.rawDate || 0) - new Date(a.rawDate || 0));
+          // Ensure latest updated/modified posts are sorted first
+          formatted.sort((a, b) => new Date(b.modifiedDate || b.rawDate || 0) - new Date(a.modifiedDate || a.rawDate || 0));
 
           setPosts(formatted);
         }
