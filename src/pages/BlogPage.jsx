@@ -302,10 +302,37 @@ export const blogPostsData = [
 ];
 
 export default function BlogPage() {
+  const [posts, setPosts] = useState(blogPostsData);
+  const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(3);
 
-  const featuredPost = blogPostsData.find(p => p.featured) || blogPostsData[0];
-  const gridPosts = blogPostsData.filter(p => p.id !== featuredPost.id);
+  useEffect(() => {
+    let isMounted = true;
+    async function loadPosts() {
+      const wpPosts = await fetchWpPosts(1, 20);
+      if (isMounted) {
+        if (wpPosts && wpPosts.length > 0) {
+          // Format & attach fallback images if post lacks featured media
+          const formatted = wpPosts.map((p, idx) => ({
+            ...p,
+            summary: p.excerpt || p.title,
+            image: p.image || [blog1Img, blog2Img, blog3Img, blog4Img, blog5Img][idx % 5]
+          }));
+
+          // Ensure newest posts (by rawDate) are sorted first
+          formatted.sort((a, b) => new Date(b.rawDate || 0) - new Date(a.rawDate || 0));
+
+          setPosts(formatted);
+        }
+        setLoading(false);
+      }
+    }
+    loadPosts();
+    return () => { isMounted = false; };
+  }, []);
+
+  const featuredPost = posts[0] || blogPostsData[0];
+  const gridPosts = posts.slice(1);
 
   const isExpanded = visibleCount >= gridPosts.length;
 
