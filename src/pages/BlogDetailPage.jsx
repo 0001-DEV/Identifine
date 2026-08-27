@@ -1,19 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import starIcon from '../assets/SVG@4x.png';
 import { blogPostsData } from './BlogPage';
+import { fetchWpPostBySlug, fetchWpPosts } from '../api/wordpress';
 
 export default function BlogDetailPage() {
   const { slug } = useParams();
+  const [article, setArticle] = useState(null);
+  const [moreStories, setMoreStories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Find post by slug or default to first post
-  const article = blogPostsData.find(
-    (p) => p.slug === slug || p.id === slug
-  ) || blogPostsData[0];
+  useEffect(() => {
+    let isMounted = true;
+    async function loadArticle() {
+      setLoading(true);
+      // 1. Try to fetch from WordPress API by slug
+      const wpArticle = await fetchWpPostBySlug(slug);
+      
+      // 2. Fetch list of stories for "More stories" section
+      const wpMore = await fetchWpPosts(1, 4);
 
-  // Get other stories excluding current article
-  const moreStories = blogPostsData.filter((p) => p.id !== article.id).slice(0, 3);
+      if (isMounted) {
+        if (wpArticle) {
+          setArticle(wpArticle);
+        } else {
+          // Fallback to static local data
+          const localArticle = blogPostsData.find(
+            (p) => p.slug === slug || p.id === slug
+          ) || blogPostsData[0];
+          setArticle(localArticle);
+        }
+
+        if (wpMore && wpMore.length > 0) {
+          setMoreStories(wpMore.filter(p => p.slug !== slug).slice(0, 3));
+        } else {
+          setMoreStories(blogPostsData.filter((p) => p.slug !== slug).slice(0, 3));
+        }
+        setLoading(false);
+      }
+    }
+
+    loadArticle();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return () => { isMounted = false; };
+  }, [slug]);
+
+  if (loading || !article) {
+    return (
+      <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-44 pb-28 px-6 text-center font-sans flex items-center justify-center">
+        <div className="space-y-4">
+          <div className="w-10 h-10 border-4 border-[#111111] border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="font-galano text-sm text-[#555555]">Loading story...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
@@ -52,41 +94,54 @@ export default function BlogDetailPage() {
           </div>
         </div>
 
-        {/* Featured Hero Image */}
-        <div className="w-full h-[480px] sm:h-[680px] lg:h-[780px] rounded-none overflow-hidden bg-[#F5F4F0] border border-[#DCDAD4] shadow-sm">
-          <img
-            src={article.image}
-            alt={article.title}
-            className="w-full h-full object-cover select-none"
-          />
-        </div>
+        {/* Featured Hero Image if available */}
+        {article.image && (
+          <div className="w-full h-[480px] sm:h-[680px] lg:h-[780px] rounded-none overflow-hidden bg-[#F5F4F0] border border-[#DCDAD4] shadow-sm">
+            <img
+              src={article.image}
+              alt={article.title}
+              className="w-full h-full object-cover select-none"
+            />
+          </div>
+        )}
 
-        {/* Article Content */}
+        {/* Article Content - Render HTML from WordPress REST API */}
         <div className="space-y-8 text-left text-base sm:text-lg text-[#333333] font-normal leading-relaxed">
-          <p className="text-lg sm:text-xl font-medium text-[#111111] leading-relaxed border-l-2 border-[#E2B857] pl-4 sm:pl-6">
-            {article.intro}
-          </p>
+          {article.contentHtml ? (
+            <div 
+              className="wp-rendered-content space-y-6 text-base sm:text-lg text-[#333333] leading-relaxed font-sans [&_p]:mb-4 [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-galano [&_h2]:font-medium [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-galano [&_h3]:font-medium [&_h3]:mt-6 [&_h3]:mb-3 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_a]:text-[#111111] [&_a]:underline [&_a]:font-medium"
+              dangerouslySetInnerHTML={{ __html: article.contentHtml }} 
+            />
+          ) : (
+            <>
+              {article.intro && (
+                <p className="text-lg sm:text-xl font-medium text-[#111111] leading-relaxed border-l-2 border-[#E2B857] pl-4 sm:pl-6">
+                  {article.intro}
+                </p>
+              )}
 
-          {article.sections && article.sections.map((section, idx) => (
-            <div key={idx} className="space-y-3 pt-4">
-              <h3 className="text-xl sm:text-2xl font-galano font-medium text-[#111111]">
-                {section.heading}
-              </h3>
-              <p className="text-base sm:text-lg text-[#444444] leading-relaxed">
-                {section.body}
-              </p>
-            </div>
-          ))}
+              {article.sections && article.sections.map((section, idx) => (
+                <div key={idx} className="space-y-3 pt-4">
+                  <h3 className="text-xl sm:text-2xl font-galano font-medium text-[#111111]">
+                    {section.heading}
+                  </h3>
+                  <p className="text-base sm:text-lg text-[#444444] leading-relaxed">
+                    {section.body}
+                  </p>
+                </div>
+              ))}
 
-          {article.takeaway && (
-            <div className="bg-white border border-[#DCDAD4] rounded-none p-6 sm:p-8 space-y-2 mt-8 shadow-sm">
-              <h4 className="text-sm font-galano font-bold text-[#111111] uppercase tracking-wider">
-                Key Takeaway
-              </h4>
-              <p className="text-base sm:text-lg text-[#222222] font-medium leading-relaxed">
-                {article.takeaway}
-              </p>
-            </div>
+              {article.takeaway && (
+                <div className="bg-white border border-[#DCDAD4] rounded-none p-6 sm:p-8 space-y-2 mt-8 shadow-sm">
+                  <h4 className="text-sm font-galano font-bold text-[#111111] uppercase tracking-wider">
+                    Key Takeaway
+                  </h4>
+                  <p className="text-base sm:text-lg text-[#222222] font-medium leading-relaxed">
+                    {article.takeaway}
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
 
@@ -107,7 +162,7 @@ export default function BlogDetailPage() {
               >
                 <div className="h-44 sm:h-48 rounded-none overflow-hidden bg-[#F5F4F0]">
                   <img
-                    src={story.image}
+                    src={story.image || starIcon}
                     alt={story.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
@@ -129,3 +184,4 @@ export default function BlogDetailPage() {
     </div>
   );
 }
+

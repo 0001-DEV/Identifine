@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import starIcon from '../assets/SVG@4x.png';
+import { fetchWpPosts } from '../api/wordpress';
 
 // Local Blog Images from Framer Site
 import blog1Img from '../assets/blog/blog_1.jpg';
