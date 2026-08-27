@@ -302,7 +302,7 @@ export const blogPostsData = [
 ];
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState(blogPostsData);
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(3);
 
@@ -323,6 +323,8 @@ export default function BlogPage() {
           formatted.sort((a, b) => new Date(b.modifiedDate || b.rawDate || 0) - new Date(a.modifiedDate || a.rawDate || 0));
 
           setPosts(formatted);
+        } else {
+          setPosts(blogPostsData);
         }
         setLoading(false);
       }
@@ -366,8 +368,22 @@ export default function BlogPage() {
           </h1>
         </div>
 
-        {/* Featured Post (Hero Card Container) */}
-        <div className="animate-hero-fade-3">
+        {/* Skeleton Loader during Initial Fetch */}
+        {loading ? (
+          <div className="space-y-10 animate-pulse">
+            {/* Featured Skeleton */}
+            <div className="bg-white border border-[#DCDAD4] h-[480px] sm:h-[580px] w-full rounded-none overflow-hidden" />
+            {/* Grid Skeletons */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white border border-[#DCDAD4] h-96 rounded-none" />
+              <div className="bg-white border border-[#DCDAD4] h-96 rounded-none" />
+              <div className="bg-white border border-[#DCDAD4] h-96 rounded-none" />
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Featured Post (Hero Card Container) */}
+            <div className="animate-hero-fade-3">
           <NavLink
             to={`/blog/${featuredPost.slug}`}
             className="group block bg-white border border-[#DCDAD4] rounded-none overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 text-left"
@@ -463,6 +479,8 @@ export default function BlogPage() {
             </button>
           </div>
         </div>
+        </>
+        )}
 
       </div>
     </div>
