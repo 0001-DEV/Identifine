@@ -96,10 +96,11 @@ export default function HomePage() {
     }
   ];
 
-  // Blog posts
-  const blogPosts = [
+  // Blog posts from WordPress REST API
+  const [blogPosts, setBlogPosts] = useState([
     {
       id: '1',
+      slug: 'design-that-converts-what-really-works-in-2025',
       date: 'Jul 8, 2026',
       readTime: '2 min read',
       title: 'Identity design that converts: What really works in 2026',
@@ -108,6 +109,7 @@ export default function HomePage() {
     },
     {
       id: '2',
+      slug: 'why-corporate-identity-is-the-future-of-organizations-success',
       date: 'Jul 2, 2026',
       readTime: '5 min read',
       title: 'Why corporate identity is the future of organization’s success',
@@ -116,13 +118,31 @@ export default function HomePage() {
     },
     {
       id: '3',
+      slug: 'identity-mistakes-you-didnt-know-you-were-making',
       date: 'Jun 21, 2026',
       readTime: '2 min read',
       title: 'Identity mistakes you didn’t know you were making',
       image: blackMatteRender,
       category: 'Brand Audit'
     }
-  ];
+  ]);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadLatestWp() {
+      const { fetchWpPosts } = await import('../api/wordpress');
+      const wpData = await fetchWpPosts(1, 3);
+      if (isMounted && wpData && wpData.length > 0) {
+        const defaultImgs = [postProcessImg, renderOne, blackMatteRender];
+        setBlogPosts(wpData.map((p, idx) => ({
+          ...p,
+          image: p.image || defaultImgs[idx % 3]
+        })));
+      }
+    }
+    loadLatestWp();
+    return () => { isMounted = false; };
+  }, []);
 
   return (
     <div className="w-full">
@@ -282,7 +302,7 @@ export default function HomePage() {
               {blogPosts.map((post) => (
                 <NavLink
                   key={post.id}
-                  to={`/blog/${post.id}`}
+                  to={`/blog/${post.slug || post.id}`}
                   className="group p-3.5 sm:p-4 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#E2B857]/50 hover:-translate-y-1 transition-all duration-300 flex flex-col sm:flex-row items-center gap-5 overflow-hidden shadow-xl"
                 >
                   {/* Inside Container - Dedicated Left Space: Compact Image from Assets */}

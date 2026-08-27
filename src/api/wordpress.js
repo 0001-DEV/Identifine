@@ -2,7 +2,19 @@
  * WordPress REST API Integration for Identifine.com.ng
  */
 
-const WP_BASE_URL = 'https://identifine.com.ng/wp-json/wp/v2';
+// Use local Vite proxy during local dev to bypass browser CORS rules
+const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+const WP_BASE_URL = isLocal ? '/wp-api' : 'https://identifine.com.ng/wp-json/wp/v2';
+
+/**
+ * Utility to decode HTML entities (e.g. &#8217; -> ', &amp; -> &)
+ */
+function decodeEntities(html) {
+  if (!html) return '';
+  const txt = document.createElement('textarea');
+  txt.innerHTML = html;
+  return txt.value;
+}
 
 /**
  * Format WordPress Post object into React clean structure
@@ -31,19 +43,30 @@ function formatPost(post) {
 
   // Calculate read time based on word count
   const textContent = post.content ? post.content.rendered.replace(/<[^>]+>/g, '') : '';
-  const wordCount = textContent.split(/\s+/).length;
+  const wordCount = textContent.trim().split(/\s+/).length;
   const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
+
+  // Extract clean title
+  let rawTitle = post.title ? post.title.rendered : '';
+  let cleanTitle = decodeEntities(rawTitle).trim();
+  if (!cleanTitle) {
+    cleanTitle = textContent.trim().slice(0, 40) || 'Untitled Post';
+  }
+
+  // Extract excerpt
+  let rawExcerpt = post.excerpt ? post.excerpt.rendered.replace(/<[^>]+>/g, '') : '';
+  let cleanExcerpt = decodeEntities(rawExcerpt).trim() || textContent.trim().slice(0, 120);
 
   return {
     id: post.id,
-    slug: post.slug,
-    title: post.title ? post.title.rendered : '',
+    slug: post.slug || `post-${post.id}`,
+    title: cleanTitle,
     date: postDate,
     readTime: `${readTimeMinutes} min read`,
-    category: categoryName,
+    category: decodeEntities(categoryName),
     featured: false,
     image: featuredImage,
-    excerpt: post.excerpt ? post.excerpt.rendered.replace(/<[^>]+>/g, '') : '',
+    excerpt: cleanExcerpt,
     contentHtml: post.content ? post.content.rendered : '',
     // Rank Math / Yoast SEO Meta Tags if available
     yoastHead: post.yoast_head || null,
