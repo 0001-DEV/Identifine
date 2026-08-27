@@ -17,7 +17,7 @@ export default function BlogDetailPage() {
       setLoading(true);
       // 1. Try to fetch from WordPress API by slug
       const wpArticle = await fetchWpPostBySlug(slug);
-      
+
       // 2. Fetch list of stories for "More stories" section
       const wpMore = await fetchWpPosts(1, 4);
 
@@ -60,7 +60,7 @@ export default function BlogDetailPage() {
   return (
     <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
       <div className="max-w-4xl mx-auto space-y-12 sm:space-y-16">
-        
+
         {/* Back Link */}
         <NavLink
           to="/blog"
@@ -108,9 +108,9 @@ export default function BlogDetailPage() {
         {/* Article Content - Render HTML from WordPress REST API */}
         <div className="space-y-8 text-left text-base sm:text-lg text-[#333333] font-normal leading-relaxed">
           {article.contentHtml ? (
-            <div 
+            <div
               className="wp-rendered-content space-y-6 text-base sm:text-lg text-[#333333] leading-relaxed font-sans [&_p]:mb-4 [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-galano [&_h2]:font-medium [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-galano [&_h3]:font-medium [&_h3]:mt-6 [&_h3]:mb-3 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2 [&_a]:text-[#111111] [&_a]:underline [&_a]:font-medium [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-xl [&_img]:my-6 [&_img]:mx-auto [&_img]:block [&_figure]:max-w-full [&_figure]:h-auto [&_figure]:my-6 [&_figure]:mx-auto [&_iframe]:max-w-full [&_iframe]:w-full [&_iframe]:rounded-xl [&_iframe]:my-6 [&_video]:max-w-full [&_video]:h-auto [&_video]:rounded-xl [&_figcaption]:text-xs [&_figcaption]:text-center [&_figcaption]:text-[#666666] [&_figcaption]:mt-2"
-              dangerouslySetInnerHTML={{ __html: article.contentHtml }} 
+              dangerouslySetInnerHTML={{ __html: article.contentHtml }}
             />
           ) : (
             <>
