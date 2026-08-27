@@ -1,0 +1,29 @@
+# =====================================================================
+# Identifine Hybrid Routing: React Frontend + WordPress REST API / Admin
+# =====================================================================
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Allow direct access to WordPress Admin dashboard
+  RewriteRule ^wp-admin($|/) - [L]
+
+  # 2. Allow direct access to WordPress REST API endpoints
+  RewriteRule ^wp-json/ - [L]
+
+  # 3. Allow direct access to WordPress Login page
+  RewriteRule ^wp-login.php - [L]
+
+  # 4. Allow direct access to WordPress Content & Uploads (images, plugins, themes)
+  RewriteRule ^wp-content/ - [L]
+  RewriteRule ^wp-includes/ - [L]
+
+  # 5. Route all existing files and directories directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 6. Route all single-page app (React) visitor URLs to index.html
+  RewriteRule . /index.html [L]
+</IfModule>
