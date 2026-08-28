@@ -60,7 +60,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
   const [toast, setToast] = useState('');
 
   useEffect(() => {
-    if (editArticle) {
+    if (editArticle && editArticle.id !== editingId) {
       setEditingId(editArticle.id);
       setTitle(editArticle.title || '');
       setSlug(editArticle.slug || '');
@@ -91,7 +91,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
         setBlocks([{ id: 'b-1', type: 'paragraph', content: editArticle.intro }]);
       }
     }
-  }, [editArticle]);
+  }, [editArticle?.id]);
 
   // Gutenberg Block Operations
   const addBlock = (type = 'paragraph', targetId = null, extraProps = {}) => {
