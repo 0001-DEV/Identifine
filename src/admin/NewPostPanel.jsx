@@ -52,6 +52,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
   const [showRightSidebar, setShowRightSidebar] = useState(true);
   const [rightSidebarTab, setRightSidebarTab] = useState('post'); // 'post' | 'block' | 'rankmath'
   const [blockSearch, setBlockSearch] = useState('');
+  const [contextMenu, setContextMenu] = useState(null); // { x, y, blockId }
   
   // Media Picker state
   const [showMediaPicker, setShowMediaPicker] = useState(false);
@@ -547,17 +548,102 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
                       <div style={{ height: 1, background: borderCard, margin: '16px 0' }} />
                     )}
 
-                    {/* Inline Quick Add Block (+) Button */}
-                    {isSelected && (
-                      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 8 }}>
+                    {/* Faint Action Line with Quick Action Icons (Image, Video, Link, Heading, Quote) */}
+                    <div
+                      style={{
+                        marginTop: 10, paddingTop: 6, borderTop: `1px dashed ${darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(34,113,177,0.2)'}`,
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        opacity: isSelected ? 1 : 0.4, transition: 'opacity 0.15s ease',
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.opacity = 1}
+                      onMouseLeave={e => { if (!isSelected) e.currentTarget.style.opacity = 0.4; }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <span style={{ fontSize: 11, fontWeight: 700, color: textMuted, marginRight: 4 }}>Faint Action Line ──</span>
+                        
+                        {/* 📷 Add Image */}
                         <button
-                          onClick={() => addBlock('paragraph', block.id)}
-                          style={{ width: 24, height: 24, borderRadius: '50%', background: '#1e1e1e', color: '#fff', border: 'none', fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addBlock('image', block.id);
+                            setMediaTargetBlockId(null);
+                          }}
+                          title="Add Image"
+                          style={{
+                            background: darkMode ? '#18181b' : '#f4f4f5', color: textColor,
+                            border: `1px solid ${borderCard}`, borderRadius: 3, padding: '2px 8px',
+                            fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4,
+                          }}
                         >
-                          +
+                          <span>📷</span>
+                          <span>Image</span>
+                        </button>
+
+                        {/* 🔤 Add Heading */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addBlock('heading', block.id, { level: 'h2' });
+                          }}
+                          title="Add Heading H2"
+                          style={{
+                            background: darkMode ? '#18181b' : '#f4f4f5', color: textColor,
+                            border: `1px solid ${borderCard}`, borderRadius: 3, padding: '2px 8px',
+                            fontSize: 12, cursor: 'pointer',
+                          }}
+                        >
+                          H2 Heading
+                        </button>
+
+                        {/* 💬 Add Quote */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addBlock('quote', block.id);
+                          }}
+                          title="Add Quote"
+                          style={{
+                            background: darkMode ? '#18181b' : '#f4f4f5', color: textColor,
+                            border: `1px solid ${borderCard}`, borderRadius: 3, padding: '2px 8px',
+                            fontSize: 12, cursor: 'pointer',
+                          }}
+                        >
+                          “ Quote
+                        </button>
+
+                        {/* 🔗 Add Link / Paragraph */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addBlock('paragraph', block.id);
+                          }}
+                          title="Add Paragraph Line"
+                          style={{
+                            background: darkMode ? '#18181b' : '#f4f4f5', color: textColor,
+                            border: `1px solid ${borderCard}`, borderRadius: 3, padding: '2px 8px',
+                            fontSize: 12, cursor: 'pointer',
+                          }}
+                        >
+                          + Text
                         </button>
                       </div>
-                    )}
+
+                      {/* + Quick Plus Button */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addBlock('paragraph', block.id);
+                        }}
+                        title="Add Block below"
+                        style={{
+                          width: 20, height: 20, borderRadius: '50%', background: '#2271b1',
+                          color: '#fff', border: 'none', fontSize: 14, cursor: 'pointer',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 );
               })}
