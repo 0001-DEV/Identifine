@@ -15,6 +15,7 @@ import BlogPage from './pages/BlogPage';
 import BlogDetailPage from './pages/BlogDetailPage';
 import BlogAdminPage from './pages/BlogAdminPage';
 import WordPressAdminShell from './pages/WordPressAdminShell';
+import WordPressLoginPage from './pages/WordPressLoginPage';
 import ProgramDetailPage from './pages/ProgramDetailPage';
 import ProductCataloguePage from './pages/ProductCataloguePage';
 import TermsPage from './pages/TermsPage';
@@ -128,6 +129,8 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogDetailPage />} />
+          <Route path="/admin/login" element={<WordPressLoginPage />} />
+          <Route path="/wp-login.php" element={<WordPressLoginPage />} />
           <Route path="/admin/blog" element={<BlogAdminPage />} />
           <Route path="/admin" element={<WordPressAdminShell />} />
           <Route path="/admin/*" element={<WordPressAdminShell />} />

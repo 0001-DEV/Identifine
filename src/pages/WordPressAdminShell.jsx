@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getActiveRole, setActiveRole, ROLES } from '../utils/roleManager';
+import { getLoggedInUser, setLoggedInUser } from './WordPressLoginPage';
 
 // Panel imports
 import DashboardHome from '../admin/DashboardHome';
@@ -335,21 +336,41 @@ export default function WordPressAdminShell() {
             ))}
           </select>
 
-          {/* User Profile */}
-          <div
-            onClick={() => goTo('my-profile')}
-            title="Logged in as Admin. Click to view profile or switch role above."
-            style={{
-              height: '100%', display: 'flex', alignItems: 'center', gap: 6,
-              padding: '0 12px', cursor: 'pointer', color: '#a7aaad', fontSize: 13,
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = WP.sidebarHover; e.currentTarget.style.color = '#fff'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#a7aaad'; }}
-          >
-            <div style={{ width: 16, height: 16, borderRadius: '50%', background: roleInfo.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#fff', fontWeight: 700 }}>
-              A
+          {/* User Profile & Log Out */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div
+              onClick={() => goTo('my-profile')}
+              title={`Logged in as ${getLoggedInUser()?.name || 'Admin'} (${roleInfo.label})`}
+              style={{
+                height: '100%', display: 'flex', alignItems: 'center', gap: 6,
+                padding: '0 8px', cursor: 'pointer', color: '#a7aaad', fontSize: 13,
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#fff'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = '#a7aaad'; }}
+            >
+              <div style={{ width: 18, height: 18, borderRadius: '50%', background: roleInfo.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#fff', fontWeight: 700 }}>
+                {(getLoggedInUser()?.name || 'Admin').charAt(0)}
+              </div>
+              <span>Howdy, {getLoggedInUser()?.name || 'Admin'}</span>
             </div>
-            <span>Howdy, {roleInfo.label.replace(/^\S+\s/, '')}</span>
+
+            {/* Log Out Button */}
+            <button
+              onClick={() => {
+                setLoggedInUser(null);
+                navigate('/admin/login');
+              }}
+              title="Log Out of WordPress Admin"
+              style={{
+                background: 'none', border: '1px solid rgba(255,255,255,0.2)',
+                color: '#a7aaad', borderRadius: 3, padding: '2px 8px', fontSize: 11,
+                cursor: 'pointer', fontFamily: 'inherit',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#fff'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = '#a7aaad'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; }}
+            >
+              Log Out
+            </button>
           </div>
         </div>
       </div>

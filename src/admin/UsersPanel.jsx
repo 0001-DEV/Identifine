@@ -4,7 +4,7 @@ import { getGlobalSettings, saveGlobalSettings, ROLES } from '../utils/roleManag
 export default function UsersPanel({ darkMode = false }) {
   const [settings, setSettings] = useState(getGlobalSettings());
   const [showAdd, setShowAdd] = useState(false);
-  const [newUser, setNewUser] = useState({ name: '', email: '', role: 'EDITOR', username: '' });
+  const [newUser, setNewUser] = useState({ name: '', email: '', role: 'EDITOR', username: '', password: '' });
   const [toast, setToast] = useState('');
   const [search, setSearch] = useState('');
 
@@ -20,14 +20,15 @@ export default function UsersPanel({ darkMode = false }) {
         name: newUser.name,
         email: newUser.email,
         role: newUser.role,
-        username: newUser.username || newUser.name.toLowerCase().replace(/\s+/g, '.')
+        username: newUser.username || newUser.name.toLowerCase().replace(/\s+/g, '.'),
+        password: newUser.password || 'password123'
       }]
     };
     setSettings(updated);
     saveGlobalSettings(updated);
-    setNewUser({ name: '', email: '', role: 'EDITOR', username: '' });
+    setNewUser({ name: '', email: '', role: 'EDITOR', username: '', password: '' });
     setShowAdd(false);
-    setToast('New user added.'); setTimeout(() => setToast(''), 3000);
+    setToast('New user created successfully.'); setTimeout(() => setToast(''), 3000);
   };
 
   const handleRoleChange = (userId, newRole) => {
@@ -89,6 +90,10 @@ export default function UsersPanel({ darkMode = false }) {
               <div>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: textColor, marginBottom: 4 }}>Email <span style={{ color: '#d63638' }}>*</span></label>
                 <input type="email" value={newUser.email} onChange={e => setNewUser(n => ({ ...n, email: e.target.value }))} placeholder="john@identifine.com.ng" required style={inputStyle} />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: textColor, marginBottom: 4 }}>Password <span style={{ color: '#d63638' }}>*</span></label>
+                <input type="text" value={newUser.password} onChange={e => setNewUser(n => ({ ...n, password: e.target.value }))} placeholder="password123" required style={inputStyle} />
               </div>
               <div>
                 <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: textColor, marginBottom: 4 }}>Role</label>
