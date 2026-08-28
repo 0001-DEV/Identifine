@@ -328,6 +328,8 @@ export const blogPostsData = [
   }
 ];
 
+import { getCustomArticles } from './BlogAdminPage';
+
 export default function BlogPage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -336,28 +338,37 @@ export default function BlogPage() {
   useEffect(() => {
     let isMounted = true;
     async function loadPosts() {
+      const customArticles = getCustomArticles();
       const wpPosts = await fetchWpPosts(1, 20);
       if (isMounted) {
         if (wpPosts && wpPosts.length > 0) {
-          // Format & attach fallback images if post lacks featured media
           const formatted = wpPosts.map((p, idx) => ({
             ...p,
             summary: p.excerpt || p.title,
             image: p.image || [blog1Img, blog2Img, blog3Img, blog4Img, blog5Img][idx % 5]
           }));
 
-          // Ensure latest updated/modified posts are sorted first
           formatted.sort((a, b) => new Date(b.modifiedDate || b.rawDate || 0) - new Date(a.modifiedDate || a.rawDate || 0));
 
-          setPosts(formatted);
+          // Combine custom published articles first, then WP posts
+          const combined = [...customArticles, ...formatted.filter(wp => !customArticles.some(c => c.slug === wp.slug))];
+          setPosts(combined);
         } else {
-          setPosts(blogPostsData);
+          const combined = [...customArticles, ...blogPostsData.filter(b => !customArticles.some(c => c.slug === b.slug))];
+          setPosts(combined);
         }
         setLoading(false);
       }
     }
+
     loadPosts();
-    return () => { isMounted = false; };
+
+    const handleUpdate = () => loadPosts();
+    window.addEventListener('identifine_articles_updated', handleUpdate);
+    return () => { 
+      isMounted = false; 
+      window.removeEventListener('identifine_articles_updated', handleUpdate);
+    };
   }, []);
 
   const featuredPost = posts[0] || blogPostsData[0];

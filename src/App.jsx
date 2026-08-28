@@ -13,6 +13,7 @@ import AboutUsPage from './pages/AboutUsPage';
 import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
 import BlogDetailPage from './pages/BlogDetailPage';
+import BlogAdminPage from './pages/BlogAdminPage';
 import ProgramDetailPage from './pages/ProgramDetailPage';
 import ProductCataloguePage from './pages/ProductCataloguePage';
 import TermsPage from './pages/TermsPage';
@@ -115,6 +116,7 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogDetailPage />} />
+          <Route path="/admin/blog" element={<BlogAdminPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/terms-and-conditions" element={<TermsPage />} />
           <Route path="/privacy-policy" element={<TermsPage />} />

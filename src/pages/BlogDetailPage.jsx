@@ -5,6 +5,8 @@ import starIcon from '../assets/SVG@4x.png';
 import { blogPostsData } from './BlogPage';
 import { fetchWpPostBySlug, fetchWpPosts } from '../api/wordpress';
 
+import { getCustomArticles } from './BlogAdminPage';
+
 export default function BlogDetailPage() {
   const { slug } = useParams();
   const [article, setArticle] = useState(null);
@@ -15,6 +17,20 @@ export default function BlogDetailPage() {
     let isMounted = true;
     async function loadArticle() {
       setLoading(true);
+
+      // Check custom authored articles first
+      const customArticles = getCustomArticles();
+      const customFound = customArticles.find(p => p.slug === slug || p.id === slug);
+
+      if (customFound) {
+        if (isMounted) {
+          setArticle(customFound);
+          setMoreStories(blogPostsData.filter((p) => p.slug !== slug).slice(0, 3));
+          setLoading(false);
+        }
+        return;
+      }
+
       // 1. Try to fetch from WordPress API by slug
       const wpArticle = await fetchWpPostBySlug(slug);
 
