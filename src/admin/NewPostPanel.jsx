@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { analyzeSeo } from '../utils/seoAnalyzer';
 import { getCustomArticles, saveCustomArticles } from '../pages/BlogAdminPage';
 import { getGlobalSettings } from '../utils/roleManager';
+import MediaPickerModal from './MediaPickerModal';
 
 function slugify(title) {
   if (!title) return '';
@@ -34,6 +35,7 @@ export default function NewPostPanel({ editArticle, onPublished }) {
   const [metaDesc, setMetaDesc] = useState('');
   const [toast, setToast] = useState('');
   const [activeRmTab, setActiveRmTab] = useState('general');
+  const [showMediaPicker, setShowMediaPicker] = useState(false);
 
   useEffect(() => {
     if (editArticle) {
@@ -484,6 +486,14 @@ export default function NewPostPanel({ editArticle, onPublished }) {
           </div>
 
           {/* Featured Image */}
+          {showMediaPicker && (
+            <MediaPickerModal
+              title="Set Featured Image"
+              onSelect={(item) => { setFeaturedImage(item.dataUrl || item.url); setShowMediaPicker(false); }}
+              onClose={() => setShowMediaPicker(false)}
+            />
+          )}
+
           <div style={metaBoxStyle}>
             <div style={metaBoxHeadStyle}>
               <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: '#1d2327' }}>Featured Image</h2>
@@ -491,17 +501,39 @@ export default function NewPostPanel({ editArticle, onPublished }) {
             <div style={metaBoxBodyStyle}>
               {featuredImage ? (
                 <div>
-                  <img src={featuredImage} alt="Featured" style={{ width: '100%', height: 120, objectFit: 'cover', borderRadius: 3, marginBottom: 8 }} onError={e => e.target.style.display='none'} />
-                  <button onClick={() => setFeaturedImage('')} style={{ background: 'none', border: 'none', color: '#d63638', cursor: 'pointer', fontSize: 12 }}>
-                    Remove featured image
-                  </button>
+                  <img
+                    src={featuredImage} alt="Featured"
+                    style={{ width: '100%', maxHeight: 160, objectFit: 'cover', borderRadius: 3, marginBottom: 8, border: '1px solid #c3c4c7', display: 'block' }}
+                    onError={e => e.target.style.display = 'none'}
+                  />
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    <button
+                      onClick={() => setShowMediaPicker(true)}
+                      style={{ background: 'none', border: 'none', color: '#2271b1', cursor: 'pointer', fontSize: 12, padding: 0, textDecoration: 'underline' }}
+                    >
+                      Replace image
+                    </button>
+                    <span style={{ color: '#c3c4c7' }}>|</span>
+                    <button
+                      onClick={() => setFeaturedImage('')}
+                      style={{ background: 'none', border: 'none', color: '#d63638', cursor: 'pointer', fontSize: 12, padding: 0 }}
+                    >
+                      Remove featured image
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div>
+                  <button
+                    onClick={() => setShowMediaPicker(true)}
+                    style={{ display: 'block', width: '100%', textAlign: 'center', padding: '28px 12px', background: '#f9f9f9', border: '2px dashed #c3c4c7', borderRadius: 3, cursor: 'pointer', color: '#2271b1', fontSize: 13, fontWeight: 600, marginBottom: 8, fontFamily: 'inherit' }}
+                  >
+                    + Set featured image
+                  </button>
+                  <div style={{ fontSize: 11, color: '#646970', textAlign: 'center', marginBottom: 8 }}>— or paste a URL —</div>
                   <input type="text" value={featuredImage} onChange={e => setFeaturedImage(e.target.value)}
-                    placeholder="Paste image URL..."
-                    style={{ ...inputStyle, marginBottom: 6 }} />
-                  <p style={{ fontSize: 11, color: '#646970', margin: 0 }}>Paste a URL or use a Unsplash link.</p>
+                    placeholder="https://images.unsplash.com/..."
+                    style={{ ...inputStyle }} />
                 </div>
               )}
             </div>
