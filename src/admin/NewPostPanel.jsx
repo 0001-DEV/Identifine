@@ -27,7 +27,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [autoSlug, setAutoSlug] = useState(true);
-  const [content, setContent] = useState(''); // Main single post write-up
+  const [content, setContent] = useState(''); // Main article HTML/Text
   const [sections, setSections] = useState([]);
   const [summary, setSummary] = useState('');
   const [category, setCategory] = useState('Uncategorized');
@@ -47,10 +47,10 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
   const [editorMode, setEditorMode] = useState('visual'); // 'visual' | 'text'
   const [rightSidebarTab, setRightSidebarTab] = useState('post'); // 'post' | 'rankmath'
   const [showMediaPicker, setShowMediaPicker] = useState(false);
-  const [mediaTarget, setMediaTarget] = useState('content'); // 'content' | 'featured' | { type: 'section', index: number }
+  const [mediaTarget, setMediaTarget] = useState('content');
   const [toast, setToast] = useState('');
 
-  const contentTextareaRef = useRef(null);
+  const visualEditorRef = useRef(null);
 
   useEffect(() => {
     if (editArticle && editArticle.id !== editingId) {
@@ -58,7 +58,11 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
       setTitle(editArticle.title || '');
       setSlug(editArticle.slug || '');
       setAutoSlug(false);
-      setContent(editArticle.intro || '');
+      const initialHtml = editArticle.intro || '';
+      setContent(initialHtml);
+      if (visualEditorRef.current) {
+        visualEditorRef.current.innerHTML = initialHtml;
+      }
       setSections(editArticle.sections || []);
       setSummary(editArticle.summary || '');
       setCategory(editArticle.category || 'Uncategorized');
@@ -94,40 +98,47 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
     setSections(sections.filter((_, i) => i !== idx));
   };
 
-  // Insert image markdown into textarea at cursor or end
+  // Sync contentEditable div HTML to content state
+  const handleVisualInput = () => {
+    if (visualEditorRef.current) {
+      setContent(visualEditorRef.current.innerHTML);
+    }
+  };
+
+  // True Rich Text Formatting Commands (execCommand)
+  const execCmd = (command, value = null) => {
+    if (editorMode === 'visual' && visualEditorRef.current) {
+      visualEditorRef.current.focus();
+      document.execCommand(command, false, value);
+      handleVisualInput();
+    } else {
+      // In Text/HTML mode fallback
+      if (command === 'bold') setContent(prev => prev + '<strong>bold</strong>');
+      if (command === 'italic') setContent(prev => prev + '<em>italic</em>');
+      if (command === 'strikeThrough') setContent(prev => prev + '<del>text</del>');
+    }
+  };
+
+  // Media selected callback
   const handleMediaSelected = (item) => {
     const imgUrl = item.dataUrl || item.url;
-    const imgMarkdown = `\n\n![${item.alt || item.name || 'Image'}](${imgUrl})\n\n`;
+    const imgHtml = `<p><img src="${imgUrl}" alt="${item.alt || item.name || 'Image'}" style="max-width:100%; height:auto; border-radius:4px; margin:12px 0;" /></p>`;
 
     if (mediaTarget === 'featured') {
       setFeaturedImage(imgUrl);
     } else if (mediaTarget === 'content') {
-      setContent(prev => prev + imgMarkdown);
+      if (editorMode === 'visual' && visualEditorRef.current) {
+        visualEditorRef.current.focus();
+        document.execCommand('insertHTML', false, imgHtml);
+        handleVisualInput();
+      } else {
+        setContent(prev => prev + `\n${imgHtml}\n`);
+      }
     } else if (typeof mediaTarget === 'object' && mediaTarget.type === 'section') {
       const idx = mediaTarget.index;
-      updateSection(idx, 'body', (sections[idx]?.body || '') + imgMarkdown);
+      updateSection(idx, 'body', (sections[idx]?.body || '') + `\n\n![${item.alt || 'Image'}](${imgUrl})\n\n`);
     }
     setShowMediaPicker(false);
-  };
-
-  // Helper formatting tools
-  const applyFormatting = (prefix, suffix = '') => {
-    if (contentTextareaRef.current) {
-      const textarea = contentTextareaRef.current;
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const text = content;
-      const selected = text.substring(start, end) || 'text';
-      const replacement = `${prefix}${selected}${suffix}`;
-      const newContent = text.substring(0, start) + replacement + text.substring(end);
-      setContent(newContent);
-      setTimeout(() => {
-        textarea.focus();
-        textarea.setSelectionRange(start + prefix.length, start + prefix.length + selected.length);
-      }, 50);
-    } else {
-      setContent(prev => prev + `${prefix}text${suffix}`);
-    }
   };
 
   // SEO Analysis
@@ -140,7 +151,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
     focusKeyword,
     seoTitle,
     metaDesc,
-    hasImage: !!featuredImage || content.includes('!['),
+    hasImage: !!featuredImage || content.includes('<img'),
   });
 
   const { score, color, checks } = seoData;
@@ -151,6 +162,8 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
       return;
     }
     const finalSlug = slug.trim() || slugify(title);
+    const finalContent = editorMode === 'visual' && visualEditorRef.current ? visualEditorRef.current.innerHTML : content;
+
     const article = {
       id: editingId || finalSlug || `art-${Date.now()}`,
       slug: finalSlug,
@@ -161,13 +174,13 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
       tags,
       featured: true,
       image: featuredImage || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
-      summary: summary.trim() || content.slice(0, 140),
-      intro: content,
+      summary: summary.trim() || finalContent.replace(/<[^>]+>/g, '').slice(0, 140),
+      intro: finalContent,
       sections,
       takeaway: '',
       focusKeyword,
       seoTitle: seoTitle || title + getGlobalSettings().siteTitleSeparator,
-      metaDesc: metaDesc || summary || content.slice(0, 155),
+      metaDesc: metaDesc || summary || finalContent.replace(/<[^>]+>/g, '').slice(0, 155),
       seoScore: score,
       status: newStatus || status,
       createdAt: new Date().toISOString(),
@@ -199,7 +212,8 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
   const metaBoxHeadStyle = { padding: '8px 12px', borderBottom: `1px solid ${borderCard}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: darkMode ? '#121212' : '#f9f9f9' };
   const metaBoxBodyStyle = { padding: 12 };
 
-  const wordCount = content ? content.trim().split(/\s+/).filter(Boolean).length : 0;
+  const plainText = content.replace(/<[^>]+>/g, '');
+  const wordCount = plainText ? plainText.trim().split(/\s+/).filter(Boolean).length : 0;
 
   return (
     <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: textColor }}>
@@ -306,7 +320,12 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
               {/* Visual / Text Mode Switcher */}
               <div style={{ display: 'flex', border: `1px solid ${darkMode ? '#333' : '#8c8f94'}`, borderRadius: 3, overflow: 'hidden' }}>
                 <button
-                  onClick={() => setEditorMode('visual')}
+                  onClick={() => {
+                    if (editorMode === 'text' && visualEditorRef.current) {
+                      visualEditorRef.current.innerHTML = content;
+                    }
+                    setEditorMode('visual');
+                  }}
                   style={{
                     padding: '3px 12px', fontSize: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
                     background: editorMode === 'visual' ? (darkMode ? '#334155' : '#e0e0e0') : 'transparent',
@@ -316,7 +335,12 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
                   Visual
                 </button>
                 <button
-                  onClick={() => setEditorMode('text')}
+                  onClick={() => {
+                    if (visualEditorRef.current) {
+                      setContent(visualEditorRef.current.innerHTML);
+                    }
+                    setEditorMode('text');
+                  }}
                   style={{
                     padding: '3px 12px', fontSize: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
                     background: editorMode === 'text' ? (darkMode ? '#334155' : '#e0e0e0') : 'transparent',
@@ -338,7 +362,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
               <select
                 onChange={(e) => {
                   if (e.target.value) {
-                    applyFormatting(`\n${e.target.value} `);
+                    execCmd('formatBlock', `<${e.target.value}>`);
                     e.target.value = '';
                   }
                 }}
@@ -348,54 +372,71 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
                   cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600,
                 }}
               >
-                <option value="">Paragraph</option>
-                <option value="#">Heading 1</option>
-                <option value="##">Heading 2</option>
-                <option value="###">Heading 3</option>
-                <option value=">">Blockquote</option>
+                <option value="p">Paragraph</option>
+                <option value="h1">Heading 1</option>
+                <option value="h2">Heading 2</option>
+                <option value="h3">Heading 3</option>
+                <option value="blockquote">Blockquote</option>
               </select>
 
               <div style={{ height: 16, width: 1, background: borderCard, margin: '0 2px' }} />
 
-              <button title="Bold" onClick={() => applyFormatting('**', '**')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', fontWeight: 700, cursor: 'pointer' }}>B</button>
-              <button title="Italic" onClick={() => applyFormatting('*', '*')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', fontStyle: 'italic', cursor: 'pointer' }}>I</button>
-              <button title="Strikethrough" onClick={() => applyFormatting('~~', '~~')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', textDecoration: 'line-through', cursor: 'pointer' }}>S</button>
+              <button title="Bold (Ctrl+B)" onClick={() => execCmd('bold')} style={{ ...inputStyle, width: 'auto', padding: '2px 10px', fontWeight: 700, cursor: 'pointer' }}>B</button>
+              <button title="Italic (Ctrl+I)" onClick={() => execCmd('italic')} style={{ ...inputStyle, width: 'auto', padding: '2px 10px', fontStyle: 'italic', cursor: 'pointer' }}>I</button>
+              <button title="Strikethrough" onClick={() => execCmd('strikeThrough')} style={{ ...inputStyle, width: 'auto', padding: '2px 10px', textDecoration: 'line-through', cursor: 'pointer' }}>S</button>
 
               <div style={{ height: 16, width: 1, background: borderCard, margin: '0 2px' }} />
 
-              <button title="Bullet List" onClick={() => applyFormatting('\n- ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>• List</button>
-              <button title="Numbered List" onClick={() => applyFormatting('\n1. ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>1. List</button>
-              <button title="Blockquote" onClick={() => applyFormatting('\n> ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>“ Quote</button>
+              <button title="Bullet List" onClick={() => execCmd('insertUnorderedList')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>• List</button>
+              <button title="Numbered List" onClick={() => execCmd('insertOrderedList')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>1. List</button>
+              <button title="Blockquote" onClick={() => execCmd('formatBlock', '<blockquote>')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>“ Quote</button>
 
               <div style={{ height: 16, width: 1, background: borderCard, margin: '0 2px' }} />
 
-              <button title="Insert Link" onClick={() => applyFormatting('[', '](https://)')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>🔗 Link</button>
+              <button title="Insert Link" onClick={() => {
+                const url = prompt('Enter destination URL:', 'https://');
+                if (url) execCmd('createLink', url);
+              }} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>🔗 Link</button>
+              
               <button title="Insert Image" onClick={() => { setMediaTarget('content'); setShowMediaPicker(true); }} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>📷 Insert Image</button>
             </div>
 
-            {/* Single Large Main Article Writing Textarea (Full 600px Height Canvas) */}
+            {/* Main Article Writing Canvas (Visual Mode vs Text Mode) */}
             <div style={metaBoxBodyStyle}>
-              <textarea
-                ref={contentTextareaRef}
-                value={content}
-                onChange={e => setContent(e.target.value)}
-                rows={28}
-                placeholder="Write your article content here... Click 'Add Media' above to insert images directly into your write-up."
-                style={{
-                  ...textareaStyle,
-                  minHeight: 580,
-                  fontSize: 15,
-                  lineHeight: 1.7,
-                  fontFamily: editorMode === 'text' ? 'Consolas, Monaco, monospace' : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                  padding: 14,
-                  background: inputBg,
-                  color: textColor,
-                  border: `1px solid ${darkMode ? '#333' : '#c3c4c7'}`,
-                }}
-              />
-              <div style={{ fontSize: 12, color: textMuted, marginTop: 6, display: 'flex', justifyContent: 'space-between' }}>
+              {editorMode === 'visual' ? (
+                /* Authentic WYSIWYG Visual Mode Canvas (contentEditable) */
+                <div
+                  ref={visualEditorRef}
+                  contentEditable
+                  onInput={handleVisualInput}
+                  onBlur={handleVisualInput}
+                  dangerouslySetInnerHTML={{ __html: content }}
+                  style={{
+                    minHeight: 520, padding: 16, fontSize: 16, lineHeight: 1.7, outline: 'none',
+                    background: inputBg, color: textColor, border: `1px solid ${darkMode ? '#333' : '#c3c4c7'}`,
+                    borderRadius: 2, boxSizing: 'border-box', overflowY: 'auto',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                  }}
+                />
+              ) : (
+                /* Text (HTML Code) Mode Canvas */
+                <textarea
+                  value={content}
+                  onChange={e => setContent(e.target.value)}
+                  rows={26}
+                  placeholder="<p>Write your HTML article content here...</p>"
+                  style={{
+                    ...textareaStyle,
+                    minHeight: 520, fontSize: 14, lineHeight: 1.6, padding: 14,
+                    fontFamily: 'Consolas, Monaco, monospace', background: inputBg, color: textColor,
+                    border: `1px solid ${darkMode ? '#333' : '#c3c4c7'}`,
+                  }}
+                />
+              )}
+
+              <div style={{ fontSize: 12, color: textMuted, marginTop: 8, display: 'flex', justifyContent: 'space-between' }}>
                 <span>Word count: <strong>{wordCount}</strong> words</span>
-                <span>Tip: Click <strong>Add Media</strong> above to insert images into your write-up.</span>
+                <span>Tip: Highlight any text and click <strong>B</strong> or <em>I</em> to instantly format it!</span>
               </div>
             </div>
           </div>
@@ -556,7 +597,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
                 <div style={metaBoxHeadStyle}>
                   <h3 style={{ fontSize: 13, fontWeight: 600, margin: 0, color: textColor }}>Excerpt</h3>
                 </div>
-                <div style={metaBoxBodyStyle}>
+                <div style={{ ...metaBoxBodyStyle }}>
                   <textarea
                     value={summary}
                     onChange={e => setSummary(e.target.value)}
