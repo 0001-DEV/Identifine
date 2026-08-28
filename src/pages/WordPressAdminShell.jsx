@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getActiveRole, setActiveRole, ROLES } from '../utils/roleManager';
-import { getLoggedInUser, setLoggedInUser } from './WordPressLoginPage';
+import WordPressLoginPage, { getLoggedInUser, setLoggedInUser } from './WordPressLoginPage';
 
 // Panel imports
 import DashboardHome from '../admin/DashboardHome';
@@ -118,6 +118,18 @@ function StubPanel({ title }) {
 // ─── Main WordPress Admin Shell ───────────────────────────────────────────────
 export default function WordPressAdminShell() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // If user is on /admin/login or /wp-login.php, render WordPressLoginPage directly
+  if (location.pathname === '/admin/login' || location.pathname === '/wp-login.php' || location.pathname === '/login') {
+    return <WordPressLoginPage />;
+  }
+
+  // Authentic WordPress Auth Protection: If not logged in, show WordPress Login Screen
+  const loggedInUser = getLoggedInUser();
+  if (!loggedInUser) {
+    return <WordPressLoginPage />;
+  }
   const [activePage, setActivePage] = useState('dashboard-home');
   const [expanded, setExpanded] = useState(DEFAULT_EXPANDED);
   const [collapsed, setCollapsed] = useState(false);
