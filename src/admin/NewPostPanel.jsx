@@ -406,14 +406,17 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
               value={title}
               onChange={e => handleTitleChange(e.target.value)}
               placeholder="Add title"
+              autoFocus
               style={{
-                width: '100%', fontSize: 38, fontWeight: 700, border: 'none', outline: 'none',
-                background: 'transparent', color: textColor, marginBottom: 24, fontFamily: 'serif',
+                width: '100%', fontSize: 36, fontWeight: 700, border: 'none', outline: 'none',
+                background: 'transparent', color: textColor, marginBottom: 20, padding: 0,
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                display: 'block', position: 'relative', zIndex: 10, cursor: 'text',
               }}
             />
 
-            {/* Blocks Stream Container */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {/* Blocks Stream Container (Clean Borderless Canvas) */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {blocks.map((block, idx) => {
                 const isSelected = selectedBlockId === block.id;
 
@@ -422,8 +425,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
                     key={block.id}
                     onClick={() => setSelectedBlockId(block.id)}
                     style={{
-                      position: 'relative', borderRadius: 4, padding: isSelected ? '8px 12px' : '4px 12px',
-                      border: isSelected ? '1px solid #2271b1' : '1px solid transparent',
+                      position: 'relative', padding: '4px 0', border: 'none', outline: 'none',
                       transition: 'all 0.15s ease',
                     }}
                   >
