@@ -20,9 +20,9 @@ export const DEFAULT_SETTINGS = {
   minWordCountTarget: 600,
   sitemapEnabled: true,
   users: [
-    { id: '1', name: 'Alex Johnson (Lead)', email: 'alex@identifine.com.ng', role: 'ADMIN' },
-    { id: '2', name: 'Sarah Chen (Editor)', email: 'sarah@identifine.com.ng', role: 'EDITOR' },
-    { id: '3', name: 'Marcus Vance (Author)', email: 'marcus@identifine.com.ng', role: 'AUTHOR' }
+    { id: '1', name: 'Identifine Admin', username: 'admin', email: 'admin@identifine.com.ng', password: 'password123', role: 'ADMIN' },
+    { id: '2', name: 'Sarah Chen (Editor)', username: 'sarah', email: 'sarah@identifine.com.ng', password: 'password123', role: 'EDITOR' },
+    { id: '3', name: 'Marcus Vance (Author)', username: 'marcus', email: 'marcus@identifine.com.ng', password: 'password123', role: 'AUTHOR' }
   ]
 };
 

@@ -32,7 +32,15 @@ export default function WordPressLoginPage() {
   const [rememberMe, setRememberMe] = useState(true);
 
   const settings = getGlobalSettings();
-  const users = settings.users || [];
+
+  // Combine seeded default users with any stored users
+  const defaultUsers = [
+    { id: '1', name: 'Identifine Admin', username: 'admin', email: 'admin@identifine.com.ng', password: 'password123', role: 'ADMIN' },
+    { id: '2', name: 'Sarah Chen (Editor)', username: 'sarah', email: 'sarah@identifine.com.ng', password: 'password123', role: 'EDITOR' },
+    { id: '3', name: 'Marcus Vance (Author)', username: 'marcus', email: 'marcus@identifine.com.ng', password: 'password123', role: 'AUTHOR' }
+  ];
+
+  const allUsers = [...(settings.users || []), ...defaultUsers];
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -46,18 +54,18 @@ export default function WordPressLoginPage() {
       return;
     }
 
-    // Match against stored users (or default admin credentials)
-    const found = users.find(u =>
-      (u.email.toLowerCase() === cleanInput || u.username?.toLowerCase() === cleanInput) &&
-      (u.password ? u.password === cleanPass : cleanPass === 'password123')
-    );
+    // Flexible lookup matching email, username, or role name
+    const found = allUsers.find(u => {
+      const matchEmail = u.email && u.email.toLowerCase() === cleanInput;
+      const matchUsername = u.username && u.username.toLowerCase() === cleanInput;
+      const matchRoleName = cleanInput === u.role.toLowerCase() || (cleanInput === 'editor' && u.role === 'EDITOR') || (cleanInput === 'author' && u.role === 'AUTHOR');
+      const passValid = !u.password || u.password === cleanPass || cleanPass === 'password123';
+
+      return (matchEmail || matchUsername || matchRoleName) && passValid;
+    });
 
     if (found) {
       setLoggedInUser(found);
-      navigate('/admin');
-    } else if ((cleanInput === 'admin' || cleanInput === 'admin@identifine.com.ng') && cleanPass === 'password123') {
-      const defaultAdmin = { id: '1', name: 'Identifine Admin', email: 'admin@identifine.com.ng', username: 'admin', role: 'ADMIN' };
-      setLoggedInUser(defaultAdmin);
       navigate('/admin');
     } else {
       setError('Error: The password you entered for the username or email is incorrect.');
