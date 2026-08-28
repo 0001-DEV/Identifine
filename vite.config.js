@@ -43,7 +43,37 @@ export default defineConfig({
   },
   preview: {
     port: 4173
-  }
+  },
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom', 'lucide-react'],
+          admin: [
+            './src/pages/WordPressAdminShell.jsx',
+            './src/admin/DashboardHome.jsx',
+            './src/admin/AllPostsPanel.jsx',
+            './src/admin/NewPostPanel.jsx',
+            './src/admin/CategoriesPanel.jsx',
+            './src/admin/TagsPanel.jsx',
+            './src/admin/MediaLibraryPanel.jsx',
+            './src/admin/CommentsPanel.jsx',
+            './src/admin/RankMathDashboard.jsx',
+            './src/admin/RankMathGeneralSettings.jsx',
+            './src/admin/RankMathTitlesMeta.jsx',
+            './src/admin/RankMathSitemap.jsx',
+            './src/admin/RankMathRoleManager.jsx',
+            './src/admin/SettingsPermalinks.jsx',
+            './src/admin/UsersPanel.jsx',
+            './src/admin/PluginsPanel.jsx',
+            './src/admin/AppearancePanel.jsx',
+            './src/admin/PagesPanel.jsx',
+          ],
+        },
+      },
+    },
+  },
 });
 
 
