@@ -118,6 +118,22 @@ export default function WordPressAdminShell() {
   const [expanded, setExpanded] = useState(DEFAULT_EXPANDED);
   const [collapsed, setCollapsed] = useState(false);
   const [editArticle, setEditArticle] = useState(null);
+  const [darkMode, setDarkMode] = useState(() => {
+    try {
+      return localStorage.getItem('identifine_admin_dark_mode') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const toggleDarkMode = () => {
+    setDarkMode(prev => {
+      const next = !prev;
+      try { localStorage.setItem('identifine_admin_dark_mode', String(next)); } catch {}
+      return next;
+    });
+  };
+
   const role = getActiveRole();
   const roleInfo = ROLES[role] || ROLES.ADMIN;
 
@@ -163,7 +179,7 @@ export default function WordPressAdminShell() {
       case 'dashboard-home': return <DashboardHome onNavigate={goTo} />;
       case 'updates': return <StubPanel title="Updates" />;
       case 'all-posts': return <AllPostsPanel onNavigate={goTo} onEditPost={handleEditPost} />;
-      case 'add-new': return <NewPostPanel editArticle={editArticle} onPublished={handlePublished} />;
+      case 'add-new': return <NewPostPanel editArticle={editArticle} onPublished={handlePublished} darkMode={darkMode} />;
       case 'categories': return <CategoriesPanel />;
       case 'tags': return <TagsPanel />;
       case 'media-library': return <MediaLibraryPanel />;
@@ -259,12 +275,28 @@ export default function WordPressAdminShell() {
           </div>
         </div>
 
-        {/* Right side: role pill + user */}
-        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', height: '100%', gap: 0 }}>
+        {/* Right side: dark mode toggle + role pill + user */}
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', height: '100%', gap: 8 }}>
+          {/* Dark Mode Toggle Button */}
+          <button
+            onClick={toggleDarkMode}
+            title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            style={{
+              background: darkMode ? '#334155' : 'rgba(255,255,255,0.1)',
+              border: `1px solid ${darkMode ? '#475569' : 'rgba(255,255,255,0.2)'}`,
+              color: '#fff', borderRadius: 12, padding: '2px 10px', fontSize: 12,
+              cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5,
+              transition: 'all 0.15s ease',
+            }}
+          >
+            <span>{darkMode ? '☀️' : '🌙'}</span>
+            <span style={{ fontSize: 11, fontWeight: 600 }}>{darkMode ? 'Light' : 'Dark'} Mode</span>
+          </button>
+
           <span style={{
             fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 10,
             background: `${roleInfo.color}25`, color: roleInfo.color,
-            border: `1px solid ${roleInfo.color}40`, marginRight: 8,
+            border: `1px solid ${roleInfo.color}40`, marginRight: 4,
           }}>
             {roleInfo.label}
           </span>
@@ -406,9 +438,10 @@ export default function WordPressAdminShell() {
         flex: 1,
         minHeight: 'calc(100vh - 32px)',
         padding: '20px 20px 40px',
-        background: WP.contentBg,
+        background: darkMode ? '#0f172a' : WP.contentBg,
+        color: darkMode ? '#f8fafc' : '#3c434a',
         boxSizing: 'border-box',
-        transition: 'margin-left 0.15s',
+        transition: 'margin-left 0.15s, background 0.15s',
       }}>
         {renderPanel()}
       </div>
