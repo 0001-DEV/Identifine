@@ -194,13 +194,13 @@ export default function WordPressAdminShell() {
       case 'rm-general': return <RankMathGeneralSettings />;
       case 'rm-titles': return <RankMathTitlesMeta />;
       case 'rm-sitemap': return <RankMathSitemap />;
-      case 'rm-roles': return <RankMathRoleManager />;
+      case 'rm-roles': return <RankMathRoleManager darkMode={darkMode} />;
       case 'rm-tools': return <StubPanel title="Rank Math — Status & Tools" />;
       case 'rm-help': return <StubPanel title="Rank Math — Help & FAQ" />;
       case 'appearance': return <AppearancePanel darkMode={darkMode} />;
       case 'plugins': return <PluginsPanel onNavigate={goTo} darkMode={darkMode} />;
-      case 'all-users': return <UsersPanel />;
-      case 'add-user': return <UsersPanel />;
+      case 'all-users': return <UsersPanel darkMode={darkMode} />;
+      case 'add-user': return <UsersPanel darkMode={darkMode} />;
       case 'my-profile': return <StubPanel title="Your Profile" />;
       case 'tools': return <StubPanel title="Tools" />;
       case 'settings-general': return <StubPanel title="General Settings" />;
