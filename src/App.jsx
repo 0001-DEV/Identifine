@@ -14,6 +14,7 @@ import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
 import BlogDetailPage from './pages/BlogDetailPage';
 import BlogAdminPage from './pages/BlogAdminPage';
+import WordPressAdminShell from './pages/WordPressAdminShell';
 import ProgramDetailPage from './pages/ProgramDetailPage';
 import ProductCataloguePage from './pages/ProductCataloguePage';
 import TermsPage from './pages/TermsPage';
@@ -91,6 +92,17 @@ function ScrollRevealObserver() {
 export default function App() {
   const location = useLocation();
   const hideFooter = location.pathname.startsWith('/program');
+  const isAdmin = location.pathname.startsWith('/admin');
+
+  // Full-screen admin shell — no site navbar or footer
+  if (isAdmin && location.pathname !== '/admin/blog') {
+    return (
+      <Routes>
+        <Route path="/admin/*" element={<WordPressAdminShell />} />
+        <Route path="/admin" element={<WordPressAdminShell />} />
+      </Routes>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#080B11] text-[#F1F5F9] font-sans flex flex-col justify-between selection:bg-[#E2B857] selection:text-black overflow-x-hidden">
@@ -117,6 +129,8 @@ export default function App() {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogDetailPage />} />
           <Route path="/admin/blog" element={<BlogAdminPage />} />
+          <Route path="/admin" element={<WordPressAdminShell />} />
+          <Route path="/admin/*" element={<WordPressAdminShell />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/terms-and-conditions" element={<TermsPage />} />
           <Route path="/privacy-policy" element={<TermsPage />} />
