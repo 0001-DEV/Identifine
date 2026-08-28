@@ -17,6 +17,19 @@ function decodeEntities(html) {
 }
 
 /**
+ * Helper to convert title into clean URL slug (e.g. "How NFC Cards Work" -> "how-nfc-cards-work")
+ */
+function slugifyTitle(title) {
+  if (!title) return '';
+  return title
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+/**
  * Format WordPress Post object into React clean structure
  */
 function formatPost(post) {
@@ -53,13 +66,17 @@ function formatPost(post) {
     cleanTitle = textContent.trim().slice(0, 40) || 'Untitled Post';
   }
 
+  // Ensure slug is always a human-readable title slug, never raw numbers like '3988-2' or '1234'
+  const isNumericOrDefaultSlug = !post.slug || /^\d+(-\d+)?$/.test(post.slug) || post.slug.startsWith('post-');
+  const finalSlug = isNumericOrDefaultSlug && cleanTitle ? slugifyTitle(cleanTitle) : post.slug;
+
   // Extract excerpt
   let rawExcerpt = post.excerpt ? post.excerpt.rendered.replace(/<[^>]+>/g, '') : '';
   let cleanExcerpt = decodeEntities(rawExcerpt).trim() || textContent.trim().slice(0, 120);
 
   return {
     id: post.id,
-    slug: post.slug || `post-${post.id}`,
+    slug: finalSlug,
     title: cleanTitle,
     date: postDate,
     rawDate: post.date,
@@ -112,13 +129,29 @@ export async function fetchWpPosts(page = 1, perPage = 12) {
   return await revalidateWpPosts(cacheKey, query);
 }
 
+/**
+ * Utility function to fetch with a strict timeout to prevent long hangs
+ */
+async function fetchWithTimeout(url, options = {}, timeoutMs = 3000) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (err) {
+    clearTimeout(timeoutId);
+    throw err;
+  }
+}
+
 async function revalidateWpPosts(cacheKey, query) {
   try {
-    let res = await fetch(`${WP_BASE_URL}${query}`);
-    if (!res.ok && WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {
-      res = await fetch(`https://identifine.com.ng/wp-json/wp/v2${query}`);
-    }
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    const res = await fetchWithTimeout(`${WP_BASE_URL}${query}`, {}, 3000);
+    if (!res.ok) throw new Error(`HTTP status ${res.status}`);
     const data = await res.json();
     const formatted = data.map(formatPost);
     
@@ -129,20 +162,21 @@ async function revalidateWpPosts(cacheKey, query) {
 
     return formatted;
   } catch (error) {
-    try {
-      const directRes = await fetch(`https://identifine.com.ng/wp-json/wp/v2${query}`);
-      if (directRes.ok) {
-        const data = await directRes.json();
-        const formatted = data.map(formatPost);
-        memoryCache[cacheKey] = formatted;
-        try {
-          sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
-        } catch (e) {}
-        return formatted;
-      }
-    } catch (err) {
-      console.warn('Could not fetch posts from WordPress API:', err);
+    if (WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {
+      try {
+        const directRes = await fetchWithTimeout(`https://identifine.com.ng/wp-json/wp/v2${query}`, {}, 3000);
+        if (directRes.ok) {
+          const data = await directRes.json();
+          const formatted = data.map(formatPost);
+          memoryCache[cacheKey] = formatted;
+          try {
+            sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
+          } catch (e) {}
+          return formatted;
+        }
+      } catch (err) {}
     }
+    console.warn('WordPress API unreachable, using local fallback:', error?.message || error);
     return memoryCache[cacheKey] || null;
   }
 }
@@ -174,11 +208,8 @@ export async function fetchWpPostBySlug(slug) {
 
 async function revalidateWpPostBySlug(cacheKey, query, slug) {
   try {
-    let res = await fetch(`${WP_BASE_URL}${query}`);
-    if (!res.ok && WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {
-      res = await fetch(`https://identifine.com.ng/wp-json/wp/v2${query}`);
-    }
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    const res = await fetchWithTimeout(`${WP_BASE_URL}${query}`, {}, 3000);
+    if (!res.ok) throw new Error(`HTTP status ${res.status}`);
     const data = await res.json();
     if (data && data.length > 0) {
       const formatted = formatPost(data[0]);
@@ -190,22 +221,24 @@ async function revalidateWpPostBySlug(cacheKey, query, slug) {
     }
     return memoryCache[cacheKey] || null;
   } catch (error) {
-    try {
-      const directRes = await fetch(`https://identifine.com.ng/wp-json/wp/v2${query}`);
-      if (directRes.ok) {
-        const data = await directRes.json();
-        if (data && data.length > 0) {
-          const formatted = formatPost(data[0]);
-          memoryCache[cacheKey] = formatted;
-          try {
-            sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
-          } catch (e) {}
-          return formatted;
+    if (WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {
+      try {
+        const directRes = await fetchWithTimeout(`https://identifine.com.ng/wp-json/wp/v2${query}`, {}, 3000);
+        if (directRes.ok) {
+          const data = await directRes.json();
+          if (data && data.length > 0) {
+            const formatted = formatPost(data[0]);
+            memoryCache[cacheKey] = formatted;
+            try {
+              sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
+            } catch (e) {}
+            return formatted;
+          }
         }
-      }
-    } catch (err) {
-      console.warn(`Could not fetch post '${slug}' from WordPress API:`, err);
+      } catch (err) {}
     }
+    console.warn(`WordPress API unreachable for '${slug}', using local fallback:`, error?.message || error);
     return memoryCache[cacheKey] || null;
   }
 }
+

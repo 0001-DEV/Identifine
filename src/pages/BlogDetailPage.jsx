@@ -25,9 +25,10 @@ export default function BlogDetailPage() {
         if (wpArticle) {
           setArticle(wpArticle);
         } else {
-          // Fallback to static local data
+          // Fallback to static local data (matches 2026, numeric ID, & legacy url variants)
+          const normalizeSlug = (s) => (s || '').toLowerCase().replace(/-in-202[56]$/, '');
           const localArticle = blogPostsData.find(
-            (p) => p.slug === slug || p.id === slug
+            (p) => p.slug === slug || p.id === slug || (slug === '3988-2' && p.slug.includes('nfc-business-cards')) || normalizeSlug(p.slug) === normalizeSlug(slug)
           ) || blogPostsData[0];
           setArticle(localArticle);
         }

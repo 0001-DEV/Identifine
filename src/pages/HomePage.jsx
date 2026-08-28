@@ -100,7 +100,7 @@ export default function HomePage() {
   const [blogPosts, setBlogPosts] = useState([
     {
       id: '1',
-      slug: 'design-that-converts-what-really-works-in-2025',
+      slug: 'design-that-converts-what-really-works-in-2026',
       date: 'Jul 8, 2026',
       readTime: '2 min read',
       title: 'Identity design that converts: What really works in 2026',

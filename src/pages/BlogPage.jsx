@@ -12,13 +12,40 @@ import blog5Img from '../assets/blog/blog_5.jpg';
 
 export const blogPostsData = [
   {
-    id: 'design-that-converts-what-really-works-in-2025',
-    slug: 'design-that-converts-what-really-works-in-2025',
+    id: 'how-nfc-business-cards-are-changing-professional-networking',
+    slug: 'how-nfc-business-cards-are-changing-professional-networking',
+    title: 'How NFC Business Cards Are Changing Professional Networking',
+    date: 'Aug 27, 2026',
+    readTime: '3 min read',
+    category: 'Smart Hardware',
+    featured: true,
+    image: blog3Img,
+    summary: 'NFC business credentials are revolutionizing executive networking by combining high-end physical materials with instant digital contact exchange.',
+    intro: 'In modern executive environments, the exchange of physical contact details is transitioning from traditional paper business cards to digital identity credentials. Precision-crafted NFC cards allow leaders to instantly share contact details, press kits, and digital portfolios with a single tap.',
+    sections: [
+      {
+        heading: '1. Instant Frictionless Contact Exchange',
+        body: 'With embedded NFC chips, contacts save directly into smartphone address books without requiring custom apps or manual typing.'
+      },
+      {
+        heading: '2. Dynamic Profile Updates',
+        body: 'Unlike printed paper cards that become outdated when information changes, NFC identity profiles can be updated remotely at any time.'
+      },
+      {
+        heading: '3. Executive Prestige & Sustainability',
+        body: 'Crafted from matte black stainless steel and gold-plated finishes, modern credentials project authority while reducing paper waste.'
+      }
+    ],
+    takeaway: 'NFC business cards transform networking from a passive interaction into a memorable, high-conversion executive connection.'
+  },
+  {
+    id: 'design-that-converts-what-really-works-in-2026',
+    slug: 'design-that-converts-what-really-works-in-2026',
     title: 'Identity design that converts: What really works in 2026',
     date: 'Jul 8, 2026',
     readTime: '2 min read',
     category: 'Design Strategy',
-    featured: true,
+    featured: false,
     image: blog1Img,
     summary: 'Conversion-focused design in 2026 is no longer about flashy CTAs or aggressive funnels. It’s about trust, clarity, and creating seamless experiences that guide users naturally.',
     intro: 'Conversion-focused design in 2026 is no longer about flashy CTAs or aggressive funnels. It’s about trust, clarity, and creating seamless experiences that guide users naturally. The best-converting websites today don’t just look good — they communicate value instantly and intuitively. Let’s break down what’s working now.',
@@ -33,7 +60,7 @@ export const blogPostsData = [
       },
       {
         heading: '3. Visual hierarchy that drives action',
-        body: 'Every section of a converting page has a clear role — headlines grab, subtext supports, buttons lead. In 2025, smart use of size, contrast, and whitespace creates flow that nudges users toward conversion without overwhelming them.'
+        body: 'Every section of a converting page has a clear role — headlines grab, subtext supports, buttons lead. In 2026, smart use of size, contrast, and whitespace creates flow that nudges users toward conversion without overwhelming them.'
       },
       {
         heading: '4. Interactive micro-moments',
@@ -41,10 +68,10 @@ export const blogPostsData = [
       },
       {
         heading: '5. Social proof with personality',
-        body: 'Testimonies, logos, and reviews still matter — but it’s not about quantity. In 2025, what converts is authenticity. Real faces, honest words, and context-rich case studies create the kind of trust that moves users to act.'
+        body: 'Testimonies, logos, and reviews still matter — but it’s not about quantity. In 2026, what converts is authenticity. Real faces, honest words, and context-rich case studies create the kind of trust that moves users to act.'
       }
     ],
-    takeaway: 'Design that converts in 2025 is human-first, story-driven, and intentional at every step. It’s not about adding more elements — it’s about removing friction and making every interaction feel natural, relevant, and credible.'
+    takeaway: 'Design that converts in 2026 is human-first, story-driven, and intentional at every step. It’s not about adding more elements — it’s about removing friction and making every interaction feel natural, relevant, and credible.'
   },
   {
     id: 'why-corporate-identity-is-the-future-of-organizations-success',
@@ -96,7 +123,7 @@ export const blogPostsData = [
     id: 'building-trust-through-thoughtful-web-design',
     slug: 'building-trust-through-thoughtful-web-design',
     title: 'Building trust through thoughtful web design',
-    date: 'Jun 12, 2025',
+    date: 'Jun 12, 2026',
     readTime: '4 min read',
     category: 'Web Experience',
     featured: false,
@@ -119,7 +146,7 @@ export const blogPostsData = [
     id: 'landing-page-tips-that-drive-more-bookings',
     slug: 'landing-page-tips-that-drive-more-bookings',
     title: 'Landing page tips that drive more bookings',
-    date: 'May 23, 2025',
+    date: 'May 23, 2026',
     readTime: '6 min read',
     category: 'Conversion Strategy',
     featured: false,
@@ -142,7 +169,7 @@ export const blogPostsData = [
     id: 'how-to-craft-a-bio-that-works-on-every-platform',
     slug: 'how-to-craft-a-bio-that-works-on-every-platform',
     title: 'How to craft a bio that works on every platform',
-    date: 'Feb 1, 2025',
+    date: 'Feb 1, 2026',
     readTime: '3 min read',
     category: 'Personal Branding',
     featured: false,
@@ -165,7 +192,7 @@ export const blogPostsData = [
     id: 'the-roi-of-premium-nfc-business-credentials',
     slug: 'the-roi-of-premium-nfc-business-credentials',
     title: 'The ROI of premium NFC business credentials for executive teams',
-    date: 'Jan 18, 2025',
+    date: 'Jan 18, 2026',
     readTime: '4 min read',
     category: 'Smart Hardware',
     featured: false,
