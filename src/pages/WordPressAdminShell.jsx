@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getActiveRole, ROLES } from '../utils/roleManager';
+import { getActiveRole, setActiveRole, ROLES } from '../utils/roleManager';
 
 // Panel imports
 import DashboardHome from '../admin/DashboardHome';
@@ -137,13 +137,20 @@ export default function WordPressAdminShell() {
     });
   };
 
-  const role = getActiveRole();
+  const [role, setRoleState] = useState(getActiveRole());
   const roleInfo = ROLES[role] || ROLES.ADMIN;
 
-  // Sync URL hash to panel
+  // Sync URL hash to panel & listen to role changes
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     if (hash) setActivePage(hash);
+
+    const handleRoleChange = () => {
+      setRoleState(getActiveRole());
+    };
+
+    window.addEventListener('identifine_role_changed', handleRoleChange);
+    return () => window.removeEventListener('identifine_role_changed', handleRoleChange);
   }, []);
 
   const goTo = (pageId) => {
@@ -298,24 +305,51 @@ export default function WordPressAdminShell() {
             <span style={{ fontSize: 11, fontWeight: 600 }}>{darkMode ? 'Light' : 'Dark'} Mode</span>
           </button>
 
-          <span style={{
-            fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 10,
-            background: `${roleInfo.color}25`, color: roleInfo.color,
-            border: `1px solid ${roleInfo.color}40`, marginRight: 4,
-          }}>
-            {roleInfo.label}
-          </span>
-          <div style={{
-            height: '100%', display: 'flex', alignItems: 'center', gap: 6,
-            padding: '0 12px', cursor: 'pointer', color: '#a7aaad', fontSize: 13,
-          }}
+          {/* Interactive Role Switcher Dropdown */}
+          <select
+            value={role}
+            onChange={(e) => {
+              setActiveRole(e.target.value);
+              setRoleState(e.target.value);
+            }}
+            title="Switch logged-in role (Admin / Editor / Author)"
+            style={{
+              fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 10,
+              background: `${roleInfo.color}25`, color: roleInfo.color,
+              border: `1px solid ${roleInfo.color}60`, outline: 'none', cursor: 'pointer',
+              marginRight: 4, fontFamily: 'inherit',
+            }}
+          >
+            {Object.values(ROLES).map(r => (
+              <option
+                key={r.id}
+                value={r.id}
+                style={{
+                  background: darkMode ? '#18181b' : '#ffffff',
+                  color: darkMode ? '#f4f4f5' : '#18181b',
+                  fontWeight: 600,
+                }}
+              >
+                Role: {r.label}
+              </option>
+            ))}
+          </select>
+
+          {/* User Profile */}
+          <div
+            onClick={() => goTo('my-profile')}
+            title="Logged in as Admin. Click to view profile or switch role above."
+            style={{
+              height: '100%', display: 'flex', alignItems: 'center', gap: 6,
+              padding: '0 12px', cursor: 'pointer', color: '#a7aaad', fontSize: 13,
+            }}
             onMouseEnter={e => { e.currentTarget.style.background = WP.sidebarHover; e.currentTarget.style.color = '#fff'; }}
             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#a7aaad'; }}
           >
             <div style={{ width: 16, height: 16, borderRadius: '50%', background: roleInfo.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#fff', fontWeight: 700 }}>
               A
             </div>
-            <span>Howdy, Admin</span>
+            <span>Howdy, {roleInfo.label.replace(/^\S+\s/, '')}</span>
           </div>
         </div>
       </div>
