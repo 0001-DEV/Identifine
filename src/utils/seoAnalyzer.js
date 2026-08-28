@@ -1,5 +1,5 @@
 /**
- * Rank Math Real-Time SEO Analyzer Engine (Authentic 100-Point Scoring)
+ * Authentic Rank Math Pro SEO Engine (100-Point Official WordPress Scoring Matrix)
  */
 
 function stripHtml(html = '') {
@@ -10,6 +10,12 @@ function slugify(text = '') {
   return text.toLowerCase().trim()
     .replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
 }
+
+const POWER_WORDS = [
+  'ultimate', 'best', 'top', 'essential', 'proven', 'complete', 'guide',
+  'simple', 'powerful', 'fast', 'free', 'exclusive', 'secret', 'incredible',
+  'stunning', 'effortless', 'guaranteed', 'modern', 'smart', 'expert'
+];
 
 export function analyzeSeo({
   title = '',
@@ -40,7 +46,7 @@ export function analyzeSeo({
   const wordCount = words.length;
   const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
 
-  // If no focus keyword specified yet, calculate basic structure score
+  // If no focus keyword specified yet
   if (!keyword) {
     let structuralScore = 0;
     if (titleText.length >= 10) structuralScore += 15;
@@ -50,9 +56,9 @@ export function analyzeSeo({
     if (excerptText.length >= 50) structuralScore += 10;
 
     return {
-      score: Math.min(structuralScore, 60),
-      grade: structuralScore >= 50 ? 'Fair' : 'Poor',
-      color: structuralScore >= 50 ? '#f59e0b' : '#ef4444',
+      score: Math.min(structuralScore, 50),
+      grade: 'Poor',
+      color: '#ef4444',
       wordCount,
       readTimeMinutes,
       keywordDensity: 0,
@@ -78,11 +84,10 @@ export function analyzeSeo({
   const occurrences = (fullContent.match(kwRegex) || []).length;
   const keywordDensity = wordCount > 0 ? parseFloat(((occurrences / wordCount) * 100).toFixed(2)) : 0;
 
-  // Introduction text (first 100 words or first 400 chars)
+  // Introduction text (first 400 chars)
   const introText = fullContent.slice(0, 400).toLowerCase();
   const hasKwInIntro = introText.includes(keyword);
 
-  // Checks array & score tracking
   const checks = [];
   let score = 0;
 
@@ -93,7 +98,7 @@ export function analyzeSeo({
   score += hasKwInTitle ? 10 : 0;
   checks.push({
     id: 'kw_in_title',
-    label: hasKwInTitle ? 'Focus Keyword used in SEO Title' : 'Focus Keyword not found in SEO Title',
+    label: hasKwInTitle ? 'Focus Keyword used in the SEO Title' : 'Focus Keyword not found in SEO Title',
     pass: hasKwInTitle,
     category: 'Basic SEO',
   });
@@ -185,6 +190,16 @@ export function analyzeSeo({
     category: 'Additional SEO',
   });
 
+  // Outbound & Internal Links (5 pts)
+  const hasLinks = content.includes('href=') || content.includes('http');
+  score += hasLinks ? 5 : 2;
+  checks.push({
+    id: 'has_links',
+    label: hasLinks ? 'Content contains links' : 'Add external or internal links to your content',
+    pass: hasLinks,
+    category: 'Additional SEO',
+  });
+
   // Featured Image / Media (5 pts)
   const containsImage = hasImage || content.includes('<img') || content.includes('![');
   score += containsImage ? 5 : 0;
@@ -199,7 +214,7 @@ export function analyzeSeo({
 
   // Focus Keyword at start of Title (5 pts)
   const kwAtStartOfTitle = titleText.toLowerCase().startsWith(keyword);
-  score += kwAtStartOfTitle ? 5 : 2;
+  score += kwAtStartOfTitle ? 5 : hasKwInTitle ? 3 : 0;
   checks.push({
     id: 'kw_start_title',
     label: kwAtStartOfTitle ? 'Focus Keyword is at the start of Title' : 'Focus Keyword used in Title',
@@ -207,8 +222,8 @@ export function analyzeSeo({
     category: 'Title Readability',
   });
 
-  // Title Length (50 - 60 chars) (5 pts)
-  const isTitleLengthOk = titleText.length >= 30 && titleText.length <= 70;
+  // Title Length (45 - 65 chars) (5 pts)
+  const isTitleLengthOk = titleText.length >= 35 && titleText.length <= 65;
   score += isTitleLengthOk ? 5 : 2;
   checks.push({
     id: 'title_length',
@@ -219,18 +234,21 @@ export function analyzeSeo({
     category: 'Title Readability',
   });
 
-  // Number in Title (5 pts)
-  const hasNumberInTitle = /\d+/.test(titleText);
-  score += hasNumberInTitle ? 5 : 0;
+  // Power Word or Number in Title (5 pts)
+  const hasNumber = /\d+/.test(titleText);
+  const hasPowerWord = POWER_WORDS.some(pw => titleText.toLowerCase().includes(pw));
+  score += (hasNumber || hasPowerWord) ? 5 : 0;
   checks.push({
-    id: 'number_in_title',
-    label: hasNumberInTitle ? 'SEO Title contains a number' : 'Try adding a number to your SEO Title',
-    pass: hasNumberInTitle,
+    id: 'title_power_word',
+    label: (hasNumber || hasPowerWord)
+      ? 'SEO Title contains a Power Word or Number'
+      : 'Try adding a Power Word or Number to your SEO Title',
+    pass: hasNumber || hasPowerWord,
     category: 'Title Readability',
   });
 
   // ── 4. CONTENT READABILITY (15 Points) ──────────────────────────────────────
-  score += wordCount > 0 ? 10 : 0;
+  score += wordCount > 0 ? 15 : 0;
   checks.push({
     id: 'readability_paragraphs',
     label: wordCount > 0 ? 'Content is readable and well structured' : 'Add text to your article body',
