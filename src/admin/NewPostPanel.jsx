@@ -657,7 +657,10 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
         <MediaPickerModal
           isOpen={showMediaPicker}
           onClose={() => setShowMediaPicker(false)}
+          onSelect={handleMediaSelected}
           onSelectMedia={handleMediaSelected}
+          title={mediaTarget === 'featured' ? 'Set Featured Image' : 'Select or Upload Media'}
+          buttonText={mediaTarget === 'featured' ? 'Set featured image' : 'Insert into post'}
         />
       )}
 

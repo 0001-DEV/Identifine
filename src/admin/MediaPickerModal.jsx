@@ -8,7 +8,7 @@ import { getAllMedia, addMedia, deleteMedia } from '../utils/mediaStorage';
  *   onClose()       — called when modal is dismissed
  *   title           — optional modal title (default: "Select or Upload Media")
  */
-export default function MediaPickerModal({ onSelect, onClose, title = 'Select or Upload Media' }) {
+export default function MediaPickerModal({ onSelect, onSelectMedia, onClose, title = 'Select or Upload Media', buttonText }) {
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -44,17 +44,24 @@ export default function MediaPickerModal({ onSelect, onClose, title = 'Select or
   const handleFiles = async (files) => {
     if (!files || files.length === 0) return;
     setUploading(true);
-    setActiveTab('library');
+    let lastAdded = null;
     for (const file of Array.from(files)) {
       if (!file.type.startsWith('image/')) continue;
       try {
-        await addMedia(file);
+        lastAdded = await addMedia(file);
       } catch (e) {
         console.error('Upload error:', e);
       }
     }
-    await loadMedia();
+    const all = await getAllMedia();
+    setItems(all);
     setUploading(false);
+    setActiveTab('library');
+    if (lastAdded) {
+      setSelected(lastAdded);
+    } else if (all.length > 0) {
+      setSelected(all[0]);
+    }
   };
 
   const handleFileInput = (e) => handleFiles(e.target.files);
@@ -75,7 +82,10 @@ export default function MediaPickerModal({ onSelect, onClose, title = 'Select or
 
   const handleSelect = () => {
     if (!selected) return;
-    onSelect({ ...selected, url: selected.dataUrl });
+    const callback = onSelect || onSelectMedia;
+    if (callback) {
+      callback({ ...selected, url: selected.dataUrl, alt: altEdit || selected.alt });
+    }
   };
 
   const filtered = items.filter(item => {
@@ -256,11 +266,11 @@ export default function MediaPickerModal({ onSelect, onClose, title = 'Select or
             style={{
               background: selected ? '#2271b1' : '#c3c4c7',
               color: '#fff', border: selected ? '1px solid #135e96' : '1px solid #b3b4b6',
-              borderRadius: 3, padding: '6px 14px', fontSize: 13,
+              borderRadius: 3, padding: '6px 16px', fontSize: 13,
               cursor: selected ? 'pointer' : 'not-allowed', fontWeight: 600,
             }}
           >
-            Set featured image
+            {buttonText || (title.toLowerCase().includes('featured') ? 'Set featured image' : 'Insert into post')}
           </button>
         </div>
       </div>
