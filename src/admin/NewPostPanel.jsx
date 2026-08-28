@@ -185,23 +185,23 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
     if (onPublished) onPublished(article);
   };
 
-  // Theme styles
-  const bgCard = darkMode ? '#1e242c' : '#fff';
-  const borderCard = darkMode ? '#2c3540' : '#c3c4c7';
+  // Theme styles (Pure Black for Dark Mode)
+  const bgCard = darkMode ? '#0a0a0a' : '#fff';
+  const borderCard = darkMode ? '#1f1f1f' : '#c3c4c7';
   const textColor = darkMode ? '#f1f5f9' : '#1d2327';
   const textMuted = darkMode ? '#94a3b8' : '#646970';
-  const inputBg = darkMode ? '#151a21' : '#fff';
+  const inputBg = darkMode ? '#000000' : '#fff';
 
   const inputStyle = {
     width: '100%', padding: '6px 8px', fontSize: 14,
-    border: `1px solid ${darkMode ? '#334155' : '#8c8f94'}`,
+    border: `1px solid ${darkMode ? '#333' : '#8c8f94'}`,
     borderRadius: 3, outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
     background: inputBg, color: textColor,
   };
   const textareaStyle = { ...inputStyle, resize: 'vertical' };
   const labelStyle = { display: 'block', fontSize: 13, fontWeight: 600, color: darkMode ? '#cbd5e1' : '#3c434a', marginBottom: 4 };
   const metaBoxStyle = { background: bgCard, border: `1px solid ${borderCard}`, boxShadow: '0 1px 1px rgba(0,0,0,.04)', marginBottom: 16 };
-  const metaBoxHeadStyle = { padding: '8px 12px', borderBottom: `1px solid ${borderCard}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: darkMode ? '#181f26' : '#fff' };
+  const metaBoxHeadStyle = { padding: '8px 12px', borderBottom: `1px solid ${borderCard}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: darkMode ? '#121212' : '#fff' };
   const metaBoxBodyStyle = { padding: 12 };
 
   const rmTabStyle = (t) => ({

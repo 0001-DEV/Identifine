@@ -221,18 +221,20 @@ export default function WordPressAdminShell() {
   const sidebarW = collapsed ? 36 : 160;
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', background: WP.contentBg }}>
+    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', background: darkMode ? '#000000' : WP.contentBg }}>
 
       {/* ── TOP ADMIN BAR ───────────────────────────────────────────────────── */}
       <div style={{
         position: 'fixed', top: 0, left: 0, right: 0, height: 32, zIndex: 99999,
-        background: WP.topbar, display: 'flex', alignItems: 'center',
+        background: darkMode ? '#000000' : WP.topbar,
+        borderBottom: darkMode ? '1px solid #1a1a1a' : 'none',
+        display: 'flex', alignItems: 'center',
         boxSizing: 'border-box',
       }}>
         {/* WP Logo */}
         <div style={{ width: sidebarW, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, height: '100%', borderRight: '1px solid rgba(255,255,255,.07)' }}>
           <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ fontSize: 12, fontWeight: 900, color: WP.topbar }}>W</span>
+            <span style={{ fontSize: 12, fontWeight: 900, color: '#1d2327' }}>W</span>
           </div>
         </div>
 
@@ -321,9 +323,9 @@ export default function WordPressAdminShell() {
       {/* ── LEFT SIDEBAR ────────────────────────────────────────────────────── */}
       <div style={{
         position: 'fixed', top: 32, left: 0, bottom: 0, width: sidebarW,
-        background: WP.sidebar, zIndex: 9999, overflowY: 'auto', overflowX: 'hidden',
+        background: darkMode ? '#0a0a0a' : WP.sidebar, zIndex: 9999, overflowY: 'auto', overflowX: 'hidden',
         transition: 'width 0.15s',
-        /* Custom scrollbar */
+        borderRight: darkMode ? '1px solid #1a1a1a' : 'none',
         scrollbarWidth: 'thin', scrollbarColor: '#3c434a #1d2327',
       }}>
         {MENU.map((item, idx) => {
@@ -441,7 +443,7 @@ export default function WordPressAdminShell() {
         flex: 1,
         minHeight: 'calc(100vh - 32px)',
         padding: '20px 20px 40px',
-        background: darkMode ? '#0f172a' : WP.contentBg,
+        background: darkMode ? '#000000' : WP.contentBg,
         color: darkMode ? '#f8fafc' : '#3c434a',
         boxSizing: 'border-box',
         transition: 'margin-left 0.15s, background 0.15s',
