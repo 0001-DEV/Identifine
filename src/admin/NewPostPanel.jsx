@@ -333,35 +333,39 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
             </div>
           </div>
 
-          {/* ───── WORDPRESS CLASSIC RICH CONTENT EDITOR ───── */}
-          <div style={metaBoxStyle}>
-            {/* Top Toolbar Bar: Add Media Button + Visual / Text Mode Tabs */}
+          {/* ───── WORDPRESS CLASSIC & GUTENBERG RICH CONTENT EDITOR ───── */}
+          <div style={{ ...metaBoxStyle, minHeight: 650 }}>
+            {/* Top Action Line Toolbar: Add Media Button + Visual / Text Mode Tabs */}
             <div style={{
-              padding: '8px 12px', borderBottom: `1px solid ${borderCard}`,
+              padding: '10px 14px', borderBottom: `1px solid ${borderCard}`,
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               background: darkMode ? '#181f26' : '#f9f9f9',
             }}>
               {/* WordPress "Add Media" Button */}
-              <button
-                onClick={openMediaForContent}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 6,
-                  background: darkMode ? '#334155' : '#fff', color: textColor,
-                  border: `1px solid ${darkMode ? '#475569' : '#8c8f94'}`,
-                  borderRadius: 3, padding: '4px 10px', fontSize: 13, fontWeight: 600,
-                  cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-                }}
-              >
-                <span style={{ fontSize: 14 }}>📷</span>
-                <span>Add Media</span>
-              </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <button
+                  onClick={openMediaForContent}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 6,
+                    background: '#2271b1', color: '#fff',
+                    border: '1px solid #135e96',
+                    borderRadius: 3, padding: '6px 14px', fontSize: 13, fontWeight: 700,
+                    cursor: 'pointer', boxShadow: '0 1px 3px rgba(34,113,177,0.3)',
+                    transition: 'all 0.15s ease',
+                  }}
+                >
+                  <span style={{ fontSize: 15 }}>📷</span>
+                  <span>Add Media</span>
+                </button>
+                <span style={{ fontSize: 11, color: textMuted }}>Click to insert images from Media Library directly into write-up</span>
+              </div>
 
               {/* Visual / Text Editor Mode Switcher */}
               <div style={{ display: 'flex', border: `1px solid ${darkMode ? '#475569' : '#8c8f94'}`, borderRadius: 3, overflow: 'hidden' }}>
                 <button
                   onClick={() => setEditorMode('visual')}
                   style={{
-                    padding: '3px 10px', fontSize: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                    padding: '4px 12px', fontSize: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
                     background: editorMode === 'visual' ? (darkMode ? '#334155' : '#e0e0e0') : 'transparent',
                     color: textColor, fontWeight: editorMode === 'visual' ? 700 : 400,
                   }}
@@ -371,7 +375,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
                 <button
                   onClick={() => setEditorMode('text')}
                   style={{
-                    padding: '3px 10px', fontSize: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                    padding: '4px 12px', fontSize: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
                     background: editorMode === 'text' ? (darkMode ? '#334155' : '#e0e0e0') : 'transparent',
                     color: textColor, fontWeight: editorMode === 'text' ? 700 : 400,
                   }}
@@ -381,51 +385,73 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
               </div>
             </div>
 
-            {/* Classic WYSIWYG Formatting Action Line Toolbar */}
+            {/* WYSIWYG Formatting Action Line Toolbar */}
             <div style={{
-              padding: '6px 12px', borderBottom: `1px solid ${borderCard}`,
-              display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap',
+              padding: '8px 14px', borderBottom: `1px solid ${borderCard}`,
+              display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap',
               background: darkMode ? '#151a21' : '#f0f0f1',
             }}>
-              <button title="Bold" onClick={() => applyFormatting('**', '**')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', fontWeight: 700, cursor: 'pointer' }}>B</button>
-              <button title="Italic" onClick={() => applyFormatting('*', '*')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', fontStyle: 'italic', cursor: 'pointer' }}>I</button>
-              <button title="Link" onClick={() => applyFormatting('[', '](https://)')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>🔗 Link</button>
-              <button title="Blockquote" onClick={() => applyFormatting('\n> ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>“ Quote</button>
-              <button title="Bullet List" onClick={() => applyFormatting('\n- ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>• Bullet</button>
-              <button title="Numbered List" onClick={() => applyFormatting('\n1. ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>1. List</button>
-              <button title="Heading 2" onClick={() => applyFormatting('\n## ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>H2</button>
-              <button title="Heading 3" onClick={() => applyFormatting('\n### ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>H3</button>
+              <button title="Bold" onClick={() => applyFormatting('**', '**')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', fontWeight: 700, cursor: 'pointer' }}>B</button>
+              <button title="Italic" onClick={() => applyFormatting('*', '*')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', fontStyle: 'italic', cursor: 'pointer' }}>I</button>
+              <button title="Link" onClick={() => applyFormatting('[', '](https://)')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>🔗 Link</button>
+              <button title="Blockquote" onClick={() => applyFormatting('\n> ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>“ Quote</button>
+              <button title="Bullet List" onClick={() => applyFormatting('\n- ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>• Bullet</button>
+              <button title="Numbered List" onClick={() => applyFormatting('\n1. ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>1. List</button>
+              <button title="Heading 2" onClick={() => applyFormatting('\n## ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>H2</button>
+              <button title="Heading 3" onClick={() => applyFormatting('\n### ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>H3</button>
 
-              <div style={{ height: 16, width: 1, background: borderCard, margin: '0 4px' }} />
+              <div style={{ height: 18, width: 1, background: borderCard, margin: '0 4px' }} />
 
-              {/* Insert Image directly into write up */}
+              {/* Insert Image Action Button */}
               <button
                 onClick={openMediaForContent}
-                title="Insert Image from Library"
-                style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '2px 8px', fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
+                title="Insert Image from Media Library"
+                style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '3px 10px', fontSize: 12, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
               >
-                <span>🖼</span>
-                <span>Insert Image</span>
+                <span>📷 Insert Image</span>
               </button>
             </div>
 
-            {/* Writeup Body Textarea */}
-            <div style={metaBoxBodyStyle}>
+            {/* Main WordPress Post Writing Textarea (Full Height 520px Canvas) */}
+            <div style={{ ...metaBoxBodyStyle, padding: 16 }}>
               <textarea
                 ref={contentTextareaRef}
                 value={content}
                 onChange={e => setContent(e.target.value)}
-                rows={10}
-                placeholder="Write your post content here... Click 'Add Media' above to insert images into your write-up."
+                rows={22}
+                placeholder="Write your post content here... Click 'Add Media' above to upload or select images from your Media Library directly into this write-up."
                 style={{
                   ...textareaStyle,
-                  fontFamily: editorMode === 'text' ? 'Consolas, Monaco, monospace' : 'inherit',
-                  lineHeight: 1.6,
+                  minHeight: 480,
+                  fontSize: 15,
+                  fontFamily: editorMode === 'text' ? 'Consolas, Monaco, monospace' : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                  lineHeight: 1.7,
+                  padding: 16,
+                  background: darkMode ? '#000000' : '#ffffff',
+                  color: textColor,
+                  border: `1px solid ${darkMode ? '#333' : '#c3c4c7'}`,
                 }}
               />
-              <div style={{ fontSize: 11, color: textMuted, marginTop: 4, display: 'flex', justifyContent: 'space-between' }}>
-                <span>Word count: {content ? content.trim().split(/\s+/).length : 0} words</span>
-                <span>Tip: Use <strong>Add Media</strong> to embed uploaded images into your article body.</span>
+
+              {/* Block Inserter Bar (+ Add Gutenberg Block) */}
+              <div style={{
+                marginTop: 12, padding: '10px 14px', border: `1px dashed ${darkMode ? '#444' : '#c3c4c7'}`,
+                borderRadius: 4, background: darkMode ? '#121212' : '#f9f9f9',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8,
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: textColor }}>+ Add Block:</span>
+                  <button
+                    onClick={openMediaForContent}
+                    style={{ background: '#2271b1', color: '#fff', border: 'none', borderRadius: 3, padding: '4px 10px', fontSize: 12, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
+                  >
+                    <span>📷 Image Block</span>
+                  </button>
+                  <button onClick={() => applyFormatting('\n## ')} style={{ background: darkMode ? '#27272a' : '#e4e4e7', color: textColor, border: 'none', borderRadius: 3, padding: '4px 10px', fontSize: 12, cursor: 'pointer' }}>Heading H2</button>
+                  <button onClick={() => applyFormatting('\n### ')} style={{ background: darkMode ? '#27272a' : '#e4e4e7', color: textColor, border: 'none', borderRadius: 3, padding: '4px 10px', fontSize: 12, cursor: 'pointer' }}>Heading H3</button>
+                  <button onClick={() => applyFormatting('\n> ')} style={{ background: darkMode ? '#27272a' : '#e4e4e7', color: textColor, border: 'none', borderRadius: 3, padding: '4px 10px', fontSize: 12, cursor: 'pointer' }}>Quote</button>
+                </div>
+                <div style={{ fontSize: 12, color: textMuted }}>Word count: <strong style={{ color: textColor }}>{content ? content.trim().split(/\s+/).length : 0}</strong> words</div>
               </div>
             </div>
           </div>
