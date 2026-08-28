@@ -22,24 +22,31 @@ export default function RankMathGeneralSettings({ darkMode = false }) {
     return { ...OPTIMAL_GENERAL_DEFAULTS, ...saved };
   });
   const [toast, setToast] = useState('');
+  const [isSaved, setIsSaved] = useState(false);
 
   const upd = (k, v) => setSettings(s => ({ ...s, [k]: v }));
 
   const handleSave = (e) => {
-    if (e) e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     saveGlobalSettings(settings);
+    setIsSaved(true);
     setToast('Rank Math General Settings saved successfully.');
-    setTimeout(() => setToast(''), 3500);
+    setTimeout(() => {
+      setIsSaved(false);
+      setToast('');
+    }, 3500);
   };
 
   const applyOptimal = () => {
-    setSettings(s => ({
-      ...s,
-      ...OPTIMAL_GENERAL_DEFAULTS,
-    }));
+    const updated = { ...settings, ...OPTIMAL_GENERAL_DEFAULTS };
+    setSettings(updated);
     saveGlobalSettings({ ...getGlobalSettings(), ...OPTIMAL_GENERAL_DEFAULTS });
+    setIsSaved(true);
     setToast('Optimal recommended SEO defaults applied & saved!');
-    setTimeout(() => setToast(''), 3500);
+    setTimeout(() => {
+      setIsSaved(false);
+      setToast('');
+    }, 3500);
   };
 
   // Theme colors
@@ -66,7 +73,7 @@ export default function RankMathGeneralSettings({ darkMode = false }) {
   );
 
   return (
-    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: textColor }}>
+    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: textColor, paddingBottom: 40 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 32, height: 32, borderRadius: 4, background: '#f86434', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -84,7 +91,9 @@ export default function RankMathGeneralSettings({ darkMode = false }) {
         </button>
       </div>
 
-      {toast && <div style={{ background: '#d1e7dd', color: '#0a3622', border: '1px solid #a3cfbb', padding: '10px 14px', marginBottom: 16, fontSize: 13, borderRadius: 3, fontWeight: 600 }}>{toast}</div>}
+      {toast && <div style={{ background: '#d1e7dd', color: '#0a3622', border: '1px solid #a3cfbb', padding: '10px 14px', marginBottom: 16, fontSize: 13, borderRadius: 3, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <span style={{ fontSize: 16 }}>✓</span> {toast}
+      </div>}
 
       <form onSubmit={handleSave}>
         {/* Links Section */}
@@ -187,9 +196,37 @@ export default function RankMathGeneralSettings({ darkMode = false }) {
           </div>
         </div>
 
-        <button type="submit" style={{ background: '#f86434', color: '#fff', border: '1px solid #d9531e', borderRadius: 3, padding: '8px 22px', fontSize: 14, cursor: 'pointer', fontWeight: 600 }}>
-          Save Changes
-        </button>
+        {/* Bottom Actions with Feedback */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 24 }}>
+          <button
+            type="submit"
+            onClick={handleSave}
+            style={{
+              background: isSaved ? '#00b32c' : '#f86434',
+              color: '#fff',
+              border: isSaved ? '1px solid #008a22' : '1px solid #d9531e',
+              borderRadius: 3,
+              padding: '10px 24px',
+              fontSize: 14,
+              cursor: 'pointer',
+              fontWeight: 600,
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              boxShadow: isSaved ? '0 0 10px rgba(0,179,44,0.4)' : 'none'
+            }}
+          >
+            <span>{isSaved ? '✓' : '💾'}</span>
+            <span>{isSaved ? 'Changes Saved Successfully!' : 'Save Changes'}</span>
+          </button>
+
+          {toast && (
+            <span style={{ color: '#00b32c', fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>
+              ✓ Settings persisted to memory & local store
+            </span>
+          )}
+        </div>
       </form>
     </div>
   );
