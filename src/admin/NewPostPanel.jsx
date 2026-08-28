@@ -45,7 +45,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
   const [blocks, setBlocks] = useState([
     { id: 'b-1', type: 'paragraph', content: '' }
   ]);
-  const [selectedBlockId, setSelectedBlockId] = useState('b-1');
+  const [selectedBlockId, setSelectedBlockId] = useState(null);
 
   // Gutenberg UI State
   const [showBlockInserter, setShowBlockInserter] = useState(false);
@@ -400,40 +400,49 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
         <div style={{ flex: 1, overflowY: 'auto', background: bgCanvas, padding: '40px 60px 100px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ width: '100%', maxWidth: 720 }}>
             
-            {/* Big Title Input (Add title) */}
-            <input
-              type="text"
-              value={title}
-              onChange={e => handleTitleChange(e.target.value)}
-              placeholder="Add title"
-              autoFocus
-              style={{
-                width: '100%', fontSize: 36, fontWeight: 700, border: 'none', outline: 'none',
-                background: 'transparent', color: textColor, marginBottom: 20, padding: 0,
-                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                display: 'block', position: 'relative', zIndex: 10, cursor: 'text',
-              }}
-            />
+            {/* Big Title Input (Add title) Container */}
+            <div style={{ position: 'relative', zIndex: 200, marginBottom: 32 }}>
+              <input
+                type="text"
+                value={title}
+                onChange={e => handleTitleChange(e.target.value)}
+                placeholder="Add title"
+                autoFocus
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedBlockId(null);
+                }}
+                style={{
+                  width: '100%', fontSize: 36, fontWeight: 700, border: 'none', outline: 'none',
+                  background: 'transparent', color: textColor, padding: 0,
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                  display: 'block', cursor: 'text', zIndex: 200, position: 'relative',
+                }}
+              />
+            </div>
 
             {/* Blocks Stream Container (Clean Borderless Canvas) */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {blocks.map((block, idx) => {
                 const isSelected = selectedBlockId === block.id;
 
                 return (
                   <div
                     key={block.id}
-                    onClick={() => setSelectedBlockId(block.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedBlockId(block.id);
+                    }}
                     style={{
-                      position: 'relative', padding: '4px 0', border: 'none', outline: 'none',
+                      position: 'relative', padding: '6px 0', border: 'none', outline: 'none',
                       transition: 'all 0.15s ease',
                     }}
                   >
-                    {/* Floating Gutenberg Block Toolbar (Appears on Selected Block) */}
+                    {/* Inline Gutenberg Block Toolbar (Appears above Selected Block) */}
                     {isSelected && (
                       <div style={{
-                        position: 'absolute', top: -38, left: 12, height: 32, background: '#1e1e1e', color: '#fff',
-                        borderRadius: 4, display: 'flex', alignItems: 'center', gap: 4, padding: '0 8px',
+                        marginBottom: 6, height: 32, background: '#1e1e1e', color: '#fff',
+                        borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 4, padding: '0 8px',
                         boxShadow: '0 2px 8px rgba(0,0,0,0.2)', zIndex: 50, fontSize: 12,
                       }}>
                         <span style={{ padding: '0 4px', fontWeight: 700, color: '#a7aaad' }}>
