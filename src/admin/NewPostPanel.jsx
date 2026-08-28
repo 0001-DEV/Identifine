@@ -402,22 +402,17 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
           <div style={{ width: '100%', maxWidth: 720 }}>
             
             {/* Big Title Input (Add title) Container */}
-            <div style={{ position: 'relative', zIndex: 200, marginBottom: 32 }}>
+            <div style={{ marginBottom: 24 }}>
               <input
                 type="text"
                 value={title}
                 onChange={e => handleTitleChange(e.target.value)}
                 placeholder="Add title"
-                autoFocus
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedBlockId(null);
-                }}
                 style={{
                   width: '100%', fontSize: 36, fontWeight: 700, border: 'none', outline: 'none',
-                  background: 'transparent', color: textColor, padding: 0,
+                  background: 'transparent', color: textColor, padding: '4px 0',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                  display: 'block', cursor: 'text', zIndex: 200, position: 'relative',
+                  display: 'block', cursor: 'text',
                 }}
               />
             </div>
