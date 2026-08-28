@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { 
   Plus, Edit3, Trash2, ExternalLink, FileText, CheckCircle, ArrowLeft, 
-  Sparkles, Save, Eye, Layers, Image as ImageIcon, Tag, BookOpen, AlertCircle
+  Sparkles, Save, Eye, Layers, Image as ImageIcon, Tag, BookOpen, AlertCircle,
+  ShieldCheck, Settings, Lock
 } from 'lucide-react';
 import RankMathPanel from '../components/RankMathPanel';
+import AdminSettingsPanel from '../components/AdminSettingsPanel';
 import { analyzeSeo } from '../utils/seoAnalyzer';
+import { getActiveRole, setActiveRole, ROLES } from '../utils/roleManager';
 import { blogPostsData } from './BlogPage';
 
 const LOCAL_STORAGE_KEY = 'identifine_custom_articles';
@@ -38,7 +41,13 @@ function slugify(title) {
 
 export default function BlogAdminPage() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('editor'); // 'editor' | 'manager'
+  const [activeTab, setActiveTab] = useState('editor'); // 'editor' | 'manager' | 'settings'
+  const [role, setRoleState] = useState(getActiveRole());
+
+  const handleRoleChange = (newRole) => {
+    setActiveRole(newRole);
+    setRoleState(newRole);
+  };
   
   // Custom Articles State
   const [articles, setArticles] = useState([]);
@@ -67,6 +76,10 @@ export default function BlogAdminPage() {
   useEffect(() => {
     const loaded = getCustomArticles();
     setArticles(loaded);
+
+    const handleRoleUpdate = () => setRoleState(getActiveRole());
+    window.addEventListener('identifine_role_changed', handleRoleUpdate);
+    return () => window.removeEventListener('identifine_role_changed', handleRoleUpdate);
   }, []);
 
   // Update slug automatically when title changes if auto-slug is enabled
@@ -173,6 +186,10 @@ export default function BlogAdminPage() {
 
   // Delete article
   const handleDeleteArticle = (id) => {
+    if (role !== 'ADMIN' && role !== 'EDITOR') {
+      alert('Only Editors and Administrators can delete articles.');
+      return;
+    }
     if (window.confirm('Are you sure you want to delete this article?')) {
       const filtered = articles.filter(a => a.id !== id);
       setArticles(filtered);
@@ -199,6 +216,8 @@ export default function BlogAdminPage() {
     setSections(sections.filter((_, i) => i !== index));
   };
 
+  const activeRoleInfo = ROLES[role] || ROLES.ADMIN;
+
   return (
     <div className="min-h-screen bg-[#09090B] text-zinc-100 font-sans pt-28 pb-20 px-4 sm:px-8">
       
@@ -212,6 +231,41 @@ export default function BlogAdminPage() {
 
       <div className="max-w-7xl mx-auto space-y-8">
         
+        {/* TOP ROLE SWITCHER BAR */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between bg-zinc-950 p-4 rounded-2xl border border-zinc-800 gap-4 shadow-lg">
+          <div className="flex items-center space-x-2">
+            <ShieldCheck className="w-5 h-5 text-emerald-400" />
+            <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">Active Role Mode:</span>
+            <span 
+              className="text-xs font-bold px-2.5 py-0.5 rounded-full border"
+              style={{
+                backgroundColor: `${activeRoleInfo.color}20`,
+                borderColor: `${activeRoleInfo.color}50`,
+                color: activeRoleInfo.color
+              }}
+            >
+              {activeRoleInfo.label} ({activeRoleInfo.badge})
+            </span>
+          </div>
+
+          {/* Selector Pills */}
+          <div className="flex items-center bg-zinc-900 p-1 rounded-xl border border-zinc-800">
+            {Object.values(ROLES).map((r) => (
+              <button
+                key={r.id}
+                onClick={() => handleRoleChange(r.id)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  role === r.id
+                    ? 'bg-zinc-800 text-white shadow'
+                    : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                {r.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* HEADER BAR */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-zinc-900/90 p-6 rounded-2xl border border-zinc-800 shadow-xl">
           <div className="space-y-1">
@@ -220,14 +274,14 @@ export default function BlogAdminPage() {
                 <ArrowLeft className="w-4 h-4" />
               </NavLink>
               <h1 className="text-2xl sm:text-3xl font-galano font-bold tracking-tight text-white flex items-center gap-2.5">
-                Article & Rank Math Studio
+                Identifine Studio
                 <span className="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-sans font-semibold">
-                  Active
+                  RBAC Enabled
                 </span>
               </h1>
             </div>
             <p className="text-sm text-zinc-400 pl-11">
-              Write, Rank Math SEO optimize, and publish blog posts live without WordPress dependencies.
+              Role-based Content Composer, Rank Math SEO Engine, and Permalinks Manager.
             </p>
           </div>
 
@@ -266,6 +320,21 @@ export default function BlogAdminPage() {
           >
             <Layers className="w-4 h-4 text-emerald-400" />
             <span>Article Manager ({articles.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('settings')}
+            className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl font-medium text-sm transition-all ${
+              activeTab === 'settings'
+                ? 'bg-zinc-800 text-white shadow-md border border-zinc-700'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            }`}
+          >
+            <Settings className="w-4 h-4 text-emerald-400" />
+            <span>System & Permalinks Settings</span>
+            {role !== 'ADMIN' && (
+              <Lock className="w-3 h-3 text-zinc-500 ml-1" />
+            )}
           </button>
         </div>
 
@@ -624,6 +693,32 @@ export default function BlogAdminPage() {
               </div>
             )}
           </div>
+        )}
+
+        {/* TAB 3: SYSTEM & PERMALINKS SETTINGS */}
+        {activeTab === 'settings' && (
+          role === 'ADMIN' ? (
+            <AdminSettingsPanel onSaveSuccess={() => showToast('System Settings updated!')} />
+          ) : (
+            <div className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-12 text-center space-y-4 shadow-xl">
+              <div className="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center mx-auto">
+                <Lock className="w-7 h-7" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-xl font-galano font-bold text-white">Administrator Access Required</h3>
+                <p className="text-sm text-zinc-400 max-w-md mx-auto">
+                  Global System Settings, Permalinks Configuration, and Team Permissions are restricted to Administrator accounts.
+                </p>
+              </div>
+              <button
+                onClick={() => handleRoleChange('ADMIN')}
+                className="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-bold text-xs transition-all shadow-lg inline-flex items-center space-x-2"
+              >
+                <ShieldCheck className="w-4 h-4" />
+                <span>Switch to Administrator Role</span>
+              </button>
+            </div>
+          )
         )}
 
       </div>
