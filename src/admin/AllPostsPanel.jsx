@@ -2,16 +2,47 @@ import React, { useState } from 'react';
 import { getCustomArticles, saveCustomArticles } from '../pages/BlogAdminPage';
 
 const STATUS_COLORS = {
-  published: { bg: '#d1e7dd', color: '#0a3622', label: 'Published' },
-  draft: { bg: '#fff3cd', color: '#664d03', label: 'Draft' },
-  pending: { bg: '#cfe2ff', color: '#084298', label: 'Pending Review' },
+  published: { color: '#00b32c', label: 'Published' },
+  draft: { color: '#dba617', label: 'Draft' },
+  pending: { color: '#d63638', label: 'Pending Review' },
 };
 
 export default function AllPostsPanel({ onNavigate, onEditPost }) {
   const [articles, setArticles] = useState(getCustomArticles());
-  const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
+  const [search, setSearch] = useState('');
   const [confirmDelete, setConfirmDelete] = useState(null);
+  const [quickEditId, setQuickEditId] = useState(null);
+
+  // Quick edit state
+  const [qeTitle, setQeTitle] = useState('');
+  const [qeSlug, setQeSlug] = useState('');
+  const [qeCategory, setQeCategory] = useState('');
+  const [qeStatus, setQeStatus] = useState('published');
+  const [qeDate, setQeDate] = useState('');
+
+  const handleStartQuickEdit = (art) => {
+    setQuickEditId(art.id);
+    setQeTitle(art.title);
+    setQeSlug(art.slug);
+    setQeCategory(art.category || 'Uncategorized');
+    setQeStatus(art.status || 'published');
+    setQeDate(art.date);
+  };
+
+  const handleSaveQuickEdit = (id) => {
+    const updated = articles.map(a => a.id === id ? {
+      ...a,
+      title: qeTitle,
+      slug: qeSlug,
+      category: qeCategory,
+      status: qeStatus,
+      date: qeDate,
+    } : a);
+    setArticles(updated);
+    saveCustomArticles(updated);
+    setQuickEditId(null);
+  };
 
   const handleDelete = (id) => {
     const updated = articles.filter(a => a.id !== id);
@@ -20,39 +51,40 @@ export default function AllPostsPanel({ onNavigate, onEditPost }) {
     setConfirmDelete(null);
   };
 
-  const filtered = articles.filter(a => {
-    const matchSearch = !search || a.title.toLowerCase().includes(search.toLowerCase());
-    const matchStatus = filterStatus === 'all' || (a.status || 'published') === filterStatus;
-    return matchSearch && matchStatus;
+  const filtered = articles.filter(art => {
+    const status = art.status || 'published';
+    const matchStatus = filterStatus === 'all' || status === filterStatus;
+    const matchSearch = !search || art.title.toLowerCase().includes(search.toLowerCase()) || (art.category && art.category.toLowerCase().includes(search.toLowerCase()));
+    return matchStatus && matchSearch;
   });
 
   const counts = {
     all: articles.length,
-    published: articles.filter(a => !a.status || a.status === 'published').length,
+    published: articles.filter(a => (a.status || 'published') === 'published').length,
     draft: articles.filter(a => a.status === 'draft').length,
+    pending: articles.filter(a => a.status === 'pending').length,
   };
 
-  const tdStyle = { padding: '8px 10px', borderBottom: '1px solid #f0f0f1', fontSize: 13, verticalAlign: 'top' };
   const thStyle = { padding: '8px 10px', borderBottom: '1px solid #c3c4c7', fontSize: 13, fontWeight: 600, color: '#1d2327', textAlign: 'left', background: '#f9f9f9' };
+  const tdStyle = { padding: '8px 10px', borderBottom: '1px solid #f0f0f1', fontSize: 13, verticalAlign: 'top' };
+  const inputStyle = { padding: '4px 6px', fontSize: 12, border: '1px solid #8c8f94', borderRadius: 3, outline: 'none', width: '100%', boxSizing: 'border-box' };
 
   return (
     <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+      {/* Title & Add New button */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
         <h1 style={{ fontSize: 23, fontWeight: 400, margin: 0, color: '#1d2327' }}>Posts</h1>
         <button
           onClick={() => onNavigate('add-new')}
-          style={{
-            background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3,
-            padding: '4px 10px', fontSize: 13, cursor: 'pointer',
-          }}
+          style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '4px 10px', fontSize: 13, cursor: 'pointer' }}
         >
           Add New Post
         </button>
       </div>
 
-      {/* Status Filter Tabs */}
+      {/* Filter status tabs */}
       <div style={{ marginBottom: 8, fontSize: 13 }}>
-        {['all', 'published', 'draft'].map(s => (
+        {['all', 'published', 'draft', 'pending'].map(s => (
           <span key={s}>
             <button
               onClick={() => setFilterStatus(s)}
@@ -65,37 +97,52 @@ export default function AllPostsPanel({ onNavigate, onEditPost }) {
             >
               {s.charAt(0).toUpperCase() + s.slice(1)} ({counts[s] || 0})
             </button>
-            {s !== 'draft' && <span style={{ color: '#c3c4c7', margin: '0 4px' }}>|</span>}
+            {s !== 'pending' && <span style={{ color: '#c3c4c7', margin: '0 4px' }}>|</span>}
           </span>
         ))}
       </div>
 
-      {/* Search + Filter Bar */}
+      {/* Bulk actions & search toolbar */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 12, alignItems: 'center' }}>
+        <select style={{ padding: '4px 8px', fontSize: 13, border: '1px solid #8c8f94', borderRadius: 3, outline: 'none' }}>
+          <option>Bulk actions</option>
+          <option>Edit</option>
+          <option>Move to Trash</option>
+        </select>
+        <button style={{ background: '#f0f0f1', border: '1px solid #8c8f94', borderRadius: 3, padding: '4px 10px', fontSize: 13, cursor: 'pointer', color: '#3c434a' }}>
+          Apply
+        </button>
+
+        <select style={{ padding: '4px 8px', fontSize: 13, border: '1px solid #8c8f94', borderRadius: 3, outline: 'none' }}>
+          <option>All dates</option>
+          <option>August 2026</option>
+          <option>July 2026</option>
+        </select>
+        <select style={{ padding: '4px 8px', fontSize: 13, border: '1px solid #8c8f94', borderRadius: 3, outline: 'none' }}>
+          <option>All Categories</option>
+          <option>Smart Hardware</option>
+          <option>Design Strategy</option>
+        </select>
+        <button style={{ background: '#f0f0f1', border: '1px solid #8c8f94', borderRadius: 3, padding: '4px 10px', fontSize: 13, cursor: 'pointer', color: '#3c434a' }}>
+          Filter
+        </button>
+
         <input
           type="search"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          placeholder="Search posts…"
-          style={{
-            padding: '4px 8px', fontSize: 13, border: '1px solid #8c8f94', borderRadius: 3,
-            width: 200, outline: 'none',
-          }}
+          placeholder="Search posts..."
+          style={{ marginLeft: 'auto', padding: '4px 8px', fontSize: 13, border: '1px solid #8c8f94', borderRadius: 3, width: 200, outline: 'none' }}
         />
-        <button
-          style={{
-            background: '#f0f0f1', border: '1px solid #8c8f94', borderRadius: 3,
-            padding: '4px 10px', fontSize: 13, cursor: 'pointer', color: '#3c434a',
-          }}
-        >
+        <button style={{ background: '#f0f0f1', border: '1px solid #8c8f94', borderRadius: 3, padding: '4px 10px', fontSize: 13, cursor: 'pointer', color: '#3c434a' }}>
           Search Posts
         </button>
       </div>
 
       {/* Table */}
       {filtered.length === 0 ? (
-        <div style={{ background: '#fff', border: '1px solid #c3c4c7', padding: 20, textAlign: 'center', fontSize: 13, color: '#646970' }}>
-          No posts found. <button onClick={() => onNavigate('add-new')} style={{ background: 'none', border: 'none', color: '#2271b1', cursor: 'pointer', textDecoration: 'underline', fontSize: 13 }}>Create your first post</button>
+        <div style={{ background: '#fff', border: '1px solid #c3c4c7', padding: 24, textAlign: 'center', color: '#646970', fontSize: 14 }}>
+          No posts found.
         </div>
       ) : (
         <table style={{ width: '100%', borderCollapse: 'collapse', background: '#fff', border: '1px solid #c3c4c7', boxShadow: '0 1px 1px rgba(0,0,0,.04)' }}>
@@ -105,7 +152,7 @@ export default function AllPostsPanel({ onNavigate, onEditPost }) {
               <th style={thStyle}>Title</th>
               <th style={thStyle}>Author</th>
               <th style={thStyle}>Categories</th>
-              <th style={thStyle}>SEO</th>
+              <th style={thStyle}>SEO Score</th>
               <th style={thStyle}>Date</th>
             </tr>
           </thead>
@@ -115,6 +162,50 @@ export default function AllPostsPanel({ onNavigate, onEditPost }) {
               const statusInfo = STATUS_COLORS[status] || STATUS_COLORS.published;
               const score = art.seoScore || 0;
               const scoreColor = score >= 80 ? '#00b32c' : score >= 50 ? '#dba617' : '#d63638';
+              const isQuickEditing = quickEditId === art.id;
+
+              if (isQuickEditing) {
+                return (
+                  <tr key={art.id} style={{ background: '#f0f6fc', borderLeft: '4px solid #2271b1' }}>
+                    <td colSpan={6} style={{ padding: 12 }}>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: '#1d2327', marginBottom: 8 }}>QUICK EDIT</div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 180px 140px', gap: 12, alignItems: 'center', marginBottom: 12 }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#3c434a', marginBottom: 2 }}>Title</label>
+                          <input type="text" value={qeTitle} onChange={e => setQeTitle(e.target.value)} style={inputStyle} />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#3c434a', marginBottom: 2 }}>Slug</label>
+                          <input type="text" value={qeSlug} onChange={e => setQeSlug(e.target.value)} style={inputStyle} />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#3c434a', marginBottom: 2 }}>Category</label>
+                          <select value={qeCategory} onChange={e => setQeCategory(e.target.value)} style={inputStyle}>
+                            <option value="Smart Hardware">Smart Hardware</option>
+                            <option value="Design Strategy">Design Strategy</option>
+                            <option value="Executive Strategy">Executive Strategy</option>
+                            <option value="Personal Branding">Personal Branding</option>
+                            <option value="Uncategorized">Uncategorized</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: 11, fontWeight: 600, color: '#3c434a', marginBottom: 2 }}>Status</label>
+                          <select value={qeStatus} onChange={e => setQeStatus(e.target.value)} style={inputStyle}>
+                            <option value="published">Published</option>
+                            <option value="draft">Draft</option>
+                            <option value="pending">Pending Review</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                        <button onClick={() => setQuickEditId(null)} style={{ background: '#f0f0f1', border: '1px solid #8c8f94', borderRadius: 3, padding: '4px 10px', fontSize: 12, cursor: 'pointer', color: '#3c434a' }}>Cancel</button>
+                        <button onClick={() => handleSaveQuickEdit(art.id)} style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '4px 12px', fontSize: 12, cursor: 'pointer', fontWeight: 600 }}>Update Post</button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              }
+
               return (
                 <tr key={art.id} style={{ background: i % 2 === 0 ? '#fff' : '#f9f9f9' }}>
                   <td style={tdStyle}><input type="checkbox" /></td>
@@ -137,6 +228,11 @@ export default function AllPostsPanel({ onNavigate, onEditPost }) {
                           onClick={() => onEditPost(art)}
                           style={{ color: '#2271b1', cursor: 'pointer', textDecoration: 'underline' }}
                         >Edit</span>
+                        {' | '}
+                        <span
+                          onClick={() => handleStartQuickEdit(art)}
+                          style={{ color: '#2271b1', cursor: 'pointer' }}
+                        >Quick Edit</span>
                         {' | '}
                         <span
                           onClick={() => setConfirmDelete(art.id)}
@@ -169,14 +265,8 @@ export default function AllPostsPanel({ onNavigate, onEditPost }) {
                       <span style={{ fontSize: 12, color: scoreColor, fontWeight: 600 }}>{score}/100</span>
                     </div>
                   </td>
-                  <td style={tdStyle}>
-                    <div style={{ fontSize: 13, color: '#3c434a' }}>
-                      {status === 'draft' ? (
-                        <span>Last Modified<br /><span style={{ color: '#646970' }}>{art.date}</span></span>
-                      ) : (
-                        <span>Published<br /><span style={{ color: '#646970' }}>{art.date}</span></span>
-                      )}
-                    </div>
+                  <td style={{ ...tdStyle, whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: 13, color: '#3c434a' }}>{art.date}</div>
                   </td>
                 </tr>
               );

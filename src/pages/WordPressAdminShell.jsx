@@ -445,8 +445,45 @@ export default function WordPressAdminShell() {
         color: darkMode ? '#f8fafc' : '#3c434a',
         boxSizing: 'border-box',
         transition: 'margin-left 0.15s, background 0.15s',
+        display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
       }}>
-        {renderPanel()}
+        <div>
+          {/* Top Screen Options & Help Tab Bar (authentic WordPress) */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 0, marginBottom: 12 }}>
+            <div style={{ background: darkMode ? '#1e242c' : '#fff', border: `1px solid ${darkMode ? '#334155' : '#c3c4c7'}`, borderTop: 'none', borderRadius: '0 0 4px 4px', display: 'flex', fontSize: 12 }}>
+              <button
+                onClick={() => alert('Screen Options: Column visibility and pagination controls are active.')}
+                style={{ background: 'none', border: 'none', padding: '3px 10px', color: darkMode ? '#94a3b8' : '#646970', cursor: 'pointer', fontFamily: 'inherit' }}
+              >
+                Screen Options ▾
+              </button>
+              <span style={{ color: darkMode ? '#334155' : '#c3c4c7', alignSelf: 'center' }}>|</span>
+              <button
+                onClick={() => alert('Help: Identifine WordPress Admin documentation & support active.')}
+                style={{ background: 'none', border: 'none', padding: '3px 10px', color: darkMode ? '#94a3b8' : '#646970', cursor: 'pointer', fontFamily: 'inherit' }}
+              >
+                Help ▾
+              </button>
+            </div>
+          </div>
+
+          {/* Active Admin Panel */}
+          {renderPanel()}
+        </div>
+
+        {/* ── AUTHENTIC WORDPRESS ADMIN FOOTER ───────────────────────────────── */}
+        <div style={{
+          marginTop: 40, paddingTop: 12, borderTop: `1px solid ${darkMode ? '#1e293b' : '#dcdcde'}`,
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          fontSize: 12, color: darkMode ? '#64748b' : '#646970',
+        }}>
+          <div>
+            Thank you for creating with <a href="https://wordpress.org" target="_blank" rel="noreferrer" style={{ color: '#2271b1', textDecoration: 'none' }}>WordPress</a> & <strong>Identifine</strong>.
+          </div>
+          <div>
+            Version 6.6.1
+          </div>
+        </div>
       </div>
     </div>
   );
