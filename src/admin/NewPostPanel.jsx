@@ -23,37 +23,41 @@ const CATEGORIES = [
 export default function NewPostPanel({ editArticle, onPublished, darkMode = false }) {
   const [editingId, setEditingId] = useState(null);
 
-  // Form fields
+  // Core Post Attributes
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [autoSlug, setAutoSlug] = useState(true);
-  const [content, setContent] = useState(''); // Intro / Main body text
-  const [sections, setSections] = useState([]);
-  const [takeaway, setTakeaway] = useState('');
-  const [summary, setSummary] = useState('');
   const [category, setCategory] = useState('Uncategorized');
   const [tags, setTags] = useState('');
   const [readTime, setReadTime] = useState('3 min read');
   const [featuredImage, setFeaturedImage] = useState('');
   const [status, setStatus] = useState('published');
   const [date, setDate] = useState(new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }));
+  const [summary, setSummary] = useState('');
+  
+  // Rank Math & SEO
   const [focusKeyword, setFocusKeyword] = useState('');
   const [seoTitle, setSeoTitle] = useState('');
   const [metaDesc, setMetaDesc] = useState('');
-  const [toast, setToast] = useState('');
   const [activeRmTab, setActiveRmTab] = useState('general');
+
+  // Gutenberg Blocks Array
+  const [blocks, setBlocks] = useState([
+    { id: 'b-1', type: 'paragraph', content: '' }
+  ]);
+  const [selectedBlockId, setSelectedBlockId] = useState('b-1');
+
+  // Gutenberg UI State
+  const [showBlockInserter, setShowBlockInserter] = useState(false);
+  const [showRightSidebar, setShowRightSidebar] = useState(true);
+  const [rightSidebarTab, setRightSidebarTab] = useState('post'); // 'post' | 'block' | 'rankmath'
+  const [blockSearch, setBlockSearch] = useState('');
+  
+  // Media Picker state
   const [showMediaPicker, setShowMediaPicker] = useState(false);
+  const [mediaTargetBlockId, setMediaTargetBlockId] = useState(null); // 'featured' or blockId
 
-  // Media picker target: 'featured' | 'content' | { type: 'section', index: number }
-  const [mediaTarget, setMediaTarget] = useState('featured');
-
-  // Editor mode: 'visual' | 'text'
-  const [editorMode, setEditorMode] = useState('visual');
-
-  // Right sidebar tab: 'post' (Post Settings) or 'rankmath' (Rank Math SEO)
-  const [rightSidebarTab, setRightSidebarTab] = useState('post');
-
-  const contentTextareaRef = useRef(null);
+  const [toast, setToast] = useState('');
 
   useEffect(() => {
     if (editArticle) {
@@ -61,91 +65,103 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
       setTitle(editArticle.title || '');
       setSlug(editArticle.slug || '');
       setAutoSlug(false);
-      setContent(editArticle.intro || '');
-      setSections(editArticle.sections || []);
-      setTakeaway(editArticle.takeaway || '');
-      setSummary(editArticle.summary || '');
       setCategory(editArticle.category || 'Uncategorized');
       setTags(editArticle.tags || '');
       setReadTime(editArticle.readTime || '3 min read');
       setFeaturedImage(editArticle.image || '');
       setStatus(editArticle.status || 'published');
       setDate(editArticle.date || new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }));
+      setSummary(editArticle.summary || '');
       setFocusKeyword(editArticle.focusKeyword || '');
       setSeoTitle(editArticle.seoTitle || '');
       setMetaDesc(editArticle.metaDesc || '');
+
+      // Load content as Gutenberg blocks
+      if (editArticle.sections && editArticle.sections.length > 0) {
+        const loadedBlocks = [];
+        if (editArticle.intro) {
+          loadedBlocks.push({ id: `b-intro`, type: 'paragraph', content: editArticle.intro });
+        }
+        editArticle.sections.forEach((sec, idx) => {
+          if (sec.heading) loadedBlocks.push({ id: `b-h-${idx}`, type: 'heading', content: sec.heading, level: 'h2' });
+          if (sec.body) loadedBlocks.push({ id: `b-p-${idx}`, type: 'paragraph', content: sec.body });
+        });
+        setBlocks(loadedBlocks.length > 0 ? loadedBlocks : [{ id: 'b-1', type: 'paragraph', content: '' }]);
+      } else if (editArticle.intro) {
+        setBlocks([{ id: 'b-1', type: 'paragraph', content: editArticle.intro }]);
+      }
     }
   }, [editArticle]);
 
-  const handleTitleChange = (val) => {
-    setTitle(val);
-    if (autoSlug) {
-      setSlug(slugify(val));
+  // Gutenberg Block Operations
+  const addBlock = (type = 'paragraph', targetId = null, extraProps = {}) => {
+    const newBlock = { id: `b-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`, type, content: '', ...extraProps };
+    if (targetId) {
+      const idx = blocks.findIndex(b => b.id === targetId);
+      const next = [...blocks];
+      next.splice(idx + 1, 0, newBlock);
+      setBlocks(next);
+    } else {
+      setBlocks(prev => [...prev, newBlock]);
     }
+    setSelectedBlockId(newBlock.id);
+    setShowBlockInserter(false);
   };
 
-  const addSection = () => {
-    setSections([...sections, { heading: '', body: '' }]);
+  const updateBlock = (id, fields) => {
+    setBlocks(prev => prev.map(b => b.id === id ? { ...b, ...fields } : b));
   };
 
-  const updateSection = (idx, field, val) => {
-    const next = [...sections];
-    next[idx] = { ...next[idx], [field]: val };
-    setSections(next);
+  const removeBlock = (id) => {
+    if (blocks.length === 1) {
+      setBlocks([{ id: `b-${Date.now()}`, type: 'paragraph', content: '' }]);
+      return;
+    }
+    setBlocks(prev => prev.filter(b => b.id !== id));
   };
 
-  const removeSection = (idx) => {
-    setSections(sections.filter((_, i) => i !== idx));
+  const moveBlock = (id, direction) => {
+    const idx = blocks.findIndex(b => b.id === id);
+    if (idx < 0) return;
+    const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (targetIdx < 0 || targetIdx >= blocks.length) return;
+    const next = [...blocks];
+    const temp = next[idx];
+    next[idx] = next[targetIdx];
+    next[targetIdx] = temp;
+    setBlocks(next);
   };
 
-  // Open media picker for inserting into content write-up or featured image
-  const openMediaForContent = () => {
-    setMediaTarget('content');
-    setShowMediaPicker(true);
-  };
+  // Convert blocks to single content string for saving & SEO analyzer
+  const fullContentString = blocks.map(b => {
+    if (b.type === 'heading') return `## ${b.content}`;
+    if (b.type === 'image') return `![${b.alt || 'Image'}](${b.url})`;
+    if (b.type === 'quote') return `> ${b.content}`;
+    return b.content;
+  }).join('\n\n');
 
-  const openMediaForSection = (idx) => {
-    setMediaTarget({ type: 'section', index: idx });
-    setShowMediaPicker(true);
-  };
-
-  const openMediaForFeatured = () => {
-    setMediaTarget('featured');
-    setShowMediaPicker(true);
-  };
-
-  // Media selected callback
+  // Media Picker Callback
   const handleMediaSelected = (item) => {
     const imgUrl = item.dataUrl || item.url;
-    const imgMarkdown = `\n\n![${item.alt || item.name || 'Image'}](${imgUrl})\n\n`;
-
-    if (mediaTarget === 'featured') {
+    if (mediaTargetBlockId === 'featured') {
       setFeaturedImage(imgUrl);
-    } else if (mediaTarget === 'content') {
-      setContent(prev => prev + imgMarkdown);
-    } else if (typeof mediaTarget === 'object' && mediaTarget.type === 'section') {
-      const idx = mediaTarget.index;
-      updateSection(idx, 'body', (sections[idx]?.body || '') + imgMarkdown);
+    } else if (mediaTargetBlockId) {
+      updateBlock(mediaTargetBlockId, { type: 'image', url: imgUrl, alt: item.alt || item.name || '' });
     }
     setShowMediaPicker(false);
-  };
-
-  // Helper formatting tools for rich text editor
-  const applyFormatting = (prefix, suffix = '') => {
-    setContent(prev => prev + `${prefix}text${suffix}`);
   };
 
   // SEO Analysis
   const seoData = analyzeSeo({
     title,
     slug,
-    content,
-    sections,
+    content: fullContentString,
+    sections: [],
     summary,
     focusKeyword,
     seoTitle,
     metaDesc,
-    hasImage: !!featuredImage,
+    hasImage: !!featuredImage || blocks.some(b => b.type === 'image'),
   });
 
   const { score, color, checks } = seoData;
@@ -156,6 +172,23 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
       return;
     }
     const finalSlug = slug.trim() || slugify(title);
+    
+    // Map blocks back to sections for public site renderer compatibility
+    const introBlock = blocks.find(b => b.type === 'paragraph')?.content || '';
+    const formattedSections = [];
+    let currentSec = null;
+
+    blocks.forEach(b => {
+      if (b.type === 'heading') {
+        if (currentSec) formattedSections.push(currentSec);
+        currentSec = { heading: b.content, body: '' };
+      } else if (currentSec) {
+        if (b.type === 'image') currentSec.body += `\n\n![${b.alt || 'Image'}](${b.url})\n\n`;
+        else currentSec.body += `\n\n${b.content}`;
+      }
+    });
+    if (currentSec) formattedSections.push(currentSec);
+
     const article = {
       id: editingId || finalSlug || `art-${Date.now()}`,
       slug: finalSlug,
@@ -165,18 +198,19 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
       category,
       tags,
       featured: true,
-      image: featuredImage || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
-      summary: summary.trim() || content.slice(0, 140),
-      intro: content,
-      sections,
-      takeaway,
+      image: featuredImage || (blocks.find(b => b.type === 'image')?.url) || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
+      summary: summary.trim() || fullContentString.slice(0, 140),
+      intro: introBlock,
+      sections: formattedSections,
+      takeaway: '',
       focusKeyword,
       seoTitle: seoTitle || title + getGlobalSettings().siteTitleSeparator,
-      metaDesc: metaDesc || summary || content.slice(0, 155),
+      metaDesc: metaDesc || summary || fullContentString.slice(0, 155),
       seoScore: score,
       status: newStatus || status,
       createdAt: new Date().toISOString(),
     };
+
     const existing = getCustomArticles();
     const updated = editingId ? existing.map(a => a.id === editingId ? article : a) : [article, ...existing];
     saveCustomArticles(updated);
@@ -185,693 +219,531 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
     if (onPublished) onPublished(article);
   };
 
-  // Theme styles (Pure Black for Dark Mode)
-  const bgCard = darkMode ? '#0a0a0a' : '#fff';
-  const borderCard = darkMode ? '#1f1f1f' : '#c3c4c7';
+  // Theme Styles
+  const bgCanvas = darkMode ? '#000000' : '#ffffff';
+  const bgCard = darkMode ? '#0a0a0a' : '#ffffff';
+  const borderCard = darkMode ? '#1f1f1f' : '#e0e0e0';
   const textColor = darkMode ? '#f1f5f9' : '#1d2327';
   const textMuted = darkMode ? '#94a3b8' : '#646970';
-  const inputBg = darkMode ? '#000000' : '#fff';
+  const inputBg = darkMode ? '#000000' : '#ffffff';
 
   const inputStyle = {
-    width: '100%', padding: '6px 8px', fontSize: 14,
+    width: '100%', padding: '6px 8px', fontSize: 13,
     border: `1px solid ${darkMode ? '#333' : '#8c8f94'}`,
     borderRadius: 3, outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
     background: inputBg, color: textColor,
   };
-  const textareaStyle = { ...inputStyle, resize: 'vertical' };
-  const labelStyle = { display: 'block', fontSize: 13, fontWeight: 600, color: darkMode ? '#cbd5e1' : '#3c434a', marginBottom: 4 };
-  const metaBoxStyle = { background: bgCard, border: `1px solid ${borderCard}`, boxShadow: '0 1px 1px rgba(0,0,0,.04)', marginBottom: 16 };
-  const metaBoxHeadStyle = { padding: '8px 12px', borderBottom: `1px solid ${borderCard}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: darkMode ? '#121212' : '#fff' };
-  const metaBoxBodyStyle = { padding: 12 };
 
-  const rmTabStyle = (t) => ({
-    padding: '6px 12px', fontSize: 12, cursor: 'pointer', border: 'none', background: 'none',
-    borderBottom: activeRmTab === t ? '2px solid #f86434' : '2px solid transparent',
-    color: activeRmTab === t ? '#f86434' : textMuted, fontWeight: activeRmTab === t ? 700 : 400,
-    fontFamily: 'inherit',
-  });
-
-  const passChecks = checks.filter(c => c.pass).length;
-  const failChecks = checks.filter(c => !c.pass).length;
+  const wordCount = fullContentString ? fullContentString.trim().split(/\s+/).length : 0;
 
   return (
-    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: textColor }}>
-
-      {/* Media Picker Modal */}
-      {showMediaPicker && (
-        <MediaPickerModal
-          title={mediaTarget === 'featured' ? 'Set Featured Image' : 'Insert Media into Content'}
-          onSelect={handleMediaSelected}
-          onClose={() => setShowMediaPicker(false)}
-        />
-      )}
-
-      {/* ── TOP ACTION HEADER (WP Block Editor Style) ────────────────────── */}
+    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: textColor, margin: '-20px -20px -40px', minHeight: 'calc(100vh - 32px)', display: 'flex', flexDirection: 'column' }}>
+      
+      {/* ── GUTENBERG TOP HEADER BAR ────────────────────────────────────────────── */}
       <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16,
-        background: bgCard, border: `1px solid ${borderCard}`, padding: '10px 16px', borderRadius: 4,
+        height: 56, borderBottom: `1px solid ${borderCard}`, background: bgCard,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 16px', sticky: 'top', zIndex: 100, boxSizing: 'border-box',
       }}>
-        <h1 style={{ fontSize: 20, fontWeight: 500, margin: 0, color: textColor }}>
-          {editingId ? 'Edit Post' : 'Add New Post'}
-        </h1>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          {/* Save Draft */}
+        {/* Left Side: + Block Inserter Button & Document Tools */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {/* Black Gutenberg + Button */}
           <button
-            onClick={() => handleSave('draft')}
-            style={{ background: darkMode ? '#334155' : '#f0f0f1', border: `1px solid ${darkMode ? '#475569' : '#8c8f94'}`, borderRadius: 3, padding: '5px 12px', fontSize: 13, cursor: 'pointer', color: darkMode ? '#e2e8f0' : '#3c434a' }}
-          >
-            Save Draft
-          </button>
-
-          {/* Publish / Update */}
-          <button
-            onClick={() => handleSave('published')}
-            style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '5px 14px', fontSize: 13, cursor: 'pointer', fontWeight: 600 }}
-          >
-            {editingId ? 'Update' : 'Publish'}
-          </button>
-
-          <div style={{ height: 18, width: 1, background: borderCard, margin: '0 2px' }} />
-
-          {/* Rank Math SEO Icon Button with live Score Pill */}
-          <button
-            onClick={() => setRightSidebarTab(rightSidebarTab === 'rankmath' ? 'post' : 'rankmath')}
-            title="Rank Math SEO Analysis"
+            onClick={() => setShowBlockInserter(!showBlockInserter)}
+            title="Toggle Gutenberg Block Inserter (+)"
             style={{
-              display: 'flex', alignItems: 'center', gap: 6,
-              background: rightSidebarTab === 'rankmath' ? '#f86434' : (darkMode ? '#181f26' : '#fff'),
-              color: rightSidebarTab === 'rankmath' ? '#fff' : textColor,
-              border: `1px solid ${rightSidebarTab === 'rankmath' ? '#d9531e' : borderCard}`,
-              borderRadius: 4, padding: '4px 10px', fontSize: 13, fontWeight: 700, cursor: 'pointer',
-              boxShadow: '0 1px 2px rgba(0,0,0,0.05)', transition: 'all 0.15s ease',
+              width: 36, height: 36, background: '#1e1e1e', color: '#fff', border: 'none',
+              borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 22, fontWeight: 300, cursor: 'pointer', boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
             }}
           >
-            <div style={{
-              width: 18, height: 18, borderRadius: 3,
-              background: rightSidebarTab === 'rankmath' ? '#fff' : '#f86434',
-              color: rightSidebarTab === 'rankmath' ? '#f86434' : '#fff',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 900
-            }}>
-              R
-            </div>
-            <span>{score}/100</span>
-            <div style={{ width: 8, height: 8, borderRadius: '50%', background: color }} />
+            +
+          </button>
+          
+          <div style={{ height: 24, width: 1, background: borderCard }} />
+
+          <button title="Undo" style={{ background: 'none', border: 'none', color: textMuted, fontSize: 16, cursor: 'pointer', padding: 4 }}>↶</button>
+          <button title="Redo" style={{ background: 'none', border: 'none', color: textMuted, fontSize: 16, cursor: 'pointer', padding: 4 }}>↷</button>
+          
+          <div style={{ fontSize: 12, color: textMuted, marginLeft: 8 }}>
+            <span>{wordCount} words</span>
+          </div>
+        </div>
+
+        {/* Right Side: Save Draft, Preview, Publish, Settings ⚙ & Rank Math Icon */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          {toast && <span style={{ fontSize: 12, color: '#10b981', fontWeight: 600 }}>{toast}</span>}
+
+          <button
+            onClick={() => handleSave('draft')}
+            style={{ background: 'none', border: `1px solid ${borderCard}`, borderRadius: 3, padding: '6px 12px', fontSize: 13, cursor: 'pointer', color: textColor, fontWeight: 500 }}
+          >
+            Save draft
           </button>
 
-          {/* Post Settings Icon Button (⚙) */}
           <button
-            onClick={() => setRightSidebarTab('post')}
-            title="Post Settings (Categories, Featured Image, Publish)"
+            onClick={() => alert('Post Preview Mode Active')}
+            style={{ background: 'none', border: `1px solid ${borderCard}`, borderRadius: 3, padding: '6px 12px', fontSize: 13, cursor: 'pointer', color: textColor, fontWeight: 500 }}
+          >
+            Preview ▾
+          </button>
+
+          <button
+            onClick={() => handleSave('published')}
+            style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '6px 16px', fontSize: 13, fontWeight: 600, cursor: 'pointer', boxShadow: '0 1px 0 #135e96' }}
+          >
+            Publish…
+          </button>
+
+          <div style={{ height: 24, width: 1, background: borderCard, margin: '0 4px' }} />
+
+          {/* Settings ⚙ Gear Button */}
+          <button
+            onClick={() => {
+              if (showRightSidebar && rightSidebarTab === 'post') {
+                setShowRightSidebar(false);
+              } else {
+                setShowRightSidebar(true);
+                setRightSidebarTab('post');
+              }
+            }}
+            title="Toggle Post / Block Settings Sidebar"
             style={{
-              background: rightSidebarTab === 'post' ? (darkMode ? '#334155' : '#1d2327') : (darkMode ? '#181f26' : '#fff'),
-              color: rightSidebarTab === 'post' ? '#fff' : textMuted,
-              border: `1px solid ${borderCard}`,
-              borderRadius: 4, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 16, cursor: 'pointer', transition: 'all 0.15s ease',
+              background: showRightSidebar && rightSidebarTab !== 'rankmath' ? (darkMode ? '#333' : '#e0e0e0') : 'none',
+              border: 'none', borderRadius: 4, padding: '6px 8px', fontSize: 16, cursor: 'pointer', color: textColor,
             }}
           >
             ⚙
           </button>
+
+          {/* Rank Math SEO Top Action Icon Button [R score/100] */}
+          <button
+            onClick={() => {
+              if (showRightSidebar && rightSidebarTab === 'rankmath') {
+                setShowRightSidebar(false);
+              } else {
+                setShowRightSidebar(true);
+                setRightSidebarTab('rankmath');
+              }
+            }}
+            title="Toggle Rank Math SEO Sidebar"
+            style={{
+              background: rightSidebarTab === 'rankmath' && showRightSidebar ? '#f86434' : 'rgba(248, 100, 52, 0.1)',
+              color: rightSidebarTab === 'rankmath' && showRightSidebar ? '#fff' : '#f86434',
+              border: '1px solid #f86434', borderRadius: 4, padding: '4px 8px', fontSize: 12, fontWeight: 700,
+              cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4,
+            }}
+          >
+            <span>R</span>
+            <span>{score}/100</span>
+          </button>
         </div>
       </div>
 
-      {toast && (
-        <div style={{ background: '#d1e7dd', color: '#0a3622', border: '1px solid #a3cfbb', padding: '8px 12px', marginBottom: 12, fontSize: 13, borderRadius: 3 }}>
-          {toast}
-        </div>
-      )}
+      {/* ── MAIN GUTENBERG WORKSPACE AREA (LEFT INSERTER + CANVAS + SIDEBAR) ───── */}
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
+        
+        {/* ── 1. LEFT GUTENBERG BLOCK INSERTER DRAWER ─────────────────────────── */}
+        {showBlockInserter && (
+          <div style={{
+            width: 300, borderRight: `1px solid ${borderCard}`, background: bgCard,
+            padding: 16, boxSizing: 'border-box', overflowY: 'auto', zIndex: 90,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+              <h3 style={{ fontSize: 14, fontWeight: 700, margin: 0, color: textColor }}>Add a block</h3>
+              <button onClick={() => setShowBlockInserter(false)} style={{ background: 'none', border: 'none', fontSize: 16, cursor: 'pointer', color: textMuted }}>✕</button>
+            </div>
+            
+            <input
+              type="text"
+              value={blockSearch}
+              onChange={e => setBlockSearch(e.target.value)}
+              placeholder="Search blocks…"
+              style={{ ...inputStyle, marginBottom: 16 }}
+            />
 
-      {/* Two-column layout: Editor Left, Sidebar Right */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 16, alignItems: 'start' }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: textMuted, textTransform: 'uppercase', marginBottom: 8, letterSpacing: 0.5 }}>Text</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
+              <button onClick={() => addBlock('paragraph')} style={{ padding: 12, border: `1px solid ${borderCard}`, borderRadius: 4, background: bgCanvas, color: textColor, cursor: 'pointer', textAlign: 'left', fontSize: 12 }}>
+                <div style={{ fontSize: 16, marginBottom: 4 }}>¶</div>
+                <strong>Paragraph</strong>
+              </button>
+              <button onClick={() => addBlock('heading', null, { level: 'h2' })} style={{ padding: 12, border: `1px solid ${borderCard}`, borderRadius: 4, background: bgCanvas, color: textColor, cursor: 'pointer', textAlign: 'left', fontSize: 12 }}>
+                <div style={{ fontSize: 16, marginBottom: 4 }}>H</div>
+                <strong>Heading</strong>
+              </button>
+              <button onClick={() => addBlock('quote')} style={{ padding: 12, border: `1px solid ${borderCard}`, borderRadius: 4, background: bgCanvas, color: textColor, cursor: 'pointer', textAlign: 'left', fontSize: 12 }}>
+                <div style={{ fontSize: 16, marginBottom: 4 }}>“</div>
+                <strong>Quote</strong>
+              </button>
+              <button onClick={() => addBlock('list')} style={{ padding: 12, border: `1px solid ${borderCard}`, borderRadius: 4, background: bgCanvas, color: textColor, cursor: 'pointer', textAlign: 'left', fontSize: 12 }}>
+                <div style={{ fontSize: 16, marginBottom: 4 }}>•</div>
+                <strong>List</strong>
+              </button>
+            </div>
 
-        {/* ── LEFT: EDITOR ────────────────────────────────────────────────── */}
-        <div>
-          {/* Post Title / Topic */}
-          <div style={{ background: bgCard, border: `1px solid ${borderCard}`, boxShadow: '0 1px 1px rgba(0,0,0,.04)', marginBottom: 16, borderRadius: 3 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: textMuted, textTransform: 'uppercase', marginBottom: 8, letterSpacing: 0.5 }}>Media</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              <button onClick={() => addBlock('image')} style={{ padding: 12, border: `1px solid ${borderCard}`, borderRadius: 4, background: bgCanvas, color: textColor, cursor: 'pointer', textAlign: 'left', fontSize: 12 }}>
+                <div style={{ fontSize: 16, marginBottom: 4 }}>📷</div>
+                <strong>Image</strong>
+              </button>
+              <button onClick={() => addBlock('separator')} style={{ padding: 12, border: `1px solid ${borderCard}`, borderRadius: 4, background: bgCanvas, color: textColor, cursor: 'pointer', textAlign: 'left', fontSize: 12 }}>
+                <div style={{ fontSize: 16, marginBottom: 4 }}>―</div>
+                <strong>Separator</strong>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ── 2. CENTER GUTENBERG WRITING CANVAS ─────────────────────────────── */}
+        <div style={{ flex: 1, overflowY: 'auto', background: bgCanvas, padding: '40px 60px 100px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ width: '100%', maxWidth: 720 }}>
+            
+            {/* Big Title Input (Add title) */}
             <input
               type="text"
               value={title}
               onChange={e => handleTitleChange(e.target.value)}
-              placeholder="Add title / post topic..."
+              placeholder="Add title"
               style={{
-                width: '100%', padding: '12px 16px', fontSize: 24, fontWeight: 400, border: 'none',
-                outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit', color: textColor, background: 'transparent',
+                width: '100%', fontSize: 38, fontWeight: 700, border: 'none', outline: 'none',
+                background: 'transparent', color: textColor, marginBottom: 24, fontFamily: 'serif',
               }}
             />
-            <div style={{ borderTop: `1px solid ${borderCard}`, padding: '6px 16px', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 12, color: textMuted }}>Permalink:</span>
-              <span style={{ fontSize: 12, color: textColor }}>
-                <span style={{ color: textMuted }}>https://identifine.com.ng/blog/</span>
-                <input
-                  type="text"
-                  value={slug}
-                  onChange={e => { setSlug(e.target.value); setAutoSlug(false); }}
-                  style={{ border: `1px solid ${darkMode ? '#475569' : '#d0d5dd'}`, padding: '1px 4px', fontSize: 12, borderRadius: 2, outline: 'none', fontFamily: 'inherit', background: inputBg, color: textColor }}
-                />
-              </span>
-            </div>
-          </div>
 
-          {/* ───── WORDPRESS CLASSIC & GUTENBERG RICH CONTENT EDITOR ───── */}
-          <div style={{ ...metaBoxStyle, minHeight: 650 }}>
-            {/* Top Action Line Toolbar: Add Media Button + Visual / Text Mode Tabs */}
-            <div style={{
-              padding: '10px 14px', borderBottom: `1px solid ${borderCard}`,
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              background: darkMode ? '#181f26' : '#f9f9f9',
-            }}>
-              {/* WordPress "Add Media" Button */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <button
-                  onClick={openMediaForContent}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: 6,
-                    background: '#2271b1', color: '#fff',
-                    border: '1px solid #135e96',
-                    borderRadius: 3, padding: '6px 14px', fontSize: 13, fontWeight: 700,
-                    cursor: 'pointer', boxShadow: '0 1px 3px rgba(34,113,177,0.3)',
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  <span style={{ fontSize: 15 }}>📷</span>
-                  <span>Add Media</span>
-                </button>
-                <span style={{ fontSize: 11, color: textMuted }}>Click to insert images from Media Library directly into write-up</span>
-              </div>
+            {/* Blocks Stream Container */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              {blocks.map((block, idx) => {
+                const isSelected = selectedBlockId === block.id;
 
-              {/* Visual / Text Editor Mode Switcher */}
-              <div style={{ display: 'flex', border: `1px solid ${darkMode ? '#475569' : '#8c8f94'}`, borderRadius: 3, overflow: 'hidden' }}>
-                <button
-                  onClick={() => setEditorMode('visual')}
-                  style={{
-                    padding: '4px 12px', fontSize: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-                    background: editorMode === 'visual' ? (darkMode ? '#334155' : '#e0e0e0') : 'transparent',
-                    color: textColor, fontWeight: editorMode === 'visual' ? 700 : 400,
-                  }}
-                >
-                  Visual
-                </button>
-                <button
-                  onClick={() => setEditorMode('text')}
-                  style={{
-                    padding: '4px 12px', fontSize: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-                    background: editorMode === 'text' ? (darkMode ? '#334155' : '#e0e0e0') : 'transparent',
-                    color: textColor, fontWeight: editorMode === 'text' ? 700 : 400,
-                  }}
-                >
-                  Text (HTML)
-                </button>
-              </div>
-            </div>
-
-            {/* WYSIWYG Formatting Action Line Toolbar (Exact WordPress Classic Editor Toolbar) */}
-            <div style={{
-              padding: '8px 14px', borderBottom: `1px solid ${borderCard}`,
-              display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap',
-              background: darkMode ? '#151a21' : '#f0f0f1',
-            }}>
-              {/* Format Dropdown (Paragraph, H1, H2, H3, H4) */}
-              <select
-                onChange={(e) => {
-                  if (e.target.value) {
-                    applyFormatting(`\n${e.target.value} `);
-                    e.target.value = '';
-                  }
-                }}
-                style={{
-                  padding: '3px 8px', fontSize: 13, border: `1px solid ${darkMode ? '#333' : '#8c8f94'}`,
-                  borderRadius: 3, outline: 'none', background: inputBg, color: textColor,
-                  cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600,
-                }}
-              >
-                <option value="">Paragraph</option>
-                <option value="#">Heading 1</option>
-                <option value="##">Heading 2</option>
-                <option value="###">Heading 3</option>
-                <option value="####">Heading 4</option>
-                <option value=">">Blockquote</option>
-              </select>
-
-              <div style={{ height: 18, width: 1, background: borderCard, margin: '0 2px' }} />
-
-              <button title="Bold (Ctrl+B)" onClick={() => applyFormatting('**', '**')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', fontWeight: 700, cursor: 'pointer' }}>B</button>
-              <button title="Italic (Ctrl+I)" onClick={() => applyFormatting('*', '*')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', fontStyle: 'italic', cursor: 'pointer' }}>I</button>
-              <button title="Strikethrough" onClick={() => applyFormatting('~~', '~~')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', textDecoration: 'line-through', cursor: 'pointer' }}>S</button>
-              
-              <div style={{ height: 18, width: 1, background: borderCard, margin: '0 2px' }} />
-
-              <button title="Bullet List" onClick={() => applyFormatting('\n- ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>• List</button>
-              <button title="Numbered List" onClick={() => applyFormatting('\n1. ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>1. List</button>
-              <button title="Blockquote" onClick={() => applyFormatting('\n> ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>“ Quote</button>
-
-              <div style={{ height: 18, width: 1, background: borderCard, margin: '0 2px' }} />
-
-              <button title="Align Left" onClick={() => applyFormatting('\n<div style="text-align:left">\n', '\n</div>')} style={{ ...inputStyle, width: 'auto', padding: '3px 8px', cursor: 'pointer' }}>Align ⇇</button>
-              <button title="Align Center" onClick={() => applyFormatting('\n<div style="text-align:center">\n', '\n</div>')} style={{ ...inputStyle, width: 'auto', padding: '3px 8px', cursor: 'pointer' }}>Align ↔</button>
-              <button title="Align Right" onClick={() => applyFormatting('\n<div style="text-align:right">\n', '\n</div>')} style={{ ...inputStyle, width: 'auto', padding: '3px 8px', cursor: 'pointer' }}>Align ⇉</button>
-              <button title="Insert Link" onClick={() => applyFormatting('[', '](https://)')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>🔗 Link</button>
-              <button title="Horizontal Line" onClick={() => applyFormatting('\n---\n')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>— Line</button>
-
-              <div style={{ height: 18, width: 1, background: borderCard, margin: '0 2px' }} />
-
-              {/* Insert Image Action Button */}
-              <button
-                onClick={openMediaForContent}
-                title="Insert Image from Media Library"
-                style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '3px 10px', fontSize: 12, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
-              >
-                <span>📷 Add Media</span>
-              </button>
-            </div>
-
-            {/* Main WordPress Post Writing Textarea (Full Height 520px Canvas) */}
-            <div style={{ ...metaBoxBodyStyle, padding: 16 }}>
-              <textarea
-                ref={contentTextareaRef}
-                value={content}
-                onChange={e => setContent(e.target.value)}
-                rows={22}
-                placeholder="Write your post content here... Click 'Add Media' above to upload or select images from your Media Library directly into this write-up."
-                style={{
-                  ...textareaStyle,
-                  minHeight: 480,
-                  fontSize: 15,
-                  fontFamily: editorMode === 'text' ? 'Consolas, Monaco, monospace' : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                  lineHeight: 1.7,
-                  padding: 16,
-                  background: darkMode ? '#000000' : '#ffffff',
-                  color: textColor,
-                  border: `1px solid ${darkMode ? '#333' : '#c3c4c7'}`,
-                }}
-              />
-
-              {/* Block Inserter Bar (+ Add Gutenberg Block) */}
-              <div style={{
-                marginTop: 12, padding: '10px 14px', border: `1px dashed ${darkMode ? '#444' : '#c3c4c7'}`,
-                borderRadius: 4, background: darkMode ? '#121212' : '#f9f9f9',
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8,
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: textColor }}>+ Add Block:</span>
-                  <button
-                    onClick={openMediaForContent}
-                    style={{ background: '#2271b1', color: '#fff', border: 'none', borderRadius: 3, padding: '4px 10px', fontSize: 12, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
+                return (
+                  <div
+                    key={block.id}
+                    onClick={() => setSelectedBlockId(block.id)}
+                    style={{
+                      position: 'relative', borderRadius: 4, padding: isSelected ? '8px 12px' : '4px 12px',
+                      border: isSelected ? '1px solid #2271b1' : '1px solid transparent',
+                      transition: 'all 0.15s ease',
+                    }}
                   >
-                    <span>📷 Image Block</span>
-                  </button>
-                  <button onClick={() => applyFormatting('\n## ')} style={{ background: darkMode ? '#27272a' : '#e4e4e7', color: textColor, border: 'none', borderRadius: 3, padding: '4px 10px', fontSize: 12, cursor: 'pointer' }}>Heading H2</button>
-                  <button onClick={() => applyFormatting('\n### ')} style={{ background: darkMode ? '#27272a' : '#e4e4e7', color: textColor, border: 'none', borderRadius: 3, padding: '4px 10px', fontSize: 12, cursor: 'pointer' }}>Heading H3</button>
-                  <button onClick={() => applyFormatting('\n> ')} style={{ background: darkMode ? '#27272a' : '#e4e4e7', color: textColor, border: 'none', borderRadius: 3, padding: '4px 10px', fontSize: 12, cursor: 'pointer' }}>Quote</button>
-                </div>
-                <div style={{ fontSize: 12, color: textMuted }}>Word count: <strong style={{ color: textColor }}>{content ? content.trim().split(/\s+/).length : 0}</strong> words</div>
-              </div>
-            </div>
-          </div>
+                    {/* Floating Gutenberg Block Toolbar (Appears on Selected Block) */}
+                    {isSelected && (
+                      <div style={{
+                        position: 'absolute', top: -38, left: 12, height: 32, background: '#1e1e1e', color: '#fff',
+                        borderRadius: 4, display: 'flex', alignItems: 'center', gap: 4, padding: '0 8px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.2)', zIndex: 50, fontSize: 12,
+                      }}>
+                        <span style={{ padding: '0 4px', fontWeight: 700, color: '#a7aaad' }}>
+                          {block.type === 'heading' ? 'H2' : block.type === 'image' ? '📷' : '¶'}
+                        </span>
+                        <div style={{ width: 1, height: 16, background: '#444' }} />
+                        
+                        <button onClick={() => moveBlock(block.id, 'up')} title="Move Up" style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', padding: '2px 4px' }}>▲</button>
+                        <button onClick={() => moveBlock(block.id, 'down')} title="Move Down" style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', padding: '2px 4px' }}>▼</button>
+                        
+                        <div style={{ width: 1, height: 16, background: '#444' }} />
 
-          {/* Body Sections (Sub-topics) */}
-          <div style={metaBoxStyle}>
-            <div style={metaBoxHeadStyle}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Body Sections / Sub-topics</h2>
-                <span style={{ fontSize: 11, color: textMuted }}>({sections.length})</span>
-              </div>
-              <button
-                onClick={addSection}
-                style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '3px 10px', fontSize: 12, cursor: 'pointer' }}
-              >
-                + Add Sub-topic Section
-              </button>
-            </div>
-            <div style={metaBoxBodyStyle}>
-              {sections.length === 0 && (
-                <div style={{ padding: '16px 0', textAlign: 'center', color: textMuted, fontSize: 13 }}>
-                  No extra sub-topics yet. Click <strong>"+ Add Sub-topic Section"</strong> to add numbered H2 headings and paragraphs.
-                </div>
-              )}
-              {sections.map((sec, i) => (
-                <div key={i} style={{ marginBottom: 16, borderBottom: i < sections.length - 1 ? `1px solid ${borderCard}` : 'none', paddingBottom: 16 }}>
-                  <div style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'center' }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: textMuted, width: 24 }}>#{i + 1}</span>
-                    <input
-                      type="text"
-                      value={sec.heading}
-                      onChange={e => updateSection(i, 'heading', e.target.value)}
-                      placeholder={`Section ${i + 1} Heading (e.g. 1. Instant Frictionless Contact Exchange)`}
-                      style={{ ...inputStyle, fontWeight: 600 }}
-                    />
-                    <button
-                      onClick={() => openMediaForSection(i)}
-                      title="Insert Image into this section"
-                      style={{ background: darkMode ? '#334155' : '#f0f0f1', color: textColor, border: `1px solid ${borderCard}`, borderRadius: 3, padding: '4px 8px', fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap' }}
-                    >
-                      📷 Add Image
-                    </button>
-                    <button
-                      onClick={() => removeSection(i)}
-                      style={{ background: darkMode ? '#450a0a' : '#fcf0f1', color: '#d63638', border: '1px solid #f5b9b9', borderRadius: 3, padding: '4px 8px', fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap' }}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                  <textarea
-                    value={sec.body}
-                    onChange={e => updateSection(i, 'body', e.target.value)}
-                    rows={4}
-                    placeholder="Section body text..."
-                    style={textareaStyle}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+                        {block.type !== 'image' && (
+                          <>
+                            <button onClick={() => updateBlock(block.id, { content: block.content + '**bold**' })} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontWeight: 700, padding: '2px 6px' }}>B</button>
+                            <button onClick={() => updateBlock(block.id, { content: block.content + '*italic*' })} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontStyle: 'italic', padding: '2px 6px' }}>I</button>
+                            <button onClick={() => updateBlock(block.id, { content: block.content + ' [link](https://)' })} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', padding: '2px 6px' }}>🔗</button>
+                          </>
+                        )}
 
-          {/* Key Takeaway */}
-          <div style={metaBoxStyle}>
-            <div style={metaBoxHeadStyle}>
-              <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Key Takeaway / Conclusion</h2>
-            </div>
-            <div style={metaBoxBodyStyle}>
-              <textarea
-                value={takeaway}
-                onChange={e => setTakeaway(e.target.value)}
-                rows={3}
-                placeholder="A bold takeaway or call-to-action for the reader..."
-                style={textareaStyle}
-              />
-            </div>
-          </div>
+                        <div style={{ width: 1, height: 16, background: '#444' }} />
+                        <button onClick={() => removeBlock(block.id)} title="Delete Block" style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', padding: '2px 6px' }}>🗑</button>
+                      </div>
+                    )}
 
-          {/* Excerpt / Summary */}
-          <div style={metaBoxStyle}>
-            <div style={metaBoxHeadStyle}>
-              <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Excerpt</h2>
-            </div>
-            <div style={metaBoxBodyStyle}>
-              <textarea
-                value={summary}
-                onChange={e => setSummary(e.target.value)}
-                rows={3}
-                placeholder="Write a short excerpt (used in blog cards and SEO meta description)..."
-                style={textareaStyle}
-              />
-              <p style={{ fontSize: 11, color: textMuted, marginTop: 4, marginBottom: 0 }}>
-                Excerpts are optional hand-crafted summaries of your content.
-              </p>
-            </div>
-          </div>
-        </div>
+                    {/* Block Render Types */}
+                    {block.type === 'heading' && (
+                      <input
+                        type="text"
+                        value={block.content}
+                        onChange={e => updateBlock(block.id, { content: e.target.value })}
+                        placeholder="Heading 2..."
+                        style={{
+                          width: '100%', fontSize: 24, fontWeight: 700, border: 'none', outline: 'none',
+                          background: 'transparent', color: textColor, fontFamily: 'inherit',
+                        }}
+                      />
+                    )}
 
-        {/* ── RIGHT SIDEBAR ───────────────────────────────────────────────── */}
-        <div>
-          {/* TAB HEADER SWITCHER */}
-          <div style={{ display: 'flex', borderBottom: `1px solid ${borderCard}`, marginBottom: 12, background: bgCard, borderRadius: 3, overflow: 'hidden' }}>
-            <button
-              onClick={() => setRightSidebarTab('post')}
-              style={{
-                flex: 1, padding: '8px 10px', fontSize: 13, fontWeight: rightSidebarTab === 'post' ? 700 : 400,
-                border: 'none', background: rightSidebarTab === 'post' ? (darkMode ? '#334155' : '#f0f0f1') : 'transparent',
-                color: rightSidebarTab === 'post' ? textColor : textMuted, cursor: 'pointer', fontFamily: 'inherit',
-              }}
-            >
-              ⚙ Post Settings
-            </button>
-            <button
-              onClick={() => setRightSidebarTab('rankmath')}
-              style={{
-                flex: 1, padding: '8px 10px', fontSize: 13, fontWeight: rightSidebarTab === 'rankmath' ? 700 : 400,
-                border: 'none', background: rightSidebarTab === 'rankmath' ? '#f86434' : 'transparent',
-                color: rightSidebarTab === 'rankmath' ? '#fff' : textMuted, cursor: 'pointer', fontFamily: 'inherit',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-              }}
-            >
-              <span>Rank Math</span>
-              <span style={{
-                background: rightSidebarTab === 'rankmath' ? '#fff' : color,
-                color: rightSidebarTab === 'rankmath' ? '#f86434' : '#fff',
-                fontSize: 10, fontWeight: 800, padding: '1px 5px', borderRadius: 8,
-              }}>
-                {score}
-              </span>
-            </button>
-          </div>
+                    {block.type === 'paragraph' && (
+                      <textarea
+                        value={block.content}
+                        onChange={e => updateBlock(block.id, { content: e.target.value })}
+                        placeholder="Type / to choose a block or write text..."
+                        rows={Math.max(2, (block.content.match(/\n/g) || []).length + 2)}
+                        style={{
+                          width: '100%', fontSize: 16, lineHeight: 1.7, border: 'none', outline: 'none',
+                          background: 'transparent', color: textColor, fontFamily: 'inherit', resize: 'none',
+                        }}
+                      />
+                    )}
 
-          {/* SIDEBAR TAB 1: RANK MATH SEO PANEL */}
-          {rightSidebarTab === 'rankmath' && (
-            <div style={{ ...metaBoxStyle, border: '1px solid #f86434' }}>
-              <div style={{ ...metaBoxHeadStyle, background: '#f86434', color: '#fff' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <div style={{ width: 22, height: 22, borderRadius: 3, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ color: '#f86434', fontSize: 13, fontWeight: 900 }}>R</span>
-                  </div>
-                  <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: '#fff' }}>Rank Math SEO</h2>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(255,255,255,0.2)', padding: '2px 8px', borderRadius: 10 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: '#fff' }}>{score}/100</span>
-                </div>
-              </div>
+                    {block.type === 'quote' && (
+                      <div style={{ borderLeft: '4px solid #2271b1', paddingLeft: 12 }}>
+                        <textarea
+                          value={block.content}
+                          onChange={e => updateBlock(block.id, { content: e.target.value })}
+                          placeholder="Write a quote..."
+                          rows={2}
+                          style={{
+                            width: '100%', fontSize: 18, fontStyle: 'italic', border: 'none', outline: 'none',
+                            background: 'transparent', color: textColor, fontFamily: 'inherit', resize: 'none',
+                          }}
+                        />
+                      </div>
+                    )}
 
-              {/* Focus Keyword */}
-              <div style={{ padding: '12px', borderBottom: `1px solid ${borderCard}` }}>
-                <label style={labelStyle}>Focus Keyword</label>
-                <input
-                  type="text"
-                  value={focusKeyword}
-                  onChange={e => setFocusKeyword(e.target.value)}
-                  placeholder="e.g. NFC business cards"
-                  style={inputStyle}
-                />
-                <p style={{ fontSize: 11, color: textMuted, marginTop: 4, marginBottom: 0 }}>
-                  {focusKeyword ? `Analyzing for: "${focusKeyword}"` : 'Enter a focus keyword to start SEO analysis.'}
-                </p>
-              </div>
-
-              {/* RM Sub-tabs */}
-              <div style={{ display: 'flex', borderBottom: `1px solid ${borderCard}`, background: darkMode ? '#151a21' : '#fafafa' }}>
-                {[['general', 'General'], ['snippet', 'Snippet'], ['schema', 'Schema']].map(([t, l]) => (
-                  <button key={t} style={rmTabStyle(t)} onClick={() => setActiveRmTab(t)}>{l}</button>
-                ))}
-              </div>
-
-              {/* General Tab: SEO Checks */}
-              {activeRmTab === 'general' && (
-                <div style={{ padding: 12 }}>
-                  <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
-                    <div style={{ flex: 1, textAlign: 'center', padding: '6px 0', background: darkMode ? '#151a21' : '#f9f9f9', borderRadius: 3, border: `1px solid ${borderCard}` }}>
-                      <div style={{ fontSize: 18, fontWeight: 700, color: '#00b32c' }}>{passChecks}</div>
-                      <div style={{ fontSize: 10, color: textMuted }}>Passed</div>
-                    </div>
-                    <div style={{ flex: 1, textAlign: 'center', padding: '6px 0', background: darkMode ? '#151a21' : '#f9f9f9', borderRadius: 3, border: `1px solid ${borderCard}` }}>
-                      <div style={{ fontSize: 18, fontWeight: 700, color: '#d63638' }}>{failChecks}</div>
-                      <div style={{ fontSize: 10, color: textMuted }}>Failed</div>
-                    </div>
-                  </div>
-                  {checks.map((c, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, padding: '6px 0', borderBottom: `1px solid ${borderCard}` }}>
-                      <span style={{ fontSize: 13, lineHeight: 1, marginTop: 1 }}>{c.pass ? '✅' : '❌'}</span>
-                      <div>
-                        <div style={{ fontSize: 12, fontWeight: 600, color: textColor }}>{c.label}</div>
-                        {!c.pass && c.fix && (
-                          <div style={{ fontSize: 11, color: textMuted, marginTop: 1 }}>{c.fix}</div>
+                    {block.type === 'image' && (
+                      <div style={{ border: `1px dashed ${borderCard}`, padding: 16, borderRadius: 4, background: darkMode ? '#121212' : '#f9f9f9', textAlign: 'center' }}>
+                        {block.url ? (
+                          <div>
+                            <img src={block.url} alt={block.alt || 'Uploaded'} style={{ maxWidth: '100%', maxHeight: 400, borderRadius: 4, objectFit: 'cover' }} />
+                            <input
+                              type="text"
+                              value={block.alt || ''}
+                              onChange={e => updateBlock(block.id, { alt: e.target.value })}
+                              placeholder="Write caption or alt text..."
+                              style={{ width: '80%', margin: '8px auto 0', padding: '4px 8px', fontSize: 12, border: 'none', textAlign: 'center', background: 'transparent', color: textMuted, outline: 'none' }}
+                            />
+                          </div>
+                        ) : (
+                          <div>
+                            <div style={{ fontSize: 32, marginBottom: 8 }}>📷</div>
+                            <div style={{ fontSize: 14, fontWeight: 600, color: textColor, marginBottom: 12 }}>Image Block</div>
+                            <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
+                              <button
+                                onClick={() => {
+                                  setMediaTargetBlockId(block.id);
+                                  setShowMediaPicker(true);
+                                }}
+                                style={{ background: '#2271b1', color: '#fff', border: 'none', borderRadius: 3, padding: '6px 14px', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
+                              >
+                                Media Library
+                              </button>
+                            </div>
+                          </div>
                         )}
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    )}
 
-              {/* Snippet Preview Tab */}
-              {activeRmTab === 'snippet' && (
-                <div style={{ padding: 12 }}>
-                  <div style={{ marginBottom: 12 }}>
-                    <label style={labelStyle}>SEO Title</label>
-                    <input type="text" value={seoTitle} onChange={e => setSeoTitle(e.target.value)} placeholder="SEO Title" style={inputStyle} />
-                    <div style={{ height: 4, background: darkMode ? '#334155' : '#f0f0f1', marginTop: 4, borderRadius: 2, overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${Math.min(100, (seoTitle.length / 60) * 100)}%`, background: seoTitle.length > 60 ? '#d63638' : '#00b32c', transition: 'width 0.2s' }} />
-                    </div>
-                    <div style={{ fontSize: 11, color: textMuted, marginTop: 2 }}>{seoTitle.length} / 60 chars</div>
-                  </div>
-                  <div style={{ marginBottom: 16 }}>
-                    <label style={labelStyle}>Meta Description</label>
-                    <textarea value={metaDesc} onChange={e => setMetaDesc(e.target.value)} rows={3} placeholder="Meta description..." style={textareaStyle} />
-                    <div style={{ height: 4, background: darkMode ? '#334155' : '#f0f0f1', marginTop: 4, borderRadius: 2, overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${Math.min(100, (metaDesc.length / 155) * 100)}%`, background: metaDesc.length > 155 ? '#d63638' : '#00b32c', transition: 'width 0.2s' }} />
-                    </div>
-                    <div style={{ fontSize: 11, color: textMuted, marginTop: 2 }}>{metaDesc.length} / 155 chars</div>
-                  </div>
-                  {/* SERP Preview */}
-                  <div style={{ background: darkMode ? '#151a21' : '#fff', border: `1px solid ${borderCard}`, borderRadius: 6, padding: 10 }}>
-                    <div style={{ fontSize: 10, color: textMuted, marginBottom: 4, fontWeight: 600, textTransform: 'uppercase' }}>Google Preview</div>
-                    <div style={{ fontSize: 15, color: '#4285f4', cursor: 'pointer', marginBottom: 2, lineHeight: 1.3, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {seoTitle || title || 'Post Title - Identifine'}
-                    </div>
-                    <div style={{ fontSize: 12, color: '#006621', marginBottom: 4 }}>
-                      https://identifine.com.ng/blog/{slug || 'post-slug'}
-                    </div>
-                    <div style={{ fontSize: 12, color: textMuted, lineHeight: 1.4 }}>
-                      {(metaDesc || summary || content).slice(0, 140) || 'Write a meta description for SERP preview.'}
-                    </div>
-                  </div>
-                </div>
-              )}
+                    {block.type === 'separator' && (
+                      <div style={{ height: 1, background: borderCard, margin: '16px 0' }} />
+                    )}
 
-              {/* Schema Tab */}
-              {activeRmTab === 'schema' && (
-                <div style={{ padding: 12 }}>
-                  <div style={{ background: darkMode ? '#151a21' : '#f9f9f9', border: `1px solid ${borderCard}`, borderRadius: 4, padding: 10 }}>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: textColor, marginBottom: 4 }}>📄 Article Schema</div>
-                    <div style={{ fontSize: 11, color: textMuted, fontFamily: 'monospace', lineHeight: 1.6 }}>
-                      <div><span style={{ color: '#9b59b6' }}>@type</span>: Article</div>
-                      <div><span style={{ color: '#9b59b6' }}>headline</span>: "{title || 'Post Title'}"</div>
-                      <div><span style={{ color: '#9b59b6' }}>author</span>: Admin</div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* SIDEBAR TAB 2: POST SETTINGS */}
-          {rightSidebarTab === 'post' && (
-            <>
-              {/* Publish Box */}
-              <div style={metaBoxStyle}>
-                <div style={metaBoxHeadStyle}>
-                  <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Publish</h2>
-                </div>
-                <div style={metaBoxBodyStyle}>
-                  <div style={{ marginBottom: 8 }}>
-                    <span style={{ fontSize: 13, color: textColor }}>
-                      <strong>Status:</strong>{' '}
-                      <select value={status} onChange={e => setStatus(e.target.value)} style={{ fontSize: 13, border: `1px solid ${darkMode ? '#334155' : '#8c8f94'}`, borderRadius: 3, padding: '2px 4px', outline: 'none', background: inputBg, color: textColor }}>
-                        <option value="published">Published</option>
-                        <option value="draft">Draft</option>
-                        <option value="pending">Pending Review</option>
-                      </select>
-                    </span>
-                  </div>
-                  <div style={{ marginBottom: 8 }}>
-                    <span style={{ fontSize: 13, color: textColor }}>
-                      <strong>Visibility:</strong> Public
-                    </span>
-                  </div>
-                  <div style={{ marginBottom: 12 }}>
-                    <label style={{ fontSize: 13, color: textColor, fontWeight: 600 }}>Publish Date: </label>
-                    <input type="text" value={date} onChange={e => setDate(e.target.value)}
-                      style={{ fontSize: 13, border: `1px solid ${darkMode ? '#334155' : '#8c8f94'}`, borderRadius: 3, padding: '2px 4px', width: '100%', marginTop: 4, boxSizing: 'border-box', outline: 'none', background: inputBg, color: textColor }} />
-                  </div>
-                  <hr style={{ margin: '8px 0', border: 'none', borderTop: `1px solid ${borderCard}` }} />
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <button
-                      onClick={() => handleSave('draft')}
-                      style={{ background: darkMode ? '#334155' : '#f0f0f1', border: `1px solid ${darkMode ? '#475569' : '#8c8f94'}`, borderRadius: 3, padding: '4px 8px', fontSize: 12, cursor: 'pointer', color: darkMode ? '#e2e8f0' : '#3c434a' }}
-                    >
-                      Save Draft
-                    </button>
-                    <button
-                      onClick={() => handleSave('published')}
-                      style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '4px 10px', fontSize: 12, cursor: 'pointer', fontWeight: 600 }}
-                    >
-                      {editingId ? 'Update' : 'Publish'}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Categories */}
-              <div style={metaBoxStyle}>
-                <div style={metaBoxHeadStyle}>
-                  <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Categories</h2>
-                </div>
-                <div style={metaBoxBodyStyle}>
-                  {CATEGORIES.map(cat => (
-                    <label key={cat} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4, fontSize: 13, color: textColor, cursor: 'pointer' }}>
-                      <input
-                        type="radio"
-                        name="category"
-                        value={cat}
-                        checked={category === cat}
-                        onChange={() => setCategory(cat)}
-                      />
-                      {cat}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Tags */}
-              <div style={metaBoxStyle}>
-                <div style={metaBoxHeadStyle}>
-                  <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Tags</h2>
-                </div>
-                <div style={metaBoxBodyStyle}>
-                  <input type="text" value={tags} onChange={e => setTags(e.target.value)}
-                    placeholder="e.g. NFC, business cards, networking"
-                    style={{ ...inputStyle, marginBottom: 4 }} />
-                  <p style={{ fontSize: 11, color: textMuted, margin: 0 }}>Separate tags with commas.</p>
-                </div>
-              </div>
-
-              {/* Featured Image */}
-              <div style={metaBoxStyle}>
-                <div style={metaBoxHeadStyle}>
-                  <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Featured Image</h2>
-                </div>
-                <div style={metaBoxBodyStyle}>
-                  {featuredImage ? (
-                    <div>
-                      <img
-                        src={featuredImage} alt="Featured"
-                        style={{ width: '100%', maxHeight: 160, objectFit: 'cover', borderRadius: 3, marginBottom: 8, border: `1px solid ${borderCard}`, display: 'block' }}
-                        onError={e => e.target.style.display = 'none'}
-                      />
-                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    {/* Inline Quick Add Block (+) Button */}
+                    {isSelected && (
+                      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 8 }}>
                         <button
-                          onClick={openMediaForFeatured}
-                          style={{ background: 'none', border: 'none', color: '#2271b1', cursor: 'pointer', fontSize: 12, padding: 0, textDecoration: 'underline' }}
+                          onClick={() => addBlock('paragraph', block.id)}
+                          style={{ width: 24, height: 24, borderRadius: '50%', background: '#1e1e1e', color: '#fff', border: 'none', fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                         >
-                          Replace image
-                        </button>
-                        <span style={{ color: textMuted }}>|</span>
-                        <button
-                          onClick={() => setFeaturedImage('')}
-                          style={{ background: 'none', border: 'none', color: '#d63638', cursor: 'pointer', fontSize: 12, padding: 0 }}
-                        >
-                          Remove image
+                          +
                         </button>
                       </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+          </div>
+        </div>
+
+        {/* ── 3. RIGHT GUTENBERG INSPECTOR SIDEBAR (POST / BLOCK / RANK MATH) ── */}
+        {showRightSidebar && (
+          <div style={{
+            width: 320, borderLeft: `1px solid ${borderCard}`, background: bgCard,
+            overflowY: 'auto', boxSizing: 'border-box', display: 'flex', flexDirection: 'column',
+          }}>
+            {/* Right Sidebar Inspector Tabs */}
+            <div style={{ display: 'flex', borderBottom: `1px solid ${borderCard}`, background: bgCard }}>
+              <button
+                onClick={() => setRightSidebarTab('post')}
+                style={{
+                  flex: 1, padding: '12px 8px', fontSize: 13, border: 'none', cursor: 'pointer',
+                  borderBottom: rightSidebarTab === 'post' ? '2px solid #2271b1' : 'none',
+                  color: rightSidebarTab === 'post' ? '#2271b1' : textMuted, fontWeight: rightSidebarTab === 'post' ? 700 : 400,
+                  background: 'transparent',
+                }}
+              >
+                Post
+              </button>
+              <button
+                onClick={() => setRightSidebarTab('block')}
+                style={{
+                  flex: 1, padding: '12px 8px', fontSize: 13, border: 'none', cursor: 'pointer',
+                  borderBottom: rightSidebarTab === 'block' ? '2px solid #2271b1' : 'none',
+                  color: rightSidebarTab === 'block' ? '#2271b1' : textMuted, fontWeight: rightSidebarTab === 'block' ? 700 : 400,
+                  background: 'transparent',
+                }}
+              >
+                Block
+              </button>
+              <button
+                onClick={() => setRightSidebarTab('rankmath')}
+                style={{
+                  flex: 1, padding: '12px 8px', fontSize: 13, border: 'none', cursor: 'pointer',
+                  borderBottom: rightSidebarTab === 'rankmath' ? '2px solid #f86434' : 'none',
+                  color: rightSidebarTab === 'rankmath' ? '#f86434' : textMuted, fontWeight: rightSidebarTab === 'rankmath' ? 700 : 400,
+                  background: 'transparent',
+                }}
+              >
+                Rank Math
+              </button>
+            </div>
+
+            {/* TAB 1: POST SETTINGS */}
+            {rightSidebarTab === 'post' && (
+              <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 20 }}>
+                
+                {/* Summary */}
+                <div>
+                  <h4 style={{ fontSize: 13, fontWeight: 700, margin: '0 0 12px', color: textColor, textTransform: 'uppercase', letterSpacing: 0.5 }}>Summary</h4>
+                  <div style={{ fontSize: 13, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: textMuted }}>Visibility</span>
+                      <span style={{ color: '#2271b1', cursor: 'pointer', fontWeight: 600 }}>Public</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: textMuted }}>Publish</span>
+                      <span style={{ color: '#2271b1', cursor: 'pointer', fontWeight: 600 }}>{date}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: textMuted }}>URL Slug</span>
+                      <input
+                        type="text"
+                        value={slug}
+                        onChange={e => { setSlug(e.target.value); setAutoSlug(false); }}
+                        style={{ ...inputStyle, width: 140, padding: '2px 4px', fontSize: 12 }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ height: 1, background: borderCard }} />
+
+                {/* Categories */}
+                <div>
+                  <h4 style={{ fontSize: 13, fontWeight: 700, margin: '0 0 12px', color: textColor, textTransform: 'uppercase', letterSpacing: 0.5 }}>Categories</h4>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 140, overflowY: 'auto' }}>
+                    {CATEGORIES.map(cat => (
+                      <label key={cat} style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', color: textColor }}>
+                        <input
+                          type="checkbox"
+                          checked={category === cat}
+                          onChange={() => setCategory(cat)}
+                        />
+                        {cat}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ height: 1, background: borderCard }} />
+
+                {/* Featured Image */}
+                <div>
+                  <h4 style={{ fontSize: 13, fontWeight: 700, margin: '0 0 12px', color: textColor, textTransform: 'uppercase', letterSpacing: 0.5 }}>Featured Image</h4>
+                  {featuredImage ? (
+                    <div>
+                      <img src={featuredImage} alt="Featured" style={{ width: '100%', height: 140, objectFit: 'cover', borderRadius: 4, marginBottom: 8 }} />
+                      <button
+                        onClick={() => { setMediaTargetBlockId('featured'); setShowMediaPicker(true); }}
+                        style={{ background: 'none', border: `1px solid ${borderCard}`, borderRadius: 3, padding: '4px 8px', fontSize: 12, cursor: 'pointer', color: textColor, width: '100%' }}
+                      >
+                        Replace Image
+                      </button>
                     </div>
                   ) : (
-                    <div>
-                      <button
-                        onClick={openMediaForFeatured}
-                        style={{ display: 'block', width: '100%', textAlign: 'center', padding: '24px 12px', background: darkMode ? '#151a21' : '#f9f9f9', border: `2px dashed ${borderCard}`, borderRadius: 3, cursor: 'pointer', color: '#2271b1', fontSize: 13, fontWeight: 600, marginBottom: 8, fontFamily: 'inherit' }}
-                      >
-                        + Set featured image
-                      </button>
-                      <div style={{ fontSize: 11, color: textMuted, textAlign: 'center', marginBottom: 8 }}>— or paste a URL —</div>
-                      <input type="text" value={featuredImage} onChange={e => setFeaturedImage(e.target.value)}
-                        placeholder="https://..."
-                        style={{ ...inputStyle }} />
-                    </div>
+                    <button
+                      onClick={() => { setMediaTargetBlockId('featured'); setShowMediaPicker(true); }}
+                      style={{
+                        width: '100%', height: 100, border: `2px dashed ${borderCard}`, borderRadius: 4,
+                        background: 'transparent', color: '#2271b1', cursor: 'pointer', fontSize: 13, fontWeight: 600,
+                      }}
+                    >
+                      Set featured image
+                    </button>
                   )}
                 </div>
-              </div>
 
-              {/* Read Time */}
-              <div style={metaBoxStyle}>
-                <div style={metaBoxHeadStyle}>
-                  <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Read Time</h2>
+                <div style={{ height: 1, background: borderCard }} />
+
+                {/* Excerpt Summary */}
+                <div>
+                  <h4 style={{ fontSize: 13, fontWeight: 700, margin: '0 0 8px', color: textColor, textTransform: 'uppercase', letterSpacing: 0.5 }}>Excerpt</h4>
+                  <textarea
+                    value={summary}
+                    onChange={e => setSummary(e.target.value)}
+                    rows={3}
+                    placeholder="Write an excerpt (optional)..."
+                    style={{ ...inputStyle, resize: 'vertical' }}
+                  />
                 </div>
-                <div style={metaBoxBodyStyle}>
-                  <input type="text" value={readTime} onChange={e => setReadTime(e.target.value)}
-                    placeholder="e.g. 3 min read" style={inputStyle} />
+
+              </div>
+            )}
+
+            {/* TAB 2: BLOCK SETTINGS */}
+            {rightSidebarTab === 'block' && (
+              <div style={{ padding: 16 }}>
+                <h4 style={{ fontSize: 13, fontWeight: 700, margin: '0 0 12px', color: textColor, textTransform: 'uppercase', letterSpacing: 0.5 }}>Block Settings</h4>
+                <p style={{ fontSize: 13, color: textMuted }}>Select any block in the canvas to customize typography and layout.</p>
+              </div>
+            )}
+
+            {/* TAB 3: RANK MATH SEO SIDEBAR */}
+            {rightSidebarTab === 'rankmath' && (
+              <div style={{ padding: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+                  <div style={{ width: 24, height: 24, borderRadius: 4, background: '#f86434', color: '#fff', fontWeight: 900, fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>R</div>
+                  <h3 style={{ fontSize: 15, fontWeight: 700, margin: 0, color: textColor }}>Rank Math SEO</h3>
+                  <div style={{ marginLeft: 'auto', background: color, color: '#fff', fontWeight: 900, fontSize: 12, padding: '2px 8px', borderRadius: 12 }}>{score}/100</div>
+                </div>
+
+                <div style={{ marginBottom: 16 }}>
+                  <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: textColor, marginBottom: 4 }}>Focus Keyword</label>
+                  <input
+                    type="text"
+                    value={focusKeyword}
+                    onChange={e => setFocusKeyword(e.target.value)}
+                    placeholder="e.g. NFC digital business cards"
+                    style={inputStyle}
+                  />
+                </div>
+
+                <div style={{ fontSize: 13, fontWeight: 700, color: textColor, marginBottom: 8 }}>SEO Tests Checklist</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  {checks.map((chk, i) => (
+                    <div key={i} style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6, color: chk.pass ? '#10b981' : '#ef4444' }}>
+                      <span>{chk.pass ? '✓' : '✕'}</span>
+                      <span>{chk.label}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </>
-          )}
-        </div>
+            )}
+
+          </div>
+        )}
+
       </div>
+
+      {/* ── MEDIA PICKER MODAL ─────────────────────────────────────────────────── */}
+      {showMediaPicker && (
+        <MediaPickerModal
+          isOpen={showMediaPicker}
+          onClose={() => setShowMediaPicker(false)}
+          onSelectMedia={handleMediaSelected}
+        />
+      )}
+
     </div>
   );
 }
