@@ -385,30 +385,63 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
               </div>
             </div>
 
-            {/* WYSIWYG Formatting Action Line Toolbar */}
+            {/* WYSIWYG Formatting Action Line Toolbar (Exact WordPress Classic Editor Toolbar) */}
             <div style={{
               padding: '8px 14px', borderBottom: `1px solid ${borderCard}`,
               display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap',
               background: darkMode ? '#151a21' : '#f0f0f1',
             }}>
-              <button title="Bold" onClick={() => applyFormatting('**', '**')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', fontWeight: 700, cursor: 'pointer' }}>B</button>
-              <button title="Italic" onClick={() => applyFormatting('*', '*')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', fontStyle: 'italic', cursor: 'pointer' }}>I</button>
-              <button title="Link" onClick={() => applyFormatting('[', '](https://)')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>🔗 Link</button>
-              <button title="Blockquote" onClick={() => applyFormatting('\n> ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>“ Quote</button>
-              <button title="Bullet List" onClick={() => applyFormatting('\n- ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>• Bullet</button>
-              <button title="Numbered List" onClick={() => applyFormatting('\n1. ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>1. List</button>
-              <button title="Heading 2" onClick={() => applyFormatting('\n## ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>H2</button>
-              <button title="Heading 3" onClick={() => applyFormatting('\n### ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>H3</button>
+              {/* Format Dropdown (Paragraph, H1, H2, H3, H4) */}
+              <select
+                onChange={(e) => {
+                  if (e.target.value) {
+                    applyFormatting(`\n${e.target.value} `);
+                    e.target.value = '';
+                  }
+                }}
+                style={{
+                  padding: '3px 8px', fontSize: 13, border: `1px solid ${darkMode ? '#333' : '#8c8f94'}`,
+                  borderRadius: 3, outline: 'none', background: inputBg, color: textColor,
+                  cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600,
+                }}
+              >
+                <option value="">Paragraph</option>
+                <option value="#">Heading 1</option>
+                <option value="##">Heading 2</option>
+                <option value="###">Heading 3</option>
+                <option value="####">Heading 4</option>
+                <option value=">">Blockquote</option>
+              </select>
 
-              <div style={{ height: 18, width: 1, background: borderCard, margin: '0 4px' }} />
+              <div style={{ height: 18, width: 1, background: borderCard, margin: '0 2px' }} />
+
+              <button title="Bold (Ctrl+B)" onClick={() => applyFormatting('**', '**')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', fontWeight: 700, cursor: 'pointer' }}>B</button>
+              <button title="Italic (Ctrl+I)" onClick={() => applyFormatting('*', '*')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', fontStyle: 'italic', cursor: 'pointer' }}>I</button>
+              <button title="Strikethrough" onClick={() => applyFormatting('~~', '~~')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', textDecoration: 'line-through', cursor: 'pointer' }}>S</button>
+              
+              <div style={{ height: 18, width: 1, background: borderCard, margin: '0 2px' }} />
+
+              <button title="Bullet List" onClick={() => applyFormatting('\n- ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>• List</button>
+              <button title="Numbered List" onClick={() => applyFormatting('\n1. ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>1. List</button>
+              <button title="Blockquote" onClick={() => applyFormatting('\n> ')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>“ Quote</button>
+
+              <div style={{ height: 18, width: 1, background: borderCard, margin: '0 2px' }} />
+
+              <button title="Align Left" onClick={() => applyFormatting('\n<div style="text-align:left">\n', '\n</div>')} style={{ ...inputStyle, width: 'auto', padding: '3px 8px', cursor: 'pointer' }}>Align ⇇</button>
+              <button title="Align Center" onClick={() => applyFormatting('\n<div style="text-align:center">\n', '\n</div>')} style={{ ...inputStyle, width: 'auto', padding: '3px 8px', cursor: 'pointer' }}>Align ↔</button>
+              <button title="Align Right" onClick={() => applyFormatting('\n<div style="text-align:right">\n', '\n</div>')} style={{ ...inputStyle, width: 'auto', padding: '3px 8px', cursor: 'pointer' }}>Align ⇉</button>
+              <button title="Insert Link" onClick={() => applyFormatting('[', '](https://)')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>🔗 Link</button>
+              <button title="Horizontal Line" onClick={() => applyFormatting('\n---\n')} style={{ ...inputStyle, width: 'auto', padding: '3px 10px', cursor: 'pointer' }}>— Line</button>
+
+              <div style={{ height: 18, width: 1, background: borderCard, margin: '0 2px' }} />
 
               {/* Insert Image Action Button */}
               <button
                 onClick={openMediaForContent}
                 title="Insert Image from Media Library"
-                style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '3px 10px', fontSize: 12, fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
+                style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '3px 10px', fontSize: 12, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
               >
-                <span>📷 Insert Image</span>
+                <span>📷 Add Media</span>
               </button>
             </div>
 
