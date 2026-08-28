@@ -115,10 +115,35 @@ function StubPanel({ title }) {
   );
 }
 
+// ─── WordPress Role-Based Allowed Menus Matrix ────────────────────────────────
+const ROLE_ALLOWED_MENUS = {
+  ADMIN: ['dashboard', 'posts', 'media', 'pages', 'comments', 'rank-math', 'appearance', 'plugins', 'users', 'tools', 'settings', 'collapse'],
+  EDITOR: ['dashboard', 'posts', 'media', 'pages', 'comments', 'rank-math', 'collapse'],
+  AUTHOR: ['dashboard', 'posts', 'media', 'collapse'],
+};
+
 // ─── Main WordPress Admin Shell ───────────────────────────────────────────────
 export default function WordPressAdminShell() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Reactive Auth State (no browser refresh required on login/logout!)
+  const [loggedInUser, setLoggedInUserState] = useState(getLoggedInUser());
+  const [role, setRoleState] = useState(getActiveRole());
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      setLoggedInUserState(getLoggedInUser());
+      setRoleState(getActiveRole());
+    };
+
+    window.addEventListener('identifine_auth_changed', handleAuthChange);
+    window.addEventListener('identifine_role_changed', handleAuthChange);
+    return () => {
+      window.removeEventListener('identifine_auth_changed', handleAuthChange);
+      window.removeEventListener('identifine_role_changed', handleAuthChange);
+    };
+  }, []);
 
   // If user is on /admin/login or /wp-login.php, render WordPressLoginPage directly
   if (location.pathname === '/admin/login' || location.pathname === '/wp-login.php' || location.pathname === '/login') {
@@ -126,10 +151,10 @@ export default function WordPressAdminShell() {
   }
 
   // Authentic WordPress Auth Protection: If not logged in, show WordPress Login Screen
-  const loggedInUser = getLoggedInUser();
   if (!loggedInUser) {
     return <WordPressLoginPage />;
   }
+
   const [activePage, setActivePage] = useState('dashboard-home');
   const [expanded, setExpanded] = useState(DEFAULT_EXPANDED);
   const [collapsed, setCollapsed] = useState(false);
@@ -150,20 +175,12 @@ export default function WordPressAdminShell() {
     });
   };
 
-  const [role, setRoleState] = useState(getActiveRole());
   const roleInfo = ROLES[role] || ROLES.ADMIN;
 
-  // Sync URL hash to panel & listen to role changes
+  // Sync URL hash to panel
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     if (hash) setActivePage(hash);
-
-    const handleRoleChange = () => {
-      setRoleState(getActiveRole());
-    };
-
-    window.addEventListener('identifine_role_changed', handleRoleChange);
-    return () => window.removeEventListener('identifine_role_changed', handleRoleChange);
   }, []);
 
   const goTo = (pageId) => {
@@ -198,6 +215,19 @@ export default function WordPressAdminShell() {
 
   // ── Active panel renderer ────────────────────────────────────────────────────
   const renderPanel = () => {
+    // Permission check for current role
+    const allowedMenus = ROLE_ALLOWED_MENUS[role] || ROLE_ALLOWED_MENUS.ADMIN;
+    const parentItem = MENU.find(m => m.id === activePage || m.subs?.some(s => s.id === activePage));
+
+    if (parentItem && !allowedMenus.includes(parentItem.id)) {
+      return (
+        <div style={{ padding: 40, textAlign: 'center', background: darkMode ? '#0a0a0a' : '#fff', border: `1px solid ${darkMode ? '#1f1f1f' : '#c3c4c7'}`, borderRadius: 4, marginTop: 20 }}>
+          <h2 style={{ fontSize: 18, color: '#d63638', margin: '0 0 8px' }}>Sorry, you are not allowed to access this page.</h2>
+          <p style={{ fontSize: 13, color: darkMode ? '#94a3b8' : '#646970' }}>Your current role ({roleInfo.label}) does not have permissions to view this section of WordPress.</p>
+        </div>
+      );
+    }
+
     switch (activePage) {
       case 'dashboard-home': return <DashboardHome onNavigate={goTo} />;
       case 'updates': return <StubPanel title="Updates" />;
@@ -395,7 +425,10 @@ export default function WordPressAdminShell() {
         borderRight: darkMode ? '1px solid #1a1a1a' : 'none',
         scrollbarWidth: 'thin', scrollbarColor: '#3c434a #1d2327',
       }}>
-        {MENU.map((item, idx) => {
+        {MENU.filter(item => {
+          const allowed = ROLE_ALLOWED_MENUS[role] || ROLE_ALLOWED_MENUS.ADMIN;
+          return allowed.includes(item.id);
+        }).map((item, idx) => {
           if (item.id === 'collapse') {
             return (
               <div

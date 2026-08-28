@@ -21,6 +21,7 @@ export function setLoggedInUser(user) {
     } else {
       localStorage.removeItem(AUTH_USER_KEY);
     }
+    window.dispatchEvent(new Event('identifine_auth_changed'));
   } catch {}
 }
 
