@@ -27,7 +27,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [autoSlug, setAutoSlug] = useState(true);
-  const [content, setContent] = useState(''); // Intro
+  const [content, setContent] = useState(''); // Intro / Main body text
   const [sections, setSections] = useState([]);
   const [takeaway, setTakeaway] = useState('');
   const [summary, setSummary] = useState('');
@@ -44,8 +44,16 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
   const [activeRmTab, setActiveRmTab] = useState('general');
   const [showMediaPicker, setShowMediaPicker] = useState(false);
 
+  // Media picker target: 'featured' | 'content' | { type: 'section', index: number }
+  const [mediaTarget, setMediaTarget] = useState('featured');
+
+  // Editor mode: 'visual' | 'text'
+  const [editorMode, setEditorMode] = useState('visual');
+
   // Right sidebar tab: 'post' (Post Settings) or 'rankmath' (Rank Math SEO)
   const [rightSidebarTab, setRightSidebarTab] = useState('post');
+
+  const contentTextareaRef = useRef(null);
 
   useEffect(() => {
     if (editArticle) {
@@ -88,6 +96,43 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
 
   const removeSection = (idx) => {
     setSections(sections.filter((_, i) => i !== idx));
+  };
+
+  // Open media picker for inserting into content write-up or featured image
+  const openMediaForContent = () => {
+    setMediaTarget('content');
+    setShowMediaPicker(true);
+  };
+
+  const openMediaForSection = (idx) => {
+    setMediaTarget({ type: 'section', index: idx });
+    setShowMediaPicker(true);
+  };
+
+  const openMediaForFeatured = () => {
+    setMediaTarget('featured');
+    setShowMediaPicker(true);
+  };
+
+  // Media selected callback
+  const handleMediaSelected = (item) => {
+    const imgUrl = item.dataUrl || item.url;
+    const imgMarkdown = `\n\n![${item.alt || item.name || 'Image'}](${imgUrl})\n\n`;
+
+    if (mediaTarget === 'featured') {
+      setFeaturedImage(imgUrl);
+    } else if (mediaTarget === 'content') {
+      setContent(prev => prev + imgMarkdown);
+    } else if (typeof mediaTarget === 'object' && mediaTarget.type === 'section') {
+      const idx = mediaTarget.index;
+      updateSection(idx, 'body', (sections[idx]?.body || '') + imgMarkdown);
+    }
+    setShowMediaPicker(false);
+  };
+
+  // Helper formatting tools for rich text editor
+  const applyFormatting = (prefix, suffix = '') => {
+    setContent(prev => prev + `${prefix}text${suffix}`);
   };
 
   // SEO Analysis
@@ -172,6 +217,15 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
   return (
     <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', color: textColor }}>
 
+      {/* Media Picker Modal */}
+      {showMediaPicker && (
+        <MediaPickerModal
+          title={mediaTarget === 'featured' ? 'Set Featured Image' : 'Insert Media into Content'}
+          onSelect={handleMediaSelected}
+          onClose={() => setShowMediaPicker(false)}
+        />
+      )}
+
       {/* ── TOP ACTION HEADER (WP Block Editor Style) ────────────────────── */}
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16,
@@ -253,15 +307,15 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
 
         {/* ── LEFT: EDITOR ────────────────────────────────────────────────── */}
         <div>
-          {/* Post Title */}
+          {/* Post Title / Topic */}
           <div style={{ background: bgCard, border: `1px solid ${borderCard}`, boxShadow: '0 1px 1px rgba(0,0,0,.04)', marginBottom: 16, borderRadius: 3 }}>
             <input
               type="text"
               value={title}
               onChange={e => handleTitleChange(e.target.value)}
-              placeholder="Add title"
+              placeholder="Add title / post topic..."
               style={{
-                width: '100%', padding: '12px 16px', fontSize: 24, fontWeight: 300, border: 'none',
+                width: '100%', padding: '12px 16px', fontSize: 24, fontWeight: 400, border: 'none',
                 outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit', color: textColor, background: 'transparent',
               }}
             />
@@ -279,47 +333,141 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
             </div>
           </div>
 
-          {/* Intro / Content */}
+          {/* ───── WORDPRESS CLASSIC RICH CONTENT EDITOR ───── */}
           <div style={metaBoxStyle}>
-            <div style={metaBoxHeadStyle}>
-              <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Content / Introduction</h2>
+            {/* Top Toolbar Bar: Add Media Button + Visual / Text Mode Tabs */}
+            <div style={{
+              padding: '8px 12px', borderBottom: `1px solid ${borderCard}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              background: darkMode ? '#181f26' : '#f9f9f9',
+            }}>
+              {/* WordPress "Add Media" Button */}
+              <button
+                onClick={openMediaForContent}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  background: darkMode ? '#334155' : '#fff', color: textColor,
+                  border: `1px solid ${darkMode ? '#475569' : '#8c8f94'}`,
+                  borderRadius: 3, padding: '4px 10px', fontSize: 13, fontWeight: 600,
+                  cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+                }}
+              >
+                <span style={{ fontSize: 14 }}>📷</span>
+                <span>Add Media</span>
+              </button>
+
+              {/* Visual / Text Editor Mode Switcher */}
+              <div style={{ display: 'flex', border: `1px solid ${darkMode ? '#475569' : '#8c8f94'}`, borderRadius: 3, overflow: 'hidden' }}>
+                <button
+                  onClick={() => setEditorMode('visual')}
+                  style={{
+                    padding: '3px 10px', fontSize: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                    background: editorMode === 'visual' ? (darkMode ? '#334155' : '#e0e0e0') : 'transparent',
+                    color: textColor, fontWeight: editorMode === 'visual' ? 700 : 400,
+                  }}
+                >
+                  Visual
+                </button>
+                <button
+                  onClick={() => setEditorMode('text')}
+                  style={{
+                    padding: '3px 10px', fontSize: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                    background: editorMode === 'text' ? (darkMode ? '#334155' : '#e0e0e0') : 'transparent',
+                    color: textColor, fontWeight: editorMode === 'text' ? 700 : 400,
+                  }}
+                >
+                  Text (HTML)
+                </button>
+              </div>
             </div>
+
+            {/* Classic WYSIWYG Formatting Action Line Toolbar */}
+            <div style={{
+              padding: '6px 12px', borderBottom: `1px solid ${borderCard}`,
+              display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap',
+              background: darkMode ? '#151a21' : '#f0f0f1',
+            }}>
+              <button title="Bold" onClick={() => applyFormatting('**', '**')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', fontWeight: 700, cursor: 'pointer' }}>B</button>
+              <button title="Italic" onClick={() => applyFormatting('*', '*')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', fontStyle: 'italic', cursor: 'pointer' }}>I</button>
+              <button title="Link" onClick={() => applyFormatting('[', '](https://)')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>🔗 Link</button>
+              <button title="Blockquote" onClick={() => applyFormatting('\n> ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>“ Quote</button>
+              <button title="Bullet List" onClick={() => applyFormatting('\n- ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>• Bullet</button>
+              <button title="Numbered List" onClick={() => applyFormatting('\n1. ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>1. List</button>
+              <button title="Heading 2" onClick={() => applyFormatting('\n## ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>H2</button>
+              <button title="Heading 3" onClick={() => applyFormatting('\n### ')} style={{ ...inputStyle, width: 'auto', padding: '2px 8px', cursor: 'pointer' }}>H3</button>
+
+              <div style={{ height: 16, width: 1, background: borderCard, margin: '0 4px' }} />
+
+              {/* Insert Image directly into write up */}
+              <button
+                onClick={openMediaForContent}
+                title="Insert Image from Library"
+                style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '2px 8px', fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
+              >
+                <span>🖼</span>
+                <span>Insert Image</span>
+              </button>
+            </div>
+
+            {/* Writeup Body Textarea */}
             <div style={metaBoxBodyStyle}>
               <textarea
+                ref={contentTextareaRef}
                 value={content}
                 onChange={e => setContent(e.target.value)}
-                rows={8}
-                placeholder="Write your introduction paragraph here..."
-                style={textareaStyle}
+                rows={10}
+                placeholder="Write your post content here... Click 'Add Media' above to insert images into your write-up."
+                style={{
+                  ...textareaStyle,
+                  fontFamily: editorMode === 'text' ? 'Consolas, Monaco, monospace' : 'inherit',
+                  lineHeight: 1.6,
+                }}
               />
+              <div style={{ fontSize: 11, color: textMuted, marginTop: 4, display: 'flex', justifyContent: 'space-between' }}>
+                <span>Word count: {content ? content.trim().split(/\s+/).length : 0} words</span>
+                <span>Tip: Use <strong>Add Media</strong> to embed uploaded images into your article body.</span>
+              </div>
             </div>
           </div>
 
-          {/* Body Sections */}
+          {/* Body Sections (Sub-topics) */}
           <div style={metaBoxStyle}>
             <div style={metaBoxHeadStyle}>
-              <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Body Sections</h2>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Body Sections / Sub-topics</h2>
+                <span style={{ fontSize: 11, color: textMuted }}>({sections.length})</span>
+              </div>
               <button
                 onClick={addSection}
-                style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '2px 8px', fontSize: 12, cursor: 'pointer' }}
+                style={{ background: '#2271b1', color: '#fff', border: '1px solid #135e96', borderRadius: 3, padding: '3px 10px', fontSize: 12, cursor: 'pointer' }}
               >
-                + Add Section
+                + Add Sub-topic Section
               </button>
             </div>
             <div style={metaBoxBodyStyle}>
               {sections.length === 0 && (
-                <p style={{ fontSize: 13, color: textMuted, margin: 0 }}>No sections yet. Click "+ Add Section" to add body content.</p>
+                <div style={{ padding: '16px 0', textAlign: 'center', color: textMuted, fontSize: 13 }}>
+                  No extra sub-topics yet. Click <strong>"+ Add Sub-topic Section"</strong> to add numbered H2 headings and paragraphs.
+                </div>
               )}
               {sections.map((sec, i) => (
                 <div key={i} style={{ marginBottom: 16, borderBottom: i < sections.length - 1 ? `1px solid ${borderCard}` : 'none', paddingBottom: 16 }}>
                   <div style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'center' }}>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: textMuted, width: 24 }}>#{i + 1}</span>
                     <input
                       type="text"
                       value={sec.heading}
                       onChange={e => updateSection(i, 'heading', e.target.value)}
-                      placeholder="Section heading (H2)"
+                      placeholder={`Section ${i + 1} Heading (e.g. 1. Instant Frictionless Contact Exchange)`}
                       style={{ ...inputStyle, fontWeight: 600 }}
                     />
+                    <button
+                      onClick={() => openMediaForSection(i)}
+                      title="Insert Image into this section"
+                      style={{ background: darkMode ? '#334155' : '#f0f0f1', color: textColor, border: `1px solid ${borderCard}`, borderRadius: 3, padding: '4px 8px', fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                    >
+                      📷 Add Image
+                    </button>
                     <button
                       onClick={() => removeSection(i)}
                       style={{ background: darkMode ? '#450a0a' : '#fcf0f1', color: '#d63638', border: '1px solid #f5b9b9', borderRadius: 3, padding: '4px 8px', fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap' }}
@@ -330,8 +478,8 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
                   <textarea
                     value={sec.body}
                     onChange={e => updateSection(i, 'body', e.target.value)}
-                    rows={5}
-                    placeholder="Section body content..."
+                    rows={4}
+                    placeholder="Section body text..."
                     style={textareaStyle}
                   />
                 </div>
@@ -342,14 +490,14 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
           {/* Key Takeaway */}
           <div style={metaBoxStyle}>
             <div style={metaBoxHeadStyle}>
-              <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Key Takeaway</h2>
+              <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Key Takeaway / Conclusion</h2>
             </div>
             <div style={metaBoxBodyStyle}>
               <textarea
                 value={takeaway}
                 onChange={e => setTakeaway(e.target.value)}
                 rows={3}
-                placeholder="A bold conclusion or call-to-action for the reader..."
+                placeholder="A bold takeaway or call-to-action for the reader..."
                 style={textareaStyle}
               />
             </div>
@@ -606,14 +754,6 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
               </div>
 
               {/* Featured Image */}
-              {showMediaPicker && (
-                <MediaPickerModal
-                  title="Set Featured Image"
-                  onSelect={(item) => { setFeaturedImage(item.dataUrl || item.url); setShowMediaPicker(false); }}
-                  onClose={() => setShowMediaPicker(false)}
-                />
-              )}
-
               <div style={metaBoxStyle}>
                 <div style={metaBoxHeadStyle}>
                   <h2 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: textColor }}>Featured Image</h2>
@@ -628,7 +768,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
                       />
                       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                         <button
-                          onClick={() => setShowMediaPicker(true)}
+                          onClick={openMediaForFeatured}
                           style={{ background: 'none', border: 'none', color: '#2271b1', cursor: 'pointer', fontSize: 12, padding: 0, textDecoration: 'underline' }}
                         >
                           Replace image
@@ -645,7 +785,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
                   ) : (
                     <div>
                       <button
-                        onClick={() => setShowMediaPicker(true)}
+                        onClick={openMediaForFeatured}
                         style={{ display: 'block', width: '100%', textAlign: 'center', padding: '24px 12px', background: darkMode ? '#151a21' : '#f9f9f9', border: `2px dashed ${borderCard}`, borderRadius: 3, cursor: 'pointer', color: '#2271b1', fontSize: 13, fontWeight: 600, marginBottom: 8, fontFamily: 'inherit' }}
                       >
                         + Set featured image
