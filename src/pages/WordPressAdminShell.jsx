@@ -17,6 +17,9 @@ import RankMathSitemap from '../admin/RankMathSitemap';
 import RankMathRoleManager from '../admin/RankMathRoleManager';
 import SettingsPermalinks from '../admin/SettingsPermalinks';
 import UsersPanel from '../admin/UsersPanel';
+import PluginsPanel from '../admin/PluginsPanel';
+import AppearancePanel from '../admin/AppearancePanel';
+import PagesPanel from '../admin/PagesPanel';
 
 // ─── Color Palette (exact WordPress admin) ────────────────────────────────────
 const WP = {
@@ -184,8 +187,8 @@ export default function WordPressAdminShell() {
       case 'tags': return <TagsPanel />;
       case 'media-library': return <MediaLibraryPanel />;
       case 'media-add': return <MediaLibraryPanel />;
-      case 'pages-all': return <StubPanel title="Pages" />;
-      case 'pages-add': return <StubPanel title="Add New Page" />;
+      case 'pages-all': return <PagesPanel darkMode={darkMode} />;
+      case 'pages-add': return <PagesPanel darkMode={darkMode} />;
       case 'comments': return <CommentsPanel />;
       case 'rm-dashboard': return <RankMathDashboard onNavigate={goTo} />;
       case 'rm-general': return <RankMathGeneralSettings />;
@@ -194,8 +197,8 @@ export default function WordPressAdminShell() {
       case 'rm-roles': return <RankMathRoleManager />;
       case 'rm-tools': return <StubPanel title="Rank Math — Status & Tools" />;
       case 'rm-help': return <StubPanel title="Rank Math — Help & FAQ" />;
-      case 'appearance': return <StubPanel title="Appearance" />;
-      case 'plugins': return <StubPanel title="Plugins" />;
+      case 'appearance': return <AppearancePanel darkMode={darkMode} />;
+      case 'plugins': return <PluginsPanel onNavigate={goTo} darkMode={darkMode} />;
       case 'all-users': return <UsersPanel />;
       case 'add-user': return <UsersPanel />;
       case 'my-profile': return <StubPanel title="Your Profile" />;
