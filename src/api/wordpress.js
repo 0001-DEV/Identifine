@@ -219,6 +219,23 @@ async function revalidateWpPostBySlug(cacheKey, query, slug) {
       } catch (e) {}
       return formatted;
     }
+
+    // Fallback: If WP single-slug query returns 0 items (because WP slug is numeric e.g. 3988-2),
+    // search the recent posts list where formatPost converted numeric slugs to title slugs!
+    const allPosts = await fetchWpPosts(1, 20);
+    if (allPosts && allPosts.length > 0) {
+      const found = allPosts.find(
+        (p) => p.slug === slug || String(p.id) === String(slug) || (p.link && p.link.includes(slug))
+      );
+      if (found) {
+        memoryCache[cacheKey] = found;
+        try {
+          sessionStorage.setItem(cacheKey, JSON.stringify(found));
+        } catch (e) {}
+        return found;
+      }
+    }
+
     return memoryCache[cacheKey] || null;
   } catch (error) {
     if (WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {
@@ -237,6 +254,24 @@ async function revalidateWpPostBySlug(cacheKey, query, slug) {
         }
       } catch (err) {}
     }
+
+    // Fallback search direct
+    try {
+      const allPosts = await fetchWpPosts(1, 20);
+      if (allPosts && allPosts.length > 0) {
+        const found = allPosts.find(
+          (p) => p.slug === slug || String(p.id) === String(slug) || (p.link && p.link.includes(slug))
+        );
+        if (found) {
+          memoryCache[cacheKey] = found;
+          try {
+            sessionStorage.setItem(cacheKey, JSON.stringify(found));
+          } catch (e) {}
+          return found;
+        }
+      }
+    } catch (e) {}
+
     console.warn(`WordPress API unreachable for '${slug}', using local fallback:`, error?.message || error);
     return memoryCache[cacheKey] || null;
   }
