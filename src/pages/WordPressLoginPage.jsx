@@ -79,16 +79,16 @@ export default function WordPressLoginPage() {
       alignItems: 'center', justifyContent: 'center', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       padding: 20, boxSizing: 'border-box',
     }}>
-      {/* WordPress Logo */}
+      {/* Identifine Branding Logo */}
       <div style={{ marginBottom: 24, textAlign: 'center' }}>
         <div style={{
-          width: 80, height: 80, borderRadius: '50%', background: '#1d2327',
+          width: 80, height: 80, borderRadius: '50%', background: '#000000',
           display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)', border: '1px solid #333',
         }}>
-          <span style={{ fontSize: 48, fontWeight: 900, color: '#fff', fontFamily: 'serif' }}>W</span>
+          <span style={{ fontSize: 42, fontWeight: 900, color: '#fff', fontFamily: 'serif', letterSpacing: -1 }}>I</span>
         </div>
-        <div style={{ fontSize: 13, color: '#646970', fontWeight: 600 }}>Identifine WordPress Portal</div>
+        <div style={{ fontSize: 14, color: '#1d2327', fontWeight: 700, letterSpacing: 0.5 }}>Identifine Portal</div>
       </div>
 
       {/* Error Banner */}

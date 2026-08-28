@@ -81,7 +81,7 @@ export default function DashboardHome({ onNavigate }) {
             ))}
             <hr style={{ margin: '8px 0', border: 'none', borderTop: '1px solid #f0f0f1' }} />
             <div style={{ padding: '4px 12px', fontSize: 13, color: '#3c434a' }}>
-              WordPress 6.5 running <strong>Identifine Blog Theme</strong>
+              Identifine Engine v2.0 running <strong>Blog Theme</strong>
             </div>
             <div style={{ padding: '4px 12px', fontSize: 13, color: '#3c434a' }}>
               Rank Math SEO <span style={{ color: '#00b32c', fontWeight: 600 }}>v1.0.123</span>

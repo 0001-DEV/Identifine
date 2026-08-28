@@ -580,10 +580,10 @@ export default function WordPressAdminShell() {
           fontSize: 12, color: darkMode ? '#64748b' : '#646970',
         }}>
           <div>
-            Thank you for creating with <a href="https://wordpress.org" target="_blank" rel="noreferrer" style={{ color: '#2271b1', textDecoration: 'none' }}>WordPress</a> & <strong>Identifine</strong>.
+            Thank you for creating with <strong>Identifine Studio</strong>.
           </div>
           <div>
-            Version 6.6.1
+            Identifine Portal v2.0
           </div>
         </div>
       </div>

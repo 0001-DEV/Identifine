@@ -148,14 +148,14 @@ export default function PluginsPanel({ onNavigate, darkMode = false }) {
       {showAddNew ? (
         /* Add New Plugins View */
         <div style={{ background: bgCard, border: `1px solid ${borderCard}`, padding: 20, borderRadius: 4 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 600, margin: '0 0 12px', color: textColor }}>Add Plugins from WordPress Directory</h2>
+          <h2 style={{ fontSize: 16, fontWeight: 600, margin: '0 0 12px', color: textColor }}>Add Plugins from Plugin Directory</h2>
           <p style={{ fontSize: 13, color: textMuted, marginBottom: 16 }}>Search over 60,000 free plugins to extend your site's functionality.</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
             {[
-              { name: 'Yoast SEO', desc: 'Improve your WordPress SEO: Write better content and have a fully optimized WordPress site.', installed: false },
+              { name: 'Yoast SEO', desc: 'Improve your SEO: Write better content and have a fully optimized site.', installed: false },
               { name: 'WooCommerce', desc: 'An eCommerce toolkit that helps you sell anything. Beautifully.', installed: false },
               { name: 'Contact Form 7', desc: 'Just another contact form plugin. Simple but flexible.', installed: false },
-              { name: 'Jetpack', desc: 'Security, performance, and marketing tools for WordPress.', installed: false },
+              { name: 'Jetpack', desc: 'Security, performance, and marketing tools for your blog.', installed: false },
             ].map(item => (
               <div key={item.name} style={{ border: `1px solid ${borderCard}`, padding: 14, borderRadius: 4, background: darkMode ? '#151a21' : '#fafafa' }}>
                 <div style={{ fontSize: 14, fontWeight: 700, color: textColor, marginBottom: 4 }}>{item.name}</div>
