@@ -34,7 +34,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
   const [tags, setTags] = useState('');
   const [readTime, setReadTime] = useState('3 min read');
   const [featuredImage, setFeaturedImage] = useState('');
-  const [status, setStatus] = useState('published');
+  const [status, setStatus] = useState('Draft');
   const [date, setDate] = useState(new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }));
   
   // Rank Math & SEO
@@ -164,6 +164,9 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
     const finalSlug = slug.trim() || slugify(title);
     const finalContent = editorMode === 'visual' && visualEditorRef.current ? visualEditorRef.current.innerHTML : content;
 
+    const saveStatus = newStatus === 'draft' ? 'Draft' : newStatus === 'published' ? 'Published' : status;
+    setStatus(saveStatus);
+
     const article = {
       id: editingId || finalSlug || `art-${Date.now()}`,
       slug: finalSlug,
@@ -182,7 +185,7 @@ export default function NewPostPanel({ editArticle, onPublished, darkMode = fals
       seoTitle: seoTitle || title + getGlobalSettings().siteTitleSeparator,
       metaDesc: metaDesc || summary || finalContent.replace(/<[^>]+>/g, '').slice(0, 155),
       seoScore: score,
-      status: newStatus || status,
+      status: saveStatus,
       createdAt: new Date().toISOString(),
     };
 
