@@ -1292,24 +1292,151 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
               </div>
             )}
 
-            {/* TAB CONTENT: BLOCK SETTINGS */}
+            {/* TAB CONTENT: BLOCK SETTINGS (Exact 1-to-1 match to screenshot) */}
             {sidebarTab === 'block' && (
-              <div className="p-4 space-y-4 text-xs">
-                <span className="font-semibold text-sm">Selected Block Settings</span>
-                <p className="text-gray-500">Configure typography, line height, spacing, and styling for the current block.</p>
-                <div className="p-3 rounded border space-y-3" style={{ borderColor: wpBorder }}>
-                  <span className="font-medium block text-gray-700 dark:text-gray-300">Typography</span>
-                  <div className="flex items-center justify-between">
-                    <span>Size</span>
-                    <select className="border rounded px-2 py-1 bg-transparent text-xs" style={{ borderColor: wpBorder }}>
-                      <option>Default</option>
-                      <option>Small (14px)</option>
-                      <option>Medium (16px)</option>
-                      <option>Large (20px)</option>
-                      <option>Extra Large (24px)</option>
-                    </select>
+              <div className="p-4 space-y-5 text-xs">
+
+                {/* 1. Block Header (¶ Paragraph + Description + Elementor AI) */}
+                <div className="space-y-1.5 pb-3 border-b" style={{ borderColor: wpBorder }}>
+                  <div className="flex items-center gap-2 font-bold text-sm text-gray-900 dark:text-gray-100">
+                    <span className="font-serif text-base">¶</span>
+                    <span>Paragraph</span>
+                  </div>
+                  <p className="text-[11px] text-[#757575] leading-relaxed">
+                    Start with the basic building block of all narrative.
+                  </p>
+                  <div className="pt-1">
+                    <button
+                      onClick={() => setElementorAiOpen(true)}
+                      className="flex items-center gap-1.5 text-[#a020f0] hover:text-purple-700 font-medium text-xs cursor-pointer"
+                    >
+                      <Sparkles size={13} />
+                      <span>Generate with Elementor AI</span>
+                    </button>
                   </div>
                 </div>
+
+                {/* 2. Typography Card */}
+                <div className="space-y-3 pt-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">Typography</span>
+                    <button className="text-gray-400 hover:text-gray-600">
+                      <MoreVertical size={14} />
+                    </button>
+                  </div>
+
+                  {/* Color selector button */}
+                  <button
+                    onClick={() => {
+                      const color = prompt('Enter text hex color (e.g. #2271b1):', '#1e1e1e');
+                      if (color) updateBlock(activeBlockId, { textColor: color });
+                    }}
+                    className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-gray-800 dark:text-gray-200 hover:border-gray-400 transition cursor-pointer"
+                    style={{ borderColor: wpBorder }}
+                  >
+                    <span className="w-4 h-4 rounded-full border border-gray-300 dark:border-zinc-700 flex items-center justify-center relative overflow-hidden bg-white">
+                      <span className="w-full h-px bg-red-400 -rotate-45 absolute" />
+                    </span>
+                    <span>Color</span>
+                  </button>
+
+                  {/* Font Size header + toggle */}
+                  <div className="space-y-1.5 pt-1">
+                    <div className="flex items-center justify-between text-[11px] font-semibold tracking-wider text-[#757575]">
+                      <span>FONT SIZE</span>
+                      <button title="Reset size" className="hover:text-gray-800 dark:hover:text-gray-200">
+                        <span className="text-xs">⇄</span>
+                      </button>
+                    </div>
+
+                    {/* S | M | L | XL Segmented Buttons */}
+                    <div className="grid grid-cols-4 border rounded overflow-hidden text-center text-xs font-semibold" style={{ borderColor: wpBorder }}>
+                      {['S', 'M', 'L', 'XL'].map((sizeKey) => {
+                        const currentSize = blocks.find(b => b.id === activeBlockId)?.fontSize || 'M';
+                        const isSelected = currentSize === sizeKey;
+
+                        return (
+                          <button
+                            key={sizeKey}
+                            onClick={() => updateBlock(activeBlockId, { fontSize: sizeKey })}
+                            className={`py-1.5 transition border-r last:border-r-0 ${
+                              isSelected
+                                ? 'bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white font-bold'
+                                : 'hover:bg-gray-50 dark:hover:bg-zinc-800/50 text-[#757575]'
+                            }`}
+                            style={{ borderColor: wpBorder }}
+                          >
+                            {sizeKey}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. Background Card */}
+                <div className="space-y-3 pt-2 border-t" style={{ borderColor: wpBorder }}>
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">Background</span>
+                    <button className="text-gray-400 hover:text-gray-600">
+                      <MoreVertical size={14} />
+                    </button>
+                  </div>
+
+                  {/* Solid Color & Gradient buttons */}
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => {
+                        const bg = prompt('Enter background hex color (e.g. #f0f0f1):', '#f8fafc');
+                        if (bg) updateBlock(activeBlockId, { bg });
+                      }}
+                      className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-gray-800 dark:text-gray-200 hover:border-gray-400 transition cursor-pointer"
+                      style={{ borderColor: wpBorder }}
+                    >
+                      <span className="w-4 h-4 rounded-full border border-gray-300 dark:border-zinc-700 flex items-center justify-center relative overflow-hidden bg-white">
+                        <span className="w-full h-px bg-red-400 -rotate-45 absolute" />
+                      </span>
+                      <span>Color</span>
+                    </button>
+
+                    <button
+                      onClick={() => updateBlock(activeBlockId, { bg: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' })}
+                      className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-gray-800 dark:text-gray-200 hover:border-gray-400 transition cursor-pointer"
+                      style={{ borderColor: wpBorder }}
+                    >
+                      <span className="w-4 h-4 rounded-full border border-gray-300 dark:border-zinc-700 flex items-center justify-center relative overflow-hidden bg-gradient-to-tr from-blue-400 to-purple-500" />
+                      <span>Gradient</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* 4. Collapsible Settings Items (Dimensions, Border, Elements, Advanced) */}
+                <div className="space-y-0 pt-2 border-t" style={{ borderColor: wpBorder }}>
+                  {/* Dimensions */}
+                  <div className="py-2.5 border-b flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
+                    <span>Dimensions</span>
+                    <Plus size={14} className="text-gray-400" />
+                  </div>
+
+                  {/* Border */}
+                  <div className="py-2.5 border-b flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
+                    <span>Border</span>
+                    <Plus size={14} className="text-gray-400" />
+                  </div>
+
+                  {/* Elements */}
+                  <div className="py-2.5 border-b flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
+                    <span>Elements</span>
+                    <Plus size={14} className="text-gray-400" />
+                  </div>
+
+                  {/* Advanced */}
+                  <div className="py-2.5 flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition">
+                    <span>Advanced</span>
+                    <ChevronDown size={14} className="text-gray-400" />
+                  </div>
+                </div>
+
               </div>
             )}
 
