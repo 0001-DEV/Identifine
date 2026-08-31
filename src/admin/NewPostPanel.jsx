@@ -257,6 +257,31 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
       content: '',
       ...extraProps
     };
+
+    if (type === 'image') {
+      const followUpParagraph = {
+        id: `b-${Date.now() + 1}-${Math.random().toString(36).substr(2, 4)}`,
+        type: 'paragraph',
+        content: '',
+        fontSize: 'M'
+      };
+      if (insertAfterId) {
+        const idx = blocks.findIndex(b => b.id === insertAfterId);
+        if (idx !== -1) {
+          const copy = [...blocks];
+          copy.splice(idx + 1, 0, newBlock, followUpParagraph);
+          setBlocks(copy);
+        } else {
+          setBlocks(prev => [...prev, newBlock, followUpParagraph]);
+        }
+      } else {
+        setBlocks(prev => [...prev, newBlock, followUpParagraph]);
+      }
+      setActiveBlockId(newBlock.id);
+      setShowTopBlockInserter(false);
+      return;
+    }
+
     if (insertAfterId) {
       const idx = blocks.findIndex(b => b.id === insertAfterId);
       if (idx !== -1) {
@@ -1027,7 +1052,13 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                                 type="text"
                                 value={block.caption || ''}
                                 onChange={(e) => updateBlock(block.id, { caption: e.target.value })}
-                                placeholder="Add caption..."
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    addBlock('paragraph', block.id);
+                                  }
+                                }}
+                                placeholder="Add caption... (press Enter to write underneath)"
                                 className="w-full text-center text-xs text-gray-600 dark:text-gray-400 italic bg-transparent border-none outline-none"
                               />
                             </div>
@@ -1082,6 +1113,17 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                             </div>
                           </div>
                         )}
+
+                        {/* Quick Continue Text Underneath Button */}
+                        <div className="flex items-center justify-center pt-2">
+                          <button
+                            onClick={() => addBlock('paragraph', block.id)}
+                            className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-zinc-800 rounded transition cursor-pointer"
+                          >
+                            <Plus size={12} />
+                            <span>Continue text underneath</span>
+                          </button>
+                        </div>
                       </div>
                     )}
 
