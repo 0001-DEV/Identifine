@@ -71,13 +71,13 @@ export function analyzeSeo({
   // ── 1. BASIC SEO (40 Points Max) ───────────────────────────────────────────
   
   // 1. Focus Keyword in SEO Title (10 pts)
-  const hasKwInTitle = Boolean(keyword && titleText.toLowerCase().includes(keyword));
+  const hasKwInTitle = Boolean(manualKeyword && titleText.toLowerCase().includes(manualKeyword));
   if (hasKwInTitle) score += 10;
   checks.push({
     id: 'kw_in_title',
     label: hasKwInTitle
       ? 'Focus Keyword used in the SEO Title'
-      : keyword
+      : manualKeyword
       ? 'Focus Keyword not found in SEO Title'
       : 'Add a Focus Keyword to your SEO Title',
     pass: hasKwInTitle,
@@ -86,13 +86,13 @@ export function analyzeSeo({
   });
 
   // 2. Focus Keyword in Meta Description (10 pts)
-  const hasKwInMeta = Boolean(keyword && excerptText.toLowerCase().includes(keyword));
+  const hasKwInMeta = Boolean(manualKeyword && excerptText.toLowerCase().includes(manualKeyword));
   if (hasKwInMeta) score += 10;
   checks.push({
     id: 'kw_in_meta',
     label: hasKwInMeta
       ? 'Focus Keyword used in Meta Description'
-      : keyword
+      : manualKeyword
       ? 'Focus Keyword not found in Meta Description'
       : 'Add a Focus Keyword to Meta Description',
     pass: hasKwInMeta,
@@ -101,13 +101,13 @@ export function analyzeSeo({
   });
 
   // 3. Focus Keyword in URL Slug (5 pts)
-  const hasKwInSlug = Boolean(keyword && (slugText.includes(kwSlugified) || slugText.includes(keyword.replace(/\s+/g, '-'))));
+  const hasKwInSlug = Boolean(manualKeyword && (slugText.includes(kwSlugified) || slugText.includes(manualKeyword.replace(/\s+/g, '-'))));
   if (hasKwInSlug) score += 5;
   checks.push({
     id: 'kw_in_slug',
     label: hasKwInSlug
       ? 'Focus Keyword used in URL Slug'
-      : keyword
+      : manualKeyword
       ? 'Focus Keyword not found in URL Slug'
       : 'Add Focus Keyword to URL Slug',
     pass: hasKwInSlug,
@@ -121,7 +121,7 @@ export function analyzeSeo({
     id: 'kw_in_intro',
     label: hasKwInIntro
       ? 'Focus Keyword appears in the first 10% of content'
-      : keyword
+      : manualKeyword
       ? 'Focus Keyword not found in the first 10% of content'
       : 'Include Focus Keyword near the beginning of article',
     pass: hasKwInIntro,
@@ -133,7 +133,7 @@ export function analyzeSeo({
   const isGoodLength = wordCount >= 600;
   const isMediumLength = wordCount >= 300;
   if (isGoodLength) score += 10;
-  else if (isMediumLength) score += 5;
+  else if (isMediumLength) score += 4;
   checks.push({
     id: 'content_length',
     label: isGoodLength
@@ -151,7 +151,7 @@ export function analyzeSeo({
   // 1. Focus Keyword in Subheadings (H2, H3) (10 pts)
   const subheadings = (content.match(/<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi) || [])
     .concat(sections.map(s => s.heading || ''));
-  const kwInSubheading = Boolean(keyword && subheadings.some(h => (h || '').toLowerCase().includes(keyword)));
+  const kwInSubheading = Boolean(manualKeyword && subheadings.some(h => (h || '').toLowerCase().includes(manualKeyword)));
   if (kwInSubheading) score += 10;
   checks.push({
     id: 'kw_in_subheadings',
@@ -167,7 +167,7 @@ export function analyzeSeo({
 
   // 2. Focus Keyword in Image ALT text (5 pts)
   const imgAltMatches = content.match(/alt="([^"]*)"/gi) || [];
-  const kwInAlt = Boolean(keyword && imgAltMatches.some(alt => alt.toLowerCase().includes(keyword)));
+  const kwInAlt = Boolean(manualKeyword && imgAltMatches.some(alt => alt.toLowerCase().includes(manualKeyword)));
   if (kwInAlt) score += 5;
   checks.push({
     id: 'kw_in_image_alt',
@@ -180,15 +180,15 @@ export function analyzeSeo({
   });
 
   // 3. Keyword Density (0.8% - 2.5%) (5 pts)
-  const isOptimalDensity = keyword ? (keywordDensity >= 0.8 && keywordDensity <= 2.5) : false;
+  const isOptimalDensity = manualKeyword ? (keywordDensity >= 0.8 && keywordDensity <= 2.5) : false;
   if (isOptimalDensity) score += 5;
   checks.push({
     id: 'kw_density',
     label: isOptimalDensity
       ? `Keyword Density is ${keywordDensity}%, which is optimal`
-      : keyword && occurrences > 0
+      : manualKeyword && occurrences > 0
       ? `Keyword Density is ${keywordDensity}%, which is outside optimal range (0.8% - 2.5%)`
-      : keyword
+      : manualKeyword
       ? 'Focus Keyword density is 0%'
       : 'Enter a Focus Keyword to calculate keyword density',
     pass: isOptimalDensity,
@@ -196,12 +196,12 @@ export function analyzeSeo({
     category: 'Additional SEO',
   });
 
-  // 4. URL Length (4 pts)
-  const isShortSlug = slugText.length >= 10 && slugText.length <= 75;
+  // 4. URL Length (4 pts) - in Rank Math, requires keyword in slug and <= 75 chars
+  const isShortSlug = Boolean(manualKeyword && hasKwInSlug && slugText.length <= 75);
   if (isShortSlug) score += 4;
   checks.push({
     id: 'slug_length',
-    label: isShortSlug ? `URL is ${slugText.length} characters long` : 'URL is too long or empty',
+    label: isShortSlug ? `URL is ${slugText.length} characters long and contains keyword` : 'URL does not contain Focus Keyword or is long',
     pass: isShortSlug,
     status: isShortSlug ? 'pass' : 'fail',
     category: 'Additional SEO',
@@ -209,7 +209,7 @@ export function analyzeSeo({
 
   // 5. Outbound Links (3 pts) & Internal Links (3 pts)
   const hasOutbound = /href="https?:\/\/(?!identifine\.com\.ng)/i.test(content);
-  const hasInternal = /href="(https?:\/\/identifine\.com\.ng|\/)/i.test(content) || content.includes('href=');
+  const hasInternal = /href="(https?:\/\/identifine\.com\.ng|\/)/i.test(content);
   if (hasOutbound) score += 3;
   if (hasInternal) score += 3;
   checks.push({
@@ -223,7 +223,7 @@ export function analyzeSeo({
   // ── 3. TITLE READABILITY (15 Points Max) ────────────────────────────────────
 
   // 1. Focus Keyword at start of Title (5 pts)
-  const kwAtStartOfTitle = Boolean(keyword && titleText.toLowerCase().startsWith(keyword));
+  const kwAtStartOfTitle = Boolean(manualKeyword && titleText.toLowerCase().startsWith(manualKeyword));
   if (kwAtStartOfTitle) score += 5;
   checks.push({
     id: 'kw_start_title',
@@ -261,11 +261,11 @@ export function analyzeSeo({
 
   // ── 4. CONTENT READABILITY (15 Points Max) ──────────────────────────────────
 
-  // 1. Paragraph Length Check (5 pts)
+  // 1. Paragraph Length Check (4 pts in Rank Math)
   const paragraphs = content.split(/<\/?p>/gi).map(p => stripHtml(p)).filter(Boolean);
   const hasLongParagraphs = paragraphs.some(p => p.split(/\s+/).filter(Boolean).length > 120);
   const goodParagraphs = wordCount > 0 && !hasLongParagraphs;
-  if (goodParagraphs) score += 5;
+  if (goodParagraphs) score += 4;
   checks.push({
     id: 'short_paragraphs',
     label: goodParagraphs ? 'Paragraphs are concise and easy to read' : 'Break up long paragraphs into shorter ones (under 120 words)',
@@ -275,7 +275,7 @@ export function analyzeSeo({
   });
 
   // 2. Media included (5 pts)
-  const containsMedia = hasImage || content.includes('<img') || content.includes('<figure') || content.includes('<iframe');
+  const containsMedia = Boolean(hasImage || content.includes('<img') || content.includes('<figure') || content.includes('<iframe'));
   if (containsMedia) score += 5;
   checks.push({
     id: 'has_media',
@@ -285,12 +285,12 @@ export function analyzeSeo({
     category: 'Content Readability',
   });
 
-  // 3. Subheading Distribution (5 pts)
-  const goodSubheadingStructure = subheadings.length >= 2 || (wordCount < 400 && subheadings.length >= 1);
+  // 3. Subheading Distribution (5 pts) - strictly requires 2+ subheadings
+  const goodSubheadingStructure = subheadings.length >= 2;
   if (goodSubheadingStructure) score += 5;
   checks.push({
     id: 'subheading_structure',
-    label: goodSubheadingStructure ? 'Content uses subheadings effectively' : 'Add more subheadings (H2, H3) to break up the text',
+    label: goodSubheadingStructure ? 'Content uses subheadings effectively' : 'Add at least 2 subheadings (H2, H3) to structure your content',
     pass: goodSubheadingStructure,
     status: goodSubheadingStructure ? 'pass' : 'fail',
     category: 'Content Readability',
