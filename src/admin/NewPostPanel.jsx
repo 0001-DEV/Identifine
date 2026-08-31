@@ -151,6 +151,70 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // ── Global Floating Highlight Selection Bubble ──
+  const [selectionToolbar, setSelectionToolbar] = useState({
+    visible: false,
+    x: 0,
+    y: 0,
+    text: '',
+    blockId: null,
+  });
+
+  useEffect(() => {
+    const handleSelectionChange = () => {
+      const selection = window.getSelection();
+      if (!selection || selection.isCollapsed || !selection.toString().trim()) {
+        return;
+      }
+      const text = selection.toString().trim();
+      if (text.length > 0) {
+        try {
+          const range = selection.getRangeAt(0);
+          const rect = range.getBoundingClientRect();
+          if (rect && rect.width > 0) {
+            let node = range.commonAncestorContainer;
+            if (node.nodeType === 3) node = node.parentNode;
+            const blockEl = node.closest('[data-block-id]');
+            const foundBlockId = blockEl ? blockEl.getAttribute('data-block-id') : activeBlockId;
+
+            setSelectionToolbar({
+              visible: true,
+              x: Math.max(20, rect.left + rect.width / 2),
+              y: Math.max(20, rect.top - 10),
+              text,
+              blockId: foundBlockId || activeBlockId || (blocks[0]?.id),
+            });
+          }
+        } catch (err) {
+          // ignore range errors
+        }
+      }
+    };
+
+    const handleMouseUp = () => {
+      setTimeout(handleSelectionChange, 60);
+    };
+
+    const handleMouseDown = (e) => {
+      if (e.target.closest('#floating-selection-bubble')) return;
+      setTimeout(() => {
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) {
+          setSelectionToolbar(prev => ({ ...prev, visible: false }));
+        }
+      }, 150);
+    };
+
+    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('keyup', handleMouseUp);
+    document.addEventListener('mousedown', handleMouseDown);
+    return () => {
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('keyup', handleMouseUp);
+      document.removeEventListener('mousedown', handleMouseDown);
+    };
+  }, [activeBlockId, blocks]);
+
   // Load article for editing if provided
   useEffect(() => {
     if (editArticle && editArticle.id !== editingId) {
@@ -843,6 +907,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 return (
                   <div
                     key={block.id}
+                    data-block-id={block.id}
                     className={`relative group rounded transition duration-150 ${
                       isActive ? 'ring-1 ring-blue-500/30' : ''
                     }`}
@@ -2131,6 +2196,98 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* ─────────────────────────────────────────────────────────────
+          GLOBAL FLOATING SELECTION BUBBLE (Pops up directly over highlighted text)
+      ───────────────────────────────────────────────────────────── */}
+      {selectionToolbar.visible && selectionToolbar.text && (
+        <div
+          id="floating-selection-bubble"
+          className="fixed z-50 flex items-center gap-1 px-2.5 py-1.5 rounded-lg shadow-2xl border text-xs select-none bg-[#1e1e1e] text-white animate-scale-in"
+          style={{
+            left: `${selectionToolbar.x}px`,
+            top: `${selectionToolbar.y}px`,
+            transform: 'translate(-50%, -100%)',
+          }}
+          onMouseDown={(e) => e.preventDefault()}
+        >
+          {/* Bold */}
+          <button
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => {
+              handleFormatSelection(selectionToolbar.blockId, 'bold');
+              setSelectionToolbar(prev => ({ ...prev, visible: false }));
+            }}
+            title="Bold"
+            className="p-1.5 rounded hover:bg-white/20 text-white font-bold transition"
+          >
+            <Bold size={14} />
+          </button>
+
+          {/* Italic */}
+          <button
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => {
+              handleFormatSelection(selectionToolbar.blockId, 'italic');
+              setSelectionToolbar(prev => ({ ...prev, visible: false }));
+            }}
+            title="Italic"
+            className="p-1.5 rounded hover:bg-white/20 text-white transition"
+          >
+            <Italic size={14} />
+          </button>
+
+          {/* Link */}
+          <button
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => {
+              setLinkModalData({
+                open: true,
+                blockId: selectionToolbar.blockId,
+                selectedText: selectionToolbar.text,
+                url: '',
+                newTab: true,
+                start: 0,
+                end: 0,
+              });
+              setSelectionToolbar(prev => ({ ...prev, visible: false }));
+            }}
+            title="Insert Link"
+            className="p-1.5 rounded hover:bg-white/20 text-blue-400 font-bold transition flex items-center gap-1 cursor-pointer"
+          >
+            <LinkIcon size={14} />
+            <span className="text-[11px]">Link</span>
+          </button>
+
+          <div className="w-px h-4 bg-white/20 mx-0.5" />
+
+          {/* Heading */}
+          <button
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => {
+              updateBlock(selectionToolbar.blockId, { type: 'heading', level: 2 });
+              setSelectionToolbar(prev => ({ ...prev, visible: false }));
+            }}
+            title="Convert block to Heading"
+            className="px-1.5 py-1 rounded hover:bg-white/20 text-white font-bold text-xs transition"
+          >
+            H2
+          </button>
+
+          {/* Text Color */}
+          <button
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => {
+              handleFormatSelection(selectionToolbar.blockId, 'color');
+              setSelectionToolbar(prev => ({ ...prev, visible: false }));
+            }}
+            title="Text Color"
+            className="p-1.5 rounded hover:bg-white/20 text-amber-400 font-bold font-serif text-xs transition"
+          >
+            A
+          </button>
         </div>
       )}
 
