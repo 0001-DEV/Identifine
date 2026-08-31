@@ -273,12 +273,14 @@ export default function WordPressAdminShell() {
   // Full-Screen Gutenberg Block Editor (Exact WordPress Experience)
   if (activePage === 'add-new') {
     return (
-      <NewPostPanel
-        editArticle={editArticle}
-        onPublished={handlePublished}
-        onBack={() => goTo('all-posts')}
-        darkMode={darkMode}
-      />
+      <div className={darkMode ? 'dark' : ''}>
+        <NewPostPanel
+          editArticle={editArticle}
+          onPublished={handlePublished}
+          onBack={() => goTo('all-posts')}
+          darkMode={darkMode}
+        />
+      </div>
     );
   }
 
