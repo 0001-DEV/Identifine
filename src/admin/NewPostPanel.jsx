@@ -27,7 +27,13 @@ import {
   Search,
   FileText,
   MessageSquare,
-  Radio
+  Radio,
+  Sliders,
+  Settings,
+  Crop,
+  Layers,
+  Upload as UploadIcon,
+  ExternalLink
 } from 'lucide-react';
 import { analyzeSeo } from '../utils/seoAnalyzer';
 import { getCustomArticles, saveCustomArticles } from '../pages/BlogAdminPage';
@@ -98,6 +104,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
   // ── UI States ──
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [sidebarTab, setSidebarTab] = useState('post'); // 'post' | 'block' | 'rankmath'
+  const [imageSubTab, setImageSubTab] = useState('styles'); // 'styles' | 'settings' | 'duotone'
   const [activeAccordion, setActiveAccordion] = useState({
     summary: true,
     trx: false,
@@ -117,6 +124,9 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
   const [seoTitle, setSeoTitle] = useState('');
   const [metaDesc, setMetaDesc] = useState('');
   const [activeRmTab, setActiveRmTab] = useState('general');
+
+  // Hidden native file input for direct upload
+  const fileInputRef = useRef(null);
 
   // Close inline inserter on outside click
   const inlineInserterRef = useRef(null);
@@ -195,16 +205,20 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
     if (blockTypeConfig.id === 'image') {
       const newId = `b-img-${Date.now()}`;
-      addBlock('image', targetBlockId, { id: newId, url: '', caption: '', alt: '' });
-      setMediaTarget({ type: 'block', id: newId });
-      setShowMediaPicker(true);
+      const currentBlock = blocks.find(b => b.id === targetBlockId);
+      if (currentBlock && !currentBlock.content?.trim()) {
+        updateBlock(targetBlockId, { type: 'image', url: '', caption: '', alt: '', decorative: false });
+        setActiveBlockId(targetBlockId);
+      } else {
+        addBlock('image', targetBlockId, { id: newId, url: '', caption: '', alt: '', decorative: false });
+      }
+      setSidebarTab('block');
       return;
     }
 
     if (blockTypeConfig.type === 'heading') {
-      // If current paragraph is empty, transform it directly; otherwise insert after
       const currentBlock = blocks.find(b => b.id === targetBlockId);
-      if (currentBlock && !currentBlock.content.trim()) {
+      if (currentBlock && !currentBlock.content?.trim()) {
         updateBlock(targetBlockId, { type: 'heading', level: blockTypeConfig.level || 2, content: '' });
       } else {
         addBlock('heading', targetBlockId, { level: blockTypeConfig.level || 2 });
@@ -214,7 +228,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
     if (blockTypeConfig.type === 'list') {
       const currentBlock = blocks.find(b => b.id === targetBlockId);
-      if (currentBlock && !currentBlock.content.trim()) {
+      if (currentBlock && !currentBlock.content?.trim()) {
         updateBlock(targetBlockId, { type: 'list', items: [''] });
       } else {
         addBlock('list', targetBlockId, { items: [''] });
@@ -250,10 +264,21 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
   const deleteBlock = (id) => {
     if (blocks.length === 1) {
-      updateBlock(id, { content: '', type: 'paragraph' });
+      updateBlock(id, { content: '', type: 'paragraph', url: '', caption: '', alt: '' });
       return;
     }
     setBlocks(prev => prev.filter(b => b.id !== id));
+  };
+
+  const handleNativeFileUpload = (e, blockId) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (loadEvt) => {
+      const base64 = loadEvt.target?.result;
+      updateBlock(blockId, { url: base64, alt: file.name.replace(/\.[^/.]+$/, '') });
+    };
+    reader.readAsDataURL(file);
   };
 
   const rawHtmlContent = blocks.map(b => {
@@ -367,10 +392,12 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     b.name.toLowerCase().includes(inlineSearch.toLowerCase())
   );
 
+  const activeBlock = blocks.find(b => b.id === activeBlockId) || blocks[0];
+
   const wpBg = darkMode ? '#121212' : '#ffffff';
   const wpHeaderBg = darkMode ? '#18181b' : '#ffffff';
   const wpBorder = darkMode ? '#27272a' : '#e0e0e0';
-  const wpText = darkMode ? '#f4f4f5' : '#1e1e1e';
+  const wpText = darkMode ? '#f4f4f5' : '#000000';
   const wpMuted = darkMode ? '#a1a1aa' : '#757575';
   const wpBlue = '#2271b1';
 
@@ -586,6 +613,17 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
       ───────────────────────────────────────────────────────────── */}
       <div className="flex-1 flex overflow-hidden relative">
 
+        {/* Hidden Native File Input for Instant Uploads */}
+        <input
+          type="file"
+          ref={fileInputRef}
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
+            if (activeBlockId) handleNativeFileUpload(e, activeBlockId);
+          }}
+        />
+
         {/* ── WRITING CANVAS (Center Document) ── */}
         <main className="flex-1 overflow-y-auto px-6 py-14 flex justify-center custom-scrollbar">
           <div className="w-full max-w-[840px]">
@@ -597,8 +635,8 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 value={title}
                 onChange={(e) => handleTitleChange(e.target.value)}
                 placeholder="Add title"
-                className="w-full text-5xl font-bold tracking-tight border-none outline-none bg-transparent placeholder-[#757575] leading-tight"
-                style={{ color: wpText, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif' }}
+                className="w-full text-5xl font-bold tracking-tight border-none outline-none bg-transparent placeholder-[#757575] leading-tight text-black dark:text-white"
+                style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif' }}
                 autoFocus
               />
             </div>
@@ -613,22 +651,26 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   <div
                     key={block.id}
                     className={`relative group rounded transition duration-150 ${
-                      isActive ? 'ring-1 ring-blue-500/30 bg-blue-50/5' : ''
+                      isActive ? 'ring-1 ring-blue-500/30' : ''
                     }`}
-                    onClick={() => setActiveBlockId(block.id)}
+                    onClick={() => {
+                      setActiveBlockId(block.id);
+                    }}
                   >
-                    {/* Floating Block Toolbar */}
-                    {isActive && (
+                    {/* ─────────────────────────────────────────────────────────────
+                        FLOATING BLOCK TOOLBAR (Exact WordPress Style)
+                    ───────────────────────────────────────────────────────────── */}
+                    {isActive && block.type === 'paragraph' && (
                       <div
                         className="absolute -top-10 left-0 z-30 flex items-center gap-1 px-2 py-1 rounded shadow-lg border text-xs select-none animate-fade-in"
                         style={{ background: wpHeaderBg, borderColor: wpBorder }}
                       >
                         <button
-                          onClick={() => updateBlock(block.id, { type: block.type === 'heading' ? 'paragraph' : 'heading', level: 2 })}
+                          onClick={() => updateBlock(block.id, { type: 'heading', level: 2 })}
                           title="Transform block"
                           className="px-1.5 py-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 font-bold"
                         >
-                          {block.type === 'heading' ? `H${block.level || 2}` : '¶'}
+                          ¶
                         </button>
                         <div className="w-px h-4 bg-gray-200 dark:bg-zinc-700" />
                         <button
@@ -672,7 +714,49 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                       </div>
                     )}
 
-                    {/* Block Renderers */}
+                    {/* Floating Toolbar for IMAGE block (matching screenshot) */}
+                    {isActive && block.type === 'image' && (
+                      <div
+                        className="absolute -top-11 left-0 z-30 flex items-center gap-1.5 px-2 py-1 rounded shadow-lg border text-xs select-none bg-white dark:bg-zinc-900 animate-fade-in"
+                        style={{ borderColor: wpBorder }}
+                      >
+                        <button className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-300">
+                          <ImageIcon size={14} />
+                        </button>
+                        <button className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-300">
+                          <AlignLeft size={14} />
+                        </button>
+                        <button className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-300 font-serif font-bold text-xs">
+                          A
+                        </button>
+                        <button className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-300">
+                          <LinkIcon size={13} />
+                        </button>
+                        <button className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-300 font-bold text-xs border border-gray-300 px-1 rounded-sm">
+                          [A]
+                        </button>
+                        <button
+                          onClick={() => {
+                            setMediaTarget({ type: 'block', id: block.id });
+                            setShowMediaPicker(true);
+                          }}
+                          className="px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-800 dark:text-gray-200 font-medium text-xs border"
+                          style={{ borderColor: wpBorder }}
+                        >
+                          Add image
+                        </button>
+                        <button
+                          onClick={() => deleteBlock(block.id)}
+                          className="p-1.5 rounded hover:bg-red-50 text-red-500"
+                        >
+                          <MoreVertical size={14} />
+                        </button>
+                      </div>
+                    )}
+
+                    {/* ─────────────────────────────────────────────────────────────
+                        BLOCK RENDERER: PARAGRAPH (Body text is deep BLACK)
+                    ───────────────────────────────────────────────────────────── */}
                     {block.type === 'paragraph' && (
                       <div className="relative flex items-center justify-between py-1">
                         <div
@@ -686,7 +770,12 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                             }
                           }}
                           data-placeholder="Type / to choose a block"
-                          className="w-full min-h-[30px] text-lg text-gray-800 dark:text-gray-200 outline-none leading-relaxed empty:before:content-[attr(data-placeholder)] empty:before:text-[#757575]"
+                          className="w-full min-h-[30px] text-lg text-black dark:text-white outline-none leading-relaxed empty:before:content-[attr(data-placeholder)] empty:before:text-[#757575]"
+                          style={{
+                            color: block.textColor || (darkMode ? '#ffffff' : '#000000'),
+                            fontSize: block.fontSize === 'S' ? '14px' : block.fontSize === 'L' ? '20px' : block.fontSize === 'XL' ? '24px' : '18px',
+                            background: block.bg || 'transparent'
+                          }}
                           dangerouslySetInnerHTML={{ __html: block.content }}
                         />
 
@@ -735,7 +824,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                                     onChange={(e) => setInlineSearch(e.target.value)}
                                     placeholder="Search"
                                     autoFocus
-                                    className="w-full bg-transparent border-none outline-none text-xs text-gray-800 dark:text-gray-100 placeholder-gray-400"
+                                    className="w-full bg-transparent border-none outline-none text-xs text-black dark:text-white placeholder-gray-400"
                                   />
                                 </div>
                               </div>
@@ -787,6 +876,78 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                       </div>
                     )}
 
+                    {/* ─────────────────────────────────────────────────────────────
+                        BLOCK RENDERER: IMAGE (Exact 1-to-1 Match to Screenshot)
+                    ───────────────────────────────────────────────────────────── */}
+                    {block.type === 'image' && (
+                      <div className="py-2">
+                        {block.url ? (
+                          <div className="relative group/img rounded border overflow-hidden" style={{ borderColor: wpBorder }}>
+                            <img src={block.url} alt={block.alt || ''} className="w-full h-auto max-h-[500px] object-cover" />
+                            <div className="p-2 bg-gray-50 dark:bg-zinc-900 border-t" style={{ borderColor: wpBorder }}>
+                              <input
+                                type="text"
+                                value={block.caption || ''}
+                                onChange={(e) => updateBlock(block.id, { caption: e.target.value })}
+                                placeholder="Add caption..."
+                                className="w-full text-center text-xs text-gray-600 dark:text-gray-400 italic bg-transparent border-none outline-none"
+                              />
+                            </div>
+                          </div>
+                        ) : (
+                          /* Exact Gutenberg Image Placeholder Box from Screenshot */
+                          <div
+                            className="border rounded p-6 bg-white dark:bg-zinc-900 select-none shadow-[0_1px_3px_rgba(0,0,0,0.05)]"
+                            style={{ borderColor: '#949494' }}
+                          >
+                            <div className="flex items-center gap-2 font-bold text-sm text-gray-900 dark:text-gray-100 mb-1">
+                              <ImageIcon size={18} className="text-gray-700 dark:text-gray-300" />
+                              <span>Image</span>
+                            </div>
+                            <p className="text-xs text-[#757575] mb-5">
+                              Drag and drop an image, upload, or choose from your library.
+                            </p>
+
+                            <div className="flex flex-wrap items-center gap-3">
+                              {/* 1. Upload Button (Solid Blue) */}
+                              <button
+                                onClick={() => fileInputRef.current?.click()}
+                                className="px-4 py-2 rounded text-xs font-semibold text-white shadow-sm hover:brightness-105 transition cursor-pointer"
+                                style={{ background: wpBlue }}
+                              >
+                                Upload
+                              </button>
+
+                              {/* 2. Media Library Button (Outlined Blue) */}
+                              <button
+                                onClick={() => {
+                                  setMediaTarget({ type: 'block', id: block.id });
+                                  setShowMediaPicker(true);
+                                }}
+                                className="px-4 py-2 rounded text-xs font-semibold border transition hover:bg-blue-50 dark:hover:bg-blue-950/30 cursor-pointer"
+                                style={{ borderColor: wpBlue, color: wpBlue }}
+                              >
+                                Media Library
+                              </button>
+
+                              {/* 3. Insert from URL Button (Outlined Blue) */}
+                              <button
+                                onClick={() => {
+                                  const url = prompt('Enter Image URL:');
+                                  if (url) updateBlock(block.id, { url, alt: 'Custom Image' });
+                                }}
+                                className="px-4 py-2 rounded text-xs font-semibold border transition hover:bg-blue-50 dark:hover:bg-blue-950/30 cursor-pointer"
+                                style={{ borderColor: wpBlue, color: wpBlue }}
+                              >
+                                Insert from URL
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* BLOCK RENDERER: HEADING */}
                     {block.type === 'heading' && (
                       <div className="flex items-center gap-2 py-1">
                         <input
@@ -794,7 +955,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                           value={block.content}
                           onChange={(e) => updateBlock(block.id, { content: e.target.value })}
                           placeholder="Heading text..."
-                          className="w-full text-3xl font-bold tracking-tight border-none outline-none bg-transparent placeholder-[#757575]"
+                          className="w-full text-3xl font-bold tracking-tight border-none outline-none bg-transparent placeholder-[#757575] text-black dark:text-white"
                         />
                         <select
                           value={block.level || 2}
@@ -810,61 +971,20 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                       </div>
                     )}
 
-                    {block.type === 'image' && (
-                      <div className="p-3 rounded border border-dashed" style={{ borderColor: wpBorder }}>
-                        {block.url ? (
-                          <div className="relative group/img">
-                            <img src={block.url} alt={block.alt || ''} className="w-full h-auto rounded max-h-[420px] object-cover" />
-                            <div className="mt-2">
-                              <input
-                                type="text"
-                                value={block.caption || ''}
-                                onChange={(e) => updateBlock(block.id, { caption: e.target.value })}
-                                placeholder="Add caption..."
-                                className="w-full text-center text-xs text-gray-500 italic bg-transparent border-none outline-none"
-                              />
-                            </div>
-                            <button
-                              onClick={() => {
-                                setMediaTarget({ type: 'block', id: block.id });
-                                setShowMediaPicker(true);
-                              }}
-                              className="absolute top-3 right-3 bg-black/70 text-white text-xs px-2.5 py-1 rounded shadow"
-                            >
-                              Replace
-                            </button>
-                          </div>
-                        ) : (
-                          <div className="py-8 flex flex-col items-center justify-center gap-2 text-center">
-                            <ImageIcon size={32} className="text-gray-400" />
-                            <p className="text-xs font-medium text-gray-500">Upload or choose image from Media Library</p>
-                            <button
-                              onClick={() => {
-                                setMediaTarget({ type: 'block', id: block.id });
-                                setShowMediaPicker(true);
-                              }}
-                              className="px-3 py-1.5 rounded text-xs font-semibold text-white mt-1 shadow-sm"
-                              style={{ background: wpBlue }}
-                            >
-                              Select Image
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
+                    {/* BLOCK RENDERER: QUOTE */}
                     {block.type === 'quote' && (
-                      <div className="border-l-4 border-gray-900 dark:border-white pl-4 py-1">
+                      <div className="border-l-4 border-black dark:border-white pl-4 py-1">
                         <textarea
                           value={block.content}
                           onChange={(e) => updateBlock(block.id, { content: e.target.value })}
                           placeholder="Quote text..."
-                          className="w-full text-xl italic font-serif bg-transparent border-none outline-none resize-none"
+                          className="w-full text-xl italic font-serif bg-transparent border-none outline-none resize-none text-black dark:text-white"
                           rows={2}
                         />
                       </div>
                     )}
 
+                    {/* BLOCK RENDERER: LIST */}
                     {block.type === 'list' && (
                       <div className="pl-6 list-disc space-y-1">
                         {(block.items || ['']).map((item, iIdx) => (
@@ -887,13 +1007,14 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                                 }
                               }}
                               placeholder="List item..."
-                              className="w-full text-base bg-transparent border-none outline-none"
+                              className="w-full text-base bg-transparent border-none outline-none text-black dark:text-white"
                             />
                           </div>
                         ))}
                       </div>
                     )}
 
+                    {/* BLOCK RENDERER: CODE */}
                     {block.type === 'code' && (
                       <div className="p-3 rounded font-mono text-sm bg-gray-900 text-gray-100">
                         <textarea
@@ -913,14 +1034,14 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
         </main>
 
         {/* ─────────────────────────────────────────────────────────────
-            4. RIGHT SIDEBAR (Exact Match: Post / Block / Rank Math)
+            4. RIGHT SIDEBAR (Both POST and BLOCK clearly visible)
         ───────────────────────────────────────────────────────────── */}
         {sidebarOpen && (
           <aside
             className="w-80 border-l flex flex-col h-full overflow-y-auto select-none custom-scrollbar"
             style={{ background: wpHeaderBg, borderColor: wpBorder }}
           >
-            {/* Sidebar Top Tab Switcher (Post | Block - Exact 1-to-1) */}
+            {/* Sidebar Top Tab Switcher (Both Post and Block headers side-by-side) */}
             <div className="flex items-center justify-between border-b px-2 sticky top-0 z-20" style={{ background: wpHeaderBg, borderColor: wpBorder }}>
               <div className="flex items-center">
                 <button
@@ -963,7 +1084,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 <div className="flex items-center justify-between pb-3 border-b" style={{ borderColor: wpBorder }}>
                   <div className="flex items-center gap-2">
                     <Feather size={16} className="text-gray-700 dark:text-gray-300" />
-                    <span className="font-semibold text-sm truncate max-w-[190px]">
+                    <span className="font-semibold text-sm truncate max-w-[190px] text-black dark:text-white">
                       {title.trim() || 'No title'}
                     </span>
                   </div>
@@ -1029,7 +1150,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                       onChange={(e) => setExcerpt(e.target.value)}
                       placeholder="Write a short summary or excerpt..."
                       rows={3}
-                      className="w-full mt-2 p-2 rounded border outline-none text-xs bg-transparent"
+                      className="w-full mt-2 p-2 rounded border outline-none text-xs bg-transparent text-black dark:text-white"
                       style={{ borderColor: wpBorder }}
                     />
                   )}
@@ -1292,8 +1413,105 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
               </div>
             )}
 
-            {/* TAB CONTENT: BLOCK SETTINGS (Exact 1-to-1 match to screenshot) */}
-            {sidebarTab === 'block' && (
+            {/* ─────────────────────────────────────────────────────────────
+                TAB CONTENT: BLOCK (Switches between Paragraph & Image views)
+            ───────────────────────────────────────────────────────────── */}
+            {sidebarTab === 'block' && activeBlock.type === 'image' && (
+              /* Exact Image Block Settings from New Screenshot */
+              <div className="p-4 space-y-5 text-xs">
+                {/* 1. Header: Image */}
+                <div className="space-y-1 pb-3 border-b" style={{ borderColor: wpBorder }}>
+                  <div className="flex items-center gap-2 font-bold text-sm text-gray-900 dark:text-gray-100">
+                    <ImageIcon size={16} />
+                    <span>Image</span>
+                  </div>
+                  <p className="text-[11px] text-[#757575]">
+                    Insert an image to make a visual statement.
+                  </p>
+                </div>
+
+                {/* 2. Sub-Tabs (3 icons: Styles, Settings, Duotone) */}
+                <div className="flex items-center justify-around border-b pb-2 pt-1 text-gray-600 dark:text-gray-400" style={{ borderColor: wpBorder }}>
+                  <button
+                    onClick={() => setImageSubTab('styles')}
+                    className={`p-1.5 rounded transition ${imageSubTab === 'styles' ? 'text-black dark:text-white font-bold' : 'hover:text-black'}`}
+                  >
+                    <Layers size={16} />
+                  </button>
+                  <button
+                    onClick={() => setImageSubTab('settings')}
+                    className={`p-1.5 rounded transition ${imageSubTab === 'settings' ? 'text-black dark:text-white font-bold' : 'hover:text-black'}`}
+                  >
+                    <Settings size={16} />
+                  </button>
+                  <button
+                    onClick={() => setImageSubTab('duotone')}
+                    className={`p-1.5 rounded transition ${imageSubTab === 'duotone' ? 'text-black dark:text-white font-bold' : 'hover:text-black'}`}
+                  >
+                    <Crop size={16} />
+                  </button>
+                </div>
+
+                {/* 3. Media Section */}
+                <div className="space-y-2 pt-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">Media</span>
+                    <button className="text-gray-400 hover:text-gray-600">
+                      <MoreVertical size={14} />
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setMediaTarget({ type: 'block', id: activeBlock.id });
+                      setShowMediaPicker(true);
+                    }}
+                    className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-gray-800 dark:text-gray-200 hover:border-gray-400 transition cursor-pointer"
+                    style={{ borderColor: wpBorder }}
+                  >
+                    <span className="w-4 h-4 rounded border border-gray-300 dark:border-zinc-700 flex items-center justify-center relative overflow-hidden bg-white">
+                      <span className="w-full h-px bg-red-400 -rotate-45 absolute" />
+                    </span>
+                    <span>Add image</span>
+                  </button>
+                </div>
+
+                {/* 4. Alternative Text Section */}
+                <div className="space-y-2 pt-2 border-t" style={{ borderColor: wpBorder }}>
+                  <div className="text-[11px] font-semibold tracking-wider text-[#757575]">
+                    ALTERNATIVE TEXT
+                  </div>
+                  <textarea
+                    value={activeBlock.alt || ''}
+                    onChange={(e) => updateBlock(activeBlock.id, { alt: e.target.value })}
+                    rows={4}
+                    className="w-full p-2.5 rounded border text-xs outline-none bg-transparent resize-y text-black dark:text-white"
+                    style={{ borderColor: wpBorder }}
+                  />
+                  <div>
+                    <a href="#alt-help" onClick={(e) => e.preventDefault()} className="text-[11px] text-[#2271b1] hover:underline flex items-center gap-1">
+                      <span>Describe the purpose of the image.</span>
+                      <ExternalLink size={10} />
+                    </a>
+                  </div>
+                  <label className="flex items-center gap-2 pt-1 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={activeBlock.decorative || false}
+                      onChange={(e) => updateBlock(activeBlock.id, { decorative: e.target.checked })}
+                      className="rounded text-blue-600 focus:ring-0"
+                    />
+                    <span className="text-xs text-gray-800 dark:text-gray-200">Mark as decorative</span>
+                  </label>
+                  <p className="text-[10px] text-[#757575]">
+                    Hidden from assistive technologies.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* TAB CONTENT: BLOCK (Paragraph Block Settings) */}
+            {sidebarTab === 'block' && activeBlock.type !== 'image' && (
               <div className="p-4 space-y-5 text-xs">
 
                 {/* 1. Block Header (¶ Paragraph + Description + Elementor AI) */}
@@ -1328,7 +1546,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   {/* Color selector button */}
                   <button
                     onClick={() => {
-                      const color = prompt('Enter text hex color (e.g. #2271b1):', '#1e1e1e');
+                      const color = prompt('Enter text hex color (e.g. #000000):', '#000000');
                       if (color) updateBlock(activeBlockId, { textColor: color });
                     }}
                     className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-gray-800 dark:text-gray-200 hover:border-gray-400 transition cursor-pointer"
@@ -1352,7 +1570,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     {/* S | M | L | XL Segmented Buttons */}
                     <div className="grid grid-cols-4 border rounded overflow-hidden text-center text-xs font-semibold" style={{ borderColor: wpBorder }}>
                       {['S', 'M', 'L', 'XL'].map((sizeKey) => {
-                        const currentSize = blocks.find(b => b.id === activeBlockId)?.fontSize || 'M';
+                        const currentSize = activeBlock.fontSize || 'M';
                         const isSelected = currentSize === sizeKey;
 
                         return (
@@ -1412,25 +1630,21 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
                 {/* 4. Collapsible Settings Items (Dimensions, Border, Elements, Advanced) */}
                 <div className="space-y-0 pt-2 border-t" style={{ borderColor: wpBorder }}>
-                  {/* Dimensions */}
                   <div className="py-2.5 border-b flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
                     <span>Dimensions</span>
                     <Plus size={14} className="text-gray-400" />
                   </div>
 
-                  {/* Border */}
                   <div className="py-2.5 border-b flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
                     <span>Border</span>
                     <Plus size={14} className="text-gray-400" />
                   </div>
 
-                  {/* Elements */}
                   <div className="py-2.5 border-b flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
                     <span>Elements</span>
                     <Plus size={14} className="text-gray-400" />
                   </div>
 
-                  {/* Advanced */}
                   <div className="py-2.5 flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition">
                     <span>Advanced</span>
                     <ChevronDown size={14} className="text-gray-400" />
@@ -1467,7 +1681,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          5. BOTTOM STATUS BAR (Exact Match: Meta Boxes ⌵ / Post › Paragraph)
+          5. BOTTOM STATUS BAR (Dynamic: Post › Paragraph / Post › Image)
       ───────────────────────────────────────────────────────────── */}
       <footer
         className="h-7 border-t flex items-center justify-between px-4 text-xs select-none"
@@ -1480,7 +1694,9 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
           <div className="flex items-center gap-1.5 text-[11px]">
             <span className="hover:underline cursor-pointer">Post</span>
             <span>›</span>
-            <span className="text-gray-800 dark:text-gray-200 font-medium">Paragraph</span>
+            <span className="text-gray-800 dark:text-gray-200 font-medium capitalize">
+              {activeBlock.type === 'image' ? 'Image' : activeBlock.type === 'heading' ? `Heading ${activeBlock.level || 2}` : 'Paragraph'}
+            </span>
           </div>
         </div>
         <div className="w-16 h-1 bg-gray-200 dark:bg-zinc-700 rounded-full mx-auto hidden sm:block"></div>
@@ -1526,7 +1742,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
               <p className="text-xs text-gray-500">What would you like Elementor AI to generate for this article?</p>
               <textarea
                 placeholder="e.g., Write an inspiring executive introductory paragraph about smart NFC luxury cards..."
-                className="w-full p-3 rounded-lg border text-sm outline-none bg-transparent"
+                className="w-full p-3 rounded-lg border text-sm outline-none bg-transparent text-black dark:text-white"
                 rows={3}
               />
             </div>
