@@ -972,9 +972,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   <div
                     key={block.id}
                     data-block-id={block.id}
-                    className={`relative group rounded transition duration-150 ${
-                      isActive ? 'ring-1 ring-blue-500/30' : ''
-                    }`}
+                    className="relative group border-none bg-transparent outline-none ring-0 shadow-none"
                     onClick={() => {
                       setActiveBlockId(block.id);
                     }}
