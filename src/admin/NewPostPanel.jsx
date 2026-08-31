@@ -1155,19 +1155,19 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
               </button>
             </div>
 
-            {/* TAB CONTENT: POST (Exact match to screenshot) */}
+            {/* TAB CONTENT: POST (All text in solid black) */}
             {sidebarTab === 'post' && (
-              <div className="p-4 space-y-5 text-xs">
+              <div className="p-4 space-y-5 text-xs text-black dark:text-white">
 
                 {/* 1. Post Header Summary Item (Feather Icon + Title + ⋮) */}
                 <div className="flex items-center justify-between pb-3 border-b" style={{ borderColor: wpBorder }}>
                   <div className="flex items-center gap-2">
-                    <Feather size={16} className="text-gray-700 dark:text-gray-300" />
-                    <span className="font-semibold text-sm truncate max-w-[190px] text-black dark:text-white">
+                    <Feather size={16} className="text-black dark:text-white" />
+                    <span className="font-bold text-sm truncate max-w-[190px] text-black dark:text-white">
                       {title.trim() || 'No title'}
                     </span>
                   </div>
-                  <button className="text-gray-400 hover:text-gray-600">
+                  <button className="text-black dark:text-white hover:opacity-70">
                     <MoreVertical size={14} />
                   </button>
                 </div>
@@ -1183,13 +1183,13 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                             setMediaTarget('featured');
                             setShowMediaPicker(true);
                           }}
-                          className="px-2.5 py-1 rounded bg-white text-gray-900 font-semibold text-[11px] shadow"
+                          className="px-2.5 py-1 rounded bg-white text-black font-bold text-[11px] shadow"
                         >
                           Replace
                         </button>
                         <button
                           onClick={() => setFeaturedImage('')}
-                          className="px-2.5 py-1 rounded bg-red-600 text-white font-semibold text-[11px] shadow"
+                          className="px-2.5 py-1 rounded bg-red-600 text-white font-bold text-[11px] shadow"
                         >
                           Remove
                         </button>
@@ -1201,7 +1201,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                         setMediaTarget('featured');
                         setShowMediaPicker(true);
                       }}
-                      className="w-full py-2.5 px-4 border rounded font-medium text-gray-800 dark:text-gray-200 hover:border-blue-500 hover:text-blue-600 transition flex items-center justify-center gap-2 text-xs"
+                      className="w-full py-2.5 px-4 border rounded font-bold text-black dark:text-white hover:border-black transition flex items-center justify-center gap-2 text-xs"
                       style={{ borderColor: wpBorder }}
                     >
                       Set featured image
@@ -1209,8 +1209,8 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   )}
                 </div>
 
-                {/* 3. Elementor AI Helper Link (Magenta/purple sparkles icon + text) */}
-                <div className="flex items-center gap-1.5 text-[#a020f0] hover:text-purple-700 cursor-pointer font-medium text-xs">
+                {/* 3. Elementor AI Helper Link */}
+                <div className="flex items-center gap-1.5 text-[#a020f0] hover:text-purple-700 cursor-pointer font-bold text-xs">
                   <Sparkles size={14} />
                   <span onClick={() => setElementorAiOpen(true)}>Generate with Elementor AI</span>
                 </div>
@@ -1219,7 +1219,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 <div>
                   <button
                     onClick={() => setShowExcerptField(!showExcerptField)}
-                    className="text-[#2271b1] hover:underline font-medium cursor-pointer"
+                    className="text-[#2271b1] hover:underline font-bold cursor-pointer"
                   >
                     {excerpt ? 'Edit excerpt...' : 'Add an excerpt...'}
                   </button>
@@ -1229,25 +1229,25 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                       onChange={(e) => setExcerpt(e.target.value)}
                       placeholder="Write a short summary or excerpt..."
                       rows={3}
-                      className="w-full mt-2 p-2 rounded border outline-none text-xs bg-transparent text-black dark:text-white"
+                      className="w-full mt-2 p-2 rounded border outline-none text-xs bg-transparent text-black dark:text-white font-medium"
                       style={{ borderColor: wpBorder }}
                     />
                   )}
                 </div>
 
                 {/* 5. Last edited timestamp */}
-                <div className="text-[11px] text-[#757575]">
+                <div className="text-[11px] text-black dark:text-white font-medium">
                   Last edited 15 minutes ago.
                 </div>
 
-                {/* 6. Post Status Details Grid (Exact Layout from screenshot) */}
+                {/* 6. Post Status Details Grid */}
                 <div className="space-y-3 pt-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Status</span>
+                    <span className="text-black dark:text-white font-semibold">Status</span>
                     <div className="relative">
                       <button
                         onClick={() => setShowStatusPicker(!showStatusPicker)}
-                        className="text-[#2271b1] font-medium hover:underline flex items-center gap-1.5"
+                        className="text-[#2271b1] font-bold hover:underline flex items-center gap-1.5"
                       >
                         <span className="w-2.5 h-2.5 rounded-full border-2 border-[#2271b1] flex items-center justify-center">
                           <span className="w-1 h-1 rounded-full bg-[#2271b1]"></span>
@@ -1263,7 +1263,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                                 setStatus(st);
                                 setShowStatusPicker(false);
                               }}
-                              className="px-2.5 py-1.5 rounded hover:bg-blue-50 dark:hover:bg-blue-950/40 cursor-pointer font-medium"
+                              className="px-2.5 py-1.5 rounded hover:bg-blue-50 dark:hover:bg-blue-950/40 cursor-pointer font-bold text-black dark:text-white"
                             >
                               {st}
                             </div>
@@ -1274,12 +1274,12 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Publish</span>
-                    <span className="text-[#2271b1] font-medium cursor-pointer hover:underline">{publishDate}</span>
+                    <span className="text-black dark:text-white font-semibold">Publish</span>
+                    <span className="text-[#2271b1] font-bold cursor-pointer hover:underline">{publishDate}</span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Slug</span>
+                    <span className="text-black dark:text-white font-semibold">Slug</span>
                     {showSlugEdit ? (
                       <input
                         type="text"
@@ -1287,13 +1287,13 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                         onChange={(e) => setSlug(e.target.value)}
                         onBlur={() => setShowSlugEdit(false)}
                         autoFocus
-                        className="border rounded px-1.5 py-0.5 text-xs outline-none max-w-[140px]"
+                        className="border rounded px-1.5 py-0.5 text-xs outline-none max-w-[140px] text-black dark:text-white font-bold"
                         style={{ borderColor: wpBorder }}
                       />
                     ) : (
                       <span
                         onClick={() => setShowSlugEdit(true)}
-                        className="text-[#2271b1] font-medium cursor-pointer hover:underline truncate max-w-[140px]"
+                        className="text-[#2271b1] font-bold cursor-pointer hover:underline truncate max-w-[140px]"
                       >
                         {slug || '3993'}
                       </span>
@@ -1301,11 +1301,11 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Author</span>
+                    <span className="text-black dark:text-white font-semibold">Author</span>
                     <div className="relative">
                       <button
                         onClick={() => setShowAuthorPicker(!showAuthorPicker)}
-                        className="text-[#2271b1] font-medium hover:underline"
+                        className="text-[#2271b1] font-bold hover:underline"
                       >
                         {author}
                       </button>
@@ -1318,7 +1318,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                                 setAuthor(aut);
                                 setShowAuthorPicker(false);
                               }}
-                              className="px-2.5 py-1.5 rounded hover:bg-blue-50 dark:hover:bg-blue-950/40 cursor-pointer font-medium"
+                              className="px-2.5 py-1.5 rounded hover:bg-blue-50 dark:hover:bg-blue-950/40 cursor-pointer font-bold text-black dark:text-white"
                             >
                               {aut}
                             </div>
@@ -1329,18 +1329,18 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Template</span>
-                    <span className="text-[#2271b1] font-medium cursor-pointer hover:underline">{template}</span>
+                    <span className="text-black dark:text-white font-semibold">Template</span>
+                    <span className="text-[#2271b1] font-bold cursor-pointer hover:underline">{template}</span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Discussion</span>
-                    <span className="text-[#2271b1] font-medium cursor-pointer hover:underline">{discussion}</span>
+                    <span className="text-black dark:text-white font-semibold">Discussion</span>
+                    <span className="text-[#2271b1] font-bold cursor-pointer hover:underline">{discussion}</span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Format</span>
-                    <span className="text-[#2271b1] font-medium cursor-pointer hover:underline">{format}</span>
+                    <span className="text-black dark:text-white font-semibold">Format</span>
+                    <span className="text-[#2271b1] font-bold cursor-pointer hover:underline">{format}</span>
                   </div>
 
                   <div className="flex items-center justify-between pt-1">
@@ -1357,7 +1357,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                           }`}
                         />
                       </button>
-                      <span className="text-gray-600 dark:text-gray-400 text-xs">Lock Modified Date</span>
+                      <span className="text-black dark:text-white font-semibold text-xs">Lock Modified Date</span>
                     </div>
                   </div>
                 </div>
@@ -1366,21 +1366,21 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 <div className="border-t pt-3" style={{ borderColor: wpBorder }}>
                   <button
                     onClick={() => setActiveAccordion(prev => ({ ...prev, trx: !prev.trx }))}
-                    className="w-full flex items-center justify-between font-semibold text-gray-800 dark:text-gray-200"
+                    className="w-full flex items-center justify-between font-bold text-black dark:text-white"
                   >
                     <span>TRX Addons AI Helper</span>
                     {activeAccordion.trx ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
                   </button>
                   {activeAccordion.trx && (
                     <div className="mt-2.5 p-2.5 rounded border space-y-2" style={{ borderColor: wpBorder }}>
-                      <p className="text-[11px] text-gray-500">Generate executive copywriting and summary with AI assistance.</p>
+                      <p className="text-[11px] text-black dark:text-white font-medium">Generate executive copywriting and summary with AI assistance.</p>
                       <button
                         onClick={() => {
                           setExcerpt(`An executive overview of ${title || 'modern brand identity'} analyzing market trajectory and design methodology.`);
                           setToast('AI Excerpt Generated!');
                           setTimeout(() => setToast(''), 3000);
                         }}
-                        className="w-full py-1.5 rounded text-xs font-semibold text-white"
+                        className="w-full py-1.5 rounded text-xs font-bold text-white"
                         style={{ background: wpBlue }}
                       >
                         Auto-Generate Summary
@@ -1393,7 +1393,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 <div className="border-t pt-3" style={{ borderColor: wpBorder }}>
                   <button
                     onClick={() => setActiveAccordion(prev => ({ ...prev, categories: !prev.categories }))}
-                    className="w-full flex items-center justify-between font-semibold text-gray-800 dark:text-gray-200"
+                    className="w-full flex items-center justify-between font-bold text-black dark:text-white"
                   >
                     <span>Categories</span>
                     {activeAccordion.categories ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
@@ -1402,7 +1402,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     <div className="mt-2.5 space-y-2">
                       <div className="max-h-36 overflow-y-auto space-y-1.5 pr-1 custom-scrollbar">
                         {categories.map(cat => (
-                          <label key={cat} className="flex items-center gap-2 cursor-pointer text-xs">
+                          <label key={cat} className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-black dark:text-white">
                             <input
                               type="checkbox"
                               checked={selectedCategories.includes(cat)}
@@ -1421,19 +1421,19 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                             value={newCatName}
                             onChange={(e) => setNewCatName(e.target.value)}
                             placeholder="New category name"
-                            className="p-1.5 text-xs rounded border outline-none bg-transparent"
+                            className="p-1.5 text-xs rounded border outline-none bg-transparent font-medium text-black dark:text-white"
                             style={{ borderColor: wpBorder }}
                           />
                           <div className="flex items-center gap-2">
                             <button
                               onClick={handleAddCategory}
-                              className="px-3 py-1 rounded bg-blue-600 text-white font-semibold text-xs"
+                              className="px-3 py-1 rounded bg-blue-600 text-white font-bold text-xs"
                             >
                               Add Category
                             </button>
                             <button
                               onClick={() => setShowAddCat(false)}
-                              className="text-xs text-gray-500 hover:text-gray-700"
+                              className="text-xs text-black dark:text-white font-bold hover:underline"
                             >
                               Cancel
                             </button>
@@ -1442,7 +1442,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                       ) : (
                         <button
                           onClick={() => setShowAddCat(true)}
-                          className="text-xs text-[#2271b1] hover:underline font-semibold"
+                          className="text-xs text-[#2271b1] hover:underline font-bold"
                         >
                           + Add New Category
                         </button>
@@ -1455,7 +1455,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 <div className="border-t pt-3" style={{ borderColor: wpBorder }}>
                   <button
                     onClick={() => setActiveAccordion(prev => ({ ...prev, tags: !prev.tags }))}
-                    className="w-full flex items-center justify-between font-semibold text-gray-800 dark:text-gray-200"
+                    className="w-full flex items-center justify-between font-bold text-black dark:text-white"
                   >
                     <span>Tags</span>
                     {activeAccordion.tags ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
@@ -1466,7 +1466,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                         {tags.map(t => (
                           <span
                             key={t}
-                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-gray-300"
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-gray-200 dark:bg-zinc-800 text-black dark:text-white font-semibold"
                           >
                             {t}
                             <button onClick={() => removeTag(t)} className="hover:text-red-500">
@@ -1481,10 +1481,10 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                         onChange={(e) => setTagInput(e.target.value)}
                         onKeyDown={handleAddTag}
                         placeholder="Add new tag (press Enter)"
-                        className="w-full p-2 text-xs rounded border outline-none bg-transparent"
+                        className="w-full p-2 text-xs rounded border outline-none bg-transparent font-medium text-black dark:text-white"
                         style={{ borderColor: wpBorder }}
                       />
-                      <p className="text-[10px] text-gray-400">Separate with commas or the Enter key.</p>
+                      <p className="text-[10px] text-black dark:text-white font-medium">Separate with commas or the Enter key.</p>
                     </div>
                   )}
                 </div>
@@ -1493,39 +1493,38 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
             )}
 
             {/* ─────────────────────────────────────────────────────────────
-                TAB CONTENT: BLOCK (Switches between Paragraph & Image views)
+                TAB CONTENT: BLOCK (Image view - all text in solid black)
             ───────────────────────────────────────────────────────────── */}
             {sidebarTab === 'block' && activeBlock.type === 'image' && (
-              /* Exact Image Block Settings from New Screenshot */
-              <div className="p-4 space-y-5 text-xs">
+              <div className="p-4 space-y-5 text-xs text-black dark:text-white">
                 {/* 1. Header: Image */}
                 <div className="space-y-1 pb-3 border-b" style={{ borderColor: wpBorder }}>
-                  <div className="flex items-center gap-2 font-bold text-sm text-gray-900 dark:text-gray-100">
+                  <div className="flex items-center gap-2 font-bold text-sm text-black dark:text-white">
                     <ImageIcon size={16} />
                     <span>Image</span>
                   </div>
-                  <p className="text-[11px] text-[#757575]">
+                  <p className="text-[11px] text-black dark:text-white font-medium">
                     Insert an image to make a visual statement.
                   </p>
                 </div>
 
-                {/* 2. Sub-Tabs (3 icons: Styles, Settings, Duotone) */}
-                <div className="flex items-center justify-around border-b pb-2 pt-1 text-gray-600 dark:text-gray-400" style={{ borderColor: wpBorder }}>
+                {/* 2. Sub-Tabs */}
+                <div className="flex items-center justify-around border-b pb-2 pt-1 text-black dark:text-white" style={{ borderColor: wpBorder }}>
                   <button
                     onClick={() => setImageSubTab('styles')}
-                    className={`p-1.5 rounded transition ${imageSubTab === 'styles' ? 'text-black dark:text-white font-bold' : 'hover:text-black'}`}
+                    className={`p-1.5 rounded transition ${imageSubTab === 'styles' ? 'text-black dark:text-white font-bold' : 'hover:opacity-70'}`}
                   >
                     <Layers size={16} />
                   </button>
                   <button
                     onClick={() => setImageSubTab('settings')}
-                    className={`p-1.5 rounded transition ${imageSubTab === 'settings' ? 'text-black dark:text-white font-bold' : 'hover:text-black'}`}
+                    className={`p-1.5 rounded transition ${imageSubTab === 'settings' ? 'text-black dark:text-white font-bold' : 'hover:opacity-70'}`}
                   >
                     <Settings size={16} />
                   </button>
                   <button
                     onClick={() => setImageSubTab('duotone')}
-                    className={`p-1.5 rounded transition ${imageSubTab === 'duotone' ? 'text-black dark:text-white font-bold' : 'hover:text-black'}`}
+                    className={`p-1.5 rounded transition ${imageSubTab === 'duotone' ? 'text-black dark:text-white font-bold' : 'hover:opacity-70'}`}
                   >
                     <Crop size={16} />
                   </button>
@@ -1534,8 +1533,8 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 {/* 3. Media Section */}
                 <div className="space-y-2 pt-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">Media</span>
-                    <button className="text-gray-400 hover:text-gray-600">
+                    <span className="font-bold text-xs text-black dark:text-white">Media</span>
+                    <button className="text-black dark:text-white hover:opacity-70">
                       <MoreVertical size={14} />
                     </button>
                   </div>
@@ -1545,10 +1544,10 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                       setMediaTarget({ type: 'block', id: activeBlock.id });
                       setShowMediaPicker(true);
                     }}
-                    className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-gray-800 dark:text-gray-200 hover:border-gray-400 transition cursor-pointer"
+                    className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-black dark:text-white font-bold hover:border-black transition cursor-pointer"
                     style={{ borderColor: wpBorder }}
                   >
-                    <span className="w-4 h-4 rounded border border-gray-300 dark:border-zinc-700 flex items-center justify-center relative overflow-hidden bg-white">
+                    <span className="w-4 h-4 rounded border border-black flex items-center justify-center relative overflow-hidden bg-white">
                       <span className="w-full h-px bg-red-400 -rotate-45 absolute" />
                     </span>
                     <span>Add image</span>
@@ -1557,18 +1556,18 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
                 {/* 4. Alternative Text Section */}
                 <div className="space-y-2 pt-2 border-t" style={{ borderColor: wpBorder }}>
-                  <div className="text-[11px] font-semibold tracking-wider text-[#757575]">
+                  <div className="text-[11px] font-bold tracking-wider text-black dark:text-white">
                     ALTERNATIVE TEXT
                   </div>
                   <textarea
                     value={activeBlock.alt || ''}
                     onChange={(e) => updateBlock(activeBlock.id, { alt: e.target.value })}
                     rows={4}
-                    className="w-full p-2.5 rounded border text-xs outline-none bg-transparent resize-y text-black dark:text-white"
+                    className="w-full p-2.5 rounded border text-xs outline-none bg-transparent resize-y text-black dark:text-white font-medium"
                     style={{ borderColor: wpBorder }}
                   />
                   <div>
-                    <a href="#alt-help" onClick={(e) => e.preventDefault()} className="text-[11px] text-[#2271b1] hover:underline flex items-center gap-1">
+                    <a href="#alt-help" onClick={(e) => e.preventDefault()} className="text-[11px] text-[#2271b1] hover:underline flex items-center gap-1 font-bold">
                       <span>Describe the purpose of the image.</span>
                       <ExternalLink size={10} />
                     </a>
@@ -1580,32 +1579,32 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                       onChange={(e) => updateBlock(activeBlock.id, { decorative: e.target.checked })}
                       className="rounded text-blue-600 focus:ring-0"
                     />
-                    <span className="text-xs text-gray-800 dark:text-gray-200">Mark as decorative</span>
+                    <span className="text-xs text-black dark:text-white font-bold">Mark as decorative</span>
                   </label>
-                  <p className="text-[10px] text-[#757575]">
+                  <p className="text-[10px] text-black dark:text-white font-medium">
                     Hidden from assistive technologies.
                   </p>
                 </div>
               </div>
             )}
 
-            {/* TAB CONTENT: BLOCK (Paragraph Block Settings) */}
+            {/* TAB CONTENT: BLOCK (Paragraph View - all text in solid black) */}
             {sidebarTab === 'block' && activeBlock.type !== 'image' && (
-              <div className="p-4 space-y-5 text-xs">
+              <div className="p-4 space-y-5 text-xs text-black dark:text-white">
 
-                {/* 1. Block Header (¶ Paragraph + Description + Elementor AI) */}
+                {/* 1. Block Header */}
                 <div className="space-y-1.5 pb-3 border-b" style={{ borderColor: wpBorder }}>
-                  <div className="flex items-center gap-2 font-bold text-sm text-gray-900 dark:text-gray-100">
-                    <span className="font-serif text-base">¶</span>
+                  <div className="flex items-center gap-2 font-bold text-sm text-black dark:text-white">
+                    <span className="font-serif text-base font-bold">¶</span>
                     <span>Paragraph</span>
                   </div>
-                  <p className="text-[11px] text-[#757575] leading-relaxed">
+                  <p className="text-[11px] text-black dark:text-white font-medium leading-relaxed">
                     Start with the basic building block of all narrative.
                   </p>
                   <div className="pt-1">
                     <button
                       onClick={() => setElementorAiOpen(true)}
-                      className="flex items-center gap-1.5 text-[#a020f0] hover:text-purple-700 font-medium text-xs cursor-pointer"
+                      className="flex items-center gap-1.5 text-[#a020f0] hover:text-purple-700 font-bold text-xs cursor-pointer"
                     >
                       <Sparkles size={13} />
                       <span>Generate with Elementor AI</span>
@@ -1616,8 +1615,8 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 {/* 2. Typography Card */}
                 <div className="space-y-3 pt-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">Typography</span>
-                    <button className="text-gray-400 hover:text-gray-600">
+                    <span className="font-bold text-xs text-black dark:text-white">Typography</span>
+                    <button className="text-black dark:text-white hover:opacity-70">
                       <MoreVertical size={14} />
                     </button>
                   </div>
@@ -1628,10 +1627,10 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                       const color = prompt('Enter text hex color (e.g. #000000):', '#000000');
                       if (color) updateBlock(activeBlockId, { textColor: color });
                     }}
-                    className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-gray-800 dark:text-gray-200 hover:border-gray-400 transition cursor-pointer"
+                    className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-black dark:text-white font-bold hover:border-black transition cursor-pointer"
                     style={{ borderColor: wpBorder }}
                   >
-                    <span className="w-4 h-4 rounded-full border border-gray-300 dark:border-zinc-700 flex items-center justify-center relative overflow-hidden bg-white">
+                    <span className="w-4 h-4 rounded-full border border-black flex items-center justify-center relative overflow-hidden bg-white">
                       <span className="w-full h-px bg-red-400 -rotate-45 absolute" />
                     </span>
                     <span>Color</span>
@@ -1639,15 +1638,15 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
                   {/* Font Size header + toggle */}
                   <div className="space-y-1.5 pt-1">
-                    <div className="flex items-center justify-between text-[11px] font-semibold tracking-wider text-[#757575]">
+                    <div className="flex items-center justify-between text-[11px] font-bold tracking-wider text-black dark:text-white">
                       <span>FONT SIZE</span>
-                      <button title="Reset size" className="hover:text-gray-800 dark:hover:text-gray-200">
+                      <button title="Reset size" className="hover:opacity-70">
                         <span className="text-xs">⇄</span>
                       </button>
                     </div>
 
                     {/* S | M | L | XL Segmented Buttons */}
-                    <div className="grid grid-cols-4 border rounded overflow-hidden text-center text-xs font-semibold" style={{ borderColor: wpBorder }}>
+                    <div className="grid grid-cols-4 border rounded overflow-hidden text-center text-xs font-bold" style={{ borderColor: wpBorder }}>
                       {['S', 'M', 'L', 'XL'].map((sizeKey) => {
                         const currentSize = activeBlock.fontSize || 'M';
                         const isSelected = currentSize === sizeKey;
@@ -1656,10 +1655,10 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                           <button
                             key={sizeKey}
                             onClick={() => updateBlock(activeBlockId, { fontSize: sizeKey })}
-                            className={`py-1.5 transition border-r last:border-r-0 ${
+                            className={`py-1.5 transition border-r last:border-r-0 font-bold ${
                               isSelected
-                                ? 'bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white font-bold'
-                                : 'hover:bg-gray-50 dark:hover:bg-zinc-800/50 text-[#757575]'
+                                ? 'bg-black text-white'
+                                : 'hover:bg-gray-100 text-black dark:text-white'
                             }`}
                             style={{ borderColor: wpBorder }}
                           >
@@ -1674,8 +1673,8 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 {/* 3. Background Card */}
                 <div className="space-y-3 pt-2 border-t" style={{ borderColor: wpBorder }}>
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-xs text-gray-900 dark:text-gray-100">Background</span>
-                    <button className="text-gray-400 hover:text-gray-600">
+                    <span className="font-bold text-xs text-black dark:text-white">Background</span>
+                    <button className="text-black dark:text-white hover:opacity-70">
                       <MoreVertical size={14} />
                     </button>
                   </div>
@@ -1687,10 +1686,10 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                         const bg = prompt('Enter background hex color (e.g. #f0f0f1):', '#f8fafc');
                         if (bg) updateBlock(activeBlockId, { bg });
                       }}
-                      className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-gray-800 dark:text-gray-200 hover:border-gray-400 transition cursor-pointer"
+                      className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-black dark:text-white font-bold hover:border-black transition cursor-pointer"
                       style={{ borderColor: wpBorder }}
                     >
-                      <span className="w-4 h-4 rounded-full border border-gray-300 dark:border-zinc-700 flex items-center justify-center relative overflow-hidden bg-white">
+                      <span className="w-4 h-4 rounded-full border border-black flex items-center justify-center relative overflow-hidden bg-white">
                         <span className="w-full h-px bg-red-400 -rotate-45 absolute" />
                       </span>
                       <span>Color</span>
@@ -1698,35 +1697,35 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
                     <button
                       onClick={() => updateBlock(activeBlockId, { bg: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' })}
-                      className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-gray-800 dark:text-gray-200 hover:border-gray-400 transition cursor-pointer"
+                      className="w-full py-2 px-3 border rounded flex items-center gap-2.5 text-xs text-black dark:text-white font-bold hover:border-black transition cursor-pointer"
                       style={{ borderColor: wpBorder }}
                     >
-                      <span className="w-4 h-4 rounded-full border border-gray-300 dark:border-zinc-700 flex items-center justify-center relative overflow-hidden bg-gradient-to-tr from-blue-400 to-purple-500" />
+                      <span className="w-4 h-4 rounded-full border border-black flex items-center justify-center relative overflow-hidden bg-gradient-to-tr from-blue-400 to-purple-500" />
                       <span>Gradient</span>
                     </button>
                   </div>
                 </div>
 
-                {/* 4. Collapsible Settings Items (Dimensions, Border, Elements, Advanced) */}
+                {/* 4. Collapsible Settings Items */}
                 <div className="space-y-0 pt-2 border-t" style={{ borderColor: wpBorder }}>
-                  <div className="py-2.5 border-b flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
+                  <div className="py-2.5 border-b flex items-center justify-between text-xs font-bold text-black dark:text-white cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
                     <span>Dimensions</span>
-                    <Plus size={14} className="text-gray-400" />
+                    <Plus size={14} className="text-black dark:text-white" />
                   </div>
 
-                  <div className="py-2.5 border-b flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
+                  <div className="py-2.5 border-b flex items-center justify-between text-xs font-bold text-black dark:text-white cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
                     <span>Border</span>
-                    <Plus size={14} className="text-gray-400" />
+                    <Plus size={14} className="text-black dark:text-white" />
                   </div>
 
-                  <div className="py-2.5 border-b flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
+                  <div className="py-2.5 border-b flex items-center justify-between text-xs font-bold text-black dark:text-white cursor-pointer hover:text-blue-600 transition" style={{ borderColor: wpBorder }}>
                     <span>Elements</span>
-                    <Plus size={14} className="text-gray-400" />
+                    <Plus size={14} className="text-black dark:text-white" />
                   </div>
 
-                  <div className="py-2.5 flex items-center justify-between text-xs font-semibold text-gray-800 dark:text-gray-200 cursor-pointer hover:text-blue-600 transition">
+                  <div className="py-2.5 flex items-center justify-between text-xs font-bold text-black dark:text-white cursor-pointer hover:text-blue-600 transition">
                     <span>Advanced</span>
-                    <ChevronDown size={14} className="text-gray-400" />
+                    <ChevronDown size={14} className="text-black dark:text-white" />
                   </div>
                 </div>
 
