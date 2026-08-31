@@ -32,12 +32,11 @@ export function analyzeSeo({
   const titleText = (seoTitle || title || '').trim();
   const slugText = (slug || slugify(title)).toLowerCase().trim();
   const plainContent = stripHtml(content);
-  const excerptText = (metaDesc || excerpt || plainContent.slice(0, 160)).trim();
+  const excerptText = (metaDesc || excerpt || '').trim();
   
-  // Combine all article text: main write-up + excerpt + sub-topic sections
+  // Combine all article text
   const fullContent = [
     plainContent,
-    excerptText,
     ...sections.map(s => `${s.heading || ''} ${stripHtml(s.body || '')}`)
   ].join(' ').replace(/\s+/g, ' ').trim();
 
@@ -46,26 +45,18 @@ export function analyzeSeo({
   const wordCount = words.length;
   const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
 
-  // If no focus keyword specified yet
+  // If no focus keyword specified yet (Authentic Rank Math gives 0 / 100)
   if (!keyword) {
-    let structuralScore = 0;
-    if (titleText.length >= 10) structuralScore += 15;
-    if (wordCount >= 300) structuralScore += 20;
-    if (wordCount >= 600) structuralScore += 15;
-    if (hasImage) structuralScore += 10;
-    if (excerptText.length >= 50) structuralScore += 10;
-
     return {
-      score: Math.min(structuralScore, 50),
+      score: 0,
       grade: 'Poor',
       color: '#ef4444',
       wordCount,
       readTimeMinutes,
       keywordDensity: 0,
       checks: [
-        { id: 'no_keyword', label: 'Enter a Focus Keyword to unlock full Rank Math SEO analysis', pass: false, category: 'General' },
-        { id: 'title_length', label: titleText.length >= 10 ? 'Title length is adequate' : 'Title is too short', pass: titleText.length >= 10, category: 'Basic SEO' },
-        { id: 'content_length', label: wordCount >= 600 ? `Good content length (${wordCount} words)` : wordCount >= 300 ? `Acceptable content length (${wordCount} words)` : `Content is ${wordCount} words (Recommended: 600+ words)`, pass: wordCount >= 300, category: 'Basic SEO' },
+        { id: 'no_keyword', label: 'Add a Focus Keyword to see your Rank Math SEO score', pass: false, category: 'Basic SEO' },
+        { id: 'content_length', label: wordCount >= 600 ? `Content length: ${wordCount} words` : `Content is ${wordCount} words (Recommended: 600+ words)`, pass: wordCount >= 600, category: 'Basic SEO' },
       ],
       serp: {
         title: titleText || 'Article Title - Identifine',
@@ -84,18 +75,19 @@ export function analyzeSeo({
   const occurrences = (fullContent.match(kwRegex) || []).length;
   const keywordDensity = wordCount > 0 ? parseFloat(((occurrences / wordCount) * 100).toFixed(2)) : 0;
 
-  // Introduction text (first 400 chars)
-  const introText = fullContent.slice(0, 400).toLowerCase();
+  // Introduction text (first 10% of content or first 250 chars)
+  const introCutoff = Math.max(200, Math.floor(fullContent.length * 0.1));
+  const introText = fullContent.slice(0, introCutoff).toLowerCase();
   const hasKwInIntro = introText.includes(keyword);
 
   const checks = [];
   let score = 0;
 
-  // ── 1. BASIC SEO (40 Points) ────────────────────────────────────────────────
+  // ── 1. BASIC SEO (40 Points Max) ───────────────────────────────────────────
   
-  // Focus Keyword in SEO Title (10 pts)
+  // 1. Focus Keyword in SEO Title (10 pts)
   const hasKwInTitle = titleText.toLowerCase().includes(keyword);
-  score += hasKwInTitle ? 10 : 0;
+  if (hasKwInTitle) score += 10;
   checks.push({
     id: 'kw_in_title',
     label: hasKwInTitle ? 'Focus Keyword used in the SEO Title' : 'Focus Keyword not found in SEO Title',
@@ -103,9 +95,9 @@ export function analyzeSeo({
     category: 'Basic SEO',
   });
 
-  // Focus Keyword in Meta Description (10 pts)
+  // 2. Focus Keyword in Meta Description (10 pts)
   const hasKwInMeta = excerptText.toLowerCase().includes(keyword);
-  score += hasKwInMeta ? 10 : 0;
+  if (hasKwInMeta) score += 10;
   checks.push({
     id: 'kw_in_meta',
     label: hasKwInMeta ? 'Focus Keyword used in Meta Description' : 'Focus Keyword not found in Meta Description',
@@ -113,9 +105,9 @@ export function analyzeSeo({
     category: 'Basic SEO',
   });
 
-  // Focus Keyword in URL Slug (5 pts)
+  // 3. Focus Keyword in URL Slug (5 pts)
   const hasKwInSlug = slugText.includes(kwSlugified) || slugText.includes(keyword.replace(/\s+/g, '-'));
-  score += hasKwInSlug ? 5 : 0;
+  if (hasKwInSlug) score += 5;
   checks.push({
     id: 'kw_in_slug',
     label: hasKwInSlug ? 'Focus Keyword used in URL Slug' : 'Focus Keyword not found in URL Slug',
@@ -123,136 +115,157 @@ export function analyzeSeo({
     category: 'Basic SEO',
   });
 
-  // Focus Keyword in Introduction (5 pts)
-  score += hasKwInIntro ? 5 : 0;
+  // 4. Focus Keyword in First 10% / Intro (5 pts)
+  if (hasKwInIntro) score += 5;
   checks.push({
     id: 'kw_in_intro',
-    label: hasKwInIntro ? 'Focus Keyword appears in the Introduction' : 'Focus Keyword not found in Introduction',
+    label: hasKwInIntro ? 'Focus Keyword appears in the first 10% of content' : 'Focus Keyword not found in the first 10% of content',
     pass: hasKwInIntro,
     category: 'Basic SEO',
   });
 
-  // Content Length (10 pts)
+  // 5. Content Length (10 pts)
   const isGoodLength = wordCount >= 600;
-  const isOkLength = wordCount >= 300;
-  score += isGoodLength ? 10 : isOkLength ? 5 : 0;
+  const isMediumLength = wordCount >= 350;
+  if (isGoodLength) score += 10;
+  else if (isMediumLength) score += 4;
   checks.push({
     id: 'content_length',
     label: isGoodLength
-      ? `Good content length (${wordCount} words)`
-      : isOkLength
-      ? `Acceptable content length (${wordCount} words)`
-      : `Content is ${wordCount} words (Recommended: 600+ words)`,
-    pass: isOkLength,
+      ? `Content is ${wordCount} words long. Good job!`
+      : `Content is ${wordCount} words long. Consider using at least 600 words.`,
+    pass: isGoodLength,
     category: 'Basic SEO',
   });
 
-  // ── 2. ADDITIONAL SEO (30 Points) ──────────────────────────────────────────
+  // ── 2. ADDITIONAL SEO (30 Points Max) ──────────────────────────────────────
 
-  // Subheadings (H1, H2, H3)
+  // 1. Focus Keyword in Subheadings (H2, H3) (10 pts)
   const subheadings = (content.match(/<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi) || [])
-    .concat(sections.map(s => s.heading));
-  const hasSubheadings = subheadings.length > 0;
+    .concat(sections.map(s => s.heading || ''));
   const kwInSubheading = subheadings.some(h => (h || '').toLowerCase().includes(keyword));
-  score += kwInSubheading ? 8 : hasSubheadings ? 4 : 0;
+  if (kwInSubheading) score += 10;
   checks.push({
     id: 'kw_in_subheadings',
     label: kwInSubheading
-      ? 'Focus Keyword found in Subheading'
-      : hasSubheadings
-      ? 'Focus Keyword not found in Subheadings'
-      : 'Use subheadings (H2, H3) to structure your content',
+      ? 'Focus Keyword found in Subheading(s)'
+      : 'Focus Keyword not found in Subheadings (H2, H3)',
     pass: kwInSubheading,
     category: 'Additional SEO',
   });
 
-  // Keyword Density (0.8% - 2.5%) (8 pts)
-  const isOptimalDensity = keywordDensity >= 0.5 && keywordDensity <= 3.0;
-  score += isOptimalDensity ? 8 : occurrences > 0 ? 4 : 0;
+  // 2. Focus Keyword in Image ALT text (5 pts)
+  const imgAltMatches = content.match(/alt="([^"]*)"/gi) || [];
+  const kwInAlt = imgAltMatches.some(alt => alt.toLowerCase().includes(keyword));
+  if (kwInAlt) score += 5;
+  checks.push({
+    id: 'kw_in_image_alt',
+    label: kwInAlt
+      ? 'Focus Keyword found in image ALT attribute(s)'
+      : 'Add Focus Keyword to image ALT text',
+    pass: kwInAlt,
+    category: 'Additional SEO',
+  });
+
+  // 3. Keyword Density (0.8% - 2.5%) (5 pts)
+  const isOptimalDensity = keywordDensity >= 0.8 && keywordDensity <= 2.5;
+  if (isOptimalDensity) score += 5;
   checks.push({
     id: 'kw_density',
     label: isOptimalDensity
-      ? `Keyword Density is optimal (${keywordDensity}%)`
+      ? `Keyword Density is ${keywordDensity}%, which is optimal`
       : occurrences > 0
-      ? `Keyword Density is ${keywordDensity}% (Optimal: 0.8% - 2.5%)`
-      : `Focus Keyword not found in body text (${occurrences} occurrences)`,
+      ? `Keyword Density is ${keywordDensity}%, which is outside optimal range (0.8% - 2.5%)`
+      : 'Focus Keyword density is 0%',
     pass: isOptimalDensity,
     category: 'Additional SEO',
   });
 
-  // URL Length (4 pts)
-  const isShortSlug = slugText.length <= 75;
-  score += isShortSlug ? 4 : 2;
+  // 4. URL Length (4 pts)
+  const isShortSlug = slugText.length >= 10 && slugText.length <= 75;
+  if (isShortSlug) score += 4;
   checks.push({
     id: 'slug_length',
-    label: isShortSlug ? `URL Slug length is concise (${slugText.length} chars)` : 'URL Slug is a bit long',
+    label: isShortSlug ? `URL is ${slugText.length} characters long` : 'URL is too long or empty',
     pass: isShortSlug,
     category: 'Additional SEO',
   });
 
-  // Outbound & Internal Links (5 pts)
-  const hasLinks = content.includes('href=') || content.includes('http');
-  score += hasLinks ? 5 : 2;
+  // 5. Outbound Links (3 pts) & Internal Links (3 pts)
+  const hasOutbound = /href="https?:\/\/(?!identifine\.com\.ng)/i.test(content);
+  const hasInternal = /href="(https?:\/\/identifine\.com\.ng|\/)/i.test(content) || content.includes('href=');
+  if (hasOutbound) score += 3;
+  if (hasInternal) score += 3;
   checks.push({
     id: 'has_links',
-    label: hasLinks ? 'Content contains links' : 'Add external or internal links to your content',
-    pass: hasLinks,
+    label: (hasOutbound || hasInternal) ? 'Link(s) found in your content' : 'Add outbound or internal links to your content',
+    pass: hasOutbound || hasInternal,
     category: 'Additional SEO',
   });
 
-  // Featured Image / Media (5 pts)
-  const containsImage = hasImage || content.includes('<img') || content.includes('![');
-  score += containsImage ? 5 : 0;
-  checks.push({
-    id: 'has_media',
-    label: containsImage ? 'Content contains image or video media' : 'Add media (images) to enhance user engagement',
-    pass: containsImage,
-    category: 'Additional SEO',
-  });
+  // ── 3. TITLE READABILITY (15 Points Max) ────────────────────────────────────
 
-  // ── 3. TITLE READABILITY (15 Points) ────────────────────────────────────────
-
-  // Focus Keyword at start of Title (5 pts)
+  // 1. Focus Keyword at start of Title (5 pts)
   const kwAtStartOfTitle = titleText.toLowerCase().startsWith(keyword);
-  score += kwAtStartOfTitle ? 5 : hasKwInTitle ? 3 : 0;
+  if (kwAtStartOfTitle) score += 5;
   checks.push({
     id: 'kw_start_title',
-    label: kwAtStartOfTitle ? 'Focus Keyword is at the start of Title' : 'Focus Keyword used in Title',
-    pass: hasKwInTitle,
+    label: kwAtStartOfTitle ? 'Focus Keyword is at the beginning of the SEO Title' : 'Place Focus Keyword near the beginning of the SEO Title',
+    pass: kwAtStartOfTitle,
     category: 'Title Readability',
   });
 
-  // Title Length (45 - 65 chars) (5 pts)
-  const isTitleLengthOk = titleText.length >= 35 && titleText.length <= 65;
-  score += isTitleLengthOk ? 5 : 2;
-  checks.push({
-    id: 'title_length',
-    label: isTitleLengthOk
-      ? `Title length is optimal (${titleText.length} characters)`
-      : `Title length is ${titleText.length} characters (Optimal: 45-65 characters)`,
-    pass: isTitleLengthOk,
-    category: 'Title Readability',
-  });
-
-  // Power Word or Number in Title (5 pts)
-  const hasNumber = /\d+/.test(titleText);
+  // 2. Power Word in Title (5 pts)
   const hasPowerWord = POWER_WORDS.some(pw => titleText.toLowerCase().includes(pw));
-  score += (hasNumber || hasPowerWord) ? 5 : 0;
+  if (hasPowerWord) score += 5;
   checks.push({
     id: 'title_power_word',
-    label: (hasNumber || hasPowerWord)
-      ? 'SEO Title contains a Power Word or Number'
-      : 'Try adding a Power Word or Number to your SEO Title',
-    pass: hasNumber || hasPowerWord,
+    label: hasPowerWord ? 'Title contains at least one Power Word' : 'Add a Power Word to your SEO Title',
+    pass: hasPowerWord,
     category: 'Title Readability',
   });
 
-  // ── 4. CONTENT READABILITY (15 Points) ──────────────────────────────────────
-  score += wordCount > 0 ? 15 : 0;
+  // 3. Number in Title (5 pts)
+  const hasNumber = /\d+/.test(titleText);
+  if (hasNumber) score += 5;
   checks.push({
-    id: 'readability_paragraphs',
-    label: wordCount > 0 ? 'Content is readable and well structured' : 'Add text to your article body',
-    pass: wordCount > 0,
+    id: 'title_number',
+    label: hasNumber ? 'Title contains a number' : 'Add a number to your SEO Title for higher CTR',
+    pass: hasNumber,
+    category: 'Title Readability',
+  });
+
+  // ── 4. CONTENT READABILITY (15 Points Max) ──────────────────────────────────
+
+  // 1. Paragraph Length Check (No monster paragraphs > 120 words) (5 pts)
+  const paragraphs = content.split(/<\/?p>/gi).map(p => stripHtml(p)).filter(Boolean);
+  const hasLongParagraphs = paragraphs.some(p => p.split(/\s+/).filter(Boolean).length > 120);
+  const goodParagraphs = wordCount > 0 && !hasLongParagraphs;
+  if (goodParagraphs) score += 5;
+  checks.push({
+    id: 'short_paragraphs',
+    label: goodParagraphs ? 'Paragraphs are concise and easy to read' : 'Break up long paragraphs into shorter ones (under 120 words)',
+    pass: goodParagraphs,
+    category: 'Content Readability',
+  });
+
+  // 2. Media included (5 pts)
+  const containsMedia = hasImage || content.includes('<img') || content.includes('<figure') || content.includes('<iframe');
+  if (containsMedia) score += 5;
+  checks.push({
+    id: 'has_media',
+    label: containsMedia ? 'Content contains image or video media' : 'Add images or videos to make content engaging',
+    pass: containsMedia,
+    category: 'Content Readability',
+  });
+
+  // 3. Subheading Distribution (5 pts)
+  const goodSubheadingStructure = subheadings.length >= 2 || (wordCount < 400 && subheadings.length >= 1);
+  if (goodSubheadingStructure) score += 5;
+  checks.push({
+    id: 'subheading_structure',
+    label: goodSubheadingStructure ? 'Content uses subheadings effectively' : 'Add more subheadings (H2, H3) to break up the text',
+    pass: goodSubheadingStructure,
     category: 'Content Readability',
   });
 
