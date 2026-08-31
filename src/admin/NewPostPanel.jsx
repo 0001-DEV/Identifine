@@ -920,33 +920,28 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
             className="w-80 border-l flex flex-col h-full overflow-y-auto select-none custom-scrollbar"
             style={{ background: wpHeaderBg, borderColor: wpBorder }}
           >
-            {/* Sidebar Top Tab Switcher (Post | Block) */}
+            {/* Sidebar Top Tab Switcher (Post | Block - Exact 1-to-1) */}
             <div className="flex items-center justify-between border-b px-2 sticky top-0 z-20" style={{ background: wpHeaderBg, borderColor: wpBorder }}>
               <div className="flex items-center">
                 <button
                   onClick={() => setSidebarTab('post')}
-                  className={`px-4 py-3 text-xs font-semibold tracking-wide transition border-b-2 ${
-                    sidebarTab === 'post' ? 'border-gray-900 dark:border-white text-gray-900 dark:text-white' : 'border-transparent text-gray-500 hover:text-gray-700'
+                  className={`px-4 py-3 text-[13px] font-semibold tracking-wide transition border-b-2 ${
+                    sidebarTab === 'post'
+                      ? 'border-[#1e1e1e] dark:border-white text-[#1e1e1e] dark:text-white'
+                      : 'border-transparent text-[#757575] hover:text-[#1e1e1e] dark:hover:text-white'
                   }`}
                 >
                   Post
                 </button>
                 <button
                   onClick={() => setSidebarTab('block')}
-                  className={`px-4 py-3 text-xs font-semibold tracking-wide transition border-b-2 ${
-                    sidebarTab === 'block' ? 'border-gray-900 dark:border-white text-gray-900 dark:text-white' : 'border-transparent text-gray-500 hover:text-gray-700'
+                  className={`px-4 py-3 text-[13px] font-semibold tracking-wide transition border-b-2 ${
+                    sidebarTab === 'block'
+                      ? 'border-[#1e1e1e] dark:border-white text-[#1e1e1e] dark:text-white'
+                      : 'border-transparent text-[#757575] hover:text-[#1e1e1e] dark:hover:text-white'
                   }`}
                 >
                   Block
-                </button>
-                <button
-                  onClick={() => setSidebarTab('rankmath')}
-                  className={`px-3 py-3 text-xs font-bold tracking-wide transition border-b-2 flex items-center gap-1 ${
-                    sidebarTab === 'rankmath' ? 'border-[#f86434] text-[#f86434]' : 'border-transparent text-gray-500 hover:text-[#f86434]'
-                  }`}
-                >
-                  <span className="w-3.5 h-3.5 rounded bg-[#f86434] text-white flex items-center justify-center text-[9px] font-black">R</span>
-                  SEO
                 </button>
               </div>
 
