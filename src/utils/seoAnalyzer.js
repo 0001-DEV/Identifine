@@ -72,7 +72,7 @@ export function analyzeSeo({
   
   // 1. Focus Keyword in SEO Title (10 pts)
   const hasKwInTitle = Boolean(manualKeyword && titleText.toLowerCase().includes(manualKeyword));
-  if (hasKwInTitle) score += 10;
+  if (manualKeyword && hasKwInTitle) score += 10;
   checks.push({
     id: 'kw_in_title',
     label: hasKwInTitle
@@ -87,7 +87,7 @@ export function analyzeSeo({
 
   // 2. Focus Keyword in Meta Description (10 pts)
   const hasKwInMeta = Boolean(manualKeyword && excerptText.toLowerCase().includes(manualKeyword));
-  if (hasKwInMeta) score += 10;
+  if (manualKeyword && hasKwInMeta) score += 10;
   checks.push({
     id: 'kw_in_meta',
     label: hasKwInMeta
@@ -102,7 +102,7 @@ export function analyzeSeo({
 
   // 3. Focus Keyword in URL Slug (5 pts)
   const hasKwInSlug = Boolean(manualKeyword && (slugText.includes(kwSlugified) || slugText.includes(manualKeyword.replace(/\s+/g, '-'))));
-  if (hasKwInSlug) score += 5;
+  if (manualKeyword && hasKwInSlug) score += 5;
   checks.push({
     id: 'kw_in_slug',
     label: hasKwInSlug
@@ -116,7 +116,7 @@ export function analyzeSeo({
   });
 
   // 4. Focus Keyword in First 10% / Intro (5 pts)
-  if (hasKwInIntro) score += 5;
+  if (manualKeyword && hasKwInIntro) score += 5;
   checks.push({
     id: 'kw_in_intro',
     label: hasKwInIntro
@@ -152,7 +152,7 @@ export function analyzeSeo({
   const subheadings = (content.match(/<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi) || [])
     .concat(sections.map(s => s.heading || ''));
   const kwInSubheading = Boolean(manualKeyword && subheadings.some(h => (h || '').toLowerCase().includes(manualKeyword)));
-  if (kwInSubheading) score += 10;
+  if (manualKeyword && kwInSubheading) score += 10;
   checks.push({
     id: 'kw_in_subheadings',
     label: kwInSubheading
@@ -168,7 +168,7 @@ export function analyzeSeo({
   // 2. Focus Keyword in Image ALT text (5 pts)
   const imgAltMatches = content.match(/alt="([^"]*)"/gi) || [];
   const kwInAlt = Boolean(manualKeyword && imgAltMatches.some(alt => alt.toLowerCase().includes(manualKeyword)));
-  if (kwInAlt) score += 5;
+  if (manualKeyword && kwInAlt) score += 5;
   checks.push({
     id: 'kw_in_image_alt',
     label: kwInAlt
@@ -181,7 +181,7 @@ export function analyzeSeo({
 
   // 3. Keyword Density (0.8% - 2.5%) (5 pts)
   const isOptimalDensity = manualKeyword ? (keywordDensity >= 0.8 && keywordDensity <= 2.5) : false;
-  if (isOptimalDensity) score += 5;
+  if (manualKeyword && isOptimalDensity) score += 5;
   checks.push({
     id: 'kw_density',
     label: isOptimalDensity
@@ -196,9 +196,9 @@ export function analyzeSeo({
     category: 'Additional SEO',
   });
 
-  // 4. URL Length (4 pts) - in Rank Math, requires keyword in slug and <= 75 chars
+  // 4. URL Length (4 pts)
   const isShortSlug = Boolean(manualKeyword && hasKwInSlug && slugText.length <= 75);
-  if (isShortSlug) score += 4;
+  if (manualKeyword && isShortSlug) score += 4;
   checks.push({
     id: 'slug_length',
     label: isShortSlug ? `URL is ${slugText.length} characters long and contains keyword` : 'URL does not contain Focus Keyword or is long',
@@ -207,9 +207,9 @@ export function analyzeSeo({
     category: 'Additional SEO',
   });
 
-  // 5. Outbound Links (3 pts)
+  // 5. Outbound Links (3 pts) - in Rank Math, only counts when Focus Keyword is active
   const hasOutbound = /href="https?:\/\/(?!identifine\.com\.ng)/i.test(content);
-  if (hasOutbound) score += 3;
+  if (manualKeyword && hasOutbound) score += 3;
   checks.push({
     id: 'outbound_links',
     label: hasOutbound ? 'Great! You are linking to external resources.' : 'Add external outbound links to your content.',
@@ -218,9 +218,9 @@ export function analyzeSeo({
     category: 'Additional SEO',
   });
 
-  // 6. Internal Links (3 pts)
+  // 6. Internal Links (3 pts) - in Rank Math, only counts when Focus Keyword is active
   const hasInternal = /href="(https?:\/\/identifine\.com\.ng|\/|#)/i.test(content) || (content.includes('href=') && !hasOutbound);
-  if (hasInternal) score += 3;
+  if (manualKeyword && hasInternal) score += 3;
   checks.push({
     id: 'internal_links',
     label: hasInternal ? 'You are linking to internal resources.' : 'Add internal links to your content.',
@@ -233,7 +233,7 @@ export function analyzeSeo({
 
   // 1. Focus Keyword at start of Title (5 pts)
   const kwAtStartOfTitle = Boolean(manualKeyword && titleText.toLowerCase().startsWith(manualKeyword));
-  if (kwAtStartOfTitle) score += 5;
+  if (manualKeyword && kwAtStartOfTitle) score += 5;
   checks.push({
     id: 'kw_start_title',
     label: kwAtStartOfTitle
@@ -248,7 +248,7 @@ export function analyzeSeo({
 
   // 2. Power Word in Title (5 pts)
   const hasPowerWord = POWER_WORDS.some(pw => titleText.toLowerCase().includes(pw));
-  if (hasPowerWord) score += 5;
+  if (manualKeyword && hasPowerWord) score += 5;
   checks.push({
     id: 'title_power_word',
     label: hasPowerWord ? 'Title contains at least one Power Word' : 'Add a Power Word to your SEO Title',
@@ -259,7 +259,7 @@ export function analyzeSeo({
 
   // 3. Number in Title (5 pts)
   const hasNumber = /\d+/.test(titleText);
-  if (hasNumber) score += 5;
+  if (manualKeyword && hasNumber) score += 5;
   checks.push({
     id: 'title_number',
     label: hasNumber ? 'Title contains a number' : 'Add a number to your SEO Title for higher CTR',
@@ -270,7 +270,7 @@ export function analyzeSeo({
 
   // ── 4. CONTENT READABILITY (15 Points Max) ──────────────────────────────────
 
-  // 1. Paragraph Length Check (4 pts in Rank Math)
+  // 1. Paragraph Length Check (4 pts)
   const paragraphs = content.split(/<\/?p>/gi).map(p => stripHtml(p)).filter(Boolean);
   const hasLongParagraphs = paragraphs.some(p => p.split(/\s+/).filter(Boolean).length > 120);
   const goodParagraphs = wordCount > 0 && !hasLongParagraphs;
@@ -285,7 +285,7 @@ export function analyzeSeo({
 
   // 2. Media included (5 pts)
   const containsMedia = Boolean(hasImage || content.includes('<img') || content.includes('<figure') || content.includes('<iframe'));
-  if (containsMedia) score += 5;
+  if (manualKeyword && containsMedia) score += 5;
   checks.push({
     id: 'has_media',
     label: containsMedia ? 'Content contains image or video media' : 'Add images or videos to make content engaging',
@@ -294,9 +294,9 @@ export function analyzeSeo({
     category: 'Content Readability',
   });
 
-  // 3. Subheading Distribution (5 pts) - strictly requires 2+ subheadings
+  // 3. Subheading Distribution (5 pts)
   const goodSubheadingStructure = subheadings.length >= 2;
-  if (goodSubheadingStructure) score += 5;
+  if (manualKeyword && goodSubheadingStructure) score += 5;
   checks.push({
     id: 'subheading_structure',
     label: goodSubheadingStructure ? 'Content uses subheadings effectively' : 'Add at least 2 subheadings (H2, H3) to structure your content',
