@@ -755,28 +755,35 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     )}
 
                     {/* ─────────────────────────────────────────────────────────────
-                        BLOCK RENDERER: PARAGRAPH (Body text is deep BLACK)
+                        BLOCK RENDERER: PARAGRAPH (Fixed: Normal forward typing)
                     ───────────────────────────────────────────────────────────── */}
                     {block.type === 'paragraph' && (
                       <div className="relative flex items-center justify-between py-1">
-                        <div
-                          contentEditable
-                          suppressContentEditableWarning
-                          onInput={(e) => updateBlock(block.id, { content: e.currentTarget.innerHTML })}
+                        <textarea
+                          id={`block-input-${block.id}`}
+                          value={block.content || ''}
+                          onChange={(e) => {
+                            updateBlock(block.id, { content: e.target.value });
+                            e.target.style.height = 'auto';
+                            e.target.style.height = `${Math.max(32, e.target.scrollHeight)}px`;
+                          }}
                           onKeyDown={(e) => {
                             if (e.key === 'Enter' && !e.shiftKey) {
                               e.preventDefault();
                               addBlock('paragraph', block.id);
+                            } else if (e.key === 'Backspace' && !block.content && blocks.length > 1) {
+                              e.preventDefault();
+                              deleteBlock(block.id);
                             }
                           }}
-                          data-placeholder="Type / to choose a block"
-                          className="w-full min-h-[30px] text-lg text-black dark:text-white outline-none leading-relaxed empty:before:content-[attr(data-placeholder)] empty:before:text-[#757575]"
+                          placeholder="Type / to choose a block"
+                          rows={1}
+                          className="w-full min-h-[32px] text-lg text-black dark:text-white outline-none leading-relaxed placeholder-[#757575] bg-transparent border-none resize-none overflow-hidden"
                           style={{
                             color: block.textColor || (darkMode ? '#ffffff' : '#000000'),
                             fontSize: block.fontSize === 'S' ? '14px' : block.fontSize === 'L' ? '20px' : block.fontSize === 'XL' ? '24px' : '18px',
                             background: block.bg || 'transparent'
                           }}
-                          dangerouslySetInnerHTML={{ __html: block.content }}
                         />
 
                         {/* ── [+] / [✕] IN-LINE BLOCK INSERTER BUTTON (Exact match) ── */}
@@ -1041,25 +1048,25 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
             className="w-80 border-l flex flex-col h-full overflow-y-auto select-none custom-scrollbar"
             style={{ background: wpHeaderBg, borderColor: wpBorder }}
           >
-            {/* Sidebar Top Tab Switcher (Both Post and Block headers side-by-side) */}
+            {/* Sidebar Top Tab Switcher (Both Post and Block headers permanently visible) */}
             <div className="flex items-center justify-between border-b px-2 sticky top-0 z-20" style={{ background: wpHeaderBg, borderColor: wpBorder }}>
-              <div className="flex items-center">
+              <div className="flex items-center gap-1">
                 <button
                   onClick={() => setSidebarTab('post')}
-                  className={`px-4 py-3 text-[13px] font-semibold tracking-wide transition border-b-2 ${
+                  className={`px-4 py-3 text-xs font-bold tracking-wide transition border-b-2 ${
                     sidebarTab === 'post'
-                      ? 'border-[#1e1e1e] dark:border-white text-[#1e1e1e] dark:text-white'
-                      : 'border-transparent text-[#757575] hover:text-[#1e1e1e] dark:hover:text-white'
+                      ? 'border-black dark:border-white text-black dark:text-white'
+                      : 'border-transparent text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white'
                   }`}
                 >
                   Post
                 </button>
                 <button
                   onClick={() => setSidebarTab('block')}
-                  className={`px-4 py-3 text-[13px] font-semibold tracking-wide transition border-b-2 ${
+                  className={`px-4 py-3 text-xs font-bold tracking-wide transition border-b-2 ${
                     sidebarTab === 'block'
-                      ? 'border-[#1e1e1e] dark:border-white text-[#1e1e1e] dark:text-white'
-                      : 'border-transparent text-[#757575] hover:text-[#1e1e1e] dark:hover:text-white'
+                      ? 'border-black dark:border-white text-black dark:text-white'
+                      : 'border-transparent text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white'
                   }`}
                 >
                   Block
