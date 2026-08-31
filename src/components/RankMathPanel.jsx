@@ -1,12 +1,40 @@
 import React, { useState } from 'react';
 import { CheckCircle2, AlertTriangle, XCircle, Globe, Smartphone, Monitor, Search, Sparkles } from 'lucide-react';
+import { analyzeSeo } from '../utils/seoAnalyzer';
 
-export default function RankMathPanel({ seoResult, focusKeyword, setFocusKeyword }) {
+export default function RankMathPanel({
+  seoResult,
+  title = '',
+  slug = '',
+  content = '',
+  summary = '',
+  focusKeyword = '',
+  setFocusKeyword,
+  seoTitle = '',
+  setSeoTitle,
+  metaDesc = '',
+  setMetaDesc,
+  activeTab = 'general',
+  setActiveTab,
+  darkMode = false,
+}) {
   const [serpDevice, setSerpDevice] = useState('desktop'); // 'desktop' | 'mobile'
-  const { score, color, grade, checks, serp, wordCount, keywordDensity } = seoResult;
+  
+  // Compute SEO analysis if not passed directly
+  const data = seoResult || analyzeSeo({
+    title,
+    slug,
+    content,
+    summary,
+    focusKeyword,
+    seoTitle,
+    metaDesc,
+  });
 
-  // Group checks by category
-  const categories = ['Basic SEO', 'Additional SEO', 'Title Readability'];
+  const { score, color, grade, checks = [], serp = {}, wordCount = 0, keywordDensity = 0 } = data;
+
+  // Group checks by category (including Content Readability)
+  const categories = ['Basic SEO', 'Additional SEO', 'Title Readability', 'Content Readability'];
 
   return (
     <div className="bg-[#18181B] text-white rounded-2xl border border-zinc-800 p-6 space-y-6 shadow-2xl font-sans">

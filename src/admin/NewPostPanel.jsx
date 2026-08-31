@@ -2018,6 +2018,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
             {sidebarTab === 'rankmath' && (
               <div className="p-4 overflow-y-auto">
                 <RankMathPanel
+                  seoResult={seoData}
                   title={title}
                   slug={slug}
                   content={rawHtmlContent}
