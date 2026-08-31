@@ -459,21 +459,31 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     const currentContent = block.content || '';
 
     if (formatType === 'bold') {
+      const isBold = selected.startsWith('<b>') || selected.startsWith('<strong>');
+      const clean = selected.replace(/<\/?(b|strong)>/gi, '');
+      const replacement = isBold ? clean : `<b>${clean || 'bold text'}</b>`;
+      let updated = '';
       if (selected && currentContent.includes(selected)) {
-        updateBlock(blockId, { content: currentContent.replace(selected, `<b>${selected}</b>`) });
+        updated = currentContent.replace(selected, replacement);
+      } else if (start !== end) {
+        updated = currentContent.substring(0, start) + replacement + currentContent.substring(end);
       } else {
-        const replacement = selected ? `<b>${selected}</b>` : `<b>bold text</b>`;
-        const updated = start !== end ? currentContent.substring(0, start) + replacement + currentContent.substring(end) : `${currentContent} ${replacement}`;
-        updateBlock(blockId, { content: updated });
+        updated = currentContent ? `${currentContent} ${replacement}` : replacement;
       }
+      updateBlock(blockId, { content: updated });
     } else if (formatType === 'italic') {
+      const isItalic = selected.startsWith('<i>') || selected.startsWith('<em>');
+      const clean = selected.replace(/<\/?(i|em)>/gi, '');
+      const replacement = isItalic ? clean : `<i>${clean || 'italic text'}</i>`;
+      let updated = '';
       if (selected && currentContent.includes(selected)) {
-        updateBlock(blockId, { content: currentContent.replace(selected, `<i>${selected}</i>`) });
+        updated = currentContent.replace(selected, replacement);
+      } else if (start !== end) {
+        updated = currentContent.substring(0, start) + replacement + currentContent.substring(end);
       } else {
-        const replacement = selected ? `<i>${selected}</i>` : `<i>italic text</i>`;
-        const updated = start !== end ? currentContent.substring(0, start) + replacement + currentContent.substring(end) : `${currentContent} ${replacement}`;
-        updateBlock(blockId, { content: updated });
+        updated = currentContent ? `${currentContent} ${replacement}` : replacement;
       }
+      updateBlock(blockId, { content: updated });
     } else if (formatType === 'link') {
       setLinkModalData({
         open: true,
@@ -487,11 +497,16 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     } else if (formatType === 'color') {
       const color = prompt('Enter text hex color (e.g. #2271b1):', '#2271b1');
       if (color) {
+        const replacement = `<span style="color: ${color}">${selected || 'colored text'}</span>`;
+        let updated = '';
         if (selected && currentContent.includes(selected)) {
-          updateBlock(blockId, { content: currentContent.replace(selected, `<span style="color: ${color}">${selected}</span>`) });
+          updated = currentContent.replace(selected, replacement);
+        } else if (start !== end) {
+          updated = currentContent.substring(0, start) + replacement + currentContent.substring(end);
         } else {
-          updateBlock(blockId, { textColor: color });
+          updated = currentContent ? `${currentContent} ${replacement}` : replacement;
         }
+        updateBlock(blockId, { content: updated });
       }
     }
   };
@@ -977,86 +992,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                       setActiveBlockId(block.id);
                     }}
                   >
-                    {/* ─────────────────────────────────────────────────────────────
-                        FLOATING BLOCK TOOLBAR (Exact WordPress Style for All Text Segments)
-                    ───────────────────────────────────────────────────────────── */}
-                    {isActive && block.type !== 'image' && (
-                      <div
-                        className="absolute -top-11 left-0 z-30 flex items-center gap-1 px-2 py-1 rounded shadow-lg border text-xs select-none bg-white dark:bg-zinc-900 animate-fade-in"
-                        style={{ borderColor: wpBorder }}
-                      >
-                        {/* 1. Block Type Switcher / Transform */}
-                        <button
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => {
-                            if (block.type === 'paragraph') updateBlock(block.id, { type: 'heading', level: 2 });
-                            else if (block.type === 'heading' && block.level === 2) updateBlock(block.id, { type: 'heading', level: 3 });
-                            else if (block.type === 'heading' && block.level === 3) updateBlock(block.id, { type: 'quote' });
-                            else updateBlock(block.id, { type: 'paragraph' });
-                          }}
-                          title="Transform block type"
-                          className="px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 font-bold flex items-center gap-1 text-black dark:text-white"
-                        >
-                          <span>{block.type === 'heading' ? `H${block.level || 2}` : block.type === 'quote' ? '“' : block.type === 'list' ? '•' : '¶'}</span>
-                          <ChevronDown size={11} className="opacity-60" />
-                        </button>
-
-                        <div className="w-px h-4 bg-gray-200 dark:bg-zinc-700 mx-0.5" />
-
-                        {/* 2. Bold */}
-                        <button
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => handleFormatSelection(block.id, 'bold')}
-                          title="Bold (Ctrl+B)"
-                          className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-black dark:text-white"
-                        >
-                          <Bold size={13} />
-                        </button>
-
-                        {/* 3. Italic */}
-                        <button
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => handleFormatSelection(block.id, 'italic')}
-                          title="Italic (Ctrl+I)"
-                          className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-black dark:text-white"
-                        >
-                          <Italic size={13} />
-                        </button>
-
-                        {/* 4. Link */}
-                        <button
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => handleFormatSelection(block.id, 'link')}
-                          title="Insert Link (Ctrl+K)"
-                          className="p-1.5 rounded hover:bg-blue-50 text-blue-600 font-semibold"
-                        >
-                          <LinkIcon size={13} />
-                        </button>
-
-                        {/* 5. Color */}
-                        <button
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => handleFormatSelection(block.id, 'color')}
-                          title="Highlight / Text Color"
-                          className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-black dark:text-white font-bold font-serif text-xs"
-                        >
-                          A
-                        </button>
-
-                        <div className="w-px h-4 bg-gray-200 dark:bg-zinc-700 mx-0.5" />
-
-                        {/* 6. Delete */}
-                        <button
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => deleteBlock(block.id)}
-                          title="Delete Block"
-                          className="p-1.5 rounded hover:bg-red-50 text-red-500 transition"
-                        >
-                          <Trash2 size={13} />
-                        </button>
-                      </div>
-                    )}
-
                     {/* Floating Toolbar for IMAGE block (matching screenshot) */}
                     {isActive && block.type === 'image' && (
                       <div
@@ -1098,19 +1033,20 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     )}
 
                     {/* ─────────────────────────────────────────────────────────────
-                        BLOCK RENDERER: PARAGRAPH (Clean Inline Blue Link with Faint Underline)
+                        BLOCK RENDERER: PARAGRAPH (Clean Inline Live Rich Text & Links)
                     ───────────────────────────────────────────────────────────── */}
                     {block.type === 'paragraph' && (() => {
-                      const hasHtmlLinks = /<a\s+(?:[^>]*?\s+)?href="([^"]*)"[^>]*>(.*?)<\/a>/gi.test(block.content || '');
+                      const isRichHtml = /<[a-z][\s\S]*>/i.test(block.content || '');
 
                       return (
                         <div className="py-1">
                           <div className="relative flex items-center justify-between">
-                            {hasHtmlLinks ? (
+                            {isRichHtml ? (
                               <div
                                 id={`block-input-${block.id}`}
                                 contentEditable
                                 suppressContentEditableWarning
+                                onInput={(e) => updateBlock(block.id, { content: e.currentTarget.innerHTML })}
                                 onSelect={(e) => handleTextSelection(e, block.id)}
                                 onMouseUp={(e) => handleTextSelection(e, block.id)}
                                 onKeyUp={(e) => handleTextSelection(e, block.id)}
