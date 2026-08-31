@@ -870,8 +870,9 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                                 onClick={(e) => {
                                   const anchor = e.target.closest('a');
                                   if (anchor && anchor.getAttribute('href')) {
-                                    e.preventDefault();
-                                    window.open(anchor.getAttribute('href'), '_blank');
+                                    // Native anchor navigation runs directly to destination URL without about:blank intermediate flash
+                                    anchor.setAttribute('target', '_blank');
+                                    anchor.setAttribute('rel', 'noopener');
                                   }
                                 }}
                                 dangerouslySetInnerHTML={{ __html: block.content }}
