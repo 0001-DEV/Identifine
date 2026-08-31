@@ -207,16 +207,25 @@ export function analyzeSeo({
     category: 'Additional SEO',
   });
 
-  // 5. Outbound Links (3 pts) & Internal Links (3 pts)
+  // 5. Outbound Links (3 pts)
   const hasOutbound = /href="https?:\/\/(?!identifine\.com\.ng)/i.test(content);
-  const hasInternal = /href="(https?:\/\/identifine\.com\.ng|\/)/i.test(content);
   if (hasOutbound) score += 3;
+  checks.push({
+    id: 'outbound_links',
+    label: hasOutbound ? 'Great! You are linking to external resources.' : 'Add external outbound links to your content.',
+    pass: hasOutbound,
+    status: hasOutbound ? 'pass' : 'fail',
+    category: 'Additional SEO',
+  });
+
+  // 6. Internal Links (3 pts)
+  const hasInternal = /href="(https?:\/\/identifine\.com\.ng|\/|#)/i.test(content) || (content.includes('href=') && !hasOutbound);
   if (hasInternal) score += 3;
   checks.push({
-    id: 'has_links',
-    label: (hasOutbound || hasInternal) ? 'Link(s) found in your content' : 'Add outbound or internal links to your content',
-    pass: hasOutbound || hasInternal,
-    status: (hasOutbound || hasInternal) ? 'pass' : 'fail',
+    id: 'internal_links',
+    label: hasInternal ? 'You are linking to internal resources.' : 'Add internal links to your content.',
+    pass: hasInternal,
+    status: hasInternal ? 'pass' : 'fail',
     category: 'Additional SEO',
   });
 
