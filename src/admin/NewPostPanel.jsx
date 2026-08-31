@@ -327,7 +327,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     const displayText = linkModalData.selectedText.trim() || url;
     const targetAttr = linkModalData.newTab ? ' target="_blank" rel="noopener noreferrer"' : '';
     const linkStyle = 'color: #2271b1 !important; text-decoration: underline !important; text-decoration-color: rgba(34, 113, 177, 0.45) !important; text-underline-offset: 3px !important; cursor: pointer !important; font-weight: 500 !important;';
-    const linkHtml = `<a href="${url}"${targetAttr} style="${linkStyle}" class="wp-attached-link">${displayText}</a>`;
+    const linkHtml = `<a href="${url}"${targetAttr} style="${linkStyle}" class="wp-attached-link" contenteditable="false">${displayText}</a>`;
 
     let newContent = '';
     if (linkModalData.start !== undefined && linkModalData.end !== undefined && linkModalData.start !== linkModalData.end) {
@@ -869,10 +869,13 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                                 }}
                                 onClick={(e) => {
                                   const anchor = e.target.closest('a');
-                                  if (anchor && anchor.getAttribute('href')) {
-                                    // Native anchor navigation runs directly to destination URL without about:blank intermediate flash
-                                    anchor.setAttribute('target', '_blank');
-                                    anchor.setAttribute('rel', 'noopener');
+                                  if (anchor) {
+                                    const href = anchor.getAttribute('href');
+                                    if (href) {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      window.open(href, '_blank', 'noopener,noreferrer');
+                                    }
                                   }
                                 }}
                                 dangerouslySetInnerHTML={{ __html: block.content }}
