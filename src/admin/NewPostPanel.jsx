@@ -162,33 +162,90 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     end: 0,
   });
 
+  const lastMousePosRef = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const trackMouse = (e) => {
+      if (e.clientX > 0 && e.clientY > 0) {
+        lastMousePosRef.current = { x: e.clientX, y: e.clientY };
+      }
+    };
+    window.addEventListener('mousemove', trackMouse, { passive: true });
+    window.addEventListener('mouseup', trackMouse, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', trackMouse);
+      window.removeEventListener('mouseup', trackMouse);
+    };
+  }, []);
+
   const handleTextSelection = (e, blockId) => {
-    const target = e.currentTarget || e.target;
+    const target = e?.currentTarget || e?.target;
     if (!target) return;
     let selectedText = '';
     let start = 0;
     let end = 0;
+    let posX = 0;
+    let posY = 0;
 
     if (typeof target.selectionStart === 'number' && target.selectionStart !== target.selectionEnd) {
       start = target.selectionStart;
       end = target.selectionEnd;
       selectedText = (target.value || '').substring(start, end).trim();
+
+      const rect = target.getBoundingClientRect();
+      const lastMouse = lastMousePosRef.current;
+      if (lastMouse.x >= rect.left - 30 && lastMouse.x <= rect.right + 30 && lastMouse.y >= rect.top - 30 && lastMouse.y <= rect.bottom + 30) {
+        posX = lastMouse.x;
+        posY = lastMouse.y - 12;
+      } else {
+        try {
+          const midPos = Math.floor((start + end) / 2);
+          const mirror = document.createElement('div');
+          const style = window.getComputedStyle(target);
+          mirror.style.position = 'absolute';
+          mirror.style.visibility = 'hidden';
+          mirror.style.whiteSpace = 'pre-wrap';
+          mirror.style.wordBreak = 'break-word';
+          mirror.style.width = `${target.clientWidth}px`;
+          mirror.style.font = style.font;
+          mirror.style.fontSize = style.fontSize;
+          mirror.style.fontFamily = style.fontFamily;
+          mirror.style.lineHeight = style.lineHeight;
+          mirror.style.padding = style.padding;
+          mirror.textContent = target.value.substring(0, midPos);
+          const marker = document.createElement('span');
+          marker.textContent = target.value.substring(midPos, midPos + 1) || '|';
+          mirror.appendChild(marker);
+          document.body.appendChild(mirror);
+
+          const mRect = marker.getBoundingClientRect();
+          const tRect = target.getBoundingClientRect();
+          posX = tRect.left + marker.offsetLeft - (target.scrollLeft || 0);
+          posY = tRect.top + marker.offsetTop - (target.scrollTop || 0) - 10;
+          document.body.removeChild(mirror);
+        } catch (err) {
+          posX = rect.left + rect.width / 2;
+          posY = rect.top - 12;
+        }
+      }
     } else {
       const sel = window.getSelection();
-      if (sel && !sel.isCollapsed) {
+      if (sel && !sel.isCollapsed && sel.rangeCount > 0) {
         selectedText = sel.toString().trim();
+        try {
+          const range = sel.getRangeAt(0);
+          const rRect = range.getBoundingClientRect();
+          posX = rRect.left + rRect.width / 2;
+          posY = rRect.top - 10;
+        } catch (err) {}
       }
     }
 
     if (selectedText.length > 0) {
-      const rect = target.getBoundingClientRect();
-      const clickX = (e.clientX && e.clientX > 0) ? e.clientX : (rect.left + rect.width / 2);
-      const clickY = (e.clientY && e.clientY > 0) ? e.clientY : rect.top;
-
       setSelectionToolbar({
         visible: true,
-        x: Math.max(100, Math.min(window.innerWidth - 100, clickX)),
-        y: Math.max(50, clickY - 14),
+        x: Math.max(120, Math.min(window.innerWidth - 120, posX)),
+        y: Math.max(50, posY),
         text: selectedText,
         blockId: blockId || activeBlockId || blocks[0]?.id,
         start,
@@ -200,7 +257,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
         if (!sel || sel.isCollapsed) {
           setSelectionToolbar(prev => ({ ...prev, visible: false }));
         }
-      }, 100);
+      }, 120);
     }
   };
 
@@ -2309,6 +2366,9 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
           >
             A
           </button>
+
+          {/* Downward Pointer Arrow */}
+          <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#1e1e1e] rotate-45 border-r border-b border-zinc-700 pointer-events-none" />
         </div>
       )}
 
