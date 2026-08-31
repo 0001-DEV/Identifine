@@ -846,82 +846,69 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     )}
 
                     {/* ─────────────────────────────────────────────────────────────
-                        BLOCK RENDERER: PARAGRAPH (With Interactive Blue Links & Underline)
+                        BLOCK RENDERER: PARAGRAPH (Clean Inline Blue Link with Faint Underline)
                     ───────────────────────────────────────────────────────────── */}
                     {block.type === 'paragraph' && (() => {
-                      const attachedLinks = extractLinksFromContent(block.content || '');
+                      const hasHtmlLinks = /<a\s+(?:[^>]*?\s+)?href="([^"]*)"[^>]*>(.*?)<\/a>/gi.test(block.content || '');
 
                       return (
                         <div className="py-1">
-                          {/* Interactive Link Badge Pill (Shows blue link with faint underline, click to open) */}
-                          {attachedLinks.length > 0 && (
-                            <div className="flex flex-wrap items-center gap-1.5 mb-2 py-1 px-2.5 rounded bg-blue-50/90 border border-blue-200 text-xs animate-fade-in select-none">
-                              <span className="text-blue-700 font-bold flex items-center gap-1">
-                                <LinkIcon size={12} />
-                                <span>Attached Link:</span>
-                              </span>
-                              {attachedLinks.map((lk, lIdx) => (
-                                <div key={lIdx} className="flex items-center gap-1.5 bg-white px-2 py-0.5 rounded shadow-sm border border-blue-100">
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      window.open(lk.url, '_blank');
-                                    }}
-                                    className="text-[#2271b1] hover:text-blue-800 font-semibold flex items-center gap-1 cursor-pointer transition"
-                                    title="Click to open link in a new tab"
-                                    style={{
-                                      color: '#2271b1',
-                                      textDecoration: 'underline',
-                                      textDecorationColor: 'rgba(34, 113, 177, 0.45)',
-                                      textUnderlineOffset: '3px',
-                                    }}
-                                  >
-                                    <span>"{lk.text}"</span>
-                                    <span className="text-[10px] text-gray-500 font-mono">({lk.url})</span>
-                                    <ExternalLink size={11} className="text-blue-600" />
-                                  </button>
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleRemoveLink(block.id, lk.url);
-                                    }}
-                                    title="Remove link"
-                                    className="text-gray-400 hover:text-red-500 ml-1 p-0.5 rounded"
-                                  >
-                                    <X size={11} />
-                                  </button>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-
                           <div className="relative flex items-center justify-between">
-                            <textarea
-                              id={`block-input-${block.id}`}
-                              value={block.content || ''}
-                              onChange={(e) => {
-                                updateBlock(block.id, { content: e.target.value });
-                                e.target.style.height = 'auto';
-                                e.target.style.height = `${Math.max(32, e.target.scrollHeight)}px`;
-                              }}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter' && !e.shiftKey) {
-                                  e.preventDefault();
-                                  addBlock('paragraph', block.id);
-                                } else if (e.key === 'Backspace' && !block.content && blocks.length > 1) {
-                                  e.preventDefault();
-                                  deleteBlock(block.id);
-                                }
-                              }}
-                              placeholder="Type / to choose a block"
-                              rows={1}
-                              className="w-full min-h-[32px] text-lg text-black outline-none leading-relaxed placeholder-[#757575] bg-transparent border-none resize-none overflow-hidden"
-                              style={{
-                                color: block.textColor || '#000000',
-                                fontSize: block.fontSize === 'S' ? '14px' : block.fontSize === 'L' ? '20px' : block.fontSize === 'XL' ? '24px' : '18px',
-                                background: block.bg || 'transparent'
-                              }}
-                            />
+                            {hasHtmlLinks ? (
+                              <div
+                                id={`block-input-${block.id}`}
+                                contentEditable
+                                suppressContentEditableWarning
+                                onBlur={(e) => updateBlock(block.id, { content: e.currentTarget.innerHTML })}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter' && !e.shiftKey) {
+                                    e.preventDefault();
+                                    addBlock('paragraph', block.id);
+                                  }
+                                }}
+                                onClick={(e) => {
+                                  const anchor = e.target.closest('a');
+                                  if (anchor && anchor.getAttribute('href')) {
+                                    e.preventDefault();
+                                    window.open(anchor.getAttribute('href'), '_blank');
+                                  }
+                                }}
+                                dangerouslySetInnerHTML={{ __html: block.content }}
+                                className="w-full min-h-[32px] text-lg text-black outline-none leading-relaxed bg-transparent border-none"
+                                style={{
+                                  color: block.textColor || '#000000',
+                                  fontSize: block.fontSize === 'S' ? '14px' : block.fontSize === 'L' ? '20px' : block.fontSize === 'XL' ? '24px' : '18px',
+                                  background: block.bg || 'transparent'
+                                }}
+                              />
+                            ) : (
+                              <textarea
+                                id={`block-input-${block.id}`}
+                                value={block.content || ''}
+                                onChange={(e) => {
+                                  updateBlock(block.id, { content: e.target.value });
+                                  e.target.style.height = 'auto';
+                                  e.target.style.height = `${Math.max(32, e.target.scrollHeight)}px`;
+                                }}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter' && !e.shiftKey) {
+                                    e.preventDefault();
+                                    addBlock('paragraph', block.id);
+                                  } else if (e.key === 'Backspace' && !block.content && blocks.length > 1) {
+                                    e.preventDefault();
+                                    deleteBlock(block.id);
+                                  }
+                                }}
+                                placeholder="Type / to choose a block"
+                                rows={1}
+                                className="w-full min-h-[32px] text-lg text-black outline-none leading-relaxed placeholder-[#757575] bg-transparent border-none resize-none overflow-hidden"
+                                style={{
+                                  color: block.textColor || '#000000',
+                                  fontSize: block.fontSize === 'S' ? '14px' : block.fontSize === 'L' ? '20px' : block.fontSize === 'XL' ? '24px' : '18px',
+                                  background: block.bg || 'transparent'
+                                }}
+                              />
+                            )}
 
                         {/* ── [+] / [✕] IN-LINE BLOCK INSERTER BUTTON (Exact match) ── */}
                         <div className="relative flex-shrink-0 ml-4">
