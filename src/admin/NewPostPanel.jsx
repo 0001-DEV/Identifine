@@ -25,7 +25,9 @@ import {
   CheckCircle2,
   ArrowLeft,
   Search,
-  FileText
+  FileText,
+  MessageSquare,
+  Radio
 } from 'lucide-react';
 import { analyzeSeo } from '../utils/seoAnalyzer';
 import { getCustomArticles, saveCustomArticles } from '../pages/BlogAdminPage';
@@ -54,7 +56,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
   // ── Core Post Fields ──
   const [title, setTitle] = useState('');
-  const [slug, setSlug] = useState('');
+  const [slug, setSlug] = useState('3993');
   const [autoSlug, setAutoSlug] = useState(true);
   const [excerpt, setExcerpt] = useState('');
   const [showExcerptField, setShowExcerptField] = useState(false);
@@ -81,8 +83,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
   ]);
   const [activeBlockId, setActiveBlockId] = useState('b-1');
   const [showBlockInserter, setShowBlockInserter] = useState(false);
-  const [history, setHistory] = useState([]);
-  const [historyIdx, setHistoryIdx] = useState(-1);
 
   // ── UI States ──
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -90,8 +90,8 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
   const [activeAccordion, setActiveAccordion] = useState({
     summary: true,
     trx: false,
-    categories: true,
-    tags: true,
+    categories: false,
+    tags: false,
   });
   const [showMediaPicker, setShowMediaPicker] = useState(false);
   const [mediaTarget, setMediaTarget] = useState('featured'); // 'featured' | { type: 'block', id: string }
@@ -99,6 +99,9 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
   const [showStatusPicker, setShowStatusPicker] = useState(false);
   const [showAuthorPicker, setShowAuthorPicker] = useState(false);
   const [showSlugEdit, setShowSlugEdit] = useState(false);
+  const [showTemplatePicker, setShowTemplatePicker] = useState(false);
+  const [showDiscussionPicker, setShowDiscussionPicker] = useState(false);
+  const [showFormatPicker, setShowFormatPicker] = useState(false);
   const [elementorAiOpen, setElementorAiOpen] = useState(false);
 
   // ── Rank Math & SEO Fields ──
@@ -112,7 +115,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     if (editArticle && editArticle.id !== editingId) {
       setEditingId(editArticle.id);
       setTitle(editArticle.title || '');
-      setSlug(editArticle.slug || '');
+      setSlug(editArticle.slug || `${Math.floor(1000 + Math.random() * 9000)}`);
       setAutoSlug(false);
       setExcerpt(editArticle.summary || '');
       setFeaturedImage(editArticle.image || '');
@@ -130,7 +133,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
         setTags(typeof editArticle.tags === 'string' ? editArticle.tags.split(',').map(t => t.trim()).filter(Boolean) : editArticle.tags);
       }
 
-      // Convert intro & sections to Gutenberg blocks
       if (editArticle.blocks && editArticle.blocks.length > 0) {
         setBlocks(editArticle.blocks);
       } else {
@@ -156,7 +158,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     }
   }, [editArticle?.id]);
 
-  // Handle title changes & auto slug
   const handleTitleChange = (val) => {
     setTitle(val);
     if (autoSlug) {
@@ -164,7 +165,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     }
   };
 
-  // Block Helpers
   const updateBlock = (id, newProps) => {
     setBlocks(prev => prev.map(b => b.id === id ? { ...b, ...newProps } : b));
   };
@@ -200,7 +200,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     setBlocks(prev => prev.filter(b => b.id !== id));
   };
 
-  // Convert blocks to full HTML content for SEO analysis & saving
   const rawHtmlContent = blocks.map(b => {
     if (b.type === 'heading') return `<h${b.level || 2}>${b.content}</h${b.level || 2}>`;
     if (b.type === 'image') return `<figure><img src="${b.url}" alt="${b.alt || ''}" /><figcaption>${b.caption || ''}</figcaption></figure>`;
@@ -210,7 +209,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     return `<p>${b.content}</p>`;
   }).join('\n');
 
-  // SEO Calculation
   const seoData = analyzeSeo({
     title,
     slug,
@@ -223,9 +221,8 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     hasImage: !!featuredImage || rawHtmlContent.includes('<img'),
   });
 
-  const { score, color } = seoData;
+  const { score } = seoData;
 
-  // Save / Publish handler
   const handleSave = (newStatus = 'Draft') => {
     const finalTitle = title.trim() || 'Untitled Post';
     const finalSlug = slug.trim() || slugify(finalTitle) || `${Date.now()}`;
@@ -264,12 +261,11 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     const updated = editingId ? existing.map(a => a.id === editingId ? article : a) : [article, ...existing];
     saveCustomArticles(updated);
     setStatus(newStatus);
-    setToast(newStatus === 'Draft' ? 'Draft saved successfully.' : 'Post published!');
+    setToast(newStatus === 'Draft' ? 'Draft saved.' : 'Post published!');
     setTimeout(() => setToast(''), 3000);
     if (onPublished) onPublished(article);
   };
 
-  // Media selection callback
   const handleMediaSelected = (item) => {
     const imgUrl = item.dataUrl || item.url;
     if (mediaTarget === 'featured') {
@@ -280,7 +276,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     setShowMediaPicker(false);
   };
 
-  // Category toggle
   const toggleCategory = (cat) => {
     setSelectedCategories(prev =>
       prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]
@@ -297,7 +292,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     setShowAddCat(false);
   };
 
-  // Tag helpers
   const handleAddTag = (e) => {
     if ((e.key === 'Enter' || e.key === ',') && tagInput.trim()) {
       e.preventDefault();
@@ -313,7 +307,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     setTags(tags.filter(tag => tag !== t));
   };
 
-  // Theme variables
   const wpBg = darkMode ? '#121212' : '#ffffff';
   const wpHeaderBg = darkMode ? '#18181b' : '#ffffff';
   const wpBorder = darkMode ? '#27272a' : '#e0e0e0';
@@ -325,15 +318,66 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     <div className="min-h-screen flex flex-col font-sans select-text" style={{ background: wpBg, color: wpText }}>
 
       {/* ─────────────────────────────────────────────────────────────
-          1. TOP GUTENBERG HEADER BAR (Exact Match to Screenshot)
+          1. TOPMOST WORDPRESS ADMIN BLACK BAR (Exact match to screenshot)
+      ───────────────────────────────────────────────────────────── */}
+      <div className="h-8 bg-[#1d2327] text-[#c3c4c7] flex items-center justify-between px-3 text-xs select-none z-50">
+        <div className="flex items-center gap-4">
+          {/* WordPress W Logo */}
+          <div className="flex items-center gap-2 cursor-pointer hover:text-white transition">
+            <div className="w-4 h-4 rounded-full bg-white flex items-center justify-center text-[#1d2327] text-[10px] font-black">
+              W
+            </div>
+          </div>
+
+          {/* Site name + icon */}
+          <div className="flex items-center gap-1.5 cursor-pointer hover:text-white transition">
+            <span className="w-3.5 h-3.5 bg-[#e2b857] text-black font-black text-[9px] rounded-sm flex items-center justify-center leading-none">
+              i
+            </span>
+            <span className="font-semibold text-white">Identifine</span>
+          </div>
+
+          {/* Quick Search */}
+          <div className="flex items-center gap-1 text-[11px] text-[#a7aaad] bg-[#2c3338] px-2 py-0.5 rounded cursor-pointer hover:text-white">
+            <Search size={11} />
+            <span>Ctrl+K</span>
+          </div>
+
+          {/* Comments Bubble */}
+          <div className="flex items-center gap-1 text-[#a7aaad] hover:text-white cursor-pointer">
+            <MessageSquare size={12} />
+            <span>0</span>
+          </div>
+
+          {/* + New Link */}
+          <div
+            onClick={() => onBack ? onBack() : null}
+            className="flex items-center gap-1 text-[#a7aaad] hover:text-white cursor-pointer"
+          >
+            <Plus size={13} />
+            <span>New</span>
+          </div>
+        </div>
+
+        {/* Right side: User Profile */}
+        <div className="flex items-center gap-2 text-[#a7aaad] text-xs">
+          <span>Howdy, Love Olaoye</span>
+          <div className="w-5 h-5 rounded-full bg-[#8c8f94] flex items-center justify-center text-white text-[10px] font-bold">
+            L
+          </div>
+        </div>
+      </div>
+
+      {/* ─────────────────────────────────────────────────────────────
+          2. GUTENBERG EDITOR HEADER BAR (Exact Match to Screenshot)
       ───────────────────────────────────────────────────────────── */}
       <header
-        className="h-14 border-b flex items-center justify-between px-3 sticky top-0 z-50 select-none"
+        className="h-14 border-b flex items-center justify-between px-3 sticky top-0 z-40 select-none shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
         style={{ background: wpHeaderBg, borderColor: wpBorder }}
       >
         {/* Left Action Buttons */}
         <div className="flex items-center gap-1.5">
-          {/* Back to WordPress Admin */}
+          {/* Back Arrow Button */}
           <button
             onClick={() => onBack ? onBack() : window.history.back()}
             title="View Posts"
@@ -355,14 +399,12 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
           {/* Undo / Redo */}
           <button
             title="Undo"
-            onClick={() => {}}
             className="w-9 h-9 flex items-center justify-center rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-600 dark:text-gray-300 transition"
           >
             <RotateCcw size={16} />
           </button>
           <button
             title="Redo"
-            onClick={() => {}}
             className="w-9 h-9 flex items-center justify-center rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-600 dark:text-gray-300 transition"
           >
             <RotateCw size={16} />
@@ -379,7 +421,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
           {/* Edit with Elementor Button */}
           <button
             onClick={() => setElementorAiOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded text-white text-xs font-semibold tracking-wide transition shadow-sm ml-2"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded text-white text-xs font-semibold tracking-wide transition shadow-sm ml-2"
             style={{ background: wpBlue }}
           >
             <span className="w-4 h-4 rounded-full bg-white flex items-center justify-center text-[10px] font-black" style={{ color: wpBlue }}>
@@ -389,7 +431,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
           </button>
         </div>
 
-        {/* Center: Document Title Pill */}
+        {/* Center: Document Title Capsule */}
         <div className="hidden md:flex items-center">
           <div
             className="px-6 py-1.5 rounded text-xs font-medium border"
@@ -397,19 +439,18 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
               background: darkMode ? '#27272a' : '#f0f0f1',
               borderColor: darkMode ? '#3f3f46' : '#dcdcde',
               color: darkMode ? '#e4e4e7' : '#50575e',
-              minWidth: '220px',
+              minWidth: '240px',
               textAlign: 'center'
             }}
           >
-            {title.trim() ? `${title.trim().slice(0, 32)} - Post` : 'No title - Post'}
+            {title.trim() ? `${title.trim().slice(0, 34)} - Post` : 'No title - Post'}
           </div>
         </div>
 
         {/* Right Action Tools */}
         <div className="flex items-center gap-2">
-          {/* Toast Notification */}
           {toast && (
-            <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 animate-fade-in mr-2">
+            <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mr-2">
               {toast}
             </span>
           )}
@@ -417,8 +458,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
           {/* Save Draft */}
           <button
             onClick={() => handleSave('Draft')}
-            className="text-xs font-medium px-2.5 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 transition"
-            style={{ color: wpText }}
+            className="text-xs font-medium px-2.5 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 transition text-[#50575e] dark:text-gray-300"
           >
             Save draft
           </button>
@@ -432,7 +472,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
             <Monitor size={17} />
           </button>
 
-          {/* Rank Math SEO Pill (Badge with Score) */}
+          {/* Rank Math SEO Pill (Red / Green badge matching screenshot) */}
           <button
             onClick={() => {
               setSidebarOpen(true);
@@ -452,7 +492,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
             <span>{score} / 100</span>
           </button>
 
-          {/* Toggle Sidebar Icon */}
+          {/* Sidebar Toggle Icon */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             title="Toggle Settings Sidebar"
@@ -482,11 +522,11 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
       </header>
 
       {/* ─────────────────────────────────────────────────────────────
-          2. MAIN CONTENT & CANVAS CONTAINER
+          3. MAIN CONTENT & CANVAS CONTAINER
       ───────────────────────────────────────────────────────────── */}
       <div className="flex-1 flex overflow-hidden relative">
 
-        {/* ── BLOCK INSERTER POPOVER MENU ── */}
+        {/* Block Inserter Popover Menu */}
         {showBlockInserter && (
           <div
             className="absolute top-2 left-4 z-40 w-72 rounded-lg shadow-2xl border p-3 animate-scale-in"
@@ -556,37 +596,37 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
           </div>
         )}
 
-        {/* ── WRITING CANVAS (Center Document) ── */}
-        <main className="flex-1 overflow-y-auto px-6 py-12 flex justify-center custom-scrollbar">
-          <div className="w-full max-w-[820px]">
+        {/* ── WRITING CANVAS (Center Document - Exact match) ── */}
+        <main className="flex-1 overflow-y-auto px-6 py-14 flex justify-center custom-scrollbar">
+          <div className="w-full max-w-[840px]">
 
             {/* Document H1 Title (Exact match Gutenberg 'Add title') */}
-            <div className="mb-6">
+            <div className="mb-8">
               <input
                 type="text"
                 value={title}
                 onChange={(e) => handleTitleChange(e.target.value)}
                 placeholder="Add title"
-                className="w-full text-4xl sm:text-5xl font-bold tracking-tight border-none outline-none bg-transparent placeholder-gray-400 dark:placeholder-zinc-600 leading-tight"
-                style={{ color: wpText, fontFamily: 'inherit' }}
+                className="w-full text-5xl font-bold tracking-tight border-none outline-none bg-transparent placeholder-[#757575] leading-tight"
+                style={{ color: wpText, fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif' }}
                 autoFocus
               />
             </div>
 
             {/* Gutenberg Blocks Canvas */}
-            <div className="space-y-4 min-h-[360px]">
-              {blocks.map((block, idx) => {
+            <div className="space-y-4 min-h-[380px]">
+              {blocks.map((block) => {
                 const isActive = activeBlockId === block.id;
 
                 return (
                   <div
                     key={block.id}
-                    className={`relative group rounded-md transition duration-150 ${
-                      isActive ? 'ring-1 ring-blue-500/50 bg-blue-50/10' : ''
+                    className={`relative group rounded transition duration-150 ${
+                      isActive ? 'ring-1 ring-blue-500/30 bg-blue-50/5' : ''
                     }`}
                     onClick={() => setActiveBlockId(block.id)}
                   >
-                    {/* Floating Block Toolbar when Active */}
+                    {/* Floating Block Toolbar */}
                     {isActive && (
                       <div
                         className="absolute -top-10 left-0 z-30 flex items-center gap-1 px-2 py-1 rounded shadow-lg border text-xs select-none animate-fade-in"
@@ -643,7 +683,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
                     {/* Block Renderers */}
                     {block.type === 'paragraph' && (
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between py-1">
                         <div
                           contentEditable
                           suppressContentEditableWarning
@@ -655,14 +695,14 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                             }
                           }}
                           data-placeholder="Type / to choose a block"
-                          className="w-full min-h-[32px] text-lg text-gray-800 dark:text-gray-200 outline-none leading-relaxed empty:before:content-[attr(data-placeholder)] empty:before:text-gray-400 dark:empty:before:text-zinc-600"
+                          className="w-full min-h-[30px] text-lg text-gray-800 dark:text-gray-200 outline-none leading-relaxed empty:before:content-[attr(data-placeholder)] empty:before:text-[#757575]"
                           dangerouslySetInnerHTML={{ __html: block.content }}
                         />
-                        {/* Hover '+' Block Add Icon on the right */}
+                        {/* Black '+' Block Icon on the right (matching screenshot) */}
                         <button
                           onClick={() => addBlock('paragraph', block.id)}
                           title="Add block"
-                          className="opacity-0 group-hover:opacity-100 w-6 h-6 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 flex items-center justify-center shadow transition ml-2 flex-shrink-0"
+                          className="w-6 h-6 rounded bg-[#1e1e1e] dark:bg-white text-white dark:text-[#1e1e1e] flex items-center justify-center shadow transition ml-4 flex-shrink-0 cursor-pointer"
                         >
                           <Plus size={14} />
                         </button>
@@ -670,13 +710,13 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     )}
 
                     {block.type === 'heading' && (
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 py-1">
                         <input
                           type="text"
                           value={block.content}
                           onChange={(e) => updateBlock(block.id, { content: e.target.value })}
                           placeholder="Heading text..."
-                          className="w-full text-2xl sm:text-3xl font-bold tracking-tight border-none outline-none bg-transparent placeholder-gray-400 dark:placeholder-zinc-600"
+                          className="w-full text-3xl font-bold tracking-tight border-none outline-none bg-transparent placeholder-[#757575]"
                         />
                         <select
                           value={block.level || 2}
@@ -790,44 +830,11 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 );
               })}
             </div>
-
-            {/* Quick Add Block Footer Bar */}
-            <div className="mt-8 pt-4 border-t flex items-center justify-between text-xs text-gray-400" style={{ borderColor: wpBorder }}>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => addBlock('paragraph')}
-                  className="flex items-center gap-1 hover:text-blue-600 transition"
-                >
-                  <Plus size={14} /> Add Paragraph
-                </button>
-                <span>•</span>
-                <button
-                  onClick={() => addBlock('heading', null, { level: 2 })}
-                  className="flex items-center gap-1 hover:text-blue-600 transition"
-                >
-                  <Heading size={14} /> Heading
-                </button>
-                <span>•</span>
-                <button
-                  onClick={() => {
-                    const newId = `b-img-${Date.now()}`;
-                    addBlock('image', null, { id: newId, url: '' });
-                    setMediaTarget({ type: 'block', id: newId });
-                    setShowMediaPicker(true);
-                  }}
-                  className="flex items-center gap-1 hover:text-blue-600 transition"
-                >
-                  <ImageIcon size={14} /> Image
-                </button>
-              </div>
-
-              <span>Word count: {rawHtmlContent.replace(/<[^>]+>/g, '').trim().split(/\s+/).filter(Boolean).length}</span>
-            </div>
           </div>
         </main>
 
         {/* ─────────────────────────────────────────────────────────────
-            3. RIGHT SIDEBAR (Exact Match: Post / Block / Rank Math)
+            4. RIGHT SIDEBAR (Exact Match: Post / Block / Rank Math)
         ───────────────────────────────────────────────────────────── */}
         {sidebarOpen && (
           <aside
@@ -874,14 +881,14 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
               </button>
             </div>
 
-            {/* TAB CONTENT: POST */}
+            {/* TAB CONTENT: POST (Exact match to screenshot) */}
             {sidebarTab === 'post' && (
-              <div className="p-4 space-y-6 text-xs">
+              <div className="p-4 space-y-5 text-xs">
 
-                {/* 1. Post Header Summary Item */}
+                {/* 1. Post Header Summary Item (Feather Icon + Title + ⋮) */}
                 <div className="flex items-center justify-between pb-3 border-b" style={{ borderColor: wpBorder }}>
                   <div className="flex items-center gap-2">
-                    <Feather size={16} className="text-gray-600 dark:text-gray-400" />
+                    <Feather size={16} className="text-gray-700 dark:text-gray-300" />
                     <span className="font-semibold text-sm truncate max-w-[190px]">
                       {title.trim() || 'No title'}
                     </span>
@@ -892,8 +899,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 </div>
 
                 {/* 2. Featured Image Section (Button: Set featured image) */}
-                <div className="space-y-2">
-                  <span className="font-semibold text-gray-700 dark:text-gray-300">Featured image</span>
+                <div>
                   {featuredImage ? (
                     <div className="relative group rounded border overflow-hidden" style={{ borderColor: wpBorder }}>
                       <img src={featuredImage} alt="Featured" className="w-full h-36 object-cover" />
@@ -921,17 +927,16 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                         setMediaTarget('featured');
                         setShowMediaPicker(true);
                       }}
-                      className="w-full py-3 px-4 border rounded font-semibold text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:text-blue-600 transition flex items-center justify-center gap-2"
+                      className="w-full py-2.5 px-4 border rounded font-medium text-gray-800 dark:text-gray-200 hover:border-blue-500 hover:text-blue-600 transition flex items-center justify-center gap-2 text-xs"
                       style={{ borderColor: wpBorder }}
                     >
-                      <ImageIcon size={15} />
                       Set featured image
                     </button>
                   )}
                 </div>
 
-                {/* 3. Elementor AI Helper Link */}
-                <div className="flex items-center gap-1.5 text-purple-600 hover:text-purple-700 cursor-pointer font-semibold py-1">
+                {/* 3. Elementor AI Helper Link (Magenta/purple sparkles icon + text) */}
+                <div className="flex items-center gap-1.5 text-[#a020f0] hover:text-purple-700 cursor-pointer font-medium text-xs">
                   <Sparkles size={14} />
                   <span onClick={() => setElementorAiOpen(true)}>Generate with Elementor AI</span>
                 </div>
@@ -940,7 +945,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 <div>
                   <button
                     onClick={() => setShowExcerptField(!showExcerptField)}
-                    className="text-blue-600 hover:text-blue-700 font-medium cursor-pointer"
+                    className="text-[#2271b1] hover:underline font-medium cursor-pointer"
                   >
                     {excerpt ? 'Edit excerpt...' : 'Add an excerpt...'}
                   </button>
@@ -948,7 +953,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     <textarea
                       value={excerpt}
                       onChange={(e) => setExcerpt(e.target.value)}
-                      placeholder="Write a short summary or excerpt for search engines and archives..."
+                      placeholder="Write a short summary or excerpt..."
                       rows={3}
                       className="w-full mt-2 p-2 rounded border outline-none text-xs bg-transparent"
                       style={{ borderColor: wpBorder }}
@@ -956,20 +961,23 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   )}
                 </div>
 
-                <div className="text-[11px] text-gray-400 italic">
-                  Last edited a few seconds ago.
+                {/* 5. Last edited timestamp */}
+                <div className="text-[11px] text-[#757575]">
+                  Last edited 15 minutes ago.
                 </div>
 
-                {/* 5. Post Status Details Grid (Exact Layout) */}
-                <div className="space-y-3 pt-2 border-t" style={{ borderColor: wpBorder }}>
+                {/* 6. Post Status Details Grid (Exact Layout from screenshot) */}
+                <div className="space-y-3 pt-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Status</span>
+                    <span className="text-gray-600 dark:text-gray-400">Status</span>
                     <div className="relative">
                       <button
                         onClick={() => setShowStatusPicker(!showStatusPicker)}
-                        className="text-blue-600 font-semibold hover:underline flex items-center gap-1"
+                        className="text-[#2271b1] font-medium hover:underline flex items-center gap-1.5"
                       >
-                        <CheckCircle2 size={13} />
+                        <span className="w-2.5 h-2.5 rounded-full border-2 border-[#2271b1] flex items-center justify-center">
+                          <span className="w-1 h-1 rounded-full bg-[#2271b1]"></span>
+                        </span>
                         {status}
                       </button>
                       {showStatusPicker && (
@@ -992,12 +1000,12 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Publish</span>
-                    <span className="text-blue-600 font-medium cursor-pointer hover:underline">{publishDate}</span>
+                    <span className="text-gray-600 dark:text-gray-400">Publish</span>
+                    <span className="text-[#2271b1] font-medium cursor-pointer hover:underline">{publishDate}</span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Slug</span>
+                    <span className="text-gray-600 dark:text-gray-400">Slug</span>
                     {showSlugEdit ? (
                       <input
                         type="text"
@@ -1011,7 +1019,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     ) : (
                       <span
                         onClick={() => setShowSlugEdit(true)}
-                        className="text-blue-600 font-medium cursor-pointer hover:underline truncate max-w-[140px]"
+                        className="text-[#2271b1] font-medium cursor-pointer hover:underline truncate max-w-[140px]"
                       >
                         {slug || '3993'}
                       </span>
@@ -1019,11 +1027,11 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Author</span>
+                    <span className="text-gray-600 dark:text-gray-400">Author</span>
                     <div className="relative">
                       <button
                         onClick={() => setShowAuthorPicker(!showAuthorPicker)}
-                        className="text-blue-600 font-medium hover:underline"
+                        className="text-[#2271b1] font-medium hover:underline"
                       >
                         {author}
                       </button>
@@ -1047,32 +1055,40 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Template</span>
-                    <span className="text-blue-600 font-medium cursor-pointer hover:underline">{template}</span>
+                    <span className="text-gray-600 dark:text-gray-400">Template</span>
+                    <span className="text-[#2271b1] font-medium cursor-pointer hover:underline">{template}</span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Discussion</span>
-                    <span className="text-blue-600 font-medium cursor-pointer hover:underline">{discussion}</span>
+                    <span className="text-gray-600 dark:text-gray-400">Discussion</span>
+                    <span className="text-[#2271b1] font-medium cursor-pointer hover:underline">{discussion}</span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-500">Format</span>
-                    <span className="text-blue-600 font-medium cursor-pointer hover:underline">{format}</span>
+                    <span className="text-gray-600 dark:text-gray-400">Format</span>
+                    <span className="text-[#2271b1] font-medium cursor-pointer hover:underline">{format}</span>
                   </div>
 
                   <div className="flex items-center justify-between pt-1">
-                    <span className="text-gray-600 dark:text-gray-400">Lock Modified Date</span>
-                    <input
-                      type="checkbox"
-                      checked={lockModifiedDate}
-                      onChange={(e) => setLockModifiedDate(e.target.checked)}
-                      className="cursor-pointer"
-                    />
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setLockModifiedDate(!lockModifiedDate)}
+                        className={`w-7 h-4 rounded-full transition relative ${
+                          lockModifiedDate ? 'bg-[#2271b1]' : 'bg-gray-300 dark:bg-zinc-700'
+                        }`}
+                      >
+                        <span
+                          className={`w-3 h-3 rounded-full bg-white absolute top-0.5 transition ${
+                            lockModifiedDate ? 'left-3.5' : 'left-0.5'
+                          }`}
+                        />
+                      </button>
+                      <span className="text-gray-600 dark:text-gray-400 text-xs">Lock Modified Date</span>
+                    </div>
                   </div>
                 </div>
 
-                {/* 6. Accordion: TRX Addons AI Helper */}
+                {/* 7. Accordion: TRX Addons AI Helper */}
                 <div className="border-t pt-3" style={{ borderColor: wpBorder }}>
                   <button
                     onClick={() => setActiveAccordion(prev => ({ ...prev, trx: !prev.trx }))}
@@ -1082,7 +1098,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     {activeAccordion.trx ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
                   </button>
                   {activeAccordion.trx && (
-                    <div className="mt-2.5 p-2 rounded border space-y-2" style={{ borderColor: wpBorder }}>
+                    <div className="mt-2.5 p-2.5 rounded border space-y-2" style={{ borderColor: wpBorder }}>
                       <p className="text-[11px] text-gray-500">Generate executive copywriting and summary with AI assistance.</p>
                       <button
                         onClick={() => {
@@ -1099,7 +1115,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   )}
                 </div>
 
-                {/* 7. Accordion: Categories */}
+                {/* 8. Accordion: Categories */}
                 <div className="border-t pt-3" style={{ borderColor: wpBorder }}>
                   <button
                     onClick={() => setActiveAccordion(prev => ({ ...prev, categories: !prev.categories }))}
@@ -1152,7 +1168,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                       ) : (
                         <button
                           onClick={() => setShowAddCat(true)}
-                          className="text-xs text-blue-600 hover:underline font-semibold"
+                          className="text-xs text-[#2271b1] hover:underline font-semibold"
                         >
                           + Add New Category
                         </button>
@@ -1161,7 +1177,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                   )}
                 </div>
 
-                {/* 8. Accordion: Tags */}
+                {/* 9. Accordion: Tags */}
                 <div className="border-t pt-3" style={{ borderColor: wpBorder }}>
                   <button
                     onClick={() => setActiveAccordion(prev => ({ ...prev, tags: !prev.tags }))}
@@ -1250,28 +1266,33 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          4. BOTTOM STATUS BAR & FLOATING CHAT WIDGET
+          5. BOTTOM STATUS BAR (Exact Match: Meta Boxes ⌵ / Post › Paragraph)
       ───────────────────────────────────────────────────────────── */}
       <footer
-        className="h-8 border-t flex items-center justify-between px-4 text-xs select-none"
+        className="h-7 border-t flex items-center justify-between px-4 text-xs select-none"
         style={{ background: wpHeaderBg, borderColor: wpBorder, color: wpMuted }}
       >
         <div className="flex items-center gap-4">
           <button className="hover:text-gray-800 dark:hover:text-gray-200 font-medium">
             Meta Boxes ▾
           </button>
-          <span>Post</span>
+          <div className="flex items-center gap-1.5 text-[11px]">
+            <span className="hover:underline cursor-pointer">Post</span>
+            <span>›</span>
+            <span className="text-gray-800 dark:text-gray-200 font-medium">Paragraph</span>
+          </div>
         </div>
-        <div className="text-[11px]">
-          Identifine Studio • Block Editor
+        <div className="w-16 h-1 bg-gray-200 dark:bg-zinc-700 rounded-full mx-auto hidden sm:block"></div>
+        <div className="text-[11px] text-gray-400">
+          Gutenberg Block Editor
         </div>
       </footer>
 
-      {/* Floating Green Chat Widget (Bottom-Right matching screenshot) */}
+      {/* Floating Green WhatsApp/Support Assistant Button (Exact match bottom-right) */}
       <button
-        title="Need help?"
-        onClick={() => alert('Identifine Support Assistant')}
-        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-2xl hover:scale-105 transition active:scale-95"
+        title="Identifine Assistant"
+        onClick={() => alert('Identifine Live Assistant ready.')}
+        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-[#25d366] hover:bg-[#20bd5a] text-white flex items-center justify-center shadow-2xl hover:scale-105 transition active:scale-95 cursor-pointer"
       >
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.632-.821A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z" />
@@ -1287,7 +1308,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
         />
       )}
 
-      {/* Elementor AI Modal Mockup */}
+      {/* Elementor AI Modal */}
       {elementorAiOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-2xl max-w-lg w-full p-6 border border-zinc-200 dark:border-zinc-800 animate-scale-in">
