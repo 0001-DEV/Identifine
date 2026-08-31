@@ -51,6 +51,15 @@ const DEFAULT_CATEGORIES = [
   'Uncategorized',
 ];
 
+const POPULAR_BLOCKS = [
+  { id: 'paragraph', name: 'Paragraph', icon: '¶', isTextIcon: true },
+  { id: 'heading-2', name: 'Heading 2', icon: 'H2', isTextIcon: true, type: 'heading', level: 2 },
+  { id: 'heading-3', name: 'Heading 3', icon: 'H3', isTextIcon: true, type: 'heading', level: 3 },
+  { id: 'list', name: 'List', icon: 'list', isListIcon: true, type: 'list' },
+  { id: 'heading-1', name: 'Heading 1', icon: 'H1', isTextIcon: true, type: 'heading', level: 1 },
+  { id: 'image', name: 'Image', icon: 'image', isImageIcon: true, type: 'image' },
+];
+
 export default function NewPostPanel({ editArticle, onPublished, onBack, darkMode = false }) {
   const [editingId, setEditingId] = useState(null);
 
@@ -82,7 +91,9 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     { id: 'b-1', type: 'paragraph', content: '' }
   ]);
   const [activeBlockId, setActiveBlockId] = useState('b-1');
-  const [showBlockInserter, setShowBlockInserter] = useState(false);
+  const [inlineInserterBlockId, setInlineInserterBlockId] = useState(null);
+  const [inlineSearch, setInlineSearch] = useState('');
+  const [showTopBlockInserter, setShowTopBlockInserter] = useState(false);
 
   // ── UI States ──
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -99,9 +110,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
   const [showStatusPicker, setShowStatusPicker] = useState(false);
   const [showAuthorPicker, setShowAuthorPicker] = useState(false);
   const [showSlugEdit, setShowSlugEdit] = useState(false);
-  const [showTemplatePicker, setShowTemplatePicker] = useState(false);
-  const [showDiscussionPicker, setShowDiscussionPicker] = useState(false);
-  const [showFormatPicker, setShowFormatPicker] = useState(false);
   const [elementorAiOpen, setElementorAiOpen] = useState(false);
 
   // ── Rank Math & SEO Fields ──
@@ -109,6 +117,18 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
   const [seoTitle, setSeoTitle] = useState('');
   const [metaDesc, setMetaDesc] = useState('');
   const [activeRmTab, setActiveRmTab] = useState('general');
+
+  // Close inline inserter on outside click
+  const inlineInserterRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (inlineInserterRef.current && !inlineInserterRef.current.contains(e.target)) {
+        setInlineInserterBlockId(null);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Load article for editing if provided
   useEffect(() => {
@@ -169,6 +189,42 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     setBlocks(prev => prev.map(b => b.id === id ? { ...b, ...newProps } : b));
   };
 
+  const handleInsertBlockFromInline = (blockTypeConfig, targetBlockId) => {
+    setInlineInserterBlockId(null);
+    setInlineSearch('');
+
+    if (blockTypeConfig.id === 'image') {
+      const newId = `b-img-${Date.now()}`;
+      addBlock('image', targetBlockId, { id: newId, url: '', caption: '', alt: '' });
+      setMediaTarget({ type: 'block', id: newId });
+      setShowMediaPicker(true);
+      return;
+    }
+
+    if (blockTypeConfig.type === 'heading') {
+      // If current paragraph is empty, transform it directly; otherwise insert after
+      const currentBlock = blocks.find(b => b.id === targetBlockId);
+      if (currentBlock && !currentBlock.content.trim()) {
+        updateBlock(targetBlockId, { type: 'heading', level: blockTypeConfig.level || 2, content: '' });
+      } else {
+        addBlock('heading', targetBlockId, { level: blockTypeConfig.level || 2 });
+      }
+      return;
+    }
+
+    if (blockTypeConfig.type === 'list') {
+      const currentBlock = blocks.find(b => b.id === targetBlockId);
+      if (currentBlock && !currentBlock.content.trim()) {
+        updateBlock(targetBlockId, { type: 'list', items: [''] });
+      } else {
+        addBlock('list', targetBlockId, { items: [''] });
+      }
+      return;
+    }
+
+    addBlock('paragraph', targetBlockId);
+  };
+
   const addBlock = (type = 'paragraph', insertAfterId = null, extraProps = {}) => {
     const newBlock = {
       id: `b-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
@@ -189,7 +245,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
       setBlocks(prev => [...prev, newBlock]);
     }
     setActiveBlockId(newBlock.id);
-    setShowBlockInserter(false);
+    setShowTopBlockInserter(false);
   };
 
   const deleteBlock = (id) => {
@@ -307,6 +363,10 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     setTags(tags.filter(tag => tag !== t));
   };
 
+  const filteredPopularBlocks = POPULAR_BLOCKS.filter(b =>
+    b.name.toLowerCase().includes(inlineSearch.toLowerCase())
+  );
+
   const wpBg = darkMode ? '#121212' : '#ffffff';
   const wpHeaderBg = darkMode ? '#18181b' : '#ffffff';
   const wpBorder = darkMode ? '#27272a' : '#e0e0e0';
@@ -388,7 +448,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
           {/* Blue Block Inserter Button (+) */}
           <button
-            onClick={() => setShowBlockInserter(!showBlockInserter)}
+            onClick={() => setShowTopBlockInserter(!showTopBlockInserter)}
             title="Toggle block inserter"
             className="w-9 h-9 rounded flex items-center justify-center text-white transition shadow-sm"
             style={{ background: wpBlue }}
@@ -472,7 +532,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
             <Monitor size={17} />
           </button>
 
-          {/* Rank Math SEO Pill (Red / Green badge matching screenshot) */}
+          {/* Rank Math SEO Pill (Red badge matching screenshot) */}
           <button
             onClick={() => {
               setSidebarOpen(true);
@@ -526,77 +586,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
       ───────────────────────────────────────────────────────────── */}
       <div className="flex-1 flex overflow-hidden relative">
 
-        {/* Block Inserter Popover Menu */}
-        {showBlockInserter && (
-          <div
-            className="absolute top-2 left-4 z-40 w-72 rounded-lg shadow-2xl border p-3 animate-scale-in"
-            style={{ background: wpHeaderBg, borderColor: wpBorder }}
-          >
-            <div className="flex items-center justify-between pb-2 mb-2 border-b" style={{ borderColor: wpBorder }}>
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-500">Add Block</span>
-              <button onClick={() => setShowBlockInserter(false)} className="text-gray-400 hover:text-gray-600">
-                <X size={15} />
-              </button>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => addBlock('paragraph')}
-                className="flex flex-col items-center gap-1.5 p-3 rounded border hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition text-left"
-                style={{ borderColor: wpBorder }}
-              >
-                <FileText size={20} className="text-blue-600" />
-                <span className="text-xs font-semibold">Paragraph</span>
-              </button>
-              <button
-                onClick={() => addBlock('heading', null, { level: 2 })}
-                className="flex flex-col items-center gap-1.5 p-3 rounded border hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition text-left"
-                style={{ borderColor: wpBorder }}
-              >
-                <Heading size={20} className="text-blue-600" />
-                <span className="text-xs font-semibold">Heading</span>
-              </button>
-              <button
-                onClick={() => {
-                  const newId = `b-img-${Date.now()}`;
-                  addBlock('image', null, { id: newId, url: '', caption: '', alt: '' });
-                  setMediaTarget({ type: 'block', id: newId });
-                  setShowMediaPicker(true);
-                }}
-                className="flex flex-col items-center gap-1.5 p-3 rounded border hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition text-left"
-                style={{ borderColor: wpBorder }}
-              >
-                <ImageIcon size={20} className="text-purple-600" />
-                <span className="text-xs font-semibold">Image</span>
-              </button>
-              <button
-                onClick={() => addBlock('quote')}
-                className="flex flex-col items-center gap-1.5 p-3 rounded border hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition text-left"
-                style={{ borderColor: wpBorder }}
-              >
-                <Quote size={20} className="text-amber-600" />
-                <span className="text-xs font-semibold">Quote</span>
-              </button>
-              <button
-                onClick={() => addBlock('list', null, { items: ['First point', 'Second point'] })}
-                className="flex flex-col items-center gap-1.5 p-3 rounded border hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition text-left"
-                style={{ borderColor: wpBorder }}
-              >
-                <ListIcon size={20} className="text-emerald-600" />
-                <span className="text-xs font-semibold">List</span>
-              </button>
-              <button
-                onClick={() => addBlock('code')}
-                className="flex flex-col items-center gap-1.5 p-3 rounded border hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition text-left"
-                style={{ borderColor: wpBorder }}
-              >
-                <Code size={20} className="text-indigo-600" />
-                <span className="text-xs font-semibold">Code</span>
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* ── WRITING CANVAS (Center Document - Exact match) ── */}
+        {/* ── WRITING CANVAS (Center Document) ── */}
         <main className="flex-1 overflow-y-auto px-6 py-14 flex justify-center custom-scrollbar">
           <div className="w-full max-w-[840px]">
 
@@ -617,6 +607,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
             <div className="space-y-4 min-h-[380px]">
               {blocks.map((block) => {
                 const isActive = activeBlockId === block.id;
+                const isInlineOpen = inlineInserterBlockId === block.id;
 
                 return (
                   <div
@@ -683,7 +674,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
                     {/* Block Renderers */}
                     {block.type === 'paragraph' && (
-                      <div className="flex items-center justify-between py-1">
+                      <div className="relative flex items-center justify-between py-1">
                         <div
                           contentEditable
                           suppressContentEditableWarning
@@ -698,14 +689,101 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                           className="w-full min-h-[30px] text-lg text-gray-800 dark:text-gray-200 outline-none leading-relaxed empty:before:content-[attr(data-placeholder)] empty:before:text-[#757575]"
                           dangerouslySetInnerHTML={{ __html: block.content }}
                         />
-                        {/* Black '+' Block Icon on the right (matching screenshot) */}
-                        <button
-                          onClick={() => addBlock('paragraph', block.id)}
-                          title="Add block"
-                          className="w-6 h-6 rounded bg-[#1e1e1e] dark:bg-white text-white dark:text-[#1e1e1e] flex items-center justify-center shadow transition ml-4 flex-shrink-0 cursor-pointer"
-                        >
-                          <Plus size={14} />
-                        </button>
+
+                        {/* ── [+] / [✕] IN-LINE BLOCK INSERTER BUTTON (Exact match) ── */}
+                        <div className="relative flex-shrink-0 ml-4">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setInlineInserterBlockId(isInlineOpen ? null : block.id);
+                              setInlineSearch('');
+                            }}
+                            title="Add block"
+                            className={`w-6 h-6 rounded flex items-center justify-center shadow transition cursor-pointer select-none ${
+                              isInlineOpen
+                                ? 'bg-[#2271b1] text-white'
+                                : 'bg-[#1e1e1e] dark:bg-white text-white dark:text-[#1e1e1e]'
+                            }`}
+                          >
+                            {isInlineOpen ? <X size={14} /> : <Plus size={14} />}
+                          </button>
+
+                          {/* "Add block" tooltip badge when open */}
+                          {isInlineOpen && (
+                            <div className="absolute top-7 -left-5 z-40 bg-black text-white text-[10px] px-1.5 py-0.5 rounded shadow whitespace-nowrap pointer-events-none">
+                              Add block
+                            </div>
+                          )}
+
+                          {/* ─────────────────────────────────────────────────────────────
+                              IN-LINE BLOCK INSERTER POPUP (Exact 1-to-1 Match to Screenshot)
+                          ───────────────────────────────────────────────────────────── */}
+                          {isInlineOpen && (
+                            <div
+                              ref={inlineInserterRef}
+                              onClick={(e) => e.stopPropagation()}
+                              className="absolute top-10 right-0 z-50 w-[290px] rounded border shadow-2xl bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 overflow-hidden animate-scale-in"
+                              style={{ borderColor: wpBorder }}
+                            >
+                              {/* 1. Search Box with Focused Blue Border */}
+                              <div className="p-3 pb-2">
+                                <div className="flex items-center gap-2 px-2.5 py-1.5 rounded border border-[#2271b1] ring-1 ring-[#2271b1] bg-white dark:bg-zinc-800 text-xs">
+                                  <Search size={14} className="text-gray-400" />
+                                  <input
+                                    type="text"
+                                    value={inlineSearch}
+                                    onChange={(e) => setInlineSearch(e.target.value)}
+                                    placeholder="Search"
+                                    autoFocus
+                                    className="w-full bg-transparent border-none outline-none text-xs text-gray-800 dark:text-gray-100 placeholder-gray-400"
+                                  />
+                                </div>
+                              </div>
+
+                              {/* 2. 6-Block Quick Grid (Paragraph, Heading 2, Heading 3, List, Heading 1, Image) */}
+                              <div className="px-3 py-2 grid grid-cols-3 gap-2">
+                                {filteredPopularBlocks.map((bItem) => (
+                                  <button
+                                    key={bItem.id}
+                                    onClick={() => handleInsertBlockFromInline(bItem, block.id)}
+                                    className="flex flex-col items-center justify-center p-3 rounded hover:bg-gray-100 dark:hover:bg-zinc-800/80 transition cursor-pointer group text-center"
+                                  >
+                                    {/* Icon renderer */}
+                                    <div className="w-8 h-8 flex items-center justify-center text-gray-800 dark:text-gray-200 group-hover:text-blue-600 transition">
+                                      {bItem.isTextIcon && (
+                                        <span className="font-serif text-lg font-bold leading-none">{bItem.icon}</span>
+                                      )}
+                                      {bItem.isListIcon && (
+                                        <div className="flex flex-col gap-1 items-start w-4">
+                                          <div className="flex items-center gap-1 w-full"><span className="w-1 h-1 rounded-full bg-current"></span><span className="h-0.5 w-full bg-current"></span></div>
+                                          <div className="flex items-center gap-1 w-full"><span className="w-1 h-1 rounded-full bg-current"></span><span className="h-0.5 w-full bg-current"></span></div>
+                                          <div className="flex items-center gap-1 w-full"><span className="w-1 h-1 rounded-full bg-current"></span><span className="h-0.5 w-full bg-current"></span></div>
+                                        </div>
+                                      )}
+                                      {bItem.isImageIcon && (
+                                        <ImageIcon size={20} />
+                                      )}
+                                    </div>
+                                    <span className="text-[11px] font-medium text-gray-700 dark:text-gray-300 mt-1 leading-tight">
+                                      {bItem.name}
+                                    </span>
+                                  </button>
+                                ))}
+                              </div>
+
+                              {/* 3. Bottom Black 'Browse all' Button */}
+                              <button
+                                onClick={() => {
+                                  setInlineInserterBlockId(null);
+                                  setShowTopBlockInserter(true);
+                                }}
+                                className="w-full py-2.5 text-center text-xs font-semibold text-white bg-[#1e1e1e] hover:bg-black transition cursor-pointer"
+                              >
+                                Browse all
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     )}
 
@@ -724,6 +802,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                           className="text-xs font-semibold px-2 py-1 rounded border bg-transparent"
                           style={{ borderColor: wpBorder }}
                         >
+                          <option value={1}>H1</option>
                           <option value={2}>H2</option>
                           <option value={3}>H3</option>
                           <option value={4}>H4</option>
