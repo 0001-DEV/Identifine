@@ -28,11 +28,17 @@ export function analyzeSeo({
   metaDesc = '',
   hasImage = false,
 }) {
-  const keyword = (focusKeyword || '').toLowerCase().trim();
+  const manualKeyword = (focusKeyword || '').toLowerCase().trim();
   const titleText = (seoTitle || title || '').trim();
   const slugText = (slug || slugify(title)).toLowerCase().trim();
   const plainContent = stripHtml(content);
   const excerptText = (metaDesc || excerpt || '').trim();
+
+  // If no manual keyword is entered, infer keyword from title words
+  const inferredKw = titleText
+    ? titleText.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w.length > 3).slice(0, 2).join(' ')
+    : '';
+  const keyword = manualKeyword || inferredKw;
   
   // Combine all article text
   const fullContent = [
@@ -46,11 +52,11 @@ export function analyzeSeo({
   const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
 
   // Escape keyword for regex matching
-  const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const escapedKeyword = keyword ? keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : '';
   const kwSlugified = keyword ? slugify(keyword) : '';
 
   // Keyword occurrences in content
-  const kwRegex = keyword ? new RegExp(`\\b${escapedKeyword}\\b`, 'gi') : null;
+  const kwRegex = escapedKeyword ? new RegExp(`\\b${escapedKeyword}\\b`, 'gi') : null;
   const occurrences = kwRegex ? (fullContent.match(kwRegex) || []).length : 0;
   const keywordDensity = (wordCount > 0 && occurrences > 0) ? parseFloat(((occurrences / wordCount) * 100).toFixed(2)) : 0;
 
