@@ -589,19 +589,24 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
           </button>
         </div>
 
-        {/* Center: Document Title Capsule */}
+        {/* Center: Document Title Capsule (Editable & Synced) */}
         <div className="hidden md:flex items-center">
           <div
-            className="px-6 py-1.5 rounded text-xs font-medium border"
+            className="px-4 py-1 rounded text-xs font-medium border flex items-center justify-center"
             style={{
               background: darkMode ? '#27272a' : '#f0f0f1',
               borderColor: darkMode ? '#3f3f46' : '#dcdcde',
-              color: darkMode ? '#e4e4e7' : '#50575e',
               minWidth: '240px',
-              textAlign: 'center'
+              maxWidth: '380px',
             }}
           >
-            {title.trim() ? `${title.trim().slice(0, 34)} - Post` : 'No title - Post'}
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => handleTitleChange(e.target.value)}
+              placeholder="No title - Post"
+              className="w-full bg-transparent border-none outline-none text-center text-xs font-semibold text-black dark:text-white placeholder-[#757575]"
+            />
           </div>
         </div>
 
@@ -706,8 +711,11 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 value={title}
                 onChange={(e) => handleTitleChange(e.target.value)}
                 placeholder="Add title"
-                className="w-full text-5xl font-bold tracking-tight border-none outline-none bg-transparent placeholder-[#757575] leading-tight text-black dark:text-white"
-                style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif' }}
+                className="w-full text-4xl sm:text-5xl font-bold tracking-tight border-none outline-none bg-transparent placeholder-[#757575] leading-tight"
+                style={{
+                  color: darkMode ? '#ffffff' : '#000000',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif'
+                }}
                 autoFocus
               />
             </div>
@@ -1110,26 +1118,28 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
             className="w-80 border-l flex flex-col h-full overflow-y-auto select-none custom-scrollbar"
             style={{ background: wpHeaderBg, borderColor: wpBorder }}
           >
-            {/* Sidebar Top Tab Switcher (Both Post and Block headers permanently visible) */}
+            {/* Sidebar Top Tab Switcher (Both Post and Block headers permanently in solid black) */}
             <div className="flex items-center justify-between border-b px-2 sticky top-0 z-20" style={{ background: wpHeaderBg, borderColor: wpBorder }}>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => setSidebarTab('post')}
-                  className={`px-4 py-3 text-xs font-bold tracking-wide transition border-b-2 ${
+                  className={`px-4 py-3 text-[13px] font-bold tracking-wide transition border-b-2 ${
                     sidebarTab === 'post'
-                      ? 'border-black dark:border-white text-black dark:text-white'
-                      : 'border-transparent text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white'
+                      ? 'border-black text-black'
+                      : 'border-transparent text-black opacity-80 hover:opacity-100'
                   }`}
+                  style={{ color: '#000000' }}
                 >
                   Post
                 </button>
                 <button
                   onClick={() => setSidebarTab('block')}
-                  className={`px-4 py-3 text-xs font-bold tracking-wide transition border-b-2 ${
+                  className={`px-4 py-3 text-[13px] font-bold tracking-wide transition border-b-2 ${
                     sidebarTab === 'block'
-                      ? 'border-black dark:border-white text-black dark:text-white'
-                      : 'border-transparent text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white'
+                      ? 'border-black text-black'
+                      : 'border-transparent text-black opacity-80 hover:opacity-100'
                   }`}
+                  style={{ color: '#000000' }}
                 >
                   Block
                 </button>
