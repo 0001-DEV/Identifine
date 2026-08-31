@@ -307,21 +307,45 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
   };
 
   const handleFormatSelection = (blockId, formatType) => {
+    const block = blocks.find(b => b.id === blockId);
+    if (!block) return;
+
     const textarea = document.getElementById(`block-input-${blockId}`);
-    if (!textarea) return;
-    const start = textarea.selectionStart || 0;
-    const end = textarea.selectionEnd || 0;
-    const currentContent = textarea.value || '';
-    const selected = currentContent.substring(start, end);
+    let selected = '';
+    let start = 0;
+    let end = 0;
+
+    if (textarea && typeof textarea.selectionStart === 'number' && textarea.selectionStart !== textarea.selectionEnd) {
+      start = textarea.selectionStart;
+      end = textarea.selectionEnd;
+      selected = (textarea.value || '').substring(start, end);
+    }
+
+    if (!selected) {
+      const winSel = window.getSelection();
+      if (winSel && winSel.toString().trim()) {
+        selected = winSel.toString().trim();
+      }
+    }
+
+    const currentContent = block.content || '';
 
     if (formatType === 'bold') {
-      const replacement = selected ? `<b>${selected}</b>` : `<b>bold text</b>`;
-      const updated = currentContent.substring(0, start) + replacement + currentContent.substring(end);
-      updateBlock(blockId, { content: updated });
+      if (selected && currentContent.includes(selected)) {
+        updateBlock(blockId, { content: currentContent.replace(selected, `<b>${selected}</b>`) });
+      } else {
+        const replacement = selected ? `<b>${selected}</b>` : `<b>bold text</b>`;
+        const updated = start !== end ? currentContent.substring(0, start) + replacement + currentContent.substring(end) : `${currentContent} ${replacement}`;
+        updateBlock(blockId, { content: updated });
+      }
     } else if (formatType === 'italic') {
-      const replacement = selected ? `<i>${selected}</i>` : `<i>italic text</i>`;
-      const updated = currentContent.substring(0, start) + replacement + currentContent.substring(end);
-      updateBlock(blockId, { content: updated });
+      if (selected && currentContent.includes(selected)) {
+        updateBlock(blockId, { content: currentContent.replace(selected, `<i>${selected}</i>`) });
+      } else {
+        const replacement = selected ? `<i>${selected}</i>` : `<i>italic text</i>`;
+        const updated = start !== end ? currentContent.substring(0, start) + replacement + currentContent.substring(end) : `${currentContent} ${replacement}`;
+        updateBlock(blockId, { content: updated });
+      }
     } else if (formatType === 'link') {
       setLinkModalData({
         open: true,
@@ -332,6 +356,15 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
         start,
         end,
       });
+    } else if (formatType === 'color') {
+      const color = prompt('Enter text hex color (e.g. #2271b1):', '#2271b1');
+      if (color) {
+        if (selected && currentContent.includes(selected)) {
+          updateBlock(blockId, { content: currentContent.replace(selected, `<span style="color: ${color}">${selected}</span>`) });
+        } else {
+          updateBlock(blockId, { textColor: color });
+        }
+      }
     }
   };
 
@@ -355,7 +388,9 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     const linkHtml = `<a href="${url}"${targetAttr} style="${linkStyle}" class="wp-attached-link" contenteditable="false">${displayText}</a>`;
 
     let newContent = '';
-    if (linkModalData.start !== undefined && linkModalData.end !== undefined && linkModalData.start !== linkModalData.end) {
+    if (linkModalData.selectedText && currentContent.includes(linkModalData.selectedText)) {
+      newContent = currentContent.replace(linkModalData.selectedText, linkHtml);
+    } else if (linkModalData.start !== undefined && linkModalData.end !== undefined && linkModalData.start !== linkModalData.end) {
       newContent = currentContent.substring(0, linkModalData.start) + linkHtml + currentContent.substring(linkModalData.end);
     } else {
       newContent = currentContent ? `${currentContent} ${linkHtml}` : linkHtml;
@@ -816,47 +851,79 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     }}
                   >
                     {/* ─────────────────────────────────────────────────────────────
-                        FLOATING BLOCK TOOLBAR (Exact WordPress Style)
+                        FLOATING BLOCK TOOLBAR (Exact WordPress Style for All Text Segments)
                     ───────────────────────────────────────────────────────────── */}
-                    {isActive && block.type === 'paragraph' && (
+                    {isActive && block.type !== 'image' && (
                       <div
-                        className="absolute -top-10 left-0 z-30 flex items-center gap-1 px-2 py-1 rounded shadow-lg border text-xs select-none animate-fade-in"
-                        style={{ background: wpHeaderBg, borderColor: wpBorder }}
+                        className="absolute -top-11 left-0 z-30 flex items-center gap-1 px-2 py-1 rounded shadow-lg border text-xs select-none bg-white dark:bg-zinc-900 animate-fade-in"
+                        style={{ borderColor: wpBorder }}
                       >
+                        {/* 1. Block Type Switcher / Transform */}
                         <button
-                          onClick={() => updateBlock(block.id, { type: 'heading', level: 2 })}
-                          title="Transform block"
-                          className="px-1.5 py-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 font-bold"
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => {
+                            if (block.type === 'paragraph') updateBlock(block.id, { type: 'heading', level: 2 });
+                            else if (block.type === 'heading' && block.level === 2) updateBlock(block.id, { type: 'heading', level: 3 });
+                            else if (block.type === 'heading' && block.level === 3) updateBlock(block.id, { type: 'quote' });
+                            else updateBlock(block.id, { type: 'paragraph' });
+                          }}
+                          title="Transform block type"
+                          className="px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 font-bold flex items-center gap-1 text-black dark:text-white"
                         >
-                          ¶
+                          <span>{block.type === 'heading' ? `H${block.level || 2}` : block.type === 'quote' ? '“' : block.type === 'list' ? '•' : '¶'}</span>
+                          <ChevronDown size={11} className="opacity-60" />
                         </button>
-                        <div className="w-px h-4 bg-gray-200 dark:bg-zinc-700" />
+
+                        <div className="w-px h-4 bg-gray-200 dark:bg-zinc-700 mx-0.5" />
+
+                        {/* 2. Bold */}
                         <button
+                          onMouseDown={(e) => e.preventDefault()}
                           onClick={() => handleFormatSelection(block.id, 'bold')}
-                          title="Bold"
-                          className="p-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800"
+                          title="Bold (Ctrl+B)"
+                          className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-black dark:text-white"
                         >
                           <Bold size={13} />
                         </button>
+
+                        {/* 3. Italic */}
                         <button
+                          onMouseDown={(e) => e.preventDefault()}
                           onClick={() => handleFormatSelection(block.id, 'italic')}
-                          title="Italic"
-                          className="p-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800"
+                          title="Italic (Ctrl+I)"
+                          className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-black dark:text-white"
                         >
                           <Italic size={13} />
                         </button>
+
+                        {/* 4. Link */}
                         <button
+                          onMouseDown={(e) => e.preventDefault()}
                           onClick={() => handleFormatSelection(block.id, 'link')}
-                          title="Attach Link"
-                          className="p-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-blue-600"
+                          title="Insert Link (Ctrl+K)"
+                          className="p-1.5 rounded hover:bg-blue-50 text-blue-600 font-semibold"
                         >
                           <LinkIcon size={13} />
                         </button>
-                        <div className="w-px h-4 bg-gray-200 dark:bg-zinc-700" />
+
+                        {/* 5. Color */}
                         <button
+                          onMouseDown={(e) => e.preventDefault()}
+                          onClick={() => handleFormatSelection(block.id, 'color')}
+                          title="Highlight / Text Color"
+                          className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-black dark:text-white font-bold font-serif text-xs"
+                        >
+                          A
+                        </button>
+
+                        <div className="w-px h-4 bg-gray-200 dark:bg-zinc-700 mx-0.5" />
+
+                        {/* 6. Delete */}
+                        <button
+                          onMouseDown={(e) => e.preventDefault()}
                           onClick={() => deleteBlock(block.id)}
                           title="Delete Block"
-                          className="p-1 rounded hover:bg-red-50 text-red-500 transition"
+                          className="p-1.5 rounded hover:bg-red-50 text-red-500 transition"
                         >
                           <Trash2 size={13} />
                         </button>
