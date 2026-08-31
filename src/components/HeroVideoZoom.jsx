@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import heroVideoFile from '../assets/herovideo.mp4';
+import heroVideoFile from '../assets/Header_Hero Section.mp4';
 
 /**
  * HeroVideoZoom — Lerp Physics Hero Zoom, fully responsive.
@@ -208,7 +208,6 @@ export default function HeroVideoZoom() {
           style={{ transform: 'scale(1.24)', willChange: 'transform' }}
         >
           <source src={heroVideoFile} type="video/mp4" />
-          <source src="/assets/herovideo.mp4" type="video/mp4" />
         </video>
       </div>
     </div>
