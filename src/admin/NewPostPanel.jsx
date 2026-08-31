@@ -326,7 +326,8 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
 
     const displayText = linkModalData.selectedText.trim() || url;
     const targetAttr = linkModalData.newTab ? ' target="_blank" rel="noopener noreferrer"' : '';
-    const linkHtml = `<a href="${url}"${targetAttr}>${displayText}</a>`;
+    const linkStyle = 'color: #2271b1 !important; text-decoration: underline !important; text-decoration-color: rgba(34, 113, 177, 0.45) !important; text-underline-offset: 3px !important; cursor: pointer !important; font-weight: 500 !important;';
+    const linkHtml = `<a href="${url}"${targetAttr} style="${linkStyle}" class="wp-attached-link">${displayText}</a>`;
 
     let newContent = '';
     if (linkModalData.start !== undefined && linkModalData.end !== undefined && linkModalData.start !== linkModalData.end) {
@@ -722,7 +723,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
         />
 
         {/* ── WRITING CANVAS (Center Document) ── */}
-        <main className="flex-1 overflow-y-auto px-6 py-14 flex justify-center custom-scrollbar">
+        <main className="wp-editor-canvas flex-1 overflow-y-auto px-6 py-14 flex justify-center custom-scrollbar">
           <div className="w-full max-w-[840px]">
 
             {/* Document H1 Title (Exact match Gutenberg 'Add title') */}

@@ -400,6 +400,26 @@
   }
 }
 
+/* WordPress Gutenberg Attached Links */
+a.wp-attached-link,
+[contenteditable] a,
+.wp-editor-canvas a {
+  color: #2271b1 !important;
+  text-decoration: underline !important;
+  text-decoration-color: rgba(34, 113, 177, 0.45) !important;
+  text-underline-offset: 3px !important;
+  cursor: pointer !important;
+  font-weight: 500 !important;
+  transition: opacity 0.15s ease;
+}
+
+a.wp-attached-link:hover,
+[contenteditable] a:hover,
+.wp-editor-canvas a:hover {
+  opacity: 0.8 !important;
+  text-decoration-color: rgba(34, 113, 177, 0.8) !important;
+}
+
 
 
 
