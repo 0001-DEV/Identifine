@@ -420,6 +420,15 @@ a.wp-attached-link:hover,
   text-decoration-color: rgba(34, 113, 177, 0.8) !important;
 }
 
+/* WordPress Canvas Text Preservation */
+.wp-editor-canvas [contenteditable],
+.wp-editor-canvas textarea {
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  line-height: 1.625 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+}
+
 
 
 

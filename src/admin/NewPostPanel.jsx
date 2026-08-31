@@ -1069,7 +1069,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                                   }
                                 }}
                                 dangerouslySetInnerHTML={{ __html: block.content }}
-                                className="w-full min-h-[32px] text-lg text-black outline-none leading-relaxed bg-transparent border-none"
+                                className="w-full min-h-[32px] text-lg text-black dark:text-white outline-none leading-relaxed bg-transparent border-none whitespace-pre-wrap break-words font-sans"
                                 style={{
                                   color: block.textColor || '#000000',
                                   fontSize: block.fontSize === 'S' ? '14px' : block.fontSize === 'L' ? '20px' : block.fontSize === 'XL' ? '24px' : '18px',
@@ -1099,7 +1099,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                                 }}
                                 placeholder="Type / to choose a block"
                                 rows={1}
-                                className="w-full min-h-[32px] text-lg text-black outline-none leading-relaxed placeholder-[#757575] bg-transparent border-none resize-none overflow-hidden"
+                                className="w-full min-h-[32px] text-lg text-black dark:text-white outline-none leading-relaxed placeholder-[#757575] bg-transparent border-none resize-none overflow-hidden whitespace-pre-wrap break-words font-sans"
                                 style={{
                                   color: block.textColor || '#000000',
                                   fontSize: block.fontSize === 'S' ? '14px' : block.fontSize === 'L' ? '20px' : block.fontSize === 'XL' ? '24px' : '18px',
