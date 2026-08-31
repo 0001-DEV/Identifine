@@ -388,6 +388,36 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     setTimeout(() => setToast(''), 2000);
   };
 
+  const focusNextParagraph = (afterBlockId) => {
+    setTimeout(() => {
+      setBlocks(currentBlocks => {
+        let nextBlock = null;
+        if (afterBlockId) {
+          const idx = currentBlocks.findIndex(b => b.id === afterBlockId);
+          if (idx !== -1 && idx + 1 < currentBlocks.length && currentBlocks[idx + 1].type === 'paragraph') {
+            nextBlock = currentBlocks[idx + 1];
+          }
+        }
+        if (!nextBlock) {
+          nextBlock = currentBlocks.find(b => b.type === 'paragraph');
+        }
+        if (nextBlock) {
+          setActiveBlockId(nextBlock.id);
+          setTimeout(() => {
+            const el = document.getElementById(`block-input-${nextBlock.id}`);
+            if (el) {
+              el.focus();
+              if (el.setSelectionRange) {
+                el.setSelectionRange(el.value.length, el.value.length);
+              }
+            }
+          }, 50);
+        }
+        return currentBlocks;
+      });
+    }, 100);
+  };
+
   const handleNativeFileUpload = (e, blockId) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -395,6 +425,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     reader.onload = (loadEvt) => {
       const base64 = loadEvt.target?.result;
       updateBlock(blockId, { url: base64, alt: file.name.replace(/\.[^/.]+$/, '') });
+      focusNextParagraph(blockId);
     };
     reader.readAsDataURL(file);
   };
@@ -471,6 +502,7 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
       setFeaturedImage(imgUrl);
     } else if (typeof mediaTarget === 'object' && mediaTarget.type === 'block') {
       updateBlock(mediaTarget.id, { url: imgUrl, alt: item.alt || item.name || 'Image' });
+      focusNextParagraph(mediaTarget.id);
     }
     setShowMediaPicker(false);
   };
@@ -1103,7 +1135,10 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                               <button
                                 onClick={() => {
                                   const url = prompt('Enter Image URL:');
-                                  if (url) updateBlock(block.id, { url, alt: 'Custom Image' });
+                                  if (url) {
+                                    updateBlock(block.id, { url, alt: 'Custom Image' });
+                                    focusNextParagraph(block.id);
+                                  }
                                 }}
                                 className="px-4 py-2 rounded text-xs font-semibold border transition hover:bg-blue-50 dark:hover:bg-blue-950/30 cursor-pointer"
                                 style={{ borderColor: wpBlue, color: wpBlue }}
@@ -1113,17 +1148,6 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                             </div>
                           </div>
                         )}
-
-                        {/* Quick Continue Text Underneath Button */}
-                        <div className="flex items-center justify-center pt-2">
-                          <button
-                            onClick={() => addBlock('paragraph', block.id)}
-                            className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-zinc-800 rounded transition cursor-pointer"
-                          >
-                            <Plus size={12} />
-                            <span>Continue text underneath</span>
-                          </button>
-                        </div>
                       </div>
                     )}
 
