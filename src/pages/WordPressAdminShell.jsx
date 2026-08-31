@@ -270,6 +270,18 @@ export default function WordPressAdminShell() {
   // ── Sidebar width ─────────────────────────────────────────────────────────────
   const sidebarW = collapsed ? 36 : 160;
 
+  // Full-Screen Gutenberg Block Editor (Exact WordPress Experience)
+  if (activePage === 'add-new') {
+    return (
+      <NewPostPanel
+        editArticle={editArticle}
+        onPublished={handlePublished}
+        onBack={() => goTo('all-posts')}
+        darkMode={darkMode}
+      />
+    );
+  }
+
   return (
     <div style={{ display: 'flex', minHeight: '100vh', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', background: darkMode ? '#000000' : WP.contentBg }}>
 
