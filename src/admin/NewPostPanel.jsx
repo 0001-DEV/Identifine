@@ -119,6 +119,17 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
   const [showSlugEdit, setShowSlugEdit] = useState(false);
   const [elementorAiOpen, setElementorAiOpen] = useState(false);
 
+  // Link Insertion State
+  const [linkModalData, setLinkModalData] = useState({
+    open: false,
+    blockId: null,
+    selectedText: '',
+    url: '',
+    newTab: true,
+    start: 0,
+    end: 0,
+  });
+
   // ── Rank Math & SEO Fields ──
   const [focusKeyword, setFocusKeyword] = useState('');
   const [seoTitle, setSeoTitle] = useState('');
@@ -268,6 +279,66 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
       return;
     }
     setBlocks(prev => prev.filter(b => b.id !== id));
+  };
+
+  const handleFormatSelection = (blockId, formatType) => {
+    const textarea = document.getElementById(`block-input-${blockId}`);
+    if (!textarea) return;
+    const start = textarea.selectionStart || 0;
+    const end = textarea.selectionEnd || 0;
+    const currentContent = textarea.value || '';
+    const selected = currentContent.substring(start, end);
+
+    if (formatType === 'bold') {
+      const replacement = selected ? `<b>${selected}</b>` : `<b>bold text</b>`;
+      const updated = currentContent.substring(0, start) + replacement + currentContent.substring(end);
+      updateBlock(blockId, { content: updated });
+    } else if (formatType === 'italic') {
+      const replacement = selected ? `<i>${selected}</i>` : `<i>italic text</i>`;
+      const updated = currentContent.substring(0, start) + replacement + currentContent.substring(end);
+      updateBlock(blockId, { content: updated });
+    } else if (formatType === 'link') {
+      setLinkModalData({
+        open: true,
+        blockId,
+        selectedText: selected || '',
+        url: '',
+        newTab: true,
+        start,
+        end,
+      });
+    }
+  };
+
+  const handleApplyLink = () => {
+    if (!linkModalData.blockId || !linkModalData.url.trim()) {
+      setLinkModalData({ open: false, blockId: null, selectedText: '', url: '', newTab: true, start: 0, end: 0 });
+      return;
+    }
+    const block = blocks.find(b => b.id === linkModalData.blockId);
+    if (!block) return;
+
+    const currentContent = block.content || '';
+    let url = linkModalData.url.trim();
+    if (!/^https?:\/\//i.test(url) && !url.startsWith('/') && !url.startsWith('#')) {
+      url = `https://${url}`;
+    }
+
+    const displayText = linkModalData.selectedText.trim() || url;
+    const targetAttr = linkModalData.newTab ? ' target="_blank" rel="noopener noreferrer"' : '';
+    const linkHtml = `<a href="${url}"${targetAttr}>${displayText}</a>`;
+
+    let newContent = '';
+    if (linkModalData.start !== undefined && linkModalData.end !== undefined && linkModalData.start !== linkModalData.end) {
+      newContent = currentContent.substring(0, linkModalData.start) + linkHtml + currentContent.substring(linkModalData.end);
+    } else {
+      newContent = currentContent ? `${currentContent} ${linkHtml}` : linkHtml;
+    }
+
+    updateBlock(linkModalData.blockId, { content: newContent });
+    setLinkModalData({ open: false, blockId: null, selectedText: '', url: '', newTab: true, start: 0, end: 0 });
+    setToast('Link attached successfully!');
+    setTimeout(() => setToast(''), 3000);
   };
 
   const handleNativeFileUpload = (e, blockId) => {
@@ -674,32 +745,23 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                         </button>
                         <div className="w-px h-4 bg-gray-200 dark:bg-zinc-700" />
                         <button
-                          onClick={() => {
-                            const sel = window.getSelection()?.toString();
-                            if (sel) document.execCommand('bold');
-                          }}
+                          onClick={() => handleFormatSelection(block.id, 'bold')}
                           title="Bold"
                           className="p-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800"
                         >
                           <Bold size={13} />
                         </button>
                         <button
-                          onClick={() => {
-                            const sel = window.getSelection()?.toString();
-                            if (sel) document.execCommand('italic');
-                          }}
+                          onClick={() => handleFormatSelection(block.id, 'italic')}
                           title="Italic"
                           className="p-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800"
                         >
                           <Italic size={13} />
                         </button>
                         <button
-                          onClick={() => {
-                            const url = prompt('Enter link URL:');
-                            if (url) document.execCommand('createLink', false, url);
-                          }}
-                          title="Link"
-                          className="p-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800"
+                          onClick={() => handleFormatSelection(block.id, 'link')}
+                          title="Attach Link"
+                          className="p-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-800 text-blue-600"
                         >
                           <LinkIcon size={13} />
                         </button>
@@ -1772,6 +1834,86 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                 className="px-4 py-2 rounded text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 shadow"
               >
                 Generate & Insert
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Gutenberg Link Attachment Modal */}
+      {linkModalData.open && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-2xl max-w-md w-full p-5 border border-zinc-200 dark:border-zinc-800 animate-scale-in">
+            <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-800">
+              <div className="flex items-center gap-2 text-[#2271b1] font-bold text-sm">
+                <LinkIcon size={16} />
+                <span>Attach Link to Text</span>
+              </div>
+              <button
+                onClick={() => setLinkModalData({ open: false, blockId: null, selectedText: '', url: '', newTab: true, start: 0, end: 0 })}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <div className="py-4 space-y-3.5 text-xs">
+              <div>
+                <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                  Text to Display
+                </label>
+                <input
+                  type="text"
+                  value={linkModalData.selectedText}
+                  onChange={(e) => setLinkModalData(prev => ({ ...prev, selectedText: e.target.value }))}
+                  placeholder="e.g. Identifine Smart Cards"
+                  className="w-full p-2.5 rounded border text-xs outline-none bg-transparent border-gray-300 dark:border-zinc-700 text-black dark:text-white"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                  Destination URL
+                </label>
+                <input
+                  type="text"
+                  value={linkModalData.url}
+                  onChange={(e) => setLinkModalData(prev => ({ ...prev, url: e.target.value }))}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleApplyLink();
+                    }
+                  }}
+                  placeholder="https://example.com or /programs"
+                  autoFocus
+                  className="w-full p-2.5 rounded border text-xs outline-none bg-transparent border-[#2271b1] ring-1 ring-[#2271b1] text-black dark:text-white font-mono"
+                />
+              </div>
+
+              <label className="flex items-center gap-2 cursor-pointer pt-1">
+                <input
+                  type="checkbox"
+                  checked={linkModalData.newTab}
+                  onChange={(e) => setLinkModalData(prev => ({ ...prev, newTab: e.target.checked }))}
+                  className="rounded text-blue-600 focus:ring-0"
+                />
+                <span className="text-gray-700 dark:text-gray-300 font-medium">Open in new tab</span>
+              </label>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2 border-t border-zinc-200 dark:border-zinc-800">
+              <button
+                onClick={() => setLinkModalData({ open: false, blockId: null, selectedText: '', url: '', newTab: true, start: 0, end: 0 })}
+                className="px-3.5 py-1.5 rounded text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:hover:bg-zinc-800"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleApplyLink}
+                className="px-4 py-1.5 rounded text-xs font-semibold text-white bg-[#2271b1] hover:brightness-105 shadow transition"
+              >
+                Attach Link
               </button>
             </div>
           </div>
