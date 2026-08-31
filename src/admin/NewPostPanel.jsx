@@ -158,62 +158,69 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
     y: 0,
     text: '',
     blockId: null,
+    start: 0,
+    end: 0,
   });
 
-  useEffect(() => {
-    const handleSelectionChange = () => {
-      const selection = window.getSelection();
-      if (!selection || selection.isCollapsed || !selection.toString().trim()) {
-        return;
+  const handleTextSelection = (e, blockId) => {
+    const target = e.currentTarget || e.target;
+    if (!target) return;
+    let selectedText = '';
+    let start = 0;
+    let end = 0;
+
+    if (typeof target.selectionStart === 'number' && target.selectionStart !== target.selectionEnd) {
+      start = target.selectionStart;
+      end = target.selectionEnd;
+      selectedText = (target.value || '').substring(start, end).trim();
+    } else {
+      const sel = window.getSelection();
+      if (sel && !sel.isCollapsed) {
+        selectedText = sel.toString().trim();
       }
-      const text = selection.toString().trim();
-      if (text.length > 0) {
-        try {
-          const range = selection.getRangeAt(0);
-          const rect = range.getBoundingClientRect();
-          if (rect && rect.width > 0) {
-            let node = range.commonAncestorContainer;
-            if (node.nodeType === 3) node = node.parentNode;
-            const blockEl = node.closest('[data-block-id]');
-            const foundBlockId = blockEl ? blockEl.getAttribute('data-block-id') : activeBlockId;
+    }
 
-            setSelectionToolbar({
-              visible: true,
-              x: Math.max(20, rect.left + rect.width / 2),
-              y: Math.max(20, rect.top - 10),
-              text,
-              blockId: foundBlockId || activeBlockId || (blocks[0]?.id),
-            });
-          }
-        } catch (err) {
-          // ignore range errors
-        }
-      }
-    };
+    if (selectedText.length > 0) {
+      const rect = target.getBoundingClientRect();
+      const clickX = (e.clientX && e.clientX > 0) ? e.clientX : (rect.left + rect.width / 2);
+      const clickY = (e.clientY && e.clientY > 0) ? e.clientY : rect.top;
 
-    const handleMouseUp = () => {
-      setTimeout(handleSelectionChange, 60);
-    };
-
-    const handleMouseDown = (e) => {
-      if (e.target.closest('#floating-selection-bubble')) return;
+      setSelectionToolbar({
+        visible: true,
+        x: Math.max(100, Math.min(window.innerWidth - 100, clickX)),
+        y: Math.max(50, clickY - 14),
+        text: selectedText,
+        blockId: blockId || activeBlockId || blocks[0]?.id,
+        start,
+        end,
+      });
+    } else {
       setTimeout(() => {
         const sel = window.getSelection();
         if (!sel || sel.isCollapsed) {
           setSelectionToolbar(prev => ({ ...prev, visible: false }));
         }
-      }, 150);
+      }, 100);
+    }
+  };
+
+  useEffect(() => {
+    const handleGlobalMouseDown = (e) => {
+      if (e.target.closest('#floating-selection-bubble')) return;
+      setTimeout(() => {
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) {
+          const activeEl = document.activeElement;
+          if (!activeEl || (typeof activeEl.selectionStart === 'number' && activeEl.selectionStart === activeEl.selectionEnd)) {
+            setSelectionToolbar(prev => ({ ...prev, visible: false }));
+          }
+        }
+      }, 120);
     };
 
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('keyup', handleMouseUp);
-    document.addEventListener('mousedown', handleMouseDown);
-    return () => {
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('keyup', handleMouseUp);
-      document.removeEventListener('mousedown', handleMouseDown);
-    };
-  }, [activeBlockId, blocks]);
+    document.addEventListener('mousedown', handleGlobalMouseDown);
+    return () => document.removeEventListener('mousedown', handleGlobalMouseDown);
+  }, []);
 
   // Load article for editing if provided
   useEffect(() => {
@@ -1049,6 +1056,9 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                                 id={`block-input-${block.id}`}
                                 contentEditable
                                 suppressContentEditableWarning
+                                onSelect={(e) => handleTextSelection(e, block.id)}
+                                onMouseUp={(e) => handleTextSelection(e, block.id)}
+                                onKeyUp={(e) => handleTextSelection(e, block.id)}
                                 onBlur={(e) => updateBlock(block.id, { content: e.currentTarget.innerHTML })}
                                 onKeyDown={(e) => {
                                   if (e.key === 'Enter' && !e.shiftKey) {
@@ -1084,6 +1094,9 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                                   e.target.style.height = 'auto';
                                   e.target.style.height = `${Math.max(32, e.target.scrollHeight)}px`;
                                 }}
+                                onSelect={(e) => handleTextSelection(e, block.id)}
+                                onMouseUp={(e) => handleTextSelection(e, block.id)}
+                                onKeyUp={(e) => handleTextSelection(e, block.id)}
                                 onKeyDown={(e) => {
                                   if (e.key === 'Enter' && !e.shiftKey) {
                                     e.preventDefault();
@@ -1287,9 +1300,13 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     {block.type === 'heading' && (
                       <div className="flex items-center gap-2 py-1">
                         <input
+                          id={`block-input-${block.id}`}
                           type="text"
                           value={block.content}
                           onChange={(e) => updateBlock(block.id, { content: e.target.value })}
+                          onSelect={(e) => handleTextSelection(e, block.id)}
+                          onMouseUp={(e) => handleTextSelection(e, block.id)}
+                          onKeyUp={(e) => handleTextSelection(e, block.id)}
                           placeholder="Heading text..."
                           className="w-full text-3xl font-bold tracking-tight border-none outline-none bg-transparent placeholder-[#757575] text-black dark:text-white"
                         />
@@ -1311,8 +1328,12 @@ export default function NewPostPanel({ editArticle, onPublished, onBack, darkMod
                     {block.type === 'quote' && (
                       <div className="border-l-4 border-black dark:border-white pl-4 py-1">
                         <textarea
+                          id={`block-input-${block.id}`}
                           value={block.content}
                           onChange={(e) => updateBlock(block.id, { content: e.target.value })}
+                          onSelect={(e) => handleTextSelection(e, block.id)}
+                          onMouseUp={(e) => handleTextSelection(e, block.id)}
+                          onKeyUp={(e) => handleTextSelection(e, block.id)}
                           placeholder="Quote text..."
                           className="w-full text-xl italic font-serif bg-transparent border-none outline-none resize-none text-black dark:text-white"
                           rows={2}
