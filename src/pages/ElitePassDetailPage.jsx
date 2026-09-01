@@ -44,7 +44,9 @@ export const elitePassData = {
     fullTitle: 'Elite Pass Gold',
     category: 'VIP Membership Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
-    writeup: 'Some things never need to shout to be noticed. The Elite Pass Gold was created for organizations that believe confidence is quiet. Its 24K electroplated finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    writeup: `Some identities are designed to stand apart.
+
+The Elite Pass Gold was created for organizations that understand that true distinction is found in the details. Its rich gold finish, refined presence, and premium craftsmanship transform an everyday ID into something worthy of attention. It carries a sense of achievement without needing to demand it. From the first glance to the moment it rests in a wallet or hangs from a lanyard, it communicates confidence, recognition, and belonging. Because when your organization represents excellence, the identity you give your people should reflect it.`,
     heroImage: goldImg,
     galleryImages: [goldImg, elitePassJpg, silverImg],
     colorScheme: 'bg-gradient-to-br from-amber-950 via-yellow-900 to-zinc-950 border border-amber-500/40'
@@ -182,7 +184,7 @@ export default function ElitePassDetailPage() {
 
           {/* Narrative Content, Specs & Actions (Indented 200px from Left Margin) */}
           <div className="animate-hero-fade-3 lg:ml-[200px] space-y-8 flex-1 mt-6 lg:mt-0">
-            <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl">
+            <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl whitespace-pre-line">
               {item.writeup}
             </p>
 
