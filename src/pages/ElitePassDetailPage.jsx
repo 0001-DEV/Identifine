@@ -58,7 +58,9 @@ The Elite Pass Gold was created for organizations that understand that true dist
     fullTitle: 'Titanium Steel',
     category: 'Aerospace Grade',
     features: 'NFC, QR code, Access, Exclusive packaging',
-    writeup: 'Some things never need to shout to be noticed. The Titanium Steel pass was created for organizations that believe confidence is quiet. Its aerospace titanium structure, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    writeup: `Strength does not need to be loud to be felt.
+
+The Titanium Steel Elite Pass is built for organizations that value resilience, precision, and enduring quality. Its distinctive metallic finish and robust construction give the card a sophisticated presence while maintaining an unmistakable sense of strength. It feels substantial in the hand and intentional in every detail. More than an identification card, it becomes a reflection of the people and organization it represents. Because when your standards are built to last, your identity should be too.`,
     heroImage: render1Img,
     galleryImages: [render1Img, blackMatteImg, gunMetalImg],
     colorScheme: 'bg-gradient-to-br from-stone-800 via-stone-700 to-zinc-900 border border-amber-600/30'
