@@ -72,7 +72,9 @@ The Titanium Steel Elite Pass is built for organizations that value resilience, 
     fullTitle: 'Gun Metal',
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
-    writeup: 'Some things never need to shout to be noticed. The Gun Metal pass was created for organizations that believe confidence is quiet. Its deep gunmetal finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    writeup: `There is confidence in restraint.
+
+The Gun Metal Elite Pass was designed for organizations that prefer sophistication over spectacle. Its deep metallic tone, contemporary character, and refined finish create an identity that feels modern, professional, and effortlessly distinguished. It doesn't compete for attention; it earns it. Whether carried in a wallet or worn on a lanyard, every detail communicates precision and purpose. Because sometimes, the strongest statement is the one made without saying a word.`,
     heroImage: blackMatte2Img,
     galleryImages: [blackMatte2Img, gunMetalImg, render1Img],
     colorScheme: 'bg-gradient-to-br from-[#111827] via-[#0F172A] to-black border border-gray-700/50'
