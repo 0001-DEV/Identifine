@@ -136,12 +136,12 @@ export default function ElitePassDetailPage() {
 
   return (
     <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-20 sm:pt-24 pb-28 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans space-y-20 sm:space-y-28">
-      
+
       {/* ========================================================================= */}
       {/* HERO SECTION: 100% FULL BLEED EDGE-TO-EDGE PICTURE (MATCHING FRAMER NOVA) */}
       {/* ========================================================================= */}
       <div className="animate-hero-fade-1 w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[260px] sm:h-[480px] lg:h-[600px] relative flex items-center justify-center group mt-0">
-        
+
         {/* Back Link Overlay - Shifted to the top-left corner so it never covers product images */}
         <div className="absolute top-3 sm:top-6 left-2.5 sm:left-10 z-20">
           <NavLink
@@ -174,12 +174,12 @@ export default function ElitePassDetailPage() {
 
       {/* Main Page Content: Padded Container */}
       <div className="max-w-[94rem] mx-auto px-4 sm:px-12 space-y-16 sm:space-y-28">
-        
+
         {/* ========================================================================= */}
         {/* OVERVIEW & SPECIFICATIONS SECTION (EXACT ALIGNMENT AS FRAMER NOVA)         */}
         {/* ========================================================================= */}
         <div className="flex flex-col lg:flex-row items-start text-left">
-          
+
           {/* Overview Tagline Label */}
           <div className="animate-hero-fade-2 pt-1 shrink-0 min-w-[160px]">
             <div className="inline-flex items-center justify-start gap-2">
@@ -278,7 +278,7 @@ export default function ElitePassDetailPage() {
         {/* SECTION: MORE ELITE PASS (CONTAINER CARDS AS ON FRAMER NOVA)               */}
         {/* ========================================================================= */}
         <div className="space-y-12 text-center">
-          
+
           <div className="w-full text-center">
             <h2 className="text-4xl sm:text-6xl lg:text-[4.5rem] font-galano font-medium text-[#111111] leading-tight tracking-tight text-center">
               More elite <em className="font-swarsh italic font-normal text-[#111111]">pass</em>

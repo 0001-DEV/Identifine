@@ -94,7 +94,7 @@ export const partnerCases = [
 export default function ProductCataloguePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialId = searchParams.get('id') || searchParams.get('card') || 'du-plex';
-  
+
   const [selectedId, setSelectedId] = useState(initialId);
   const [visibleCount, setVisibleCount] = useState(9);
 
@@ -125,12 +125,12 @@ export default function ProductCataloguePage() {
 
   return (
     <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-20 sm:pt-24 pb-28 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans space-y-20 sm:space-y-28">
-      
+
       {/* ========================================================================= */}
       {/* HERO SECTION: 100% FULL BLEED EDGE-TO-EDGE PICTURE (NO BORDER, NO RADIUS) */}
       {/* ========================================================================= */}
       <div className="animate-hero-fade-1 w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[260px] sm:h-[480px] lg:h-[600px] relative flex items-center justify-center group mt-0">
-        
+
         {/* Hero Product Image */}
         <img
           src={activeProduct.image}
@@ -152,12 +152,12 @@ export default function ProductCataloguePage() {
 
       {/* Main Page Content: Padded Container for Overview and Grid */}
       <div className="max-w-[94rem] mx-auto px-6 sm:px-12 space-y-20 sm:space-y-28">
-        
+
         {/* ========================================================================= */}
         {/* OVERVIEW & SPECIFICATIONS SECTION (OVERVIEW LABEL ALIGNED ON FIRST LINE)  */}
         {/* ========================================================================= */}
         <div className="flex flex-col lg:flex-row items-start text-left">
-          
+
           {/* Overview Tagline Label (Enlarged, Lowercase, Aligned with first line of narrative) */}
           <div className="animate-hero-fade-2 pt-1 shrink-0 min-w-[160px]">
             <div className="inline-flex items-center justify-start gap-2">
@@ -199,7 +199,7 @@ export default function ProductCataloguePage() {
         {/* SECTION: PARTNERS USING OUR FLAGSHIP (SINGLE LINE HEADING)                 */}
         {/* ========================================================================= */}
         <div className="space-y-10 text-left">
-          
+
           <div className="w-full">
             <h2 className="text-2xl sm:text-3xl lg:text-[2.5rem] font-galano font-medium text-[#111111] leading-tight tracking-tight whitespace-nowrap">
               Partners using our {activeProduct.title} flagship
