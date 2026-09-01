@@ -86,7 +86,9 @@ The Gun Metal Elite Pass was designed for organizations that prefer sophisticati
     fullTitle: 'Rose Gold Metal',
     category: 'Prestige VIP Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
-    writeup: 'Some things never need to shout to be noticed. The Rose Gold Metal pass was created for organizations that believe confidence is quiet. Its refined rose gold electroplated finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust.',
+    writeup: `Elegance has a way of making an impression.
+
+The Rose Gold Elite Pass brings warmth and sophistication to the identity experience. Its distinctive rose-toned finish combines contemporary elegance with a premium sense of craftsmanship, creating an ID card that feels as considered as the organization behind it. It is refined without being excessive and memorable without being loud. From the first touch to every moment it is seen, it represents care, confidence, and attention to detail. Because an identity card can be functional and still feel exceptional.`,
     heroImage: silverImg,
     galleryImages: [silverImg, goldImg, elitePassJpg],
     colorScheme: 'bg-gradient-to-br from-amber-900 via-rose-950 to-zinc-950 border border-rose-800/40'
