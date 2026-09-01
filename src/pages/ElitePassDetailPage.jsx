@@ -20,7 +20,9 @@ export const elitePassData = {
     fullTitle: 'Nova Pass',
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
-    writeup: 'Some things never need to shout to be noticed. The Nova Pass was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    writeup: `Some things never need to shout to be noticed.
+
+The Nova Pass was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday Business ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because a Business identity card should do more than identify. It should represent the standard your organization stands for.`,
     heroImage: blackMatteImg,
     galleryImages: [blackMatteImg, render1Img, elitePassJpg],
     colorScheme: 'bg-gradient-to-br from-black via-[#0D0D0D] to-zinc-950 border border-zinc-800'
@@ -34,7 +36,7 @@ export const elitePassData = {
     features: 'NFC, QR code, Access, Exclusive packaging',
     writeup: `Some things never need to shout to be noticed.
 
-The Black Matte was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.`,
+The Black Matte was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday Business ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because a Business identity card should do more than identify. It should represent the standard your organization stands for.`,
     heroImage: blackMatteImg,
     galleryImages: [blackMatteImg, blackMatte2Img, render1Img],
     colorScheme: 'bg-gradient-to-br from-black via-[#0D0D0D] to-zinc-950 border border-zinc-800'
@@ -48,7 +50,7 @@ The Black Matte was created for organizations that believe confidence is quiet. 
     features: 'NFC, QR code, Access, Exclusive packaging',
     writeup: `Some identities are designed to stand apart.
 
-The Elite Pass Gold was created for organizations that understand that true distinction is found in the details. Its rich gold finish, refined presence, and premium craftsmanship transform an everyday ID into something worthy of attention. It carries a sense of achievement without needing to demand it. From the first glance to the moment it rests in a wallet or hangs from a lanyard, it communicates confidence, recognition, and belonging. Because when your organization represents excellence, the identity you give your people should reflect it.`,
+The Elite Pass Gold was created for organizations that understand that true distinction is found in the details. Its rich gold finish, refined presence, and premium craftsmanship transform an everyday Business ID into something worthy of attention. It carries a sense of achievement without needing to demand it. From the first glance to the moment it rests in a wallet or hangs from a lanyard, it communicates confidence, recognition, and belonging. Because when your organization represents excellence, the identity you give your people should reflect it.`,
     heroImage: goldImg,
     galleryImages: [goldImg, elitePassJpg, silverImg],
     colorScheme: 'bg-gradient-to-br from-amber-950 via-yellow-900 to-zinc-950 border border-amber-500/40'
@@ -62,7 +64,7 @@ The Elite Pass Gold was created for organizations that understand that true dist
     features: 'NFC, QR code, Access, Exclusive packaging',
     writeup: `Strength does not need to be loud to be felt.
 
-The Titanium Steel Elite Pass is built for organizations that value resilience, precision, and enduring quality. Its distinctive metallic finish and robust construction give the card a sophisticated presence while maintaining an unmistakable sense of strength. It feels substantial in the hand and intentional in every detail. More than an identification card, it becomes a reflection of the people and organization it represents. Because when your standards are built to last, your identity should be too.`,
+The Titanium Steel Elite Pass is built for organizations that value resilience, precision, and enduring quality. Its distinctive metallic finish and robust construction give the card a sophisticated presence while maintaining an unmistakable sense of strength. It feels substantial in the hand and intentional in every detail. More than a Business identification card, it becomes a reflection of the people and organization it represents. Because when your standards are built to last, your identity should be too.`,
     heroImage: render1Img,
     galleryImages: [render1Img, blackMatteImg, gunMetalImg],
     colorScheme: 'bg-gradient-to-br from-stone-800 via-stone-700 to-zinc-900 border border-amber-600/30'
@@ -90,7 +92,7 @@ The Gun Metal Elite Pass was designed for organizations that prefer sophisticati
     features: 'NFC, QR code, Access, Exclusive packaging',
     writeup: `Elegance has a way of making an impression.
 
-The Rose Gold Elite Pass brings warmth and sophistication to the identity experience. Its distinctive rose-toned finish combines contemporary elegance with a premium sense of craftsmanship, creating an ID card that feels as considered as the organization behind it. It is refined without being excessive and memorable without being loud. From the first touch to every moment it is seen, it represents care, confidence, and attention to detail. Because an identity card can be functional and still feel exceptional.`,
+The Rose Gold Elite Pass brings warmth and sophistication to the identity experience. Its distinctive rose-toned finish combines contemporary elegance with a premium sense of craftsmanship, creating a Business ID card that feels as considered as the organization behind it. It is refined without being excessive and memorable without being loud. From the first touch to every moment it is seen, it represents care, confidence, and attention to detail. Because a Business identity card can be functional and still feel exceptional.`,
     heroImage: silverImg,
     galleryImages: [silverImg, goldImg, elitePassJpg],
     colorScheme: 'bg-gradient-to-br from-amber-900 via-rose-950 to-zinc-950 border border-rose-800/40'
@@ -104,7 +106,7 @@ The Rose Gold Elite Pass brings warmth and sophistication to the identity experi
     features: 'NFC, QR code, Access, Exclusive packaging',
     writeup: `Built for organizations that don't compromise on strength.
 
-The Aircraft-Grade Metal Elite Pass brings engineering-inspired durability to everyday identity. Its premium metallic construction, sleek finish, and substantial feel create an ID card designed to communicate reliability from the moment it is held. Every edge, surface, and detail is intentional, turning identification into an experience of quality. It speaks to organizations that build with purpose and expect their standards to endure. Because when what you represent is built to last, your identity should carry the same strength.`,
+The Aircraft-Grade Metal Elite Pass brings engineering-inspired durability to everyday identity. Its premium metallic construction, sleek finish, and substantial feel create a Business ID card designed to communicate reliability from the moment it is held. Every edge, surface, and detail is intentional, turning identification into an experience of quality. It speaks to organizations that build with purpose and expect their standards to endure. Because when what you represent is built to last, your identity should carry the same strength.`,
     heroImage: gunMetalImg,
     galleryImages: [gunMetalImg, render1Img, blackMatteImg],
     colorScheme: 'bg-gradient-to-br from-slate-800 via-zinc-900 to-black border border-slate-700'
@@ -118,7 +120,7 @@ The Aircraft-Grade Metal Elite Pass brings engineering-inspired durability to ev
     features: 'NFC, QR code, Access, Exclusive packaging',
     writeup: `Some identities deserve more than a finish. They deserve distinction.
 
-The 24K Gold Plated Elite Pass is crafted for organizations that want their identity to feel truly exceptional. Its unmistakable gold presence, premium craftsmanship, and refined detailing transform a functional ID card into a symbol of prestige and recognition. It catches the eye without losing its sophistication, creating an experience that feels considered from every angle. Because your people don't simply carry an identification card. They carry a representation of the organization, its values, and the standard it chooses to uphold.`,
+The 24K Gold Plated Elite Pass is crafted for organizations that want their identity to feel truly exceptional. Its unmistakable gold presence, premium craftsmanship, and refined detailing transform a functional Business ID card into a symbol of prestige and recognition. It catches the eye without losing its sophistication, creating an experience that feels considered from every angle. Because your people don't simply carry a Business identification card. They carry a representation of the organization, its values, and the standard it chooses to uphold.`,
     heroImage: elitePassJpg,
     galleryImages: [elitePassJpg, goldImg, silverImg],
     colorScheme: 'bg-gradient-to-br from-yellow-950 via-amber-900 to-black border border-yellow-600/40'
