@@ -142,8 +142,8 @@ export default function ElitePassDetailPage() {
       {/* ========================================================================= */}
       <div className="animate-hero-fade-1 w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[260px] sm:h-[480px] lg:h-[600px] relative flex items-center justify-center group mt-0">
 
-        {/* Back Link Overlay - Shifted to the top-left corner so it never covers product images */}
-        <div className="absolute top-3 sm:top-6 left-2.5 sm:left-10 z-20">
+        {/* Back Link Overlay - Shifted 4px lower on mobile (top-4) */}
+        <div className="absolute top-4 sm:top-8 left-3 sm:left-10 z-20">
           <NavLink
             to="/elite-pass"
             className="inline-flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-mono uppercase text-white/90 hover:text-white bg-black/60 backdrop-blur-md px-2.5 sm:px-4 py-1 sm:py-2 rounded-full border border-white/20 transition-all shadow-lg"
@@ -204,13 +204,13 @@ export default function ElitePassDetailPage() {
 
             {/* Specs List (Category & Features stacked in separate rows as Framer Nova) */}
             <div className="space-y-1 max-w-5xl pt-2">
-              <div className="py-4 border-b border-[#DCDAD4] flex items-center justify-between text-base sm:text-lg">
-                <span className="font-galano font-medium text-[#737378]">Category:</span>
-                <span className="font-galano font-semibold text-[#111111]">{item.category}</span>
+              <div className="py-3.5 sm:py-4 border-b border-[#DCDAD4] flex items-start sm:items-center justify-between gap-8 sm:gap-14 text-xs sm:text-lg">
+                <span className="font-galano font-medium text-[#737378] text-xs sm:text-lg shrink-0">Category:</span>
+                <span className="font-galano font-semibold text-[#111111] text-right text-xs sm:text-lg leading-snug sm:leading-normal pl-4">{item.category}</span>
               </div>
-              <div className="py-4 border-b border-[#DCDAD4] flex items-center justify-between text-base sm:text-lg">
-                <span className="font-galano font-medium text-[#737378]">Features:</span>
-                <span className="font-galano font-semibold text-[#111111] text-right">{item.features}</span>
+              <div className="py-3.5 sm:py-4 border-b border-[#DCDAD4] flex items-start sm:items-center justify-between gap-8 sm:gap-14 text-xs sm:text-lg">
+                <span className="font-galano font-medium text-[#737378] text-xs sm:text-lg shrink-0">Features:</span>
+                <span className="font-galano font-semibold text-[#111111] text-right text-xs sm:text-lg leading-snug sm:leading-normal pl-4">{item.features}</span>
               </div>
             </div>
 
