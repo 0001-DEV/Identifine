@@ -142,13 +142,13 @@ export default function ElitePassDetailPage() {
       {/* ========================================================================= */}
       <div className="animate-hero-fade-1 w-full rounded-none border-0 overflow-hidden bg-[#0A0D14] h-[260px] sm:h-[480px] lg:h-[600px] relative flex items-center justify-center group mt-0">
         
-        {/* Back Link Overlay */}
-        <div className="absolute top-20 sm:top-28 left-4 sm:left-12 z-20">
+        {/* Back Link Overlay - Shifted to the top-left corner so it never covers product images */}
+        <div className="absolute top-3 sm:top-6 left-2.5 sm:left-10 z-20">
           <NavLink
             to="/elite-pass"
-            className="inline-flex items-center gap-2 text-xs font-mono uppercase text-white/80 hover:text-white bg-black/40 backdrop-blur-md px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/20 transition-all"
+            className="inline-flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-mono uppercase text-white/90 hover:text-white bg-black/60 backdrop-blur-md px-2.5 sm:px-4 py-1 sm:py-2 rounded-full border border-white/20 transition-all shadow-lg"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
+            <ArrowLeft className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             <span>All Elite Passes</span>
           </NavLink>
         </div>
