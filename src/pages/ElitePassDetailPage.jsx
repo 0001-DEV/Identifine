@@ -100,7 +100,9 @@ The Rose Gold Elite Pass brings warmth and sophistication to the identity experi
     fullTitle: 'Aircraft Grade Metal',
     category: 'Military & Aerospace',
     features: 'NFC, QR code, Access, Exclusive packaging',
-    writeup: 'Some things never need to shout to be noticed. The Aircraft Grade Metal pass was created for organizations that believe confidence is quiet. Its ultra-lightweight high-durability alloy finish transforms an everyday ID card into a statement of authority.',
+    writeup: `Built for organizations that don't compromise on strength.
+
+The Aircraft-Grade Metal Elite Pass brings engineering-inspired durability to everyday identity. Its premium metallic construction, sleek finish, and substantial feel create an ID card designed to communicate reliability from the moment it is held. Every edge, surface, and detail is intentional, turning identification into an experience of quality. It speaks to organizations that build with purpose and expect their standards to endure. Because when what you represent is built to last, your identity should carry the same strength.`,
     heroImage: gunMetalImg,
     galleryImages: [gunMetalImg, render1Img, blackMatteImg],
     colorScheme: 'bg-gradient-to-br from-slate-800 via-zinc-900 to-black border border-slate-700'
