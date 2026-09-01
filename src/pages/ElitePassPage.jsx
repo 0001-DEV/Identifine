@@ -83,15 +83,13 @@ export default function ElitePassPage() {
     <NavLink
       key={pass.id}
       to={`/elite-pass/${pass.id}`}
-      className={`group cursor-pointer w-full h-[220px] sm:h-[320px] md:h-[380px] lg:h-[420px] rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 text-white shadow-lg flex flex-col justify-center items-center text-center relative overflow-hidden transition-all duration-500 hover:shadow-2xl border border-black/10 select-none block ${
-        isExtra
-          ? `transform transition-all duration-700 ease-out ${
-              isExpanded
-                ? 'translate-y-0 opacity-100 scale-100'
-                : '-translate-y-6 opacity-0 scale-95 pointer-events-none'
-            }`
+      className={`group cursor-pointer w-full h-[220px] sm:h-[320px] md:h-[380px] lg:h-[420px] rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 text-white shadow-lg flex flex-col justify-center items-center text-center relative overflow-hidden transition-all duration-500 hover:shadow-2xl border border-black/10 select-none block ${isExtra
+          ? `transform transition-all duration-700 ease-out ${isExpanded
+            ? 'translate-y-0 opacity-100 scale-100'
+            : '-translate-y-6 opacity-0 scale-95 pointer-events-none'
+          }`
           : ''
-      }`}
+        }`}
       style={{
         backgroundColor: '#000000',
         transitionDelay: isExtra && isExpanded ? `${extraIndex * 150}ms` : '0ms'
@@ -137,7 +135,7 @@ export default function ElitePassPage() {
   return (
     <div className="bg-[#EBEAE6] min-h-screen pt-24 sm:pt-36 lg:pt-48 pb-20 sm:pb-28 px-4 sm:px-8 lg:px-12">
       <div className="max-w-[88rem] mx-auto space-y-8 sm:space-y-16">
-        
+
         {/* Header with Page-Load Entrance Animation */}
         <div className="text-center max-w-5xl mx-auto space-y-3 sm:space-y-6 mt-2 sm:mt-6">
           <h1 className="animate-hero-fade-1 text-3xl sm:text-5xl lg:text-[4.5rem] font-sans font-bold text-[#111111] leading-[1.15] tracking-tight">

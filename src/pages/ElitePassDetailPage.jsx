@@ -32,8 +32,8 @@ The Nova Pass was created for organizations that believe confidence is quiet. It
     sansTitle: 'Black',
     serifTitle: 'Matte',
     fullTitle: 'Black Matte',
-    category: 'Executive Level',
-    features: 'NFC, QR code, Access, Exclusive packaging',
+    category: 'TITAN SIGNATURE',
+    features: 'Premium stainless steel, NFC, QR code, Access, Exclusive packaging',
     writeup: `Some things never need to shout to be noticed.
 
 The Black Matte was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday Business ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because a Business identity card should do more than identify. It should represent the standard your organization stands for.`,
@@ -46,8 +46,8 @@ The Black Matte was created for organizations that believe confidence is quiet. 
     sansTitle: 'Elite Pass',
     serifTitle: 'Gold',
     fullTitle: 'Elite Pass Gold',
-    category: 'VIP Membership Level',
-    features: 'NFC, QR code, Access, Exclusive packaging',
+    category: 'TITAN PRESTIGE',
+    features: '316L stainless steel, Higher finish, enhanced personalization, NFC, QR code, Access, Exclusive packaging',
     writeup: `Some identities are designed to stand apart.
 
 The Elite Pass Gold was created for organizations that understand that true distinction is found in the details. Its rich gold finish, refined presence, and premium craftsmanship transform an everyday Business ID into something worthy of attention. It carries a sense of achievement without needing to demand it. From the first glance to the moment it rests in a wallet or hangs from a lanyard, it communicates confidence, recognition, and belonging. Because when your organization represents excellence, the identity you give your people should reflect it.`,
@@ -60,8 +60,8 @@ The Elite Pass Gold was created for organizations that understand that true dist
     sansTitle: 'Titanium',
     serifTitle: 'Steel',
     fullTitle: 'Titanium Steel',
-    category: 'Aerospace Grade',
-    features: 'NFC, QR code, Access, Exclusive packaging',
+    category: 'TITAN EXECUTIVE',
+    features: 'Grade 5 titanium, NFC, QR code, Access, Exclusive packaging',
     writeup: `Strength does not need to be loud to be felt.
 
 The Titanium Steel Elite Pass is built for organizations that value resilience, precision, and enduring quality. Its distinctive metallic finish and robust construction give the card a sophisticated presence while maintaining an unmistakable sense of strength. It feels substantial in the hand and intentional in every detail. More than a Business identification card, it becomes a reflection of the people and organization it represents. Because when your standards are built to last, your identity should be too.`,
@@ -74,8 +74,8 @@ The Titanium Steel Elite Pass is built for organizations that value resilience, 
     sansTitle: 'Gun',
     serifTitle: 'Metal',
     fullTitle: 'Gun Metal',
-    category: 'Executive Level',
-    features: 'NFC, QR code, Access, Exclusive packaging',
+    category: 'TITAN CHAIRMAN',
+    features: 'Grade 5 titanium + precious-metal detailing, NFC, QR code, Access, Exclusive packaging',
     writeup: `There is confidence in restraint.
 
 The Gun Metal Elite Pass was designed for organizations that prefer sophistication over spectacle. Its deep metallic tone, contemporary character, and refined finish create an identity that feels modern, professional, and effortlessly distinguished. It doesn't compete for attention; it earns it. Whether carried in a wallet or worn on a lanyard, every detail communicates precision and purpose. Because sometimes, the strongest statement is the one made without saying a word.`,
