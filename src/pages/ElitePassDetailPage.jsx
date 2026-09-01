@@ -32,7 +32,9 @@ export const elitePassData = {
     fullTitle: 'Black Matte',
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
-    writeup: 'Some things never need to shout to be noticed. The Black Matte was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    writeup: `Some things never need to shout to be noticed.
+
+The Black Matte was created for organizations that believe confidence is quiet. Its deep, non-reflective finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.`,
     heroImage: blackMatteImg,
     galleryImages: [blackMatteImg, blackMatte2Img, render1Img],
     colorScheme: 'bg-gradient-to-br from-black via-[#0D0D0D] to-zinc-950 border border-zinc-800'
