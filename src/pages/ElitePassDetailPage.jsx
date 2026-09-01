@@ -114,7 +114,9 @@ The Aircraft-Grade Metal Elite Pass brings engineering-inspired durability to ev
     fullTitle: '24K Gold Plated',
     category: 'Prestige 24K Gold',
     features: 'NFC, QR code, Access, Exclusive packaging',
-    writeup: 'Some things never need to shout to be noticed. The 24K Gold Plated pass was created for organizations that believe confidence is quiet. Its 24K electroplated gold surface and refined craftsmanship represent the highest tier of organizational identity.',
+    writeup: `Some identities deserve more than a finish. They deserve distinction.
+
+The 24K Gold Plated Elite Pass is crafted for organizations that want their identity to feel truly exceptional. Its unmistakable gold presence, premium craftsmanship, and refined detailing transform a functional ID card into a symbol of prestige and recognition. It catches the eye without losing its sophistication, creating an experience that feels considered from every angle. Because your people don't simply carry an identification card. They carry a representation of the organization, its values, and the standard it chooses to uphold.`,
     heroImage: elitePassJpg,
     galleryImages: [elitePassJpg, goldImg, silverImg],
     colorScheme: 'bg-gradient-to-br from-yellow-950 via-amber-900 to-black border border-yellow-600/40'
