@@ -94,22 +94,47 @@ export default function CompanyLogosMarquee() {
   // Dynamic state for each popping slot (0 to 10)
   const [dynamicStates, setDynamicStates] = useState(Array(11).fill(0));
   const [hoveredId, setHoveredId] = useState(null);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    // Pop speed interval 850ms
-    const interval = setInterval(() => {
-      setDynamicStates(prev => {
-        const next = [...prev];
-        const count = 1 + Math.floor(Math.random() * 2);
-        for (let i = 0; i < count; i++) {
-          const targetIdx = Math.floor(Math.random() * next.length);
-          next[targetIdx] = next[targetIdx] === 0 ? 1 : 0;
-        }
-        return next;
-      });
-    }, 850);
+    let interval = null;
 
-    return () => clearInterval(interval);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (!interval) {
+              interval = setInterval(() => {
+                setDynamicStates(prev => {
+                  const next = [...prev];
+                  const count = 1 + Math.floor(Math.random() * 2);
+                  for (let i = 0; i < count; i++) {
+                    const targetIdx = Math.floor(Math.random() * next.length);
+                    next[targetIdx] = next[targetIdx] === 0 ? 1 : 0;
+                  }
+                  return next;
+                });
+              }, 1200);
+            }
+          } else {
+            if (interval) {
+              clearInterval(interval);
+              interval = null;
+            }
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+      observer.disconnect();
+    };
   }, []);
 
   const renderLogoItem = (item, idx) => {
@@ -184,7 +209,7 @@ export default function CompanyLogosMarquee() {
   };
 
   return (
-    <div className="py-20 sm:py-28 bg-transparent w-full overflow-hidden">
+    <div ref={containerRef} className="py-20 sm:py-28 bg-transparent w-full overflow-hidden">
       <div className="flex flex-col items-center gap-10 sm:gap-16 lg:gap-20 w-full max-w-[94rem] mx-auto px-4 sm:px-8 lg:px-12">
         {/* LINE 1 (6 Items) */}
         <div className="flex items-center justify-center gap-2 sm:gap-6 md:gap-10 lg:gap-12 w-full flex-wrap sm:flex-nowrap">

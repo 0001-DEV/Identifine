@@ -266,14 +266,9 @@ export default function AboutUsPage() {
                 href="https://wa.me/2349030001851"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-semibold px-10 py-5 sm:py-5.5 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[58px]"
+                className="group relative inline-flex items-center justify-center text-sm sm:text-base font-semibold px-10 py-5 sm:py-5.5 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[58px]"
               >
-                <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                  <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                    <span className="block">Contribute to the story</span>
-                    <span className="block">Contribute to the story</span>
-                  </span>
-                </span>
+                <span>Contribute to the story</span>
               </a>
             </div>
           </div>

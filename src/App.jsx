@@ -13,9 +13,6 @@ import AboutUsPage from './pages/AboutUsPage';
 import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
 import BlogDetailPage from './pages/BlogDetailPage';
-import BlogAdminPage from './pages/BlogAdminPage';
-import WordPressAdminShell from './pages/WordPressAdminShell';
-import WordPressLoginPage from './pages/WordPressLoginPage';
 import ProgramDetailPage from './pages/ProgramDetailPage';
 import ProductCataloguePage from './pages/ProductCataloguePage';
 import TermsPage from './pages/TermsPage';
@@ -74,14 +71,17 @@ function ScrollRevealObserver() {
 
     const timer = setTimeout(applyObservers, 60);
 
-    // Watch for dynamic DOM additions (e.g. clicking Load More)
+    // Watch for dynamic DOM additions (e.g. clicking Load More) with debouncing
+    let mutationTimer = null;
     mutationObserver = new MutationObserver(() => {
-      applyObservers();
+      if (mutationTimer) clearTimeout(mutationTimer);
+      mutationTimer = setTimeout(applyObservers, 250);
     });
     mutationObserver.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       clearTimeout(timer);
+      if (mutationTimer) clearTimeout(mutationTimer);
       if (observer) observer.disconnect();
       if (mutationObserver) mutationObserver.disconnect();
     };
@@ -93,17 +93,6 @@ function ScrollRevealObserver() {
 export default function App() {
   const location = useLocation();
   const hideFooter = location.pathname.startsWith('/program');
-  const isAdmin = location.pathname.startsWith('/admin');
-
-  // Full-screen admin shell — no site navbar or footer
-  if (isAdmin && location.pathname !== '/admin/blog') {
-    return (
-      <Routes>
-        <Route path="/admin/*" element={<WordPressAdminShell />} />
-        <Route path="/admin" element={<WordPressAdminShell />} />
-      </Routes>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#080B11] text-[#F1F5F9] font-sans flex flex-col justify-between selection:bg-[#E2B857] selection:text-black overflow-x-hidden">
@@ -129,11 +118,6 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogDetailPage />} />
-          <Route path="/admin/login" element={<WordPressLoginPage />} />
-          <Route path="/wp-login.php" element={<WordPressLoginPage />} />
-          <Route path="/admin/blog" element={<BlogAdminPage />} />
-          <Route path="/admin" element={<WordPressAdminShell />} />
-          <Route path="/admin/*" element={<WordPressAdminShell />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/terms-and-conditions" element={<TermsPage />} />
           <Route path="/privacy-policy" element={<TermsPage />} />

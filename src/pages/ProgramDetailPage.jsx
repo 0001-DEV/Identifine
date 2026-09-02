@@ -32,9 +32,9 @@ gsap.registerPlugin(ScrollTrigger);
 const programData = {
   'consultation': {
     id: 'consultation',
-    title: 'Identity Consultation Services',
-    subtitle: 'Strategic Brand Alignment',
-    whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Consultation%20Services',
+    title: 'NFC-enabled Identity & Access',
+    subtitle: 'Combine secure identification with effortless NFC technology for an access experience built for modern organizations.',
+    whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20NFC-enabled%20Identity%20%26%20Access',
     images: [
       { src: heroImg, title: 'Strategic Brand Audit', desc: 'In-depth analysis of your existing identity touchpoints, physical credentials, and market positioning.' },
       { src: scrollssImg, title: 'Identity Architecture', desc: 'Structuring a unified physical and digital presence for executive leadership teams.' },
@@ -46,9 +46,9 @@ const programData = {
   },
   'corporate-design': {
     id: 'corporate-design',
-    title: 'Corporate Identity Design',
-    subtitle: 'Visual Systems & Architecture',
-    whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Corporate%20Identity%20Design',
+    title: 'Identi-care',
+    subtitle: 'A premium grade identity assurance policy that keeps your organization identity operational for the long term',
+    whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identi-care',
     images: [
       { src: ab1, title: 'Corporate Identity Design 01', desc: 'Tactile material formulation and bespoke executive finishes.' },
       { src: ab2, title: 'Corporate Identity Design 02', desc: 'Precision engineered finishes balancing ultra-durability with modern elegance.' },

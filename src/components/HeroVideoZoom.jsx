@@ -95,16 +95,8 @@ export default function HeroVideoZoom() {
     let currentProgress  = 0;
     let targetProgress   = 0;
     let animationFrameId = null;
-
-    const updateScrollTarget = () => {
-      const rect         = section.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      // Triggers as section enters at 85vh, completes when section top reaches 15vh
-      const startPoint = windowHeight * 0.85;
-      const endPoint   = windowHeight * 0.15;
-      const progress   = (startPoint - rect.top) / (startPoint - endPoint);
-      targetProgress   = Math.max(0, Math.min(1, progress));
-    };
+    let isAnimating      = false;
+    let isIntersecting   = true;
 
     // Maps raw scroll progress → easing curve progress using per-breakpoint pivot
     const getCurveProgress = (p) => {
@@ -123,11 +115,20 @@ export default function HeroVideoZoom() {
     };
 
     const renderLoop = () => {
-      const diff = targetProgress - currentProgress;
-      currentProgress = Math.abs(diff) < 0.0001
-        ? targetProgress
-        : currentProgress + diff * 0.18;
+      if (!isAnimating || !isIntersecting) return;
 
+      const diff = targetProgress - currentProgress;
+      if (Math.abs(diff) < 0.0005) {
+        currentProgress = targetProgress;
+        const cp = getCurveProgress(currentProgress);
+        applyBounds(cp);
+        video.style.transform = `scale(${1.24 - cp * 0.24})`;
+        isAnimating = false;
+        animationFrameId = null;
+        return;
+      }
+
+      currentProgress += diff * 0.18;
       const cp = getCurveProgress(currentProgress);
       applyBounds(cp);
 
@@ -137,13 +138,56 @@ export default function HeroVideoZoom() {
       animationFrameId = requestAnimationFrame(renderLoop);
     };
 
+    const startAnimation = () => {
+      if (!isAnimating && isIntersecting) {
+        isAnimating = true;
+        renderLoop();
+      }
+    };
+
+    const updateScrollTarget = () => {
+      if (!isIntersecting) return;
+      const rect         = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      // Triggers as section enters at 85vh, completes when section top reaches 15vh
+      const startPoint = windowHeight * 0.85;
+      const endPoint   = windowHeight * 0.15;
+      const progress   = (startPoint - rect.top) / (startPoint - endPoint);
+      targetProgress   = Math.max(0, Math.min(1, progress));
+      startAnimation();
+    };
+
     const handleScroll = () => updateScrollTarget();
 
     // Resize / orientation-change: always re-anchor to fresh bounds at current progress
     const handleResize = () => {
+      if (!isIntersecting) return;
       updateScrollTarget();
       applyBounds(getCurveProgress(currentProgress));
     };
+
+    // IntersectionObserver to pause scroll calculations and video playback when offscreen
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isIntersecting = entry.isIntersecting;
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+            updateScrollTarget();
+          } else {
+            video.pause();
+            if (animationFrameId) {
+              cancelAnimationFrame(animationFrameId);
+              animationFrameId = null;
+            }
+            isAnimating = false;
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(section);
 
     window.addEventListener('scroll',            handleScroll, { passive: true });
     window.addEventListener('resize',            handleResize, { passive: true });
@@ -156,9 +200,8 @@ export default function HeroVideoZoom() {
     wrap.style.width        = `${startPx}px`;
     wrap.style.borderRadius = `${startRadius}px`;
 
-    renderLoop();
-
     return () => {
+      observer.disconnect();
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
       window.removeEventListener('scroll',            handleScroll);
       window.removeEventListener('resize',            handleResize);

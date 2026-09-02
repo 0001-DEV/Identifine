@@ -8,9 +8,9 @@ export default function ProgramAccordionShowcase() {
   const programs = [
     {
       id: 'consultation',
-      title: 'Identity Consultation Services',
-      subtitle: 'Strategic Brand Alignment',
-      description: 'We craft distinctive corporate brand identities that speak louder than words. We design bold brand identities that capture your mission and connect across every touchpoint.',
+      title: 'NFC-enabled Identity & Access',
+      subtitle: 'Combine secure identification with effortless NFC technology for an access experience built for modern organizations.',
+      description: 'Combine secure identification with effortless NFC technology for an access experience built for modern organizations.',
       features: [
         'Strategic Brand Audit & Positioning',
         'Executive Leadership Identity Architecture',
@@ -20,9 +20,9 @@ export default function ProgramAccordionShowcase() {
     },
     {
       id: 'corporate-design',
-      title: 'Corporate Identity Design',
-      subtitle: 'Visual Systems & Architecture',
-      description: 'Build the clarity, presence, and habits needed to lead with confidence and calm across all corporate assets.',
+      title: 'Identi-care',
+      subtitle: 'A premium grade identity assurance policy that keeps your organization identity operational for the long term',
+      description: 'A premium grade identity assurance policy that keeps your organization identity operational for the long term',
       features: [
         '24K Gold & Titanium Metal Credentials',
         'Unified Visual Brand Hierarchy',
@@ -53,8 +53,8 @@ export default function ProgramAccordionShowcase() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch max-w-7xl mx-auto py-6">
-      {/* VERTICAL TEXT CONTAINERS (LEFT COLUMN: 6 Cols on Desktop) */}
-      <div className="lg:col-span-6 order-1 flex flex-col justify-between space-y-4 h-full">
+      {/* VERTICAL TEXT CONTAINERS (LEFT COLUMN: 6 Cols on Desktop, constrained on smaller screens/tablets) */}
+      <div className="lg:col-span-6 order-1 flex flex-col justify-between space-y-4 h-full w-full max-lg:max-w-xl max-lg:mx-auto">
         {programs.map((prog) => {
           const isOpen = activeId === prog.id;
           return (
@@ -94,26 +94,6 @@ export default function ProgramAccordionShowcase() {
                   >
                     {prog.description}
                   </p>
-
-
-                  {/* Learn More Button Drop-Down (Delay 300ms) */}
-                  <div
-                    className={`pt-2 transform transition-all duration-500 ease-out ${isOpen ? 'translate-y-0 opacity-100 delay-300' : '-translate-y-4 opacity-0'
-                      }`}
-                  >
-                    <NavLink
-                      to={`/program/${prog.id}`}
-                      onClick={(e) => e.stopPropagation()}
-                      className="group/btn relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-semibold px-7 py-3.5 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300"
-                    >
-                      <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                        <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:-translate-y-1/2">
-                          <span className="block">Learn more</span>
-                          <span className="block">Learn more</span>
-                        </span>
-                      </span>
-                    </NavLink>
-                  </div>
                 </div>
               </div>
             </div>

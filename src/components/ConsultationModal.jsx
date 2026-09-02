@@ -45,7 +45,7 @@ export default function ConsultationModal({ isOpen, onClose }) {
     e.preventDefault();
     
     const message = 
-      `Hello Identifine! I would like to book an executive consultation.\n\n` +
+      `Hello Identifine! I would like to make an executive enquiry.\n\n` +
       `- *Name:* ${formData.name || 'Not specified'}\n` +
       `- *Organization:* ${formData.company || 'Not specified'}\n` +
       `- *Identity Interest:* ${formData.solution}\n` +
@@ -74,7 +74,7 @@ export default function ConsultationModal({ isOpen, onClose }) {
             </div>
             <div>
               <h3 className="font-galano font-semibold text-base sm:text-xl text-white tracking-tight">
-                Book a Consultation
+                Make an Enquiry
               </h3>
               <p className="text-[11px] sm:text-xs text-[#888888] font-medium leading-none mt-0.5">
                 Tailored executive identity engineering

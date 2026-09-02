@@ -84,17 +84,14 @@ export default function Navbar() {
 
           {/* Right CTA Button (Visible on lg 1024px+ screens) */}
           <div className="hidden lg:block">
-            <button
-              onClick={() => setConsultationModalOpen(true)}
-              className="group relative overflow-hidden inline-flex items-center justify-center text-sm sm:text-base font-bold px-8 py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
+            <a
+              href="https://wa.me/2349030001851"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center justify-center text-sm sm:text-base font-bold px-8 py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
             >
-              <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                  <span className="block">Book a consultation</span>
-                  <span className="block">Book a consultation</span>
-                </span>
-              </span>
-            </button>
+              <span>Make an Enquiry</span>
+            </a>
           </div>
 
           {/* Mobile / Split-Screen Hamburger Menu Button */}
@@ -142,20 +139,15 @@ export default function Navbar() {
             style={{ transitionDelay: mobileMenuOpen ? `${150 + (navLinks.length * 150)}ms` : '0ms' }}
           >
             <div className="flex justify-start w-full">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setConsultationModalOpen(true);
-                }}
-                className="group relative overflow-hidden inline-flex items-center justify-center text-xs sm:text-sm font-bold px-6 py-3 sm:px-8 sm:py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 w-auto"
+              <a
+                href="https://wa.me/2349030001851"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="group relative inline-flex items-center justify-center text-xs sm:text-sm font-bold px-6 py-3 sm:px-8 sm:py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 w-auto"
               >
-                <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                  <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                    <span className="block">Book a consultation</span>
-                    <span className="block">Book a consultation</span>
-                  </span>
-                </span>
-              </button>
+                <span>Make an Enquiry</span>
+              </a>
             </div>
           </div>
         </div>

@@ -159,18 +159,15 @@ export default function HomePage() {
             We help organizations transform identity from an administrative necessity into a strategic organizational capability.
           </p>
 
-          <div className="animate-hero-fade-3 pt-4">
-            <button
-              onClick={() => setConsultationModalOpen(true)}
-              className="group relative overflow-hidden inline-flex items-center justify-center text-xs sm:text-base font-bold px-5 py-3 sm:px-8 sm:py-4 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+          <div className="pt-4">
+            <a
+              href="https://wa.me/2349030001851"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center justify-center text-xs sm:text-base font-bold px-5 py-3 sm:px-8 sm:py-4 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
             >
-              <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
-                <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1/2">
-                  <span className="block">Book a consultation</span>
-                  <span className="block">Book a consultation</span>
-                </span>
-              </span>
-            </button>
+              <span>Make an Enquiry</span>
+            </a>
           </div>
         </div>
 
@@ -185,8 +182,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto space-y-16">
 
           <div className="text-center max-w-4xl mx-auto space-y-4">
-            {/* Title Badge - Coming up from down with stagger-delay-1 */}
-            <div className="scroll-reveal-deep stagger-delay-1 inline-flex items-center justify-center gap-2 mx-auto">
+            {/* Title Badge */}
+            <div className="inline-flex items-center justify-center gap-2 mx-auto">
               <img
                 src={starIcon}
                 alt=""
@@ -199,20 +196,20 @@ export default function HomePage() {
               </span>
             </div>
 
-            {/* Main Heading - Coming up from down with stagger-delay-2 */}
-            <h2 className="scroll-reveal-deep stagger-delay-2 text-2xl sm:text-4xl md:text-5xl lg:text-[4rem] font-galano font-medium text-[#111111] leading-tight max-w-6xl mx-auto">
+            {/* Main Heading */}
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-[4rem] font-galano font-medium text-[#111111] leading-tight max-w-6xl mx-auto">
               <span className="inline-block whitespace-nowrap">Define how your organization is</span> <br />
               <em className="font-swarsh italic font-normal text-[#111111]">experienced</em>
             </h2>
           </div>
 
-          {/* Program Accordion Showcase - Coming up from down with stagger-delay-3 */}
-          <div className="scroll-reveal-deep stagger-delay-3">
+          {/* Program Accordion Showcase */}
+          <div>
             <ProgramAccordionShowcase />
           </div>
 
           {/* Client Logos Marquee (AFTER CONTAINER) */}
-          <div className="scroll-reveal my-28 sm:my-40 lg:my-52">
+          <div className="my-28 sm:my-40 lg:my-52">
             <CompanyLogosMarquee />
           </div>
 
@@ -231,7 +228,7 @@ export default function HomePage() {
       <section className="bg-[#EBEAE6] pt-28 pb-48 sm:pb-60 px-6 sm:px-12">
         <div className="max-w-5xl mx-auto space-y-16">
 
-          <div className="scroll-reveal text-center space-y-3">
+          <div className="text-center space-y-3">
             <div className="inline-flex items-center justify-center gap-2 mx-auto">
               <img
                 src={starIcon}
@@ -265,7 +262,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
             
             {/* Left Column: Vertically Arranged Text & Button - Shifted Upwards */}
-            <div className="lg:col-span-5 space-y-6 scroll-reveal lg:sticky lg:top-24 -mt-8 sm:-mt-12 lg:-mt-16">
+            <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24 -mt-8 sm:-mt-12 lg:-mt-16">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2">
                   <img
@@ -298,7 +295,7 @@ export default function HomePage() {
             </div>
 
             {/* Right Column: Blog Containers Arranged Vertically */}
-            <div className="lg:col-span-7 space-y-4 scroll-reveal">
+            <div className="lg:col-span-7 space-y-4">
               {blogPosts.map((post) => (
                 <NavLink
                   key={post.id}
@@ -343,7 +340,7 @@ export default function HomePage() {
 
       {/* 6. INTERACTIVE DIAGNOSTIC QUIZ */}
       <section className="bg-[#EBEAE6] py-28 px-6 sm:px-12 overflow-hidden">
-        <div className="scroll-reveal max-w-[1200px] w-full mx-auto">
+        <div className="max-w-[1200px] w-full mx-auto">
           <IdentityQuiz />
         </div>
       </section>

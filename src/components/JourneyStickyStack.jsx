@@ -25,7 +25,8 @@ export default function JourneyStickyStack({ journeySteps }) {
             scale: 1,
             rotation: index % 2 === 1 ? 1.8 : -1.8,
             opacity: 1,
-            transformOrigin: '50% 50%'
+            transformOrigin: '50% 50%',
+            force3D: true,
           });
         } else {
           gsap.set(card, {
@@ -34,7 +35,8 @@ export default function JourneyStickyStack({ journeySteps }) {
             scale: 1,
             rotation: 0,
             opacity: 1,
-            transformOrigin: '50% 50%'
+            transformOrigin: '50% 50%',
+            force3D: true,
           });
         }
       });
@@ -48,7 +50,7 @@ export default function JourneyStickyStack({ journeySteps }) {
           anticipatePin: 1,
           start: 'top top+=80',
           end: () => `+=${(totalCards - 1) * 100}%`,
-          scrub: 0.35,
+          scrub: 0.4,
           invalidateOnRefresh: true,
         },
       });
@@ -69,6 +71,7 @@ export default function JourneyStickyStack({ journeySteps }) {
             opacity: 1,
             ease: 'none',
             duration: 1,
+            force3D: true,
           },
           `step-${index}`
         );
@@ -91,6 +94,7 @@ export default function JourneyStickyStack({ journeySteps }) {
               opacity: prevOpacity,
               ease: 'none',
               duration: 1,
+              force3D: true,
             },
             `step-${index}`
           );
@@ -124,6 +128,7 @@ export default function JourneyStickyStack({ journeySteps }) {
             zIndex: idx + 10,
             borderRadius: 'clamp(16px, 3vw, 40px)',
             boxShadow: '0 20px 60px rgba(0,0,0,0.50)',
+            willChange: 'transform',
           }}
         >
           <img
