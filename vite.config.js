@@ -13,7 +13,7 @@ function wpApiPlugin() {
       server.middlewares.use('/wp-api', async (req, res) => {
         const targetUrl = `https://identifine.com.ng/wp-json/wp/v2${req.url}`;
         const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), 2500);
+        const timer = setTimeout(() => controller.abort(), 10000);
 
         try {
           const wpRes = await fetch(targetUrl, { signal: controller.signal });

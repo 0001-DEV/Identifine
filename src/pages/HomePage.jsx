@@ -131,7 +131,7 @@ export default function HomePage() {
   useEffect(() => {
     let isMounted = true;
     try {
-      const cached = sessionStorage.getItem('wp_posts_1_3') || sessionStorage.getItem('wp_posts_1_20');
+      const cached = localStorage.getItem('wp_posts_1_3') || localStorage.getItem('wp_posts_1_20') || sessionStorage.getItem('wp_posts_1_3') || sessionStorage.getItem('wp_posts_1_20');
       if (cached) {
         const parsed = JSON.parse(cached);
         if (parsed && parsed.length > 0 && isMounted) {
@@ -147,14 +147,28 @@ export default function HomePage() {
       const { fetchWpPosts } = await import('../api/wordpress');
       const wpData = await fetchWpPosts(1, 3);
       if (isMounted && wpData && wpData.length > 0) {
-        setBlogPosts(wpData.map((p) => ({
+        setBlogPosts(wpData.slice(0, 3).map((p) => ({
           ...p,
           image: p.image || null
         })));
       }
     }
     loadLatestWp();
-    return () => { isMounted = false; };
+
+    const handleWpPostsUpdated = (e) => {
+      if (e.detail && Array.isArray(e.detail) && e.detail.length > 0 && isMounted) {
+        setBlogPosts(e.detail.slice(0, 3).map((p) => ({
+          ...p,
+          image: p.image || null
+        })));
+      }
+    };
+    window.addEventListener('identifine_wp_posts_updated', handleWpPostsUpdated);
+
+    return () => { 
+      isMounted = false; 
+      window.removeEventListener('identifine_wp_posts_updated', handleWpPostsUpdated);
+    };
   }, []);
 
   return (

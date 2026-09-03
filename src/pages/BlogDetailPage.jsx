@@ -93,10 +93,21 @@ export default function BlogDetailPage() {
         `;
       }
 
+      // Ensure TOC starts closed
+      tocContainer.classList.remove('is-open');
+      tocContainer.classList.add('is-collapsed');
+
       const handleToggle = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        tocContainer.classList.toggle('is-collapsed');
+        const isOpen = tocContainer.classList.contains('is-open');
+        if (isOpen) {
+          tocContainer.classList.remove('is-open');
+          tocContainer.classList.add('is-collapsed');
+        } else {
+          tocContainer.classList.add('is-open');
+          tocContainer.classList.remove('is-collapsed');
+        }
       };
 
       if (titleContainer) {

@@ -334,7 +334,7 @@ export default function BlogPage() {
   // Initialize with cached or local articles immediately so there is zero waiting time on first paint
   const [posts, setPosts] = useState(() => {
     try {
-      const cached = sessionStorage.getItem('wp_posts_1_20');
+      const cached = localStorage.getItem('wp_posts_1_20') || sessionStorage.getItem('wp_posts_1_20');
       if (cached) {
         const parsed = JSON.parse(cached);
         if (parsed && parsed.length > 0) return parsed;
@@ -374,11 +374,27 @@ export default function BlogPage() {
 
     loadPosts();
 
-    const handleUpdate = () => loadPosts();
-    window.addEventListener('identifine_articles_updated', handleUpdate);
+    const handleCustomUpdate = () => loadPosts();
+    const handleWpPostsUpdated = (e) => {
+      if (e.detail && Array.isArray(e.detail) && e.detail.length > 0 && isMounted) {
+        const customArticles = getCustomArticles();
+        const formatted = e.detail.map((p, idx) => ({
+          ...p,
+          summary: p.excerpt || p.title,
+          image: p.image || [blog1Img, blog2Img, blog3Img, blog4Img, blog5Img][idx % 5]
+        }));
+        formatted.sort((a, b) => new Date(b.modifiedDate || b.rawDate || 0) - new Date(a.modifiedDate || a.rawDate || 0));
+        const combined = [...customArticles, ...formatted.filter(wp => !customArticles.some(c => c.slug === wp.slug))];
+        setPosts(combined);
+      }
+    };
+
+    window.addEventListener('identifine_articles_updated', handleCustomUpdate);
+    window.addEventListener('identifine_wp_posts_updated', handleWpPostsUpdated);
     return () => { 
       isMounted = false; 
-      window.removeEventListener('identifine_articles_updated', handleUpdate);
+      window.removeEventListener('identifine_articles_updated', handleCustomUpdate);
+      window.removeEventListener('identifine_wp_posts_updated', handleWpPostsUpdated);
     };
   }, []);
 

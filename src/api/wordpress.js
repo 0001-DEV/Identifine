@@ -106,20 +106,21 @@ export async function fetchWpPosts(page = 1, perPage = 12) {
   const cacheKey = `wp_posts_${page}_${perPage}`;
   const query = `/posts?_embed=true&page=${page}&per_page=${perPage}&status=publish&orderby=modified&order=desc`;
 
-  // 1. Check in-memory or sessionStorage cache first for instant load
+  // 1. Check in-memory, localStorage, or sessionStorage cache first for instant load
   if (memoryCache[cacheKey]) {
-    // Return cached immediately, trigger background refresh silently
     revalidateWpPosts(cacheKey, query);
     return memoryCache[cacheKey];
   }
 
   try {
-    const saved = sessionStorage.getItem(cacheKey);
+    const saved = localStorage.getItem(cacheKey) || sessionStorage.getItem(cacheKey);
     if (saved) {
       const parsed = JSON.parse(saved);
-      memoryCache[cacheKey] = parsed;
-      revalidateWpPosts(cacheKey, query);
-      return parsed;
+      if (parsed && parsed.length > 0) {
+        memoryCache[cacheKey] = parsed;
+        revalidateWpPosts(cacheKey, query);
+        return parsed;
+      }
     }
   } catch (e) {
     // Ignore storage quota errors
@@ -131,8 +132,9 @@ export async function fetchWpPosts(page = 1, perPage = 12) {
 
 /**
  * Utility function to fetch with a strict timeout to prevent long hangs
+ * Default 9000ms gives shared hosting WordPress sufficient time without aborting early
  */
-async function fetchWithTimeout(url, options = {}, timeoutMs = 3000) {
+async function fetchWithTimeout(url, options = {}, timeoutMs = 9000) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -150,28 +152,38 @@ async function fetchWithTimeout(url, options = {}, timeoutMs = 3000) {
 
 async function revalidateWpPosts(cacheKey, query) {
   try {
-    const res = await fetchWithTimeout(`${WP_BASE_URL}${query}`, {}, 3000);
+    const res = await fetchWithTimeout(`${WP_BASE_URL}${query}`, {}, 9000);
     if (!res.ok) throw new Error(`HTTP status ${res.status}`);
     const data = await res.json();
     const formatted = data.map(formatPost);
     
     memoryCache[cacheKey] = formatted;
     try {
+      localStorage.setItem(cacheKey, JSON.stringify(formatted));
       sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
     } catch (e) {}
+
+    // Notify React components in real time so UI updates without requiring page refresh
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('identifine_wp_posts_updated', { detail: formatted }));
+    }
 
     return formatted;
   } catch (error) {
     if (WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {
       try {
-        const directRes = await fetchWithTimeout(`https://identifine.com.ng/wp-json/wp/v2${query}`, {}, 3000);
+        const directRes = await fetchWithTimeout(`https://identifine.com.ng/wp-json/wp/v2${query}`, {}, 9000);
         if (directRes.ok) {
           const data = await directRes.json();
           const formatted = data.map(formatPost);
           memoryCache[cacheKey] = formatted;
           try {
+            localStorage.setItem(cacheKey, JSON.stringify(formatted));
             sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
           } catch (e) {}
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('identifine_wp_posts_updated', { detail: formatted }));
+          }
           return formatted;
         }
       } catch (err) {}
@@ -194,7 +206,7 @@ export async function fetchWpPostBySlug(slug) {
   }
 
   try {
-    const saved = sessionStorage.getItem(cacheKey);
+    const saved = localStorage.getItem(cacheKey) || sessionStorage.getItem(cacheKey);
     if (saved) {
       const parsed = JSON.parse(saved);
       memoryCache[cacheKey] = parsed;
@@ -208,13 +220,14 @@ export async function fetchWpPostBySlug(slug) {
 
 async function revalidateWpPostBySlug(cacheKey, query, slug) {
   try {
-    const res = await fetchWithTimeout(`${WP_BASE_URL}${query}`, {}, 3000);
+    const res = await fetchWithTimeout(`${WP_BASE_URL}${query}`, {}, 9000);
     if (!res.ok) throw new Error(`HTTP status ${res.status}`);
     const data = await res.json();
     if (data && data.length > 0) {
       const formatted = formatPost(data[0]);
       memoryCache[cacheKey] = formatted;
       try {
+        localStorage.setItem(cacheKey, JSON.stringify(formatted));
         sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
       } catch (e) {}
       return formatted;
@@ -230,6 +243,7 @@ async function revalidateWpPostBySlug(cacheKey, query, slug) {
       if (found) {
         memoryCache[cacheKey] = found;
         try {
+          localStorage.setItem(cacheKey, JSON.stringify(found));
           sessionStorage.setItem(cacheKey, JSON.stringify(found));
         } catch (e) {}
         return found;
@@ -240,13 +254,14 @@ async function revalidateWpPostBySlug(cacheKey, query, slug) {
   } catch (error) {
     if (WP_BASE_URL !== 'https://identifine.com.ng/wp-json/wp/v2') {
       try {
-        const directRes = await fetchWithTimeout(`https://identifine.com.ng/wp-json/wp/v2${query}`, {}, 3000);
+        const directRes = await fetchWithTimeout(`https://identifine.com.ng/wp-json/wp/v2${query}`, {}, 9000);
         if (directRes.ok) {
           const data = await directRes.json();
           if (data && data.length > 0) {
             const formatted = formatPost(data[0]);
             memoryCache[cacheKey] = formatted;
             try {
+              localStorage.setItem(cacheKey, JSON.stringify(formatted));
               sessionStorage.setItem(cacheKey, JSON.stringify(formatted));
             } catch (e) {}
             return formatted;

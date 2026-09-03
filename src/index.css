@@ -492,19 +492,38 @@ a.wp-attached-link:hover,
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Toggle chevron rotation */
+/* Toggle chevron rotation — collapsed by default (-90deg), pointing down (0deg) when open */
+#ez-toc-container .ez-toc-title-toggle svg {
+  transform: rotate(-90deg) !important;
+}
+
+#ez-toc-container.is-open .ez-toc-title-toggle svg {
+  transform: rotate(0deg) !important;
+}
+
 #ez-toc-container.is-collapsed .ez-toc-title-toggle svg {
   transform: rotate(-90deg) !important;
 }
 
-#ez-toc-container:not(.is-collapsed) .ez-toc-title-toggle svg {
-  transform: rotate(0deg) !important;
-}
-
-/* Table of contents list container collapsible animation */
+/* Table of contents list container collapsible animation — COLLAPSED BY DEFAULT */
 #ez-toc-container nav {
   overflow: hidden !important;
-  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin-top 0.3s ease !important;
+  max-height: 0 !important;
+  opacity: 0 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+  pointer-events: none !important;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin-top 0.3s ease, padding-top 0.3s ease !important;
+}
+
+#ez-toc-container.is-open nav {
+  max-height: 1600px !important;
+  opacity: 1 !important;
+  margin-top: 1rem !important;
+  padding-top: 1rem !important;
+  border-top: 1px solid #DCDAD4 !important;
+  pointer-events: auto !important;
 }
 
 #ez-toc-container.is-collapsed nav {
@@ -514,14 +533,6 @@ a.wp-attached-link:hover,
   padding-top: 0 !important;
   border-top: none !important;
   pointer-events: none !important;
-}
-
-#ez-toc-container:not(.is-collapsed) nav {
-  max-height: 1200px !important;
-  opacity: 1 !important;
-  margin-top: 1rem !important;
-  padding-top: 1rem !important;
-  border-top: 1px solid #EBEAE6 !important;
 }
 
 /* TOC Items & Links */
