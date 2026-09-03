@@ -133,10 +133,9 @@ export default function HomePage() {
       const { fetchWpPosts } = await import('../api/wordpress');
       const wpData = await fetchWpPosts(1, 3);
       if (isMounted && wpData && wpData.length > 0) {
-        const defaultImgs = [postProcessImg, renderOne, blackMatteRender];
-        setBlogPosts(wpData.map((p, idx) => ({
+        setBlogPosts(wpData.map((p) => ({
           ...p,
-          image: p.image || defaultImgs[idx % 3]
+          image: p.image || null
         })));
       }
     }
@@ -302,13 +301,19 @@ export default function HomePage() {
                   to={`/blog/${post.slug || post.id}`}
                   className="group p-3.5 sm:p-4 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#E2B857]/50 hover:-translate-y-1 transition-all duration-300 flex flex-col sm:flex-row items-center gap-5 overflow-hidden shadow-xl"
                 >
-                  {/* Inside Container - Dedicated Left Space: Compact Image from Assets */}
-                  <div className="w-full sm:w-44 h-36 sm:h-32 rounded-xl overflow-hidden bg-black/60 relative border border-[#222222] shrink-0 flex items-center justify-center p-1">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 select-none"
-                    />
+                  {/* Inside Container - Dedicated Left Space: Featured Image */}
+                  <div className="w-full sm:w-44 h-36 sm:h-32 rounded-xl overflow-hidden bg-[#1a1a1a] relative border border-[#222222] shrink-0">
+                    {post.image ? (
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="text-[#444444] text-xs font-mono">No image</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Inside Container - Dedicated Right Space: Text Details */}
