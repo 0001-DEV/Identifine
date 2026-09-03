@@ -148,6 +148,7 @@ export default function CaseStudiesPage() {
                   <img
                     src={item.image}
                     alt={item.name}
+                    loading="lazy"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 select-none rounded-none"
                   />
                 </div>
