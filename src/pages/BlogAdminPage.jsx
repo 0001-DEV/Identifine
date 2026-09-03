@@ -374,7 +374,7 @@ export default function BlogAdminPage() {
                   </label>
                 </div>
                 <div className="flex items-center bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm text-zinc-400">
-                  <span className="text-zinc-500 text-xs hidden sm:inline mr-1">/blog/</span>
+                  <span className="text-zinc-500 text-xs hidden sm:inline mr-1">/</span>
                   <input
                     type="text"
                     value={slug}
@@ -643,13 +643,13 @@ export default function BlogAdminPage() {
                         <h3 className="text-sm font-semibold text-white truncate hover:text-emerald-400 transition-colors">
                           {art.title}
                         </h3>
-                        <p className="text-xs text-zinc-500 font-mono truncate">/blog/{art.slug}</p>
+                        <p className="text-xs text-zinc-500 font-mono truncate">/{art.slug}</p>
                       </div>
                     </div>
 
                     <div className="flex items-center space-x-2 shrink-0 self-end sm:self-auto">
                       <NavLink
-                        to={`/blog/${art.slug}`}
+                        to={`/${art.slug}`}
                         target="_blank"
                         className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white transition-colors"
                         title="View Live Article"

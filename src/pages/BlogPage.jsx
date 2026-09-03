@@ -434,7 +434,7 @@ export default function BlogPage() {
             {/* Featured Post (Hero Card Container) */}
             <div className="animate-hero-fade-3">
           <NavLink
-            to={`/blog/${featuredPost.slug}`}
+            to={`/${featuredPost.slug}`}
             className="group block bg-white border border-[#DCDAD4] rounded-none overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 text-left"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
@@ -479,7 +479,7 @@ export default function BlogPage() {
             {gridPosts.slice(0, visibleCount).map((article) => (
               <NavLink
                 key={article.id}
-                to={`/blog/${article.slug}`}
+                to={`/${article.slug}`}
                 className="group block bg-white border border-[#DCDAD4] rounded-none p-6 sm:p-8 space-y-5 shadow-sm hover:shadow-xl hover:border-[#111111]/30 transition-all duration-500 text-left flex flex-col justify-between animate-hero-fade-4"
               >
                 <div className="space-y-5">

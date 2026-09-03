@@ -312,7 +312,7 @@ export default function HomePage() {
               {blogPosts.map((post) => (
                 <NavLink
                   key={post.id}
-                  to={`/blog/${post.slug || post.id}`}
+                  to={`/${post.slug || post.id}`}
                   className="group p-3.5 sm:p-4 rounded-2xl bg-[#111111] border border-[#222222] hover:border-[#E2B857]/50 hover:-translate-y-1 transition-all duration-300 flex flex-col sm:flex-row items-center gap-5 overflow-hidden shadow-xl"
                 >
                   {/* Inside Container - Dedicated Left Space: Featured Image */}

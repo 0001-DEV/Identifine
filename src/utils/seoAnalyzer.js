@@ -319,7 +319,7 @@ export function analyzeSeo({
     checks,
     serp: {
       title: titleText || 'Article Title - Identifine',
-      url: `https://identifine.com.ng/blog/${slugText || 'your-article-slug'}`,
+      url: `https://identifine.com.ng/${slugText || 'your-article-slug'}`,
       description: excerptText || 'Add a meta description to see how your article snippet will appear in Google search results.'
     }
   };

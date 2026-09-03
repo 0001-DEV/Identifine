@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import starIcon from '../assets/SVG@4x.png';
 import { blogPostsData } from './BlogPage';
 import { fetchWpPostBySlug, fetchWpPosts } from '../api/wordpress';
+import NotFoundPage from './NotFoundPage';
 
 import { getCustomArticles } from '../utils/customArticles';
 
@@ -12,11 +13,13 @@ export default function BlogDetailPage() {
   const [article, setArticle] = useState(null);
   const [moreStories, setMoreStories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
     async function loadArticle() {
       setLoading(true);
+      setNotFound(false);
 
       // Check custom authored articles first
       const customArticles = getCustomArticles();
@@ -42,11 +45,17 @@ export default function BlogDetailPage() {
           setArticle(wpArticle);
         } else {
           // Fallback to static local data (matches 2026, numeric ID, & legacy url variants)
-          const normalizeSlug = (s) => (s || '').toLowerCase().replace(/-in-202[56]$/, '');
+          const normalizeSlug = (s) => (s || '').toLowerCase().replace(/-in-202[567]$/, '');
           const localArticle = blogPostsData.find(
             (p) => p.slug === slug || p.id === slug || (slug === '3988-2' && p.slug.includes('nfc-business-cards')) || normalizeSlug(p.slug) === normalizeSlug(slug)
-          ) || blogPostsData[0];
-          setArticle(localArticle);
+          );
+          if (localArticle) {
+            setArticle(localArticle);
+          } else {
+            setNotFound(true);
+            setLoading(false);
+            return;
+          }
         }
 
         if (wpMore && wpMore.length > 0) {
@@ -105,6 +114,9 @@ export default function BlogDetailPage() {
     return () => clearTimeout(timer);
   }, [article]);
 
+  if (notFound) {
+    return <NotFoundPage />;
+  }
 
   if (loading || !article) {
     return (
@@ -217,7 +229,7 @@ export default function BlogDetailPage() {
             {moreStories.map((story) => (
               <NavLink
                 key={story.id}
-                to={`/blog/${story.slug}`}
+                to={`/${story.slug}`}
                 className="group block bg-white border border-[#DCDAD4] rounded-none p-5 space-y-4 shadow-sm hover:shadow-md transition-all text-left"
               >
                 <div className="h-44 sm:h-48 rounded-none overflow-hidden bg-[#F5F4F0]">

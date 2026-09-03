@@ -25,7 +25,7 @@ export default function NotFoundPage() {
       try {
         const post = await fetchWpPostBySlug(rawPath);
         if (post && isMounted) {
-          navigate(`/blog/${post.slug || rawPath}`, { replace: true });
+          navigate(`/${post.slug || rawPath}`, { replace: true });
           return;
         }
 
@@ -34,7 +34,7 @@ export default function NotFoundPage() {
           p => p.slug === rawPath || String(p.id) === String(rawPath)
         );
         if (local && isMounted) {
-          navigate(`/blog/${local.slug}`, { replace: true });
+          navigate(`/${local.slug}`, { replace: true });
           return;
         }
 
@@ -44,7 +44,7 @@ export default function NotFoundPage() {
           p => p.slug === rawPath || String(p.id) === String(rawPath) || (p.link && p.link.includes(rawPath))
         );
         if (match && isMounted) {
-          navigate(`/blog/${match.slug}`, { replace: true });
+          navigate(`/${match.slug}`, { replace: true });
           return;
         }
       } catch (err) {

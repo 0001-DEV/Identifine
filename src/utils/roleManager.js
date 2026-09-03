@@ -72,5 +72,5 @@ export function formatArticleUrl(slug, category = 'blog', id = '1') {
   }
   
   // Default %postname%
-  return `/blog/${cleanSlug}`;
+  return `/${cleanSlug}`;
 }

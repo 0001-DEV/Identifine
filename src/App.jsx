@@ -1,7 +1,13 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate, useParams } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+
+// Redirect legacy /blog/:slug to /:slug
+function BlogSlugRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/${slug}`} replace />;
+}
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -117,7 +123,7 @@ export default function App() {
           <Route path="/about-us" element={<AboutUsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/:slug" element={<BlogDetailPage />} />
+          <Route path="/blog/:slug" element={<BlogSlugRedirect />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/terms-and-conditions" element={<TermsPage />} />
           <Route path="/privacy-policy" element={<TermsPage />} />
@@ -129,6 +135,8 @@ export default function App() {
           <Route path="/product-catalogue" element={<ProductCataloguePage />} />
           <Route path="/product-catalogue/:id" element={<ProductCataloguePage />} />
           <Route path="/catalogue" element={<ProductCataloguePage />} />
+          {/* Direct blog article route at root */}
+          <Route path="/:slug" element={<BlogDetailPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

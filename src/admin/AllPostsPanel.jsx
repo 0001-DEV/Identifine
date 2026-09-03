@@ -239,7 +239,7 @@ export default function AllPostsPanel({ onNavigate, onEditPost }) {
                           style={{ color: '#d63638', cursor: 'pointer' }}
                         >Trash</span>
                         {' | '}
-                        <a href={`/blog/${art.slug}`} target="_blank" rel="noreferrer" style={{ color: '#2271b1' }}>View</a>
+                        <a href={`/${art.slug}`} target="_blank" rel="noreferrer" style={{ color: '#2271b1' }}>View</a>
                       </span>
                     </div>
                     {confirmDelete === art.id && (

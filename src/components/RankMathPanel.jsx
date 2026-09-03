@@ -130,8 +130,8 @@ export default function RankMathPanel({
               I
             </span>
             <span className="font-medium text-zinc-800 truncate">identifine.com.ng</span>
-            <span className="text-zinc-400">› blog ›</span>
-            <span className="text-zinc-500 truncate">{serp.url.split('/blog/')[1] || ''}</span>
+            <span className="text-zinc-400">›</span>
+            <span className="text-zinc-500 truncate">{serp.url.replace('https://identifine.com.ng/', '')}</span>
           </div>
 
           <h4 className={`font-medium text-blue-800 hover:underline cursor-pointer truncate ${serpDevice === 'desktop' ? 'text-base' : 'text-sm'}`}>

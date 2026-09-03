@@ -73,7 +73,7 @@ export default function AdminSettingsPanel({ onSaveSuccess }) {
             {
               id: '%postname%',
               title: 'Post name (Recommended for SEO)',
-              example: 'https://identifine.com.ng/blog/how-nfc-business-cards-work',
+              example: 'https://identifine.com.ng/how-nfc-business-cards-work',
               badge: 'SEO Optimal'
             },
             {
