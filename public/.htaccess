@@ -8,24 +8,28 @@ DirectoryIndex index.html index.php
   RewriteEngine On
   RewriteBase /
 
-  # 1. Allow direct access to WordPress Admin, login, and REST API
+  # 1. Real WordPress directories — pass through directly
   RewriteRule ^wp-admin($|/) - [L]
-  RewriteRule ^wp-json/ - [L]
-  RewriteRule ^wp-login\.php - [L]
-  RewriteRule ^xmlrpc\.php - [L]
-
-  # 2. Allow direct access to WordPress Content & Uploads (images, plugins, themes)
   RewriteRule ^wp-content/ - [L]
   RewriteRule ^wp-includes/ - [L]
 
-  # 3. Allow direct access to custom cPanel subdirectories
+  # 2. WordPress PHP files — pass through directly
+  RewriteRule ^wp-login\.php - [L]
+  RewriteRule ^wp-cron\.php - [L]
+  RewriteRule ^xmlrpc\.php - [L]
+  RewriteRule ^wp-.*\.php$ - [L]
+
+  # 3. Custom cPanel folders
   RewriteRule ^(admin|apps|\.well-known)($|/) - [L]
 
-  # 4. Route all existing physical files and directories directly
+  # 4. Serve physical files and folders directly
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # 6. Route all single-page app (React) visitor URLs to index.html
+  # 5. WordPress REST API → route to WordPress index.php (NOT React)
+  RewriteRule ^wp-json/ /index.php [L]
+
+  # 6. All other routes → React SPA
   RewriteRule . /index.html [L]
 </IfModule>
