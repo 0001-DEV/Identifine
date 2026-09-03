@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import heroVideoFile from '../assets/Header_Hero Section.mp4';
-import heroPosterImg from '../assets/Hero@4x.png';
+import silverForteImg from '../assets/IDENTIFINE SILVER FORTE.jpg';
 
 /**
  * HeroVideoZoom — Lerp Physics Hero Zoom, fully responsive.
@@ -248,7 +248,7 @@ export default function HeroVideoZoom() {
           loop
           playsInline
           preload="metadata"
-          poster={heroPosterImg}
+          poster={silverForteImg}
           className="w-full h-full object-cover block"
           style={{ transform: 'scale(1.24)', willChange: 'transform' }}
         >

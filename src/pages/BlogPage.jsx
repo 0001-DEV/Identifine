@@ -331,8 +331,19 @@ export const blogPostsData = [
 import { getCustomArticles } from './BlogAdminPage';
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Initialize with cached or local articles immediately so there is zero waiting time on first paint
+  const [posts, setPosts] = useState(() => {
+    try {
+      const cached = sessionStorage.getItem('wp_posts_1_20');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && parsed.length > 0) return parsed;
+      }
+    } catch (e) {}
+    const custom = getCustomArticles();
+    return custom && custom.length > 0 ? [...custom, ...blogPostsData] : blogPostsData;
+  });
+  const [loading, setLoading] = useState(false);
   const [visibleCount, setVisibleCount] = useState(3);
 
   useEffect(() => {

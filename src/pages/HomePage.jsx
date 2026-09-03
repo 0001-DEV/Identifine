@@ -127,8 +127,22 @@ export default function HomePage() {
     }
   ]);
 
+  // Check cached posts immediately so they render on first frame without waiting
   useEffect(() => {
     let isMounted = true;
+    try {
+      const cached = sessionStorage.getItem('wp_posts_1_3') || sessionStorage.getItem('wp_posts_1_20');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && parsed.length > 0 && isMounted) {
+          setBlogPosts(parsed.slice(0, 3).map((p) => ({
+            ...p,
+            image: p.image || null
+          })));
+        }
+      }
+    } catch (e) {}
+
     async function loadLatestWp() {
       const { fetchWpPosts } = await import('../api/wordpress');
       const wpData = await fetchWpPosts(1, 3);
