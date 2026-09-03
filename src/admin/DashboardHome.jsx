@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getCustomArticles, saveCustomArticles } from '../pages/BlogAdminPage';
+import { getCustomArticles, saveCustomArticles } from '../utils/customArticles';
 
 export default function DashboardHome({ onNavigate }) {
   const articles = getCustomArticles();

@@ -328,7 +328,7 @@ export const blogPostsData = [
   }
 ];
 
-import { getCustomArticles } from './BlogAdminPage';
+import { getCustomArticles } from '../utils/customArticles';
 
 export default function BlogPage() {
   // Initialize with cached or local articles immediately so there is zero waiting time on first paint

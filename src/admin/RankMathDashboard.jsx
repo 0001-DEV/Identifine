@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getCustomArticles } from '../pages/BlogAdminPage';
+import { getCustomArticles } from '../utils/customArticles';
 
 const MODULE_DEFAULTS = [
   { id: 'links', label: 'Link Counter', desc: 'Count internal and external links in posts.', enabled: true },

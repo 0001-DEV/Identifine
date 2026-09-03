@@ -11,23 +11,8 @@ import { analyzeSeo } from '../utils/seoAnalyzer';
 import { getActiveRole, setActiveRole, ROLES } from '../utils/roleManager';
 import { blogPostsData } from './BlogPage';
 
-const LOCAL_STORAGE_KEY = 'identifine_custom_articles';
-
-export function getCustomArticles() {
-  try {
-    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return saved ? JSON.parse(saved) : [];
-  } catch (e) {
-    return [];
-  }
-}
-
-export function saveCustomArticles(articles) {
-  try {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(articles));
-    window.dispatchEvent(new Event('identifine_articles_updated'));
-  } catch (e) {}
-}
+import { getCustomArticles, saveCustomArticles } from '../utils/customArticles';
+export { getCustomArticles, saveCustomArticles };
 
 function slugify(title) {
   if (!title) return '';

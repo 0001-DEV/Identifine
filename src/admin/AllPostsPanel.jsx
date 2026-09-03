@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getCustomArticles, saveCustomArticles } from '../pages/BlogAdminPage';
+import { getCustomArticles, saveCustomArticles } from '../utils/customArticles';
 
 const STATUS_COLORS = {
   published: { color: '#00b32c', label: 'Published' },

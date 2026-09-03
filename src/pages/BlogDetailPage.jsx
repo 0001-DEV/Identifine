@@ -5,7 +5,7 @@ import starIcon from '../assets/SVG@4x.png';
 import { blogPostsData } from './BlogPage';
 import { fetchWpPostBySlug, fetchWpPosts } from '../api/wordpress';
 
-import { getCustomArticles } from './BlogAdminPage';
+import { getCustomArticles } from '../utils/customArticles';
 
 export default function BlogDetailPage() {
   const { slug } = useParams();

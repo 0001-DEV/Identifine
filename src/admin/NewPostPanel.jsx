@@ -36,7 +36,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { analyzeSeo } from '../utils/seoAnalyzer';
-import { getCustomArticles, saveCustomArticles } from '../pages/BlogAdminPage';
+import { getCustomArticles, saveCustomArticles } from '../utils/customArticles';
 import { getGlobalSettings } from '../utils/roleManager';
 import MediaPickerModal from './MediaPickerModal';
 import RankMathPanel from '../components/RankMathPanel';
