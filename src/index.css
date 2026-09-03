@@ -429,6 +429,135 @@ a.wp-attached-link:hover,
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
 }
 
+/* ========================================================================= */
+/* TABLE OF CONTENTS (EZ-TOC) ACCORDION CONTAINER STYLING                   */
+/* ========================================================================= */
+#ez-toc-container,
+.ez-toc-v2_0_87 {
+  background: #FFFFFF !important;
+  border: 1px solid #DCDAD4 !important;
+  border-radius: 16px !important;
+  padding: 1.25rem 1.5rem !important;
+  margin: 2rem 0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.3s ease !important;
+}
+
+#ez-toc-container:hover {
+  border-color: rgba(17, 17, 17, 0.25) !important;
+}
+
+.ez-toc-title-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  padding: 0.25rem 0 !important;
+}
+
+.ez-toc-title {
+  font-family: 'Galano Grotesque', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 1.125rem !important;
+  color: #111111 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.ez-toc-title-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  background: #F5F4F0 !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.ez-toc-title-toggle:hover {
+  background: #EBEAE6 !important;
+}
+
+.ez-toc-title-toggle a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.ez-toc-title-toggle svg {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Toggle chevron rotation */
+#ez-toc-container.is-collapsed .ez-toc-title-toggle svg {
+  transform: rotate(-90deg) !important;
+}
+
+#ez-toc-container:not(.is-collapsed) .ez-toc-title-toggle svg {
+  transform: rotate(0deg) !important;
+}
+
+/* Table of contents list container collapsible animation */
+#ez-toc-container nav {
+  overflow: hidden !important;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin-top 0.3s ease !important;
+}
+
+#ez-toc-container.is-collapsed nav {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+  pointer-events: none !important;
+}
+
+#ez-toc-container:not(.is-collapsed) nav {
+  max-height: 1200px !important;
+  opacity: 1 !important;
+  margin-top: 1rem !important;
+  padding-top: 1rem !important;
+  border-top: 1px solid #EBEAE6 !important;
+}
+
+/* TOC Items & Links */
+.ez-toc-list {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
+}
+
+.ez-toc-list li {
+  margin: 0.5rem 0 !important;
+  font-size: 0.95rem !important;
+  line-height: 1.5 !important;
+}
+
+.ez-toc-list-level-3,
+.ez-toc-list-level-4 {
+  padding-left: 1.25rem !important;
+  border-left: 2px solid #EBEAE6 !important;
+  margin-left: 0.25rem !important;
+}
+
+.ez-toc-list a {
+  color: #444444 !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  transition: color 0.2s ease, transform 0.2s ease !important;
+  display: inline-block !important;
+}
+
+.ez-toc-list a:hover {
+  color: #E2B857 !important;
+  transform: translateX(4px) !important;
+}
+
+
 
 
 

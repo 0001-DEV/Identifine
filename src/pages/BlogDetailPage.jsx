@@ -63,6 +63,49 @@ export default function BlogDetailPage() {
     return () => { isMounted = false; };
   }, [slug]);
 
+  // Make ez-toc accordion interactive with dropdown icon & collapse by default
+  useEffect(() => {
+    if (!article || !article.contentHtml) return;
+
+    const timer = setTimeout(() => {
+      const tocContainer = document.getElementById('ez-toc-container') || document.querySelector('.ez-toc-v2_0_87');
+      if (!tocContainer) return;
+
+      // Start expanded or clean state
+      const titleContainer = tocContainer.querySelector('.ez-toc-title-container');
+      const toggleBtn = tocContainer.querySelector('.ez-toc-title-toggle');
+
+      // Replace generic icon or create a clean custom modern chevron if not present
+      if (toggleBtn && !toggleBtn.querySelector('.custom-chevron')) {
+        toggleBtn.innerHTML = `
+          <svg class="custom-chevron w-4 h-4 text-[#111111]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        `;
+      }
+
+      const handleToggle = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        tocContainer.classList.toggle('is-collapsed');
+      };
+
+      if (titleContainer) {
+        titleContainer.style.cursor = 'pointer';
+        titleContainer.addEventListener('click', handleToggle);
+      }
+
+      return () => {
+        if (titleContainer) {
+          titleContainer.removeEventListener('click', handleToggle);
+        }
+      };
+    }, 150);
+
+    return () => clearTimeout(timer);
+  }, [article]);
+
+
   if (loading || !article) {
     return (
       <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-44 pb-28 px-6 text-center font-sans flex items-center justify-center">
