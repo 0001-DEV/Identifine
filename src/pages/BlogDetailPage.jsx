@@ -72,19 +72,139 @@ export default function BlogDetailPage() {
     return () => { isMounted = false; };
   }, [slug]);
 
-  // Make ez-toc accordion interactive with dropdown icon & collapse by default
+  // Make ez-toc accordion interactive with dropdown icon, collapse by default & format clean structured numbering
   useEffect(() => {
     if (!article || !article.contentHtml) return;
 
-    const timer = setTimeout(() => {
+    let attempts = 0;
+    const interval = setInterval(() => {
+      attempts++;
       const tocContainer = document.getElementById('ez-toc-container') || document.querySelector('.ez-toc-v2_0_87');
-      if (!tocContainer) return;
+      if (!tocContainer) {
+        if (attempts > 20) clearInterval(interval);
+        return;
+      }
+      clearInterval(interval);
 
-      // Start expanded or clean state
+      // 1. Structure TOC numbering: 1, 2, 3... 3.1, 3.2... 3.11, 3.12 (strict level progression, no skipped levels, no bullets)
+      const links = tocContainer.querySelectorAll('a.ez-toc-link, nav a');
+      if (links.length > 0) {
+        const items = Array.from(links).map((link) => {
+          const li = link.closest('li');
+          const liClass = li ? li.className : '';
+          const match = liClass.match(/ez-toc-heading-level-(\d+)/);
+          const rawHeadingLevel = match ? parseInt(match[1], 10) : 2;
+          const rawText = link.textContent.trim();
+          // Strip any numbers author manually typed in WordPress heading
+          const cleanText = rawText.replace(/^\s*\d+(\.\d+)*[\.\)\s-]+\s*/, '').trim();
+          return { link, li, rawHeadingLevel, cleanText };
+        });
+
+        const startsWithH2 = items.length > 0 && items[0].rawHeadingLevel === 2;
+
+        let currentL1 = 0;
+        let currentL2 = 0;
+        let currentL3 = 0;
+        let currentLevel = 1;
+        let prevRaw = null;
+
+        items.forEach((item) => {
+          let raw = item.rawHeadingLevel;
+          if (startsWithH2 && raw === 1) {
+            raw = 2; // Normalize H1 to main section level if post started with H2
+          }
+
+          let targetLevel = 1;
+          if (prevRaw === null) {
+            targetLevel = 1;
+          } else if (raw === prevRaw) {
+            targetLevel = currentLevel;
+          } else if (raw > prevRaw) {
+            // Cannot jump more than 1 level deeper (e.g. from 1 directly to 3)
+            targetLevel = currentLevel + 1;
+            if (targetLevel > 3) targetLevel = 3;
+          } else {
+            // Stepping back up
+            if (raw <= 2) {
+              targetLevel = 1;
+            } else {
+              targetLevel = Math.max(1, currentLevel - 1);
+            }
+          }
+
+          currentLevel = targetLevel;
+          prevRaw = raw;
+
+          let numStr = '';
+          if (targetLevel === 1) {
+            currentL1++;
+            currentL2 = 0;
+            currentL3 = 0;
+            numStr = `${currentL1}`;
+          } else if (targetLevel === 2) {
+            if (currentL1 === 0) currentL1 = 1;
+            currentL2++;
+            currentL3 = 0;
+            numStr = `${currentL1}.${currentL2}`;
+          } else {
+            if (currentL1 === 0) currentL1 = 1;
+            if (currentL2 === 0) currentL2 = 1;
+            currentL3++;
+            // Sub of 3.1 is 3.11, 3.12 as requested
+            numStr = `${currentL1}.${currentL2}${currentL3}`;
+          }
+
+          if (item.li) {
+            item.li.style.listStyle = 'none';
+            item.li.style.listStyleType = 'none';
+            item.li.style.paddingLeft = '0';
+            if (targetLevel === 1) {
+              item.li.style.marginLeft = '0';
+              item.li.style.marginTop = '0.55rem';
+              item.li.style.marginBottom = '0.55rem';
+            } else if (targetLevel === 2) {
+              item.li.style.marginLeft = '1.25rem';
+              item.li.style.marginTop = '0.35rem';
+              item.li.style.marginBottom = '0.35rem';
+            } else {
+              item.li.style.marginLeft = '2.25rem';
+              item.li.style.marginTop = '0.25rem';
+              item.li.style.marginBottom = '0.25rem';
+            }
+          }
+
+          item.link.innerHTML = `<span class="ez-toc-num font-semibold text-[#111111] inline-block mr-2">${numStr}.</span><span class="ez-toc-txt text-[#333333] hover:text-[#E2B857] transition-colors">${item.cleanText}</span>`;
+
+          // Intercept click to perform smooth in-page scroll without reloading the page
+          const rawHref = item.link.getAttribute('href') || '';
+          let targetId = '';
+          if (rawHref.includes('#')) {
+            targetId = decodeURIComponent(rawHref.split('#')[1]);
+          }
+          if (targetId) {
+            item.link.setAttribute('href', `#${targetId}`);
+            item.link.onclick = (e) => {
+              e.preventDefault();
+              const targetEl = document.getElementById(targetId) || document.querySelector(`[name="${targetId}"]`);
+              if (targetEl) {
+                const headerOffset = 100;
+                const elementPosition = targetEl.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: 'smooth'
+                });
+                window.history.replaceState(null, '', `#${targetId}`);
+              }
+            };
+          }
+        });
+      }
+
+      // 2. Replace generic icon with clean custom modern chevron
       const titleContainer = tocContainer.querySelector('.ez-toc-title-container');
       const toggleBtn = tocContainer.querySelector('.ez-toc-title-toggle');
 
-      // Replace generic icon or create a clean custom modern chevron if not present
       if (toggleBtn && !toggleBtn.querySelector('.custom-chevron')) {
         toggleBtn.innerHTML = `
           <svg class="custom-chevron w-4 h-4 text-[#111111]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -112,17 +232,12 @@ export default function BlogDetailPage() {
 
       if (titleContainer) {
         titleContainer.style.cursor = 'pointer';
+        titleContainer.removeEventListener('click', handleToggle);
         titleContainer.addEventListener('click', handleToggle);
       }
+    }, 50);
 
-      return () => {
-        if (titleContainer) {
-          titleContainer.removeEventListener('click', handleToggle);
-        }
-      };
-    }, 150);
-
-    return () => clearTimeout(timer);
+    return () => clearInterval(interval);
   }, [article]);
 
   if (notFound) {

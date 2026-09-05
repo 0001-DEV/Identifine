@@ -535,32 +535,39 @@ a.wp-attached-link:hover,
   pointer-events: none !important;
 }
 
-/* TOC Items & Links */
-.ez-toc-list {
-  list-style: none !important;
-  padding-left: 0 !important;
-  margin: 0 !important;
-}
+/* ── TOC: Clean Hierarchical Numbering & Spacing ── */
 
+/* Reset all list defaults — absolutely no bullets, discs, or circle dots */
+.ez-toc-list,
+.ez-toc-list ul,
+.ez-toc-list ol,
 .ez-toc-list li {
-  margin: 0.5rem 0 !important;
-  font-size: 0.95rem !important;
-  line-height: 1.5 !important;
+  list-style: none !important;
+  list-style-type: none !important;
+  padding-left: 0 !important;
 }
 
-.ez-toc-list-level-3,
-.ez-toc-list-level-4 {
-  padding-left: 1.25rem !important;
-  border-left: 2px solid #EBEAE6 !important;
-  margin-left: 0.25rem !important;
+.ez-toc-num {
+  font-family: inherit;
+  font-weight: 600;
+  color: #111111;
+  display: inline-block;
+  margin-right: 0.4rem;
 }
 
+.ez-toc-txt {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* ── TOC Links ── */
 .ez-toc-list a {
   color: #444444 !important;
   text-decoration: none !important;
   font-weight: 500 !important;
   transition: color 0.2s ease, transform 0.2s ease !important;
-  display: inline-block !important;
+  display: inline-flex !important;
+  align-items: baseline !important;
 }
 
 .ez-toc-list a:hover {
