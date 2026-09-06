@@ -205,19 +205,19 @@ export default function HomePage() {
 
 
       {/* 2. DEFINE HOW YOUR ORGANIZATION IS EXPERIENCED */}
-      <section className="bg-[#EBEAE6] pt-4 pb-20 px-6 sm:px-12 overflow-hidden relative z-10">
-        <div className="max-w-7xl mx-auto space-y-16">
+      <section className="bg-[#EBEAE6] pt-4 pb-20 px-3 xs:px-4 sm:px-8 lg:px-12 overflow-hidden relative z-10">
+        <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
 
-          <div className="text-center max-w-4xl mx-auto space-y-4">
+          <div className="text-center max-w-4xl mx-auto space-y-3 sm:space-y-4">
             {/* Title Badge */}
             <div className="inline-flex items-center justify-center gap-2 mx-auto">
               <img
                 src={starIcon}
                 alt=""
-                className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 object-contain brightness-0"
+                className="w-3.5 h-3.5 sm:w-5 sm:h-5 shrink-0 object-contain brightness-0"
               />
               <span
-                className="font-galano font-normal text-[#111111] text-sm sm:text-lg tracking-[3px] sm:tracking-[5px] whitespace-nowrap"
+                className="font-galano font-normal text-[#111111] text-xs sm:text-lg tracking-[2px] sm:tracking-[5px] whitespace-nowrap"
               >
                 Our identity experience program
               </span>
@@ -225,7 +225,7 @@ export default function HomePage() {
 
             {/* Main Heading */}
             <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-[4rem] font-galano font-medium text-[#111111] leading-tight max-w-6xl mx-auto">
-              <span className="inline-block whitespace-nowrap">Define how your organization is</span> <br />
+              <span className="inline-block">Define how your organization is</span> <br />
               <em className="font-swarsh italic font-normal text-[#111111]">experienced</em>
             </h2>
           </div>

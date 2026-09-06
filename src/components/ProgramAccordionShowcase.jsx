@@ -37,13 +37,13 @@ export default function ProgramAccordionShowcase() {
   const [activeId, setActiveId] = useState('identity-discovery');
 
   const toggleProgram = (id) => {
-    setActiveId((prev) => (prev === id ? null : id));
+    setActiveId(id);
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch max-w-7xl mx-auto py-6">
-      {/* VERTICAL TEXT CONTAINERS — same fixed height as the image panel with 24px space between items */}
-      <div className="lg:col-span-6 order-1 flex flex-col gap-6 h-[384px] sm:h-[464px] lg:h-[524px] w-full max-lg:max-w-xl max-lg:mx-auto overflow-hidden font-galano">
+    <div className="grid grid-cols-2 gap-2.5 xs:gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-stretch max-w-7xl mx-auto py-3 sm:py-6">
+      {/* VERTICAL TEXT CONTAINERS — same fixed height as the image panel */}
+      <div className="col-span-1 flex flex-col gap-1.5 xs:gap-2 sm:gap-4 lg:gap-6 h-[380px] xs:h-[420px] sm:h-[464px] lg:h-[524px] w-full overflow-hidden font-galano">
         {programs.map((prog) => {
           const isOpen = activeId === prog.id;
           return (
@@ -56,26 +56,27 @@ export default function ProgramAccordionShowcase() {
                   setActiveId(prog.id);
                 }
               }}
-              className={`group cursor-pointer transition-all duration-500 rounded-3xl select-none flex flex-col overflow-hidden ${
+              className={`group cursor-pointer transition-all duration-500 rounded-xl xs:rounded-2xl lg:rounded-3xl select-none flex flex-col overflow-hidden ${
                 isOpen
-                  ? 'bg-[#F5F4F0] border border-[#DCDAD4] px-6 py-5 sm:px-8 sm:py-6 shadow-xl flex-1 min-h-0'
-                  : 'bg-transparent border border-transparent px-5 py-[16px] sm:px-6 sm:py-[16px] text-black hover:text-black flex-none'
+                  ? 'bg-[#F5F4F0] border border-[#DCDAD4] p-2.5 xs:p-3.5 sm:p-5 md:p-6 lg:px-8 lg:py-6 shadow-md sm:shadow-xl flex-1 min-h-0'
+                  : 'bg-transparent border border-transparent px-2 py-1 xs:px-3 xs:py-1.5 sm:px-5 sm:py-3 lg:px-6 lg:py-3.5 text-black hover:text-black flex-none'
               }`}
             >
               {/* Header Row with Title */}
-              <div className="flex items-center justify-between gap-4 shrink-0">
-                <h3 className="text-2xl sm:text-3xl lg:text-[2.25rem] font-galano font-medium tracking-tight text-black">
+              <div className="flex items-center justify-between gap-1.5 sm:gap-4 shrink-0">
+                <h3 className="text-xs xs:text-sm sm:text-lg md:text-2xl lg:text-[2.25rem] font-galano font-medium tracking-tight text-black leading-snug sm:leading-tight">
                   {prog.title}
                 </h3>
               </div>
 
               {/* Expandable Description — scrollable within the flex-1 item */}
               <div
-                className={`transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-y-auto min-h-0 ${
+                className={`transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-y-auto min-h-0 thin-scrollbar pr-0.5 sm:pr-1 ${
                   isOpen
-                    ? 'opacity-100 mt-3 flex-1'
+                    ? 'opacity-100 mt-1.5 xs:mt-2 sm:mt-3 flex-1'
                     : 'max-h-0 opacity-0 pointer-events-none flex-none'
                 }`}
+                style={{ WebkitOverflowScrolling: 'touch' }}
               >
                 <div
                   className={`transform transition-all duration-500 ease-out ${
@@ -85,7 +86,7 @@ export default function ProgramAccordionShowcase() {
                   {prog.description.split('\n\n').map((para, i) => (
                     <p
                       key={i}
-                      className="font-galano text-sm sm:text-base text-[#555555] leading-relaxed font-normal mb-2.5 last:mb-0"
+                      className="font-galano text-[11px] xs:text-xs sm:text-sm lg:text-base text-[#555555] leading-relaxed font-normal mb-1.5 sm:mb-2.5 last:mb-0"
                     >
                       {para}
                     </p>
@@ -97,16 +98,17 @@ export default function ProgramAccordionShowcase() {
         })}
       </div>
 
-      {/* DYNAMIC IMAGE (RIGHT COLUMN: 6 Cols on Desktop - Height increased by 24px) */}
-      <div className="lg:col-span-6 order-2 relative w-full h-[384px] sm:h-[464px] lg:h-[524px] rounded-3xl overflow-hidden bg-[#111111] border border-[#DCDAD4] shadow-2xl min-h-[384px] sm:min-h-[464px] lg:min-h-[524px]">
+      {/* DYNAMIC IMAGE (RIGHT COLUMN) */}
+      <div className="col-span-1 relative w-full h-[380px] xs:h-[420px] sm:h-[464px] lg:h-[524px] rounded-xl xs:rounded-2xl lg:rounded-3xl overflow-hidden bg-[#111111] border border-[#DCDAD4] shadow-md sm:shadow-2xl">
         {programs.map((prog) => {
           const isActive = activeId === prog.id;
           return (
             <NavLink
               key={prog.id}
               to={`/program/${prog.id}`}
-              className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out ${isActive ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-105 pointer-events-none'
-                }`}
+              className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out ${
+                isActive ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-105 pointer-events-none'
+              }`}
             >
               <img
                 src={prog.image}
