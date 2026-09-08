@@ -34,6 +34,9 @@ import img1 from '../assets/1.jpg';
 import img2 from '../assets/2.jpg';
 import img3 from '../assets/3.jpg';
 import img4 from '../assets/4.jpg';
+import arch1 from '../assets/arch-1.jpg';
+import arch2 from '../assets/arch-2.jpg';
+import arch3 from '../assets/arch-3.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,25 +59,25 @@ const programData = {
         src: img2,
         title: 'Understand what’s working.',
         desc: 'Identify the identity elements that already feel clear, credible, and consistent.',
-        color: '#EDD091',
-        btnBg: '#EDD091',
-        btnText: '#111111'
+        color: '#000000',
+        btnBg: '#000000',
+        btnText: '#FFFFFF'
       },
       {
         src: img3,
         title: 'Uncover what feels disconnected.',
         desc: 'Spot gaps and inconsistencies between how your organization defines itself and how it is experienced.',
-        color: '#2B2927',
-        btnBg: '#2B2927',
+        color: '#000000',
+        btnBg: '#000000',
         btnText: '#FFFFFF'
       },
       {
         src: img4,
         title: 'Create a more intentional identity.',
         desc: 'Turn your findings into opportunities for a clearer, more consistent, and recognizable organizational experience.',
-        color: '#CED0D9',
-        btnBg: '#CED0D9',
-        btnText: '#111111'
+        color: '#1A1D23',
+        btnBg: '#1A1D23',
+        btnText: '#FFFFFF'
       }
     ]
   },
@@ -84,11 +87,30 @@ const programData = {
     subtitle: 'Design how identity works across your organization — people, places, processes and touchpoints.',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Architecture',
     images: [
-      { src: card1Img, title: 'Identity Framework Design', desc: 'Defining how organizational identity should be represented across every key touchpoint.' },
-      { src: scrollSlideImg, title: 'Departmental Alignment', desc: 'Bringing different departments under a unified identity standard and visual language.' },
-      { src: scroll4xImg, title: 'People & Credentials', desc: 'Ensuring employees and executives are represented consistently and with purpose.' },
-      { src: techImg, title: 'Physical & Digital Coherence', desc: 'Connecting physical and digital identity experiences into a seamless whole.' },
-      { src: elitePassGold2, title: 'Identity Architecture Blueprint', desc: 'A structured plan for consistency, clarity, and purpose across all organizational touchpoints.' }
+      {
+        src: arch1,
+        title: 'Design how identity works across your organization.',
+        desc: '',
+        color: '#000000',
+        btnBg: '#000000',
+        btnText: '#FFFFFF'
+      },
+      {
+        src: arch2,
+        title: 'An organization can have a strong brand and still have a fragmented identity experience.',
+        desc: '',
+        color: '#000000',
+        btnBg: '#000000',
+        btnText: '#FFFFFF'
+      },
+      {
+        src: arch3,
+        title: 'We help define how organizational identity should be represented across key people, places, processes and touchpoints, creating greater consistency, clarity and purpose in the way your organization is experienced.',
+        desc: '',
+        color: '#000000',
+        btnBg: '#000000',
+        btnText: '#FFFFFF'
+      }
     ]
   },
   'identity-experience': {
@@ -259,19 +281,21 @@ export default function ProgramDetailPage() {
 
               {/* Text on top of MAKE AN ENQUIRY button */}
               <div className="absolute bottom-[6%] sm:bottom-[8%] left-1/2 -translate-x-1/2 z-20 pointer-events-auto w-full max-w-2xl px-4 sm:px-6 text-center flex flex-col items-center gap-3 sm:gap-4">
-                <div className="space-y-1 sm:space-y-1.5 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
+                <div className={`space-y-1 sm:space-y-1.5 ${textColor === '#000000' || textColor.startsWith('#1') ? 'drop-shadow-[0_1px_4px_rgba(255,255,255,0.7)]' : 'drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]'}`}>
                   <h3
-                    className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-galano font-semibold tracking-tight"
+                    className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-galano font-semibold tracking-tight leading-snug max-w-xl mx-auto"
                     style={{ color: textColor }}
                   >
                     {imgObj.title}
                   </h3>
-                  <p
-                    className="text-xs xs:text-sm sm:text-base md:text-lg font-galano font-normal leading-snug max-w-xl mx-auto"
-                    style={{ color: textColor }}
-                  >
-                    {imgObj.desc}
-                  </p>
+                  {imgObj.desc && (
+                    <p
+                      className="text-xs xs:text-sm sm:text-base md:text-lg font-galano font-normal leading-snug max-w-xl mx-auto"
+                      style={{ color: textColor }}
+                    >
+                      {imgObj.desc}
+                    </p>
+                  )}
                 </div>
 
                 {/* MAKE AN ENQUIRY Button */}

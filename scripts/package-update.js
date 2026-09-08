@@ -32,9 +32,10 @@ try {
     const isCode = lower.endsWith('.js') || lower.endsWith('.css') || lower.endsWith('.svg');
     const isIdentityAsset = lower.includes('identity-') || lower.includes('identikare');
     const isDiscoveryAsset = /^[1-4]-/.test(file);
+    const isArchAsset = lower.startsWith('arch-');
     const isSmallIcon = (lower.endsWith('.png') || lower.endsWith('.webp')) && stat.size < 100 * 1024;
 
-    if (isCode || isIdentityAsset || isDiscoveryAsset || isSmallIcon) {
+    if (isCode || isIdentityAsset || isDiscoveryAsset || isArchAsset || isSmallIcon) {
       fs.copyFileSync(fullPath, path.join(tempDir, 'assets', file));
     }
   }
