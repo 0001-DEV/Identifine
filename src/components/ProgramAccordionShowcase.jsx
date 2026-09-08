@@ -50,12 +50,7 @@ export default function ProgramAccordionShowcase() {
             <div
               key={prog.id}
               onClick={() => toggleProgram(prog.id)}
-              onMouseEnter={() => {
-                // Only trigger on hover for desktop view (screen >= 1024px)
-                if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
-                  setActiveId(prog.id);
-                }
-              }}
+              onMouseEnter={() => setActiveId(prog.id)}
               className={`group cursor-pointer transition-all duration-500 rounded-xl xs:rounded-2xl lg:rounded-3xl select-none flex flex-col overflow-hidden ${
                 isOpen
                   ? 'bg-[#F5F4F0] border border-[#DCDAD4] p-2.5 xs:p-3.5 sm:p-5 md:p-6 lg:px-8 lg:py-6 shadow-md sm:shadow-xl flex-1 min-h-0'
@@ -126,14 +121,14 @@ export default function ProgramAccordionShowcase() {
             <NavLink
               key={prog.id}
               to={`/program/${prog.id}`}
-              className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out ${
+              className={`absolute inset-0 w-full h-full p-2 xs:p-3 sm:p-4 md:p-6 flex items-center justify-center transition-all duration-700 ease-in-out ${
                 isActive ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-105 pointer-events-none'
               }`}
             >
               <img
                 src={prog.image}
                 alt={prog.title}
-                className="w-full h-full object-cover object-center select-none"
+                className="w-full h-full object-contain object-center select-none"
               />
             </NavLink>
           );

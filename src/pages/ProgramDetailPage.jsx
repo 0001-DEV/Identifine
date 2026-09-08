@@ -30,6 +30,10 @@ import identityImg from '../assets/IDENTITY.jpg';
 import techImg from '../assets/TECH.jpg';
 import deployImg from '../assets/Deploy.jpg';
 import card1Img from '../assets/Card 1.png';
+import img1 from '../assets/1.jpg';
+import img2 from '../assets/2.jpg';
+import img3 from '../assets/3.jpg';
+import img4 from '../assets/4.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,11 +44,10 @@ const programData = {
     subtitle: 'See how your organization is represented across people, credentials, spaces, communication, and everyday interactions.',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Discovery',
     images: [
-      { src: techImg, title: 'Identity Touchpoint Audit', desc: 'Examining the key places where your organization\'s identity is being expressed.' },
-      { src: heroImg, title: 'What Is Working Well', desc: 'Identifying the strengths in your existing identity expressions across departments.' },
-      { src: scrollssImg, title: 'Disconnected Signals', desc: 'Spotting where identity feels fragmented, inconsistent, or unintentional.' },
-      { src: scrollSliderImg, title: 'Opportunity Mapping', desc: 'Highlighting opportunities to create a more consistent and intentional identity experience.' },
-      { src: scrollImg, title: 'Discovery Report', desc: 'A clear picture of how your organization is currently being experienced.' }
+      { src: img1, title: 'Identity Touchpoint Audit', desc: 'Examining the key places where your organization\'s identity is being expressed.' },
+      { src: img2, title: 'What Is Working Well', desc: 'Identifying the strengths in your existing identity expressions across departments.' },
+      { src: img3, title: 'Disconnected Signals', desc: 'Spotting where identity feels fragmented, inconsistent, or unintentional.' },
+      { src: img4, title: 'Opportunity Mapping & Discovery Report', desc: 'Highlighting opportunities to create a more consistent and intentional identity experience.' }
     ]
   },
   'identity-architecture': {
@@ -213,13 +216,13 @@ export default function ProgramDetailPage() {
             <div
               key={idx}
               ref={(el) => (slideRefs.current[idx] = el)}
-              className="absolute inset-0 w-full h-full will-change-transform overflow-hidden pointer-events-none"
+              className="absolute inset-0 w-full h-full will-change-transform overflow-hidden pointer-events-none flex items-center justify-center p-2 sm:p-4 md:p-8 bg-[#080B11]"
               style={{ zIndex: idx + 1 }}
             >
               <img
                 src={imgObj.src}
                 alt={imgObj.title}
-                className="w-full h-full object-cover object-center select-none pointer-events-none"
+                className="w-full h-full object-contain object-center select-none pointer-events-none"
               />
               <div className="absolute bottom-[8%] left-1/2 -translate-x-1/2 z-20 pointer-events-auto">
                 <a

@@ -36,5 +36,6 @@ framer_data.json
 *.zip
 scratch/
 .temp_patch/
+cpanel_upload_files/
 
 

@@ -22,7 +22,7 @@ try {
     fs.copyFileSync(path.join(distDir, '.htaccess'), path.join(tempDir, '.htaccess'));
   }
 
-  // Copy JS, CSS, SVG, logos, and identity program images
+  // Copy JS, CSS, SVG, logos, identity program images, and discovery 1-4 images
   const assets = fs.readdirSync(path.join(distDir, 'assets'));
   for (const file of assets) {
     const fullPath = path.join(distDir, 'assets', file);
@@ -31,19 +31,27 @@ try {
 
     const isCode = lower.endsWith('.js') || lower.endsWith('.css') || lower.endsWith('.svg');
     const isIdentityAsset = lower.includes('identity-') || lower.includes('identikare');
+    const isDiscoveryAsset = /^[1-4]-/.test(file);
     const isSmallIcon = (lower.endsWith('.png') || lower.endsWith('.webp')) && stat.size < 100 * 1024;
 
-    if (isCode || isIdentityAsset || isSmallIcon) {
+    if (isCode || isIdentityAsset || isDiscoveryAsset || isSmallIcon) {
       fs.copyFileSync(fullPath, path.join(tempDir, 'assets', file));
     }
   }
 
   // Create zip using built-in tar
   execSync(`tar.exe -a -c -f "${zipFile}" -C "${tempDir}" .`);
+
+  // Sync unzipped folder cpanel_upload_files for direct non-zipped upload
+  const unzippedDir = path.join(rootDir, 'cpanel_upload_files');
+  if (fs.existsSync(unzippedDir)) fs.rmSync(unzippedDir, { recursive: true, force: true });
+  fs.cpSync(tempDir, unzippedDir, { recursive: true });
+
   fs.rmSync(tempDir, { recursive: true, force: true });
 
   const stats = fs.statSync(zipFile);
   console.log(`\n✓ Successfully created: cpanel_update_only.zip (${(stats.size / 1024).toFixed(1)} KB)`);
+  console.log(`✓ Successfully updated unzipped directory: d:/Identifine/cpanel_upload_files`);
   console.log(`Ready to upload to public_html in cPanel!\n`);
 } catch (err) {
   console.error('Error packaging update:', err);
