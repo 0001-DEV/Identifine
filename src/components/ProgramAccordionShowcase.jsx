@@ -10,19 +10,19 @@ export default function ProgramAccordionShowcase() {
     {
       id: 'identity-discovery',
       title: 'Identity Discovery',
-      description: 'See how your organization is represented.\n\nEvery organization communicates identity — through its people, credentials, spaces, communication, and everyday interactions.\n\nSome of these are carefully designed. Others simply evolve over time.\n\nIdentity Discovery helps you take a step back and look at the key places where your organization\'s identity is being expressed.\n\nWe examine selected identity touchpoints across your organization to identify what is working well, what feels disconnected, and where there are opportunities to create a more consistent and intentional experience.',
+      description: 'Every organization communicates identity, through its people, credentials, spaces, communication, and everyday interactions.\n\nSome of these are carefully designed. Others simply evolve over time.\n\nWe examine selected identity touchpoints across your organization to identify what is working well, what feels disconnected, and where there are opportunities to create a more consistent and intentional experience.',
       image: techImg,
     },
     {
       id: 'identity-architecture',
       title: 'Identity Architecture',
-      description: 'Design how identity works across your organization.\n\nAn organization can have a strong brand and still have a fragmented identity experience.\n\nDifferent departments may use different standards. Employees may be represented differently. Executives may have their own systems. Physical and digital experiences may not connect. Credentials may identify people without actually representing the organization.\n\nIdentity Architecture brings these elements together.\n\nWe help define how organizational identity should be represented across key people, places, processes and touchpoints — creating greater consistency, clarity and purpose in the way your organization is experienced.',
+      description: 'Design how identity works across your organization.\n\nAn organization can have a strong brand and still have a fragmented identity experience.\n\nWe help define how organizational identity should be represented across key people, places, processes and touchpoints, creating greater consistency, clarity and purpose in the way your organization is experienced.',
       image: card1Img,
     },
     {
       id: 'identity-experience',
       title: 'Identity Experience',
-      description: 'Make identity tangible.\n\nAn organization\'s identity is not experienced in a strategy document.\n\nIt is experienced through the people who represent it, the credentials they carry, the places they enter, the spaces they encounter, the systems they interact with, and the moments that shape perception.\n\nIdentity Experience brings your identity architecture to life across the touchpoints that people actually encounter.\n\nWe translate identity standards into practical experiences — physical, digital and human — so that the organization is not only clearly defined, but consistently experienced.',
+      description: 'Make identity tangible.\n\nAn organization\'s identity is not experienced in a strategy document.\n\nIt is experienced through the people who represent it, the credentials they carry, the places they enter, the spaces they encounter, the systems they interact with, and the moments that shape perception.\n\nWe translate identity standards into practical experiences, physical, digital and human, so that the organization is not only clearly defined, but consistently experienced.',
       image: identityImg,
     },
     {
