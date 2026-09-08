@@ -172,8 +172,8 @@ export default function Footer() {
               <div className="space-y-4">
                 <p className="text-[#AAA9AD] text-base font-normal">Get in touch</p>
                 <div className="space-y-3 text-base text-[#AAA9AD]">
-                  <a href="tel:+2347046367754" className="block text-[#AAA9AD] hover:text-white transition-colors">+234 704 636 7754</a>
-                  <a href="mailto:identifine@cr8.com" className="block text-[#AAA9AD] hover:text-white transition-colors">identifine@cr8.com</a>
+                  <a href="tel:+2349030001851" className="block text-[#AAA9AD] hover:text-white transition-colors">+234 903 000 1851</a>
+                  <a href="mailto:reachus@xtremecardz.com" className="block text-[#AAA9AD] hover:text-white transition-colors">contactus@Identifine.com.ng</a>
                 </div>
               </div>
 

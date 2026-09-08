@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:patch": "vite build && node scripts/package-update.js",
     "preview": "vite preview"
   },
   "dependencies": {

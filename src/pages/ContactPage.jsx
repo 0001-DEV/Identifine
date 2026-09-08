@@ -31,7 +31,10 @@ export default function ContactPage() {
     email: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [referenceId, setReferenceId] = useState('');
   const [openFaq, setOpenFaq] = useState(null);
   const faqRef = useRef(null);
 
@@ -57,9 +60,68 @@ export default function ContactPage() {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    const refCode = 'IDF-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    const timestamp = new Date().toLocaleString('en-US', {
+      dateStyle: 'full',
+      timeStyle: 'short'
+    });
+
+    const structuredEmailBody = 
+`==================================================
+IDENTIFINE EXECUTIVE CLIENT CONSULTATION INQUIRY
+Reference ID: ${refCode}
+Date & Time: ${timestamp}
+==================================================
+
+1. CLIENT IDENTIFICATION
+- Client Name: ${formData.name}
+- Official Contact Email: ${formData.email}
+- Routed Corporate Mailbox: reachus@xtremecardz.com
+
+2. INQUIRY DETAILS & SCOPE
+${formData.message ? formData.message : 'No message provided.'}
+
+==================================================
+Official Transmission: Identifine Web Portal (identifine.com.ng)
+Recipient: reachus@xtremecardz.com
+Confidentiality: Privileged Commercial Inquiry`;
+
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/contact.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          refId: refCode
+        })
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (response.ok && result?.status === 'success') {
+        setReferenceId(result?.refId || refCode);
+        setSubmitted(true);
+      } else {
+        throw new Error(result?.message || 'Server mail delivery was not completed.');
+      }
+    } catch (err) {
+      console.error('Contact form submission error:', err);
+      setErrorMessage('Unable to dispatch message directly right now. Please email us at contactus@Identifine.com.ng or call +234 903 000 1851.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -98,8 +160,8 @@ export default function ContactPage() {
                   <a href="tel:+2349030001851" className="block text-xl sm:text-2xl font-normal text-[#111111] hover:text-[#E2B857] transition-colors">
                     +234 903 000 1851
                   </a>
-                  <a href="mailto:contact@identifine.com.ng" className="text-lg sm:text-xl lg:text-[1.65rem] font-bold text-[#111111] block hover:text-[#E2B857] transition-colors leading-tight max-w-xs sm:max-w-sm">
-                    contact@identifine.com.ng
+                  <a href="mailto:reachus@xtremecardz.com" className="text-lg sm:text-xl lg:text-[1.65rem] font-bold text-[#111111] block hover:text-[#E2B857] transition-colors leading-tight max-w-xs sm:max-w-sm">
+                    contactus@Identifine.com.ng
                   </a>
                 </div>
               </div>
@@ -191,11 +253,18 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {errorMessage && (
+                    <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl leading-relaxed">
+                      {errorMessage}
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    className="group relative inline-flex items-center justify-center text-sm sm:text-base font-semibold px-10 py-3.5 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[50px] mt-2"
+                    disabled={isSubmitting}
+                    className="group relative inline-flex items-center justify-center text-sm sm:text-base font-semibold px-10 py-3.5 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[50px] mt-2 disabled:opacity-60 disabled:pointer-events-none"
                   >
-                    <span>Submit</span>
+                    <span>{isSubmitting ? 'Transmitting inquiry...' : 'Submit'}</span>
                   </button>
                 </form>
               ) : (
@@ -203,12 +272,15 @@ export default function ContactPage() {
                   <div className="w-14 h-14 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center mx-auto">
                     <CheckCircle2 className="w-7 h-7" />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#111111]">Enquiry Received!</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#111111]">Inquiry Dispatched!</h3>
                   <p className="text-xs sm:text-sm text-[#555555] max-w-md mx-auto leading-relaxed">
-                    Thank you, Amanda. We will reach out to you within 2 business hours.
+                    Thank you, <strong className="text-[#111111]">{formData.name}</strong>. Your consultation request has been officially received{referenceId ? ` (Ref: ${referenceId})` : ''}. We will reach out to you shortly.
                   </p>
                   <button
-                    onClick={() => setSubmitted(false)}
+                    onClick={() => {
+                      setSubmitted(false);
+                      setFormData({ name: '', email: '', message: '' });
+                    }}
                     className="framer-pill-button text-xs px-6 py-2.5"
                   >
                     Submit another

@@ -34,5 +34,7 @@ dist-ssr
 live-browser.*
 framer_data.json
 *.zip
+scratch/
+.temp_patch/
 
 

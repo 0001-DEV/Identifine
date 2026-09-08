@@ -52,7 +52,7 @@ export default function ConsultationModal({ isOpen, onClose }) {
       `- *Timeline:* ${formData.timeline}\n` +
       (formData.notes ? `- *Notes/Requirements:* ${formData.notes}\n` : '');
 
-    const whatsappUrl = `https://wa.me/2347046367754?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/2349030001851?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     onClose();
   };

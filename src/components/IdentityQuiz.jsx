@@ -190,7 +190,7 @@ export default function IdentityQuiz() {
       `-----------------------------------\n` +
       `Status: Ready for Strategy Consultation Call`;
 
-    window.open(`https://wa.me/2347046367754?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/2349030001851?text=${encodeURIComponent(message)}`, '_blank');
     setSubmitted(true);
   };
 

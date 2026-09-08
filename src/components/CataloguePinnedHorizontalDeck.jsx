@@ -17,6 +17,31 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
       const track = trackRef.current;
       const mm = gsap.matchMedia();
 
+      // Mobile (< 768px): Smooth pinned horizontal scroll
+      mm.add('(max-width: 767px)', () => {
+        const getScrollAmount = () => {
+          const trackWidth = track.scrollWidth;
+          const windowWidth = window.innerWidth;
+          const extraOffset = 32;
+          return -(trackWidth - windowWidth + extraOffset);
+        };
+
+        gsap.to(track, {
+          x: () => getScrollAmount(),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+            start: 'top top',
+            end: () => `+=${Math.max(350, Math.abs(getScrollAmount()) * 0.5)}`,
+            scrub: 0.25,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+
       // Desktop & Tablet (>= 768px): Smooth pinned horizontal scroll
       mm.add('(min-width: 768px)', () => {
         const getScrollAmount = () => {
@@ -56,7 +81,7 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
   return (
     <section
       ref={containerRef}
-      className="relative z-10 bg-black text-white w-full min-h-[480px] md:h-screen md:min-h-[520px] md:max-h-[1080px] flex flex-col justify-center py-6 sm:py-6 lg:py-8 overflow-hidden border-t border-white/10 select-none gap-4 sm:gap-6 lg:gap-8"
+      className="relative z-10 bg-black text-white w-full h-[100dvh] min-h-[500px] max-h-[1080px] flex flex-col justify-center py-4 sm:py-6 lg:py-8 overflow-hidden border-t border-white/10 select-none gap-3 sm:gap-6 lg:gap-8"
     >
       <div className="max-w-7xl mx-auto space-y-3 sm:space-y-4 px-4 sm:px-8 lg:px-12 w-full shrink-0">
 
@@ -100,10 +125,10 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
       </div>
 
       {/* Horizontal Cards Slider Track */}
-      <div className="w-full overflow-x-auto md:overflow-hidden py-2 shrink-0 scrollbar-hide">
+      <div className="w-full overflow-hidden py-2 shrink-0">
         <div
           ref={trackRef}
-          className="flex items-center gap-[10px] sm:gap-[14px] w-max pl-4 sm:pl-12 lg:pl-16 pr-8 sm:pr-16 lg:pr-24 touch-pan-x"
+          className="flex items-center gap-[10px] sm:gap-[14px] w-max pl-4 sm:pl-12 lg:pl-16 pr-8 sm:pr-16 lg:pr-24"
           style={{ willChange: 'transform' }}
         >
           {catalogueCards.map((card) => (
