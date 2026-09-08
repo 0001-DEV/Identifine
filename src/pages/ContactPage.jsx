@@ -274,7 +274,7 @@ Confidentiality: Privileged Commercial Inquiry`;
                   </div>
                   <h3 className="text-xl sm:text-2xl font-bold text-[#111111]">Inquiry Dispatched!</h3>
                   <p className="text-xs sm:text-sm text-[#555555] max-w-md mx-auto leading-relaxed">
-                    Thank you, <strong className="text-[#111111]">{formData.name}</strong>. Your consultation request has been officially received{referenceId ? ` (Ref: ${referenceId})` : ''}. We will reach out to you shortly.
+                    Thank you, <strong className="text-[#111111]">{formData.name}</strong>. Your consultation request has been officially received. We will reach out to you shortly.
                   </p>
                   <button
                     onClick={() => {
