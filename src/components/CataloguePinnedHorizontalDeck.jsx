@@ -15,27 +15,31 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
       if (!containerRef.current || !trackRef.current) return;
 
       const track = trackRef.current;
+      const mm = gsap.matchMedia();
 
-      const getScrollAmount = () => {
-        const trackWidth = track.scrollWidth;
-        const windowWidth = window.innerWidth;
-        const extraOffset = windowWidth < 640 ? 32 : 64;
-        return -(trackWidth - windowWidth + extraOffset);
-      };
+      // Desktop & Tablet (>= 768px): Smooth pinned horizontal scroll
+      mm.add('(min-width: 768px)', () => {
+        const getScrollAmount = () => {
+          const trackWidth = track.scrollWidth;
+          const windowWidth = window.innerWidth;
+          const extraOffset = 64;
+          return -(trackWidth - windowWidth + extraOffset);
+        };
 
-      gsap.to(track, {
-        x: () => getScrollAmount(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          start: 'top top',
-          end: () => `+=${Math.max(250, Math.abs(getScrollAmount()) * 0.45)}`,
-          scrub: 0.2,
-          invalidateOnRefresh: true,
-        },
+        gsap.to(track, {
+          x: () => getScrollAmount(),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+            start: 'top top',
+            end: () => `+=${Math.max(250, Math.abs(getScrollAmount()) * 0.45)}`,
+            scrub: 0.2,
+            invalidateOnRefresh: true,
+          },
+        });
       });
     }, containerRef);
 
@@ -52,7 +56,7 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
   return (
     <section
       ref={containerRef}
-      className="relative z-10 bg-black text-white w-full h-screen min-h-[520px] max-h-[1080px] flex flex-col justify-center py-4 sm:py-6 lg:py-8 overflow-hidden border-t border-white/10 select-none gap-4 sm:gap-6 lg:gap-8"
+      className="relative z-10 bg-black text-white w-full min-h-[480px] md:h-screen md:min-h-[520px] md:max-h-[1080px] flex flex-col justify-center py-6 sm:py-6 lg:py-8 overflow-hidden border-t border-white/10 select-none gap-4 sm:gap-6 lg:gap-8"
     >
       <div className="max-w-7xl mx-auto space-y-3 sm:space-y-4 px-4 sm:px-8 lg:px-12 w-full shrink-0">
 
@@ -96,10 +100,10 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
       </div>
 
       {/* Horizontal Cards Slider Track */}
-      <div className="w-full overflow-hidden py-1 sm:py-2 shrink-0">
+      <div className="w-full overflow-x-auto md:overflow-hidden py-2 shrink-0 scrollbar-hide">
         <div
           ref={trackRef}
-          className="flex items-center gap-[10px] sm:gap-[14px] w-max pl-4 sm:pl-12 lg:pl-16 pr-8 sm:pr-16 lg:pr-24"
+          className="flex items-center gap-[10px] sm:gap-[14px] w-max pl-4 sm:pl-12 lg:pl-16 pr-8 sm:pr-16 lg:pr-24 touch-pan-x"
           style={{ willChange: 'transform' }}
         >
           {catalogueCards.map((card) => (

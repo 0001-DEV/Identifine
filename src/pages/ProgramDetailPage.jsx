@@ -200,7 +200,7 @@ export default function ProgramDetailPage() {
   }, [activeKey]);
 
   return (
-    <div className="bg-[#080B11] text-white overflow-x-hidden selection:bg-[#E2B857] selection:text-black">
+    <div className="bg-[#080B11] text-white overflow-x-clip selection:bg-[#E2B857] selection:text-black">
 
       {/* PINNED FULL-SCREEN SCROLL GALLERY */}
       <section

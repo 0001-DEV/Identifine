@@ -63,7 +63,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="bg-[#EBEAE6] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 text-[#111111] overflow-hidden">
+    <div className="bg-[#EBEAE6] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 text-[#111111] overflow-x-clip">
       <div className="max-w-[96rem] mx-auto space-y-24 sm:space-y-32">
         
         {/* Header - Reduced width, centered & font-medium */}

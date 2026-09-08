@@ -146,14 +146,22 @@ export default function HeroVideoZoom() {
       }
     };
 
+    let sectionDocTop = 0;
+    const calculateSectionPosition = () => {
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      sectionDocTop = rect.top + window.scrollY;
+    };
+    calculateSectionPosition();
+
     const updateScrollTarget = () => {
       if (!isIntersecting) return;
-      const rect         = section.getBoundingClientRect();
       const windowHeight = window.innerHeight;
+      const rectTop      = sectionDocTop - window.scrollY;
       // Triggers as section enters at 85vh, completes when section top reaches 15vh
       const startPoint = windowHeight * 0.85;
       const endPoint   = windowHeight * 0.15;
-      const progress   = (startPoint - rect.top) / (startPoint - endPoint);
+      const progress   = (startPoint - rectTop) / (startPoint - endPoint);
       targetProgress   = Math.max(0, Math.min(1, progress));
       startAnimation();
     };
@@ -162,6 +170,7 @@ export default function HeroVideoZoom() {
 
     // Resize / orientation-change: always re-anchor to fresh bounds at current progress
     const handleResize = () => {
+      calculateSectionPosition();
       if (!isIntersecting) return;
       updateScrollTarget();
       applyBounds(getCurveProgress(currentProgress));
@@ -173,6 +182,7 @@ export default function HeroVideoZoom() {
         entries.forEach((entry) => {
           isIntersecting = entry.isIntersecting;
           if (entry.isIntersecting) {
+            calculateSectionPosition();
             video.play().catch(() => {});
             updateScrollTarget();
           } else {

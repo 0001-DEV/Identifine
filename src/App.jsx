@@ -46,6 +46,8 @@ function ScrollRevealObserver() {
         '.scroll-reveal, .reveal-on-scroll, .scroll-reveal-deep, [data-reveal], footer'
       );
 
+      if (observer) observer.disconnect();
+
       observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -57,7 +59,7 @@ function ScrollRevealObserver() {
         },
         {
           threshold: 0.05,
-          rootMargin: '0px 0px -30px 0px'
+          rootMargin: '40px 0px 40px 0px'
         }
       );
 
@@ -66,22 +68,16 @@ function ScrollRevealObserver() {
           el.classList.add('reveal-on-scroll');
         }
         observer.observe(el);
-
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 30) {
-          el.classList.add('is-revealed');
-          observer.unobserve(el);
-        }
       });
     };
 
-    const timer = setTimeout(applyObservers, 60);
+    const timer = setTimeout(applyObservers, 80);
 
     // Watch for dynamic DOM additions (e.g. clicking Load More) with debouncing
     let mutationTimer = null;
     mutationObserver = new MutationObserver(() => {
       if (mutationTimer) clearTimeout(mutationTimer);
-      mutationTimer = setTimeout(applyObservers, 250);
+      mutationTimer = setTimeout(applyObservers, 300);
     });
     mutationObserver.observe(document.body, { childList: true, subtree: true });
 
@@ -101,7 +97,7 @@ export default function App() {
   const hideFooter = location.pathname.startsWith('/program');
 
   return (
-    <div className="min-h-screen bg-[#080B11] text-[#F1F5F9] font-sans flex flex-col justify-between selection:bg-[#E2B857] selection:text-black overflow-x-hidden">
+    <div className="min-h-screen bg-[#080B11] text-[#F1F5F9] font-sans flex flex-col justify-between selection:bg-[#E2B857] selection:text-black overflow-x-clip">
       <ScrollToTop />
       <ScrollRevealObserver />
       

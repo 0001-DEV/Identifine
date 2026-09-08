@@ -109,7 +109,7 @@ export default function CaseStudiesPage() {
   ];
 
   return (
-    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-x-clip font-sans">
       <div className="max-w-[94rem] mx-auto space-y-16 sm:space-y-24">
         
         {/* Header Section with Page-Open Entry Animation */}

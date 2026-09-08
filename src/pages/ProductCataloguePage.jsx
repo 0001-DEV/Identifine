@@ -124,7 +124,7 @@ export default function ProductCataloguePage() {
   ];
 
   return (
-    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-20 sm:pt-24 pb-28 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans space-y-20 sm:space-y-28">
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-20 sm:pt-24 pb-28 selection:bg-[#E2B857] selection:text-black overflow-x-clip font-sans space-y-20 sm:space-y-28">
 
       {/* ========================================================================= */}
       {/* HERO SECTION: 100% FULL BLEED EDGE-TO-EDGE PICTURE (NO BORDER, NO RADIUS) */}

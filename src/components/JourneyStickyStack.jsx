@@ -41,6 +41,9 @@ export default function JourneyStickyStack({ journeySteps }) {
         }
       });
 
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+      const scrubDistance = isMobile ? 60 : 100;
+
       // Pin section and animate cards entering the stack seamlessly with buttery smooth scrub
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -48,9 +51,9 @@ export default function JourneyStickyStack({ journeySteps }) {
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
-          start: 'top top+=80',
-          end: () => `+=${(totalCards - 1) * 100}%`,
-          scrub: 0.4,
+          start: isMobile ? 'top top+=60' : 'top top+=80',
+          end: () => `+=${(totalCards - 1) * scrubDistance}%`,
+          scrub: isMobile ? 0.2 : 0.4,
           invalidateOnRefresh: true,
         },
       });

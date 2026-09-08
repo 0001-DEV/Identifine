@@ -412,7 +412,7 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-20 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-hidden font-sans">
+    <div className="bg-[#EBEAE6] text-[#111111] min-h-screen pt-36 sm:pt-44 pb-20 px-6 sm:px-12 selection:bg-[#E2B857] selection:text-black overflow-x-clip font-sans">
       <div className="max-w-[94rem] mx-auto space-y-10 sm:space-y-14">
         
         {/* Header Section */}
