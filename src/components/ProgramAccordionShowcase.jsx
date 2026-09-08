@@ -87,9 +87,9 @@ export default function ProgramAccordionShowcase() {
                     </p>
                   ))}
 
-                  {/* Learn More Button */}
+                  {/* Action Buttons: Learn More & Identishare */}
                   <div
-                    className={`pt-2.5 sm:pt-3.5 pb-1 transform transition-all duration-500 ease-out text-left ${
+                    className={`pt-2.5 sm:pt-3.5 pb-1 transform transition-all duration-500 ease-out text-left flex items-center gap-2.5 sm:gap-3.5 flex-wrap ${
                       isOpen ? 'translate-y-0 opacity-100 delay-150' : '-translate-y-4 opacity-0'
                     }`}
                   >
@@ -105,6 +105,23 @@ export default function ProgramAccordionShowcase() {
                         </span>
                       </span>
                     </NavLink>
+
+                    {prog.id === 'identity-experience' && (
+                      <a
+                        href="https://identishare.identifine.com.ng"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="group/btn relative overflow-hidden inline-flex items-center justify-center text-[11px] xs:text-xs sm:text-sm md:text-base font-semibold px-4 xs:px-5 sm:px-7 py-2 xs:py-2.5 sm:py-3.5 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300"
+                      >
+                        <span className="relative inline-block overflow-hidden h-[1.3em] leading-snug">
+                          <span className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:-translate-y-1/2">
+                            <span className="block">Identishare</span>
+                            <span className="block">Identishare</span>
+                          </span>
+                        </span>
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
