@@ -77,7 +77,8 @@ const programData = {
         desc: 'Turn your findings into opportunities for a clearer, more consistent, and recognizable organizational experience.',
         color: '#1A1D23',
         btnBg: '#1A1D23',
-        btnText: '#FFFFFF'
+        btnText: '#FFFFFF',
+        hasGlassBg: true
       }
     ]
   },
@@ -281,7 +282,17 @@ export default function ProgramDetailPage() {
 
               {/* Text on top of MAKE AN ENQUIRY button */}
               <div className="absolute bottom-[6%] sm:bottom-[8%] left-1/2 -translate-x-1/2 z-20 pointer-events-auto w-full max-w-2xl px-4 sm:px-6 text-center flex flex-col items-center gap-3 sm:gap-4">
-                <div className={`space-y-1 sm:space-y-1.5 ${textColor === '#000000' || textColor.startsWith('#1') ? 'drop-shadow-[0_1px_4px_rgba(255,255,255,0.7)]' : 'drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]'}`}>
+                <div
+                  className={`space-y-1 sm:space-y-1.5 transition-all duration-300 ${
+                    imgObj.hasGlassBg
+                      ? 'backdrop-blur-md bg-white/25 border border-white/30 rounded-2xl sm:rounded-3xl px-5 sm:px-8 py-3.5 sm:py-5 shadow-lg max-w-xl mx-auto'
+                      : ''
+                  } ${
+                    textColor === '#000000' || textColor === '#111111' || textColor === '#1A1D23'
+                      ? ''
+                      : 'drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]'
+                  }`}
+                >
                   <h3
                     className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-galano font-semibold tracking-tight leading-snug max-w-xl mx-auto"
                     style={{ color: textColor }}
