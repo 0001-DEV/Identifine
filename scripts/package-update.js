@@ -13,17 +13,28 @@ try {
   if (fs.existsSync(tempDir)) fs.rmSync(tempDir, { recursive: true, force: true });
   fs.mkdirSync(path.join(tempDir, 'assets'), { recursive: true });
 
-  // Copy index.html & contact.php
+  // Copy index.html, contact.php, and .htaccess
   fs.copyFileSync(path.join(distDir, 'index.html'), path.join(tempDir, 'index.html'));
   if (fs.existsSync(path.join(distDir, 'contact.php'))) {
     fs.copyFileSync(path.join(distDir, 'contact.php'), path.join(tempDir, 'contact.php'));
   }
+  if (fs.existsSync(path.join(distDir, '.htaccess'))) {
+    fs.copyFileSync(path.join(distDir, '.htaccess'), path.join(tempDir, '.htaccess'));
+  }
 
-  // Copy all JS and CSS code bundles
+  // Copy JS, CSS, SVG, logos, and identity program images
   const assets = fs.readdirSync(path.join(distDir, 'assets'));
   for (const file of assets) {
-    if (file.endsWith('.js') || file.endsWith('.css')) {
-      fs.copyFileSync(path.join(distDir, 'assets', file), path.join(tempDir, 'assets', file));
+    const fullPath = path.join(distDir, 'assets', file);
+    const stat = fs.statSync(fullPath);
+    const lower = file.toLowerCase();
+
+    const isCode = lower.endsWith('.js') || lower.endsWith('.css') || lower.endsWith('.svg');
+    const isIdentityAsset = lower.includes('identity-') || lower.includes('identikare');
+    const isSmallIcon = (lower.endsWith('.png') || lower.endsWith('.webp')) && stat.size < 100 * 1024;
+
+    if (isCode || isIdentityAsset || isSmallIcon) {
+      fs.copyFileSync(fullPath, path.join(tempDir, 'assets', file));
     }
   }
 
