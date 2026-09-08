@@ -71,8 +71,8 @@ export default function ContactPage() {
       timeStyle: 'short'
     });
 
-    const structuredEmailBody = 
-`==================================================
+    const structuredEmailBody =
+      `==================================================
 IDENTIFINE EXECUTIVE CLIENT CONSULTATION INQUIRY
 Reference ID: ${refCode}
 Date & Time: ${timestamp}
@@ -127,7 +127,7 @@ Confidentiality: Privileged Commercial Inquiry`;
   return (
     <div className="bg-[#EBEAE6] min-h-screen pt-36 sm:pt-44 pb-28 px-6 sm:px-12 text-[#111111] overflow-x-clip">
       <div className="max-w-[96rem] mx-auto space-y-24 sm:space-y-32">
-        
+
         {/* Header - Reduced width, centered & font-medium */}
         <div className="animate-hero-fade-1 max-w-4xl mx-auto text-center pb-2">
           <h1 className="text-5xl sm:text-7xl lg:text-[6.25rem] font-galano font-medium text-[#111111] leading-[1.08] tracking-tight text-center">
@@ -137,10 +137,10 @@ Confidentiality: Privileged Commercial Inquiry`;
 
         {/* Contact Grid: Left Details & Right Form Container */}
         <div className="animate-hero-fade-2 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
-          
+
           {/* Left Details - Indented with margin-left, bottom aligned with right form container */}
           <div className="lg:col-span-5 flex flex-col justify-between h-full text-left lg:ml-4 xl:ml-8 space-y-8">
-            
+
             <div className="space-y-8">
               {/* Contact us */}
               <div className="space-y-3">
@@ -194,7 +194,7 @@ Confidentiality: Privileged Commercial Inquiry`;
               <p className="text-lg sm:text-xl font-galano font-normal text-[#111111] leading-relaxed">
                 “Every great project begins with a simple <br /> conversation — let’s start yours.”
               </p>
-              
+
               <div className="flex items-center gap-3.5 pt-1">
                 <div className="w-12 h-12 rounded-full bg-[#111111] text-[#E2B857] flex items-center justify-center font-bold text-sm shadow-md shrink-0">
                   DA
@@ -211,7 +211,7 @@ Confidentiality: Privileged Commercial Inquiry`;
           {/* Right Container (Height & Width increased by 18px) */}
           <div className="lg:col-span-7">
             <div className="bg-[#F5F4F0] p-10 sm:p-12 lg:p-14 min-h-[518px] rounded-none border border-[#DCDAD4] shadow-md space-y-7 flex flex-col justify-between h-full">
-              
+
               <h2 className="text-2xl sm:text-3xl font-galano font-medium text-[#111111]">
                 Let’s work together
               </h2>
@@ -295,7 +295,7 @@ Confidentiality: Privileged Commercial Inquiry`;
 
         {/* FAQ Section - Center Aligned Header & White Card Containers */}
         <div ref={faqRef} className="pt-16 sm:pt-24 border-t border-[#DCDAD4] space-y-12">
-          
+
           {/* Center-aligned FAQ Header */}
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center justify-center gap-2 mx-auto">
@@ -338,9 +338,8 @@ Confidentiality: Privileged Commercial Inquiry`;
                     </div>
                   </button>
                   <div
-                    className={`grid transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                      isOpen ? 'grid-rows-[1fr] opacity-100 mt-6 pt-6 border-t border-[#DCDAD4]/60' : 'grid-rows-[0fr] opacity-0'
-                    }`}
+                    className={`grid transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? 'grid-rows-[1fr] opacity-100 mt-6 pt-6 border-t border-[#DCDAD4]/60' : 'grid-rows-[0fr] opacity-0'
+                      }`}
                   >
                     <div className="overflow-hidden">
                       <p className={`text-base sm:text-[1.05rem] text-[#444444] leading-relaxed max-w-3xl font-normal ${isOpen ? 'animate-typewriter-text' : ''}`}>
