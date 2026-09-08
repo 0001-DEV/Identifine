@@ -45,33 +45,36 @@ $htmlContent = "
 <head>
   <meta charset='UTF-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <title>New Website Enquiry</title>
+  <title>NEW ENQUIRY</title>
+  <link rel='icon' type='image/png' href='https://identifine.com.ng/favicon.png'>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #ffffff; color: #111111; margin: 0; padding: 20px; font-size: 15px; line-height: 1.6; }
     .box { max-width: 580px; margin: 0 auto; background: #ffffff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 24px 28px; }
-    .title { font-size: 18px; font-weight: 700; margin: 0 0 16px; color: #111111; border-bottom: 2px solid #E2B857; padding-bottom: 8px; }
     .row { margin-bottom: 10px; }
     .label { font-weight: 600; color: #555555; display: inline-block; width: 70px; }
     .value { color: #111111; }
     .msg-title { font-weight: 600; color: #555555; margin-top: 18px; margin-bottom: 6px; }
     .msg-content { background: #f7f7f7; padding: 14px 16px; border-radius: 6px; color: #111111; white-space: pre-wrap; font-size: 14px; line-height: 1.6; }
-    .footer { margin-top: 24px; padding-top: 14px; border-top: 1px solid #eeeeee; font-size: 13px; color: #888888; }
   </style>
 </head>
 <body>
   <div class='box'>
-    <div class='title'><strong>NEW ENQUIRY</strong></div>
-    <div style='height: 16px;'></div>
+    <table cellpadding='0' cellspacing='0' border='0' style='width: 100%; border-bottom: 2px solid #E2B857; padding-bottom: 10px; margin-bottom: 18px;'>
+      <tr>
+        <td style='vertical-align: middle; width: 28px; padding-right: 10px;'>
+          <img src='https://identifine.com.ng/favicon.png' alt='Identifine' width='22' height='22' style='display: block; border: 0;' />
+        </td>
+        <td style='vertical-align: middle; font-size: 18px; font-weight: 800; color: #111111; letter-spacing: 0.5px;'>
+          <strong>NEW ENQUIRY</strong>
+        </td>
+      </tr>
+    </table>
     <div class='row'><span class='label'>Name:</span> <span class='value'><strong>" . htmlspecialchars($name) . "</strong></span></div>
     <div class='row'><span class='label'>Email:</span> <span class='value'><a href='mailto:" . htmlspecialchars($email) . "' style='color: #111111; text-decoration: underline;'>" . htmlspecialchars($email) . "</a></span></div>
     <div class='row'><span class='label'>Date:</span> <span class='value'>{$timestamp}</span></div>
     
     <div class='msg-title'>Message:</div>
     <div class='msg-content'>" . nl2br(htmlspecialchars($message)) . "</div>
-
-    <div class='footer'>
-      Click <strong>Reply</strong> to email " . htmlspecialchars($name) . " directly.
-    </div>
   </div>
 </body>
 </html>
