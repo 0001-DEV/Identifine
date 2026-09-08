@@ -114,21 +114,21 @@ export default function ProgramAccordionShowcase() {
       </div>
 
       {/* DYNAMIC IMAGE (RIGHT COLUMN) */}
-      <div className="col-span-1 relative w-full h-[420px] xs:h-[460px] sm:h-[510px] lg:h-[580px] rounded-xl xs:rounded-2xl lg:rounded-3xl overflow-hidden bg-[#111111] border border-[#DCDAD4] shadow-md sm:shadow-2xl">
+      <div className="col-span-1 relative w-full h-[420px] xs:h-[460px] sm:h-[510px] lg:h-[580px] rounded-xl xs:rounded-2xl lg:rounded-3xl overflow-hidden border border-[#DCDAD4] shadow-md sm:shadow-2xl bg-transparent">
         {programs.map((prog) => {
           const isActive = activeId === prog.id;
           return (
             <NavLink
               key={prog.id}
               to={`/program/${prog.id}`}
-              className={`absolute inset-0 w-full h-full p-2 xs:p-3 sm:p-4 md:p-6 flex items-center justify-center transition-all duration-700 ease-in-out ${
+              className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out ${
                 isActive ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-105 pointer-events-none'
               }`}
             >
               <img
                 src={prog.image}
                 alt={prog.title}
-                className="w-full h-full object-contain object-center select-none"
+                className="w-full h-full object-cover object-center select-none"
               />
             </NavLink>
           );

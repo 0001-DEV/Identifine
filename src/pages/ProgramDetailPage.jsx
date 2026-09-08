@@ -44,10 +44,38 @@ const programData = {
     subtitle: 'See how your organization is represented across people, credentials, spaces, communication, and everyday interactions.',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Discovery',
     images: [
-      { src: img1, title: 'Identity Touchpoint Audit', desc: 'Examining the key places where your organization\'s identity is being expressed.' },
-      { src: img2, title: 'What Is Working Well', desc: 'Identifying the strengths in your existing identity expressions across departments.' },
-      { src: img3, title: 'Disconnected Signals', desc: 'Spotting where identity feels fragmented, inconsistent, or unintentional.' },
-      { src: img4, title: 'Opportunity Mapping & Discovery Report', desc: 'Highlighting opportunities to create a more consistent and intentional identity experience.' }
+      {
+        src: img1,
+        title: 'Reveal your identity touchpoints.',
+        desc: 'See how your people, credentials, spaces, communication, and interactions express your organization.',
+        color: '#EAE5CB',
+        btnBg: '#EAE5CB',
+        btnText: '#111111'
+      },
+      {
+        src: img2,
+        title: 'Understand what’s working.',
+        desc: 'Identify the identity elements that already feel clear, credible, and consistent.',
+        color: '#EDD091',
+        btnBg: '#EDD091',
+        btnText: '#111111'
+      },
+      {
+        src: img3,
+        title: 'Uncover what feels disconnected.',
+        desc: 'Spot gaps and inconsistencies between how your organization defines itself and how it is experienced.',
+        color: '#2B2927',
+        btnBg: '#2B2927',
+        btnText: '#FFFFFF'
+      },
+      {
+        src: img4,
+        title: 'Create a more intentional identity.',
+        desc: 'Turn your findings into opportunities for a clearer, more consistent, and recognizable organizational experience.',
+        color: '#CED0D9',
+        btnBg: '#CED0D9',
+        btnText: '#111111'
+      }
     ]
   },
   'identity-architecture': {
@@ -211,27 +239,53 @@ export default function ProgramDetailPage() {
         className="w-full h-screen relative overflow-hidden"
       >
         {program.images.map((imgObj, idx) => {
+          const textColor = imgObj.color || '#FFFFFF';
+          const btnBg = imgObj.btnBg || imgObj.color || '#E2B857';
+          const btnText = imgObj.btnText || (imgObj.color === '#2B2927' ? '#FFFFFF' : '#111111');
 
           return (
             <div
               key={idx}
               ref={(el) => (slideRefs.current[idx] = el)}
-              className="absolute inset-0 w-full h-full will-change-transform overflow-hidden pointer-events-none flex items-center justify-center p-2 sm:p-4 md:p-8 bg-[#080B11]"
+              className="absolute inset-0 w-full h-full will-change-transform overflow-hidden pointer-events-none"
               style={{ zIndex: idx + 1 }}
             >
+              {/* Full-screen edge-to-edge image */}
               <img
                 src={imgObj.src}
                 alt={imgObj.title}
-                className="w-full h-full object-contain object-center select-none pointer-events-none"
+                className="w-full h-full object-cover object-center select-none pointer-events-none"
               />
-              <div className="absolute bottom-[8%] left-1/2 -translate-x-1/2 z-20 pointer-events-auto">
+
+              {/* Text on top of MAKE AN ENQUIRY button */}
+              <div className="absolute bottom-[6%] sm:bottom-[8%] left-1/2 -translate-x-1/2 z-20 pointer-events-auto w-full max-w-2xl px-4 sm:px-6 text-center flex flex-col items-center gap-3 sm:gap-4">
+                <div className="space-y-1 sm:space-y-1.5 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
+                  <h3
+                    className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-galano font-semibold tracking-tight"
+                    style={{ color: textColor }}
+                  >
+                    {imgObj.title}
+                  </h3>
+                  <p
+                    className="text-xs xs:text-sm sm:text-base md:text-lg font-galano font-normal leading-snug max-w-xl mx-auto"
+                    style={{ color: textColor }}
+                  >
+                    {imgObj.desc}
+                  </p>
+                </div>
+
+                {/* MAKE AN ENQUIRY Button */}
                 <a
                   href={program.whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="framer-pill-gold inline-flex items-center gap-2 px-8 py-3 text-sm font-bold tracking-wider uppercase"
+                  className="inline-flex items-center justify-center px-8 sm:px-10 py-3 sm:py-3.5 text-xs sm:text-sm font-galano font-bold tracking-wider uppercase rounded-full shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl active:scale-95"
+                  style={{
+                    backgroundColor: btnBg,
+                    color: btnText,
+                  }}
                 >
-                  Enquire on WhatsApp
+                  MAKE AN ENQUIRY
                 </a>
               </div>
             </div>
