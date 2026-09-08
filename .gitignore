@@ -33,4 +33,6 @@ dist-ssr
 .playwright-mcp
 live-browser.*
 framer_data.json
+*.zip
+
 
