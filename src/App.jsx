@@ -33,11 +33,14 @@ function ScrollToTop() {
   return null;
 }
 
-// Global Scroll Reveal for all sections, pages & footer
+// Global Scroll Reveal for subpages & footer (disabled on home page to eliminate floatup animations)
 function ScrollRevealObserver() {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    // Completely disable on the home page so sections do not float up
+    if (pathname === '/') return;
+
     let observer = null;
     let mutationObserver = null;
 

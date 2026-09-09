@@ -50,6 +50,17 @@
 .reveal-delay-300 { transition-delay: 300ms; }
 .reveal-delay-400 { transition-delay: 400ms; }
 
+/* Ensure home page sections do not have float-up / rise-from-bottom animations on page load */
+.home-page .reveal-on-scroll,
+.home-page .scroll-reveal,
+.home-page .scroll-reveal-deep,
+.home-page [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  filter: none !important;
+}
+
 @layer base {
   html, body {
     max-width: 100vw;

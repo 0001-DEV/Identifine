@@ -50,9 +50,9 @@ export default function JourneyStickyStack({ journeySteps }) {
         }
       });
 
-      // Calibrated scroll distance: snappy and responsive, no dead zones or hanging
-      const scrollPerCard = isMobile ? 320 : 420;
-      const dwellScroll = isMobile ? 30 : 40;
+      // Calibrated scroll distance with dedicated settle buffer for the final card ("Evolve")
+      const scrollPerCard = isMobile ? 360 : 460;
+      const dwellScroll = isMobile ? 240 : 360;
       const totalScrollDistance = (totalCards - 1) * scrollPerCard + dwellScroll;
 
       // Pin section and animate cards sliding straight up on one another
@@ -64,7 +64,7 @@ export default function JourneyStickyStack({ journeySteps }) {
           anticipatePin: 1,
           start: isMobile ? 'top top+=60' : 'top top+=80',
           end: () => `+=${totalScrollDistance}`,
-          scrub: isMobile ? 0.1 : 0.15,
+          scrub: isMobile ? 0.12 : 0.18,
           invalidateOnRefresh: true,
         },
       });
@@ -98,8 +98,8 @@ export default function JourneyStickyStack({ journeySteps }) {
         );
       });
 
-      // Clean unpin buffer so 'Evolve' is fully resting before transitioning
-      tl.to({}, { duration: 0.08 }, 'dwell');
+      // Dedicated dwell hold so 'Evolve' lands first and settles completely before Insights & Inspiration shows
+      tl.to({}, { duration: 0.8 }, 'dwell');
     }, containerRef);
 
     const timer = setTimeout(() => {

@@ -186,7 +186,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full home-page">
 
       {/* 1. HERO SECTION (Height min-h-[95vh], pt-48 sm:pt-64 pb-[300px]) */}
       <section className="bg-[#EBEAE6] pt-48 sm:pt-64 pb-32 px-6 sm:px-12 text-center flex flex-col items-center justify-center relative min-h-[95vh] overflow-hidden">
