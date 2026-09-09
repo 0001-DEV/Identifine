@@ -33,9 +33,10 @@ try {
     const isIdentityAsset = lower.includes('identity-') || lower.includes('identikare');
     const isDiscoveryAsset = /^[1-4]-/.test(file);
     const isArchAsset = lower.startsWith('arch-');
-    const isSmallIcon = (lower.endsWith('.png') || lower.endsWith('.webp')) && stat.size < 100 * 1024;
+    const isWebpAsset = lower.endsWith('.webp');
+    const isSmallIcon = (lower.endsWith('.png') || lower.endsWith('.webp')) && stat.size < 400 * 1024;
 
-    if (isCode || isIdentityAsset || isDiscoveryAsset || isArchAsset || isSmallIcon) {
+    if (isCode || isIdentityAsset || isDiscoveryAsset || isArchAsset || isWebpAsset || isSmallIcon) {
       fs.copyFileSync(fullPath, path.join(tempDir, 'assets', file));
     }
   }

@@ -2,22 +2,22 @@ import React from 'react';
 import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 
-// Case Study Images
-import rainoil1 from '../assets/case-studies/rainoil_1.jpg';
-import rainoil2 from '../assets/case-studies/rainoil_2.png';
-import rainoil3 from '../assets/case-studies/rainoil_3.jpg';
+// Case Study Images (Optimized WebP)
+import rainoil1 from '../assets/case-studies/rainoil_1.webp';
+import rainoil2 from '../assets/case-studies/rainoil_2.webp';
+import rainoil3 from '../assets/case-studies/rainoil_3.webp';
 
-import seplatImg from '../assets/case-studies/seplat.png';
-import revPlusImg from '../assets/case-studies/revolution_plus.png';
-import armImg from '../assets/case-studies/arm.png';
-import sterlingImg from '../assets/case-studies/sterling_bank.png';
-import tvcImg from '../assets/case-studies/tvc.jpg';
-import bank78Img from '../assets/case-studies/bank78.jpg';
-import ubaImg from '../assets/case-studies/uba.png';
-import optivaImg from '../assets/case-studies/optiva.png';
-import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.png';
-import elitePassGold from '../assets/ELITE_PASS_GOLD.png';
-import elitePassSilver from '../assets/ELITE_PASS_SILVER.png';
+import seplatImg from '../assets/case-studies/seplat.webp';
+import revPlusImg from '../assets/case-studies/revolution_plus.webp';
+import armImg from '../assets/case-studies/arm.webp';
+import sterlingImg from '../assets/case-studies/sterling_bank.webp';
+import tvcImg from '../assets/case-studies/tvc.webp';
+import bank78Img from '../assets/case-studies/bank78.webp';
+import ubaImg from '../assets/case-studies/uba.webp';
+import optivaImg from '../assets/case-studies/optiva.webp';
+import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.webp';
+import elitePassGold from '../assets/ELITE_PASS_GOLD.webp';
+import elitePassSilver from '../assets/ELITE_PASS_SILVER.webp';
 
 const caseStudyDetails = {
   'rainoil': {
@@ -168,6 +168,7 @@ export default function CaseStudyDetailPage() {
                   alt={`${study.title} visual ${index + 1}`}
                   className="w-full h-auto object-cover select-none rounded-none"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
             ))}

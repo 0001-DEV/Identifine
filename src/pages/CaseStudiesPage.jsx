@@ -3,16 +3,16 @@ import { NavLink } from 'react-router-dom';
 import starIcon from '../assets/SVG@4x.png';
 import CardShowcaseModal from '../components/CardShowcaseModal';
 
-// Case Study Image Assets
-import rainoilImg from '../assets/case-studies/rainoil.jpg';
-import seplatImg from '../assets/case-studies/seplat.png';
-import revolutionPlusImg from '../assets/case-studies/revolution_plus.png';
-import armImg from '../assets/case-studies/arm.png';
-import sterlingBankImg from '../assets/case-studies/sterling_bank.png';
-import tvcImg from '../assets/case-studies/tvc.jpg';
-import bank78Img from '../assets/case-studies/bank78.jpg';
-import ubaImg from '../assets/case-studies/uba.png';
-import optivaImg from '../assets/case-studies/optiva.png';
+// Case Study Image Assets (Optimized WebP)
+import rainoilImg from '../assets/case-studies/rainoil.webp';
+import seplatImg from '../assets/case-studies/seplat.webp';
+import revolutionPlusImg from '../assets/case-studies/revolution_plus.webp';
+import armImg from '../assets/case-studies/arm.webp';
+import sterlingBankImg from '../assets/case-studies/sterling_bank.webp';
+import tvcImg from '../assets/case-studies/tvc.webp';
+import bank78Img from '../assets/case-studies/bank78.webp';
+import ubaImg from '../assets/case-studies/uba.webp';
+import optivaImg from '../assets/case-studies/optiva.webp';
 
 export const caseStudiesData = [
   {
@@ -149,6 +149,7 @@ export default function CaseStudiesPage() {
                     src={item.image}
                     alt={item.name}
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 select-none rounded-none"
                   />
                 </div>
