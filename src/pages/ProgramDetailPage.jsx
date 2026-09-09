@@ -31,12 +31,16 @@ import techImg from '../assets/TECH.jpg';
 import deployImg from '../assets/Deploy.jpg';
 import card1Img from '../assets/Card 1.png';
 import img1 from '../assets/1.jpg';
-import img2 from '../assets/2.jpg';
+import twoDollImg from '../assets/two doll.webp';
 import img3 from '../assets/3.jpg';
 import img4 from '../assets/4.jpg';
 import arch1 from '../assets/arch-1.jpg';
 import arch2 from '../assets/arch-2.jpg';
 import arch3 from '../assets/arch-3.jpg';
+import expSlide1 from '../assets/slide 1.webp';
+import expSlide2 from '../assets/slide 2.webp';
+import expSlide3 from '../assets/Slide 3.webp';
+import expSlide4 from '../assets/Slide 4.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,12 +60,13 @@ const programData = {
         btnText: '#111111'
       },
       {
-        src: img2,
+        src: twoDollImg,
         title: 'Understand what’s working.',
         desc: 'Identify the identity elements that already feel clear, credible, and consistent.',
-        color: '#000000',
-        btnBg: '#000000',
-        btnText: '#FFFFFF'
+        color: '#E2B857',
+        btnBg: '#E2B857',
+        btnText: '#111111',
+        hasGlassBg: true
       },
       {
         src: img3,
@@ -91,16 +96,17 @@ const programData = {
     images: [
       {
         src: arch1,
-        title: 'Design how identity works across your organization.',
-        desc: '',
+        title: 'Eliminate fragmentation.',
+        desc: 'Align departments, employees, executives, physical spaces, and digital experiences under clear identity standards.',
         color: '#000000',
         btnBg: '#000000',
-        btnText: '#FFFFFF'
+        btnText: '#FFFFFF',
+        hasGlassBg: true
       },
       {
         src: arch2,
-        title: 'An organization can have a strong brand and still have a fragmented identity experience.',
-        desc: '',
+        title: 'Define how your organization is represented.',
+        desc: 'Establish purposeful principles for how identity should show up across the key places people encounter your organization.',
         color: '#000000',
         btnBg: '#000000',
         btnText: '#FFFFFF',
@@ -108,8 +114,8 @@ const programData = {
       },
       {
         src: arch3,
-        title: 'We help define how organizational identity should be represented across key people, places, processes and touchpoints, creating greater consistency, clarity and purpose in the way your organization is experienced.',
-        desc: '',
+        title: 'Build consistency with purpose.',
+        desc: 'Create an identity system that is clearer, more connected, and consistently experienced across the organization.',
         color: '#000000',
         btnBg: '#000000',
         btnText: '#FFFFFF',
@@ -123,11 +129,42 @@ const programData = {
     subtitle: 'Make identity tangible across physical, digital and human touchpoints.',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Experience',
     images: [
-      { src: identityImg, title: 'Tangible Identity', desc: 'Translating identity standards into practical experiences people actually encounter.' },
-      { src: elitePassBlack2, title: 'Credential Experience', desc: 'The credentials people carry become a direct expression of organizational identity.' },
-      { src: renderOne, title: 'Physical Touchpoints', desc: 'Spaces and places designed to communicate the organization\'s identity consistently.' },
-      { src: postProcessImg, title: 'Digital Touchpoints', desc: 'Digital environments that reflect and reinforce organizational identity at every interaction.' },
-      { src: elitePassSilver, title: 'Human Experience', desc: 'The moments shaped by people — how they present, interact, and represent the organization.' }
+      {
+        src: expSlide1,
+        title: 'Bring identity into the real world.',
+        desc: 'Turn your identity strategy into experiences people can see, use, and interact with every day.',
+        color: '#FFFFFF',
+        btnBg: '#FFFFFF',
+        btnText: '#111111',
+        hasGlassBg: true
+      },
+      {
+        src: expSlide2,
+        title: 'Connect every touchpoint.',
+        desc: 'Align people, credentials, spaces, systems, and digital experiences so they feel like one organization.',
+        color: '#FFFFFF',
+        btnBg: '#FFFFFF',
+        btnText: '#111111',
+        hasGlassBg: true
+      },
+      {
+        src: expSlide3,
+        title: 'Turn standards into experiences.',
+        desc: 'Translate identity principles into practical physical, digital, and human applications.',
+        color: '#FFFFFF',
+        btnBg: '#FFFFFF',
+        btnText: '#111111',
+        hasGlassBg: true
+      },
+      {
+        src: expSlide4,
+        title: 'Make identity consistently felt.',
+        desc: 'Create experiences that reinforce who your organization is at every meaningful point of interaction.',
+        color: '#FFFFFF',
+        btnBg: '#FFFFFF',
+        btnText: '#111111',
+        hasGlassBg: true
+      }
     ]
   },
   'identikare': {
@@ -283,13 +320,15 @@ export default function ProgramDetailPage() {
                 className="w-full h-full object-cover object-center select-none pointer-events-none"
               />
 
-              {/* Text on top of MAKE AN ENQUIRY button */}
-              <div className="absolute bottom-[6%] sm:bottom-[8%] left-1/2 -translate-x-1/2 z-20 pointer-events-auto w-full max-w-2xl px-4 sm:px-6 text-center flex flex-col items-center gap-3 sm:gap-4">
+              {/* Text on top of MAKE AN ENQUIRY button - placed on the deeper and lower part of the picture across all viewports */}
+              <div className="absolute bottom-5 sm:bottom-8 lg:bottom-10 left-1/2 -translate-x-1/2 z-20 pointer-events-auto w-full max-w-2xl px-4 sm:px-6 text-center flex flex-col items-center gap-2.5 sm:gap-3.5">
                 <div
                   className={`space-y-1 sm:space-y-1.5 transition-all duration-300 ${
                     imgObj.hasGlassBg
                       ? `backdrop-blur-md ${
-                          textColor === '#FFFFFF'
+                          textColor === '#E2B857'
+                            ? 'bg-black/55 border-[#E2B857]/40 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
+                            : textColor === '#FFFFFF'
                             ? 'bg-white/20 border-white/30'
                             : 'bg-white/40 border-white/50'
                         } border rounded-2xl sm:rounded-3xl px-5 sm:px-8 py-3.5 sm:py-5 shadow-xl w-fit max-w-[92vw] sm:max-w-xl mx-auto`

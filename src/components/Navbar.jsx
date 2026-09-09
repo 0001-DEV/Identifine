@@ -82,13 +82,21 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right CTA Button (Visible on lg 1024px+ screens) */}
-          <div className="hidden lg:block">
+          {/* Right CTA Buttons (Visible on lg 1024px+ screens) */}
+          <div className="hidden lg:flex items-center gap-3">
+            <a
+              href="https://identishare.identifine.com.ng"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center justify-center text-sm sm:text-base font-bold px-7 py-3.5 rounded-full border border-black/80 bg-white/70 text-black hover:bg-black hover:text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 cursor-pointer"
+            >
+              <span>Identishare</span>
+            </a>
             <a
               href="https://wa.me/2349030001851"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center text-sm sm:text-base font-bold px-8 py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
+              className="group relative inline-flex items-center justify-center text-sm sm:text-base font-bold px-7 py-3.5 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
             >
               <span>Make an Enquiry</span>
             </a>
@@ -138,13 +146,22 @@ export default function Navbar() {
             }`}
             style={{ transitionDelay: mobileMenuOpen ? `${150 + (navLinks.length * 150)}ms` : '0ms' }}
           >
-            <div className="flex justify-start w-full">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full">
+              <a
+                href="https://identishare.identifine.com.ng"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="group relative inline-flex items-center justify-center text-xs sm:text-sm font-bold px-6 py-3 rounded-full border border-black/80 bg-white/70 text-black hover:bg-black hover:text-white shadow-sm transition-all duration-300 w-auto text-center"
+              >
+                <span>Identishare</span>
+              </a>
               <a
                 href="https://wa.me/2349030001851"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="group relative inline-flex items-center justify-center text-xs sm:text-sm font-bold px-6 py-3 sm:px-8 sm:py-4 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 w-auto"
+                className="group relative inline-flex items-center justify-center text-xs sm:text-sm font-bold px-6 py-3 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 w-auto text-center"
               >
                 <span>Make an Enquiry</span>
               </a>
