@@ -14,9 +14,8 @@ export default function JourneyStickyStack({ journeySteps }) {
       if (!cards || cards.length === 0) return;
 
       const totalCards = cards.length;
-      const verticalPeekOffset = 24; // Exposure offset so upper part of previous cards remains visible
 
-      // Set initial positions: first card at 0, subsequent cards waiting below at yPercent: 100 (flat, no rotation or pile offset)
+      // Set initial positions: first card visible, subsequent cards completely hidden (autoAlpha: 0) and below
       cards.forEach((card, index) => {
         if (index > 0) {
           gsap.set(card, {
@@ -24,7 +23,7 @@ export default function JourneyStickyStack({ journeySteps }) {
             y: 0,
             scale: 1,
             rotation: 0,
-            opacity: 1,
+            autoAlpha: 0,
             transformOrigin: '50% 50%',
             force3D: true,
           });
@@ -34,7 +33,7 @@ export default function JourneyStickyStack({ journeySteps }) {
             y: 0,
             scale: 1,
             rotation: 0,
-            opacity: 1,
+            autoAlpha: 1,
             transformOrigin: '50% 50%',
             force3D: true,
           });
@@ -64,38 +63,30 @@ export default function JourneyStickyStack({ journeySteps }) {
       cards.forEach((card, index) => {
         if (index === 0) return;
 
-        const prevCard = cards[index - 1];
-
-        // Incoming card slides straight up from below directly onto the previous one
-        tl.to(
+        // Slide incoming card straight up over the previous card.
+        // It becomes visible only during its active slide, keeping upcoming cards completely hidden.
+        tl.fromTo(
           card,
+          {
+            yPercent: 100,
+            y: 0,
+            rotation: 0,
+            scale: 1,
+            autoAlpha: 1,
+          },
           {
             yPercent: 0,
             y: 0,
             rotation: 0,
             scale: 1,
-            opacity: 1,
+            autoAlpha: 1,
             ease: 'none',
             duration: 1,
             force3D: true,
+            immediateRender: false,
           },
           `step-${index}`
         );
-
-        // Previous card subtly eases underneath for depth
-        if (prevCard) {
-          tl.to(
-            prevCard,
-            {
-              scale: 0.96,
-              opacity: 0.75,
-              ease: 'none',
-              duration: 1,
-              force3D: true,
-            },
-            `step-${index}`
-          );
-        }
       });
 
       // Brief dwell hold so 'Evolve' lands first and rests completely before unpinning
@@ -117,7 +108,7 @@ export default function JourneyStickyStack({ journeySteps }) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full mx-auto h-[65vh] sm:h-[75vh] min-h-[450px] max-h-[720px]"
+      className="relative w-full mx-auto h-[65vh] sm:h-[75vh] min-h-[450px] max-h-[720px] overflow-hidden rounded-2xl sm:rounded-[36px] shadow-2xl"
     >
       {journeySteps.map((step, idx) => (
         <div
@@ -126,9 +117,11 @@ export default function JourneyStickyStack({ journeySteps }) {
           className="absolute inset-0 w-full h-full overflow-hidden bg-[#111111] transform-gpu"
           style={{
             zIndex: (idx + 1) * 10,
-            borderRadius: 'clamp(16px, 3vw, 40px)',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.45)',
-            willChange: 'transform',
+            borderRadius: 'clamp(16px, 3vw, 36px)',
+            visibility: idx === 0 ? 'visible' : 'hidden',
+            opacity: idx === 0 ? 1 : 0,
+            transform: idx === 0 ? 'none' : 'translate3d(0, 100%, 0)',
+            willChange: 'transform, opacity',
           }}
         >
           <img
