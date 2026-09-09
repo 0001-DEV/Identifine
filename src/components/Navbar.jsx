@@ -83,12 +83,12 @@ export default function Navbar() {
           </nav>
 
           {/* Right CTA Buttons (Visible on lg 1024px+ screens) */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3.5 ml-auto pl-6">
             <a
               href="https://identishare.identifine.com.ng"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center text-sm sm:text-base font-bold px-7 py-3.5 rounded-full border border-black/80 bg-white/70 text-black hover:bg-black hover:text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 cursor-pointer"
+              className="group relative inline-flex items-center justify-center text-sm sm:text-base font-bold px-7 py-3.5 rounded-full border-2 border-[#E2B857] bg-white/70 text-black hover:bg-[#E2B857] hover:text-black shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 cursor-pointer"
             >
               <span>Identishare</span>
             </a>
@@ -152,7 +152,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="group relative inline-flex items-center justify-center text-xs sm:text-sm font-bold px-6 py-3 rounded-full border border-black/80 bg-white/70 text-black hover:bg-black hover:text-white shadow-sm transition-all duration-300 w-auto text-center"
+                className="group relative inline-flex items-center justify-center text-xs sm:text-sm font-bold px-6 py-3 rounded-full border-2 border-[#E2B857] bg-white/70 text-black hover:bg-[#E2B857] hover:text-black shadow-sm transition-all duration-300 w-auto text-center"
               >
                 <span>Identishare</span>
               </a>

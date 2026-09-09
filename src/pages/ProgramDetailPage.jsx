@@ -31,8 +31,8 @@ import techImg from '../assets/TECH.jpg';
 import deployImg from '../assets/Deploy.jpg';
 import card1Img from '../assets/Card 1.png';
 import img1 from '../assets/1.jpg';
+import img2 from '../assets/2.jpg';
 import twoDollImg from '../assets/two doll.webp';
-import img3 from '../assets/3.jpg';
 import img4 from '../assets/4.jpg';
 import arch1 from '../assets/arch-1.jpg';
 import arch2 from '../assets/arch-2.jpg';
@@ -60,20 +60,19 @@ const programData = {
         btnText: '#111111'
       },
       {
-        src: twoDollImg,
+        src: img2,
         title: 'Understand what’s working.',
         desc: 'Identify the identity elements that already feel clear, credible, and consistent.',
-        color: '#E2B857',
-        btnBg: '#E2B857',
-        btnText: '#111111',
-        hasGlassBg: true
+        color: '#000000',
+        btnBg: '#000000',
+        btnText: '#FFFFFF'
       },
       {
-        src: img3,
+        src: twoDollImg,
         title: 'Uncover what feels disconnected.',
         desc: 'Spot gaps and inconsistencies between how your organization defines itself and how it is experienced.',
-        color: '#FFFFFF',
-        btnBg: '#FFFFFF',
+        color: '#E2B857',
+        btnBg: '#E2B857',
         btnText: '#111111',
         hasGlassBg: true
       },
@@ -133,9 +132,9 @@ const programData = {
         src: expSlide1,
         title: 'Bring identity into the real world.',
         desc: 'Turn your identity strategy into experiences people can see, use, and interact with every day.',
-        color: '#FFFFFF',
-        btnBg: '#FFFFFF',
-        btnText: '#111111',
+        color: '#000000',
+        btnBg: '#000000',
+        btnText: '#FFFFFF',
         hasGlassBg: true
       },
       {
@@ -160,8 +159,8 @@ const programData = {
         src: expSlide4,
         title: 'Make identity consistently felt.',
         desc: 'Create experiences that reinforce who your organization is at every meaningful point of interaction.',
-        color: '#FFFFFF',
-        btnBg: '#FFFFFF',
+        color: '#E2B857',
+        btnBg: '#E2B857',
         btnText: '#111111',
         hasGlassBg: true
       }
@@ -227,6 +226,7 @@ export default function ProgramDetailPage() {
 
   const galleryRef = useRef(null);
   const slideRefs = useRef([]);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -261,6 +261,13 @@ export default function ProgramDetailPage() {
           onUpdate: (self) => {
             const p = self.progress; // 0 → 1 as user scrolls through this segment
 
+            // Update active slide counter (when progress passes 50%)
+            if (p >= 0.5) {
+              setActiveSlide(idx);
+            } else if (p < 0.5 && idx === 1) {
+              setActiveSlide(0);
+            }
+
             // New slide slides in from right
             gsap.set(slide, {
               xPercent: 100 - p * 100,
@@ -285,6 +292,13 @@ export default function ProgramDetailPage() {
         end: () => `+=${(total - 1) * window.innerHeight * 0.9}`,
         invalidateOnRefresh: true,
         scrub: true,
+        onUpdate: (self) => {
+          const index = Math.min(
+            total - 1,
+            Math.floor(self.progress * total + 0.05)
+          );
+          setActiveSlide(index);
+        }
       });
 
     }, galleryRef);
@@ -301,6 +315,40 @@ export default function ProgramDetailPage() {
         ref={galleryRef}
         className="w-full h-screen relative overflow-hidden"
       >
+        {/* Top Slide Progress Indicator & Counter */}
+        <div className="absolute top-4 sm:top-6 left-0 right-0 z-40 pointer-events-none px-4 sm:px-8 max-w-xl mx-auto flex flex-col items-center gap-2">
+          {/* Segmented Line Indicator */}
+          <div className="w-full flex items-center gap-1.5 sm:gap-2.5">
+            {program.images.map((_, i) => (
+              <div
+                key={i}
+                className="h-1 sm:h-1.5 flex-1 rounded-full overflow-hidden bg-white/25 backdrop-blur-md transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
+              >
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ease-out ${
+                    i === activeSlide
+                      ? 'w-full bg-[#E2B857] shadow-[0_0_10px_#E2B857]'
+                      : i < activeSlide
+                      ? 'w-full bg-white/90'
+                      : 'w-0 bg-transparent'
+                  }`}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Numerical Slide Counter */}
+          <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 shadow-md">
+            <span className="text-[11px] sm:text-xs font-mono font-bold text-[#E2B857]">
+              {String(activeSlide + 1).padStart(2, '0')}
+            </span>
+            <span className="text-[10px] sm:text-xs font-mono text-white/50">/</span>
+            <span className="text-[11px] sm:text-xs font-mono font-medium text-white/80">
+              {String(program.images.length).padStart(2, '0')}
+            </span>
+          </div>
+        </div>
+
         {program.images.map((imgObj, idx) => {
           const textColor = imgObj.color || '#FFFFFF';
           const btnBg = imgObj.btnBg || imgObj.color || '#E2B857';

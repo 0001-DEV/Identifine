@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import identityDiscoveryImg from '../assets/identity-discovery.jpg';
 import identityArchitectureImg from '../assets/identity-architecture.jpg';
-import identityExperienceImg from '../assets/identity-experience.jpg';
+import identityExperienceImg from '../assets/identity Exp.webp';
 import identikareImg from '../assets/identikare.jpeg';
 
 export default function ProgramAccordionShowcase() {
