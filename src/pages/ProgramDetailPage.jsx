@@ -315,38 +315,27 @@ export default function ProgramDetailPage() {
         ref={galleryRef}
         className="w-full h-screen relative overflow-hidden"
       >
-        {/* Top Slide Progress Indicator & Counter (Positioned safely below the fixed navbar) */}
-        <div className="absolute top-24 sm:top-28 left-0 right-0 z-40 pointer-events-none px-4 sm:px-8 max-w-md sm:max-w-lg mx-auto flex flex-col items-center gap-2">
-          {/* Segmented Line Indicator */}
-          <div className="w-full flex items-center gap-1.5 sm:gap-2.5 bg-black/40 backdrop-blur-md p-1.5 sm:p-2 rounded-full border border-white/20 shadow-2xl">
-            {program.images.map((_, i) => (
-              <div
-                key={i}
-                className="h-1.5 sm:h-2 flex-1 rounded-full overflow-hidden bg-white/25 transition-all duration-300"
-              >
-                <div
-                  className={`h-full rounded-full transition-all duration-500 ease-out ${
-                    i === activeSlide
-                      ? 'w-full bg-[#E2B857] shadow-[0_0_12px_#E2B857]'
-                      : i < activeSlide
-                      ? 'w-full bg-white/90'
-                      : 'w-0 bg-transparent'
-                  }`}
-                />
-              </div>
-            ))}
+        {/* Top Slide Progress Indicator: Minimalist tiny line with current number on left and total on right */}
+        <div className="absolute top-24 sm:top-28 left-0 right-0 z-40 pointer-events-none px-6 sm:px-10 max-w-sm sm:max-w-md mx-auto flex items-center justify-center gap-3">
+          {/* Current Slide Number (Left) */}
+          <span className="text-xs sm:text-sm font-galano font-bold text-[#E2B857] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] select-none">
+            {activeSlide + 1}
+          </span>
+
+          {/* Tiny Hairline Progress Track */}
+          <div className="relative flex-1 h-[2px] rounded-full bg-white/30 backdrop-blur-sm overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            <div
+              className="h-full bg-[#E2B857] transition-all duration-500 ease-out shadow-[0_0_8px_#E2B857]"
+              style={{
+                width: `${((activeSlide + 1) / program.images.length) * 100}%`,
+              }}
+            />
           </div>
 
-          {/* Numerical Slide Counter */}
-          <div className="flex items-center gap-2 bg-black/75 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/20 shadow-xl">
-            <span className="text-xs sm:text-sm font-mono font-bold text-[#E2B857] tracking-wider">
-              Slide {String(activeSlide + 1).padStart(2, '0')}
-            </span>
-            <span className="text-xs font-mono text-white/40">/</span>
-            <span className="text-xs sm:text-sm font-mono font-medium text-white/80 tracking-wider">
-              {String(program.images.length).padStart(2, '0')}
-            </span>
-          </div>
+          {/* Total Slides Number (Right) */}
+          <span className="text-xs sm:text-sm font-galano font-semibold text-white/80 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] select-none">
+            {program.images.length}
+          </span>
         </div>
 
         {program.images.map((imgObj, idx) => {
