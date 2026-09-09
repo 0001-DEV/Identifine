@@ -50,12 +50,12 @@ export default function JourneyStickyStack({ journeySteps }) {
         }
       });
 
-      // Calibrated scroll distance with dedicated settle buffer for the final card ("Evolve")
-      const scrollPerCard = isMobile ? 360 : 460;
-      const dwellScroll = isMobile ? 240 : 360;
+      // Calibrated scroll distance: generous scroll travel so cards glide smoothly without rushing
+      const scrollPerCard = isMobile ? 650 : 850;
+      const dwellScroll = isMobile ? 320 : 450;
       const totalScrollDistance = (totalCards - 1) * scrollPerCard + dwellScroll;
 
-      // Pin section and animate cards sliding straight up on one another
+      // Pin section and animate cards sliding straight up at a controlled, luxurious pace
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -64,7 +64,7 @@ export default function JourneyStickyStack({ journeySteps }) {
           anticipatePin: 1,
           start: isMobile ? 'top top+=60' : 'top top+=80',
           end: () => `+=${totalScrollDistance}`,
-          scrub: isMobile ? 0.12 : 0.18,
+          scrub: isMobile ? 0.3 : 0.35,
           invalidateOnRefresh: true,
         },
       });
