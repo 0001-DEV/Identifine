@@ -65,23 +65,24 @@ const programData = {
         desc: 'Identify the identity elements that already feel clear, credible, and consistent.',
         color: '#000000',
         btnBg: '#000000',
-        btnText: '#FFFFFF'
+        btnText: '#FFFFFF',
+        hasGlassBg: true
       },
       {
         src: twoDollImg,
         title: 'Uncover what feels disconnected.',
         desc: 'Spot gaps and inconsistencies between how your organization defines itself and how it is experienced.',
-        color: '#E2B857',
-        btnBg: '#E2B857',
-        btnText: '#111111',
+        color: '#000000',
+        btnBg: '#000000',
+        btnText: '#FFFFFF',
         hasGlassBg: true
       },
       {
         src: img4,
         title: 'Create a more intentional identity.',
         desc: 'Turn your findings into opportunities for a clearer, more consistent, and recognizable organizational experience.',
-        color: '#1A1D23',
-        btnBg: '#1A1D23',
+        color: '#000000',
+        btnBg: '#000000',
         btnText: '#FFFFFF',
         hasGlassBg: true
       }
@@ -159,9 +160,9 @@ const programData = {
         src: expSlide4,
         title: 'Make identity consistently felt.',
         desc: 'Create experiences that reinforce who your organization is at every meaningful point of interaction.',
-        color: '#E2B857',
-        btnBg: '#E2B857',
-        btnText: '#111111',
+        color: '#000000',
+        btnBg: '#000000',
+        btnText: '#FFFFFF',
         hasGlassBg: true
       }
     ]
