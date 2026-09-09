@@ -20,7 +20,7 @@ export default function JourneyStickyStack({ journeySteps }) {
       cards.forEach((card, index) => {
         if (index > 0) {
           gsap.set(card, {
-            yPercent: 120 + (index - 1) * 30,
+            yPercent: 110,
             y: 0,
             scale: 1,
             rotation: index % 2 === 1 ? 1.8 : -1.8,
@@ -42,7 +42,11 @@ export default function JourneyStickyStack({ journeySteps }) {
       });
 
       const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-      const scrubDistance = isMobile ? 60 : 100;
+      // Generous scroll segments so each card slides with luxurious smoothness
+      const segmentHeight = isMobile ? window.innerHeight * 0.75 : window.innerHeight * 0.95;
+      // Dwell buffer: ensures the final card ("Evolve") lands fully and settles before unpinning
+      const dwellHeight = isMobile ? window.innerHeight * 0.5 : window.innerHeight * 0.7;
+      const totalScrollDistance = (totalCards - 1) * segmentHeight + dwellHeight;
 
       // Pin section and animate cards entering the stack seamlessly with buttery smooth scrub
       const tl = gsap.timeline({
@@ -51,9 +55,9 @@ export default function JourneyStickyStack({ journeySteps }) {
           pin: true,
           pinSpacing: true,
           anticipatePin: 1,
-          start: isMobile ? 'top top+=60' : 'top top+=80',
-          end: () => `+=${(totalCards - 1) * scrubDistance}%`,
-          scrub: isMobile ? 0.2 : 0.4,
+          start: isMobile ? 'top top+=70' : 'top top+=90',
+          end: () => `+=${totalScrollDistance}`,
+          scrub: isMobile ? 0.6 : 0.8,
           invalidateOnRefresh: true,
         },
       });
@@ -72,7 +76,7 @@ export default function JourneyStickyStack({ journeySteps }) {
             y: currentY,
             rotation: currentRot,
             opacity: 1,
-            ease: 'none',
+            ease: 'power1.out',
             duration: 1,
             force3D: true,
           },
@@ -95,7 +99,7 @@ export default function JourneyStickyStack({ journeySteps }) {
               rotation: prevRot,
               y: prevY,
               opacity: prevOpacity,
-              ease: 'none',
+              ease: 'power1.out',
               duration: 1,
               force3D: true,
             },
@@ -103,6 +107,10 @@ export default function JourneyStickyStack({ journeySteps }) {
           );
         }
       });
+
+      // Crucial: Dwell / resting hold after the final card ('Evolve') lands,
+      // so 'Evolve' lands first and rests completely before the next section appears
+      tl.to({}, { duration: 0.75 }, 'dwell');
     }, containerRef);
 
     const timer = setTimeout(() => {

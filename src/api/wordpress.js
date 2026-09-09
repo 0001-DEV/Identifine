@@ -99,12 +99,12 @@ function formatPost(post) {
 const memoryCache = {};
 
 /**
- * Fetch list of published posts from WordPress (Latest updated/modified first)
+ * Fetch list of published posts from WordPress (Latest published first)
  * Uses instant cache + background revalidation for maximum speed
  */
 export async function fetchWpPosts(page = 1, perPage = 12) {
   const cacheKey = `wp_posts_${page}_${perPage}`;
-  const query = `/posts?_embed=true&page=${page}&per_page=${perPage}&status=publish&orderby=modified&order=desc`;
+  const query = `/posts?_embed=true&page=${page}&per_page=${perPage}&status=publish&orderby=date&order=desc`;
 
   // 1. Check in-memory, localStorage, or sessionStorage cache first for instant load
   if (memoryCache[cacheKey]) {
@@ -155,7 +155,11 @@ async function revalidateWpPosts(cacheKey, query) {
     const res = await fetchWithTimeout(`${WP_BASE_URL}${query}`, {}, 9000);
     if (!res.ok) throw new Error(`HTTP status ${res.status}`);
     const data = await res.json();
-    const formatted = data.map(formatPost);
+    const formatted = data.map(formatPost).sort((a, b) => {
+      const tA = new Date(a.rawDate || a.date).getTime() || 0;
+      const tB = new Date(b.rawDate || b.date).getTime() || 0;
+      return tB - tA;
+    });
     
     memoryCache[cacheKey] = formatted;
     try {
@@ -175,7 +179,11 @@ async function revalidateWpPosts(cacheKey, query) {
         const directRes = await fetchWithTimeout(`https://identifine.com.ng/wp-json/wp/v2${query}`, {}, 9000);
         if (directRes.ok) {
           const data = await directRes.json();
-          const formatted = data.map(formatPost);
+          const formatted = data.map(formatPost).sort((a, b) => {
+            const tA = new Date(a.rawDate || a.date).getTime() || 0;
+            const tB = new Date(b.rawDate || b.date).getTime() || 0;
+            return tB - tA;
+          });
           memoryCache[cacheKey] = formatted;
           try {
             localStorage.setItem(cacheKey, JSON.stringify(formatted));

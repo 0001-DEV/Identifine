@@ -23,6 +23,7 @@ import discoverImg from '../assets/Discover.jpg';
 import designImg from '../assets/design.jpg';
 import deployImg from '../assets/Deploy.jpg';
 import evolveImg from '../assets/Evolve.png';
+import blog3Img from '../assets/blog/blog_3.jpg';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -96,10 +97,29 @@ export default function HomePage() {
     }
   ];
 
-  // Blog posts from WordPress REST API
+  // Helper to sort posts by published date descending (latest published first)
+  const sortPostsByPublishedDate = (posts) => {
+    if (!posts || !Array.isArray(posts)) return [];
+    return [...posts].sort((a, b) => {
+      const timeA = new Date(a.rawDate || a.date).getTime() || 0;
+      const timeB = new Date(b.rawDate || b.date).getTime() || 0;
+      return timeB - timeA;
+    });
+  };
+
+  // Blog posts arranged in order of when they were published (latest first)
   const [blogPosts, setBlogPosts] = useState([
     {
-      id: '1',
+      id: 'how-nfc-business-cards-are-changing-professional-networking',
+      slug: 'how-nfc-business-cards-are-changing-professional-networking',
+      date: 'Aug 27, 2026',
+      readTime: '3 min read',
+      title: 'How NFC Business Cards Are Changing Professional Networking',
+      image: blog3Img,
+      category: 'Smart Hardware'
+    },
+    {
+      id: 'design-that-converts-what-really-works-in-2026',
       slug: 'design-that-converts-what-really-works-in-2026',
       date: 'Jul 8, 2026',
       readTime: '2 min read',
@@ -108,22 +128,13 @@ export default function HomePage() {
       category: 'Design Strategy'
     },
     {
-      id: '2',
+      id: 'why-corporate-identity-is-the-future-of-organizations-success',
       slug: 'why-corporate-identity-is-the-future-of-organizations-success',
       date: 'Jul 2, 2026',
       readTime: '5 min read',
       title: 'Why corporate identity is the future of organization’s success',
       image: renderOne,
       category: 'Corporate Growth'
-    },
-    {
-      id: '3',
-      slug: 'identity-mistakes-you-didnt-know-you-were-making',
-      date: 'Jun 21, 2026',
-      readTime: '2 min read',
-      title: 'Identity mistakes you didn’t know you were making',
-      image: blackMatteRender,
-      category: 'Brand Audit'
     }
   ]);
 
@@ -131,11 +142,12 @@ export default function HomePage() {
   useEffect(() => {
     let isMounted = true;
     try {
-      const cached = localStorage.getItem('wp_posts_1_3') || localStorage.getItem('wp_posts_1_20') || sessionStorage.getItem('wp_posts_1_3') || sessionStorage.getItem('wp_posts_1_20');
+      const cached = localStorage.getItem('wp_posts_1_3') || localStorage.getItem('wp_posts_1_10') || localStorage.getItem('wp_posts_1_20') || sessionStorage.getItem('wp_posts_1_3') || sessionStorage.getItem('wp_posts_1_10') || sessionStorage.getItem('wp_posts_1_20');
       if (cached) {
         const parsed = JSON.parse(cached);
         if (parsed && parsed.length > 0 && isMounted) {
-          setBlogPosts(parsed.slice(0, 3).map((p) => ({
+          const sorted = sortPostsByPublishedDate(parsed);
+          setBlogPosts(sorted.slice(0, 3).map((p) => ({
             ...p,
             image: p.image || null
           })));
@@ -145,9 +157,10 @@ export default function HomePage() {
 
     async function loadLatestWp() {
       const { fetchWpPosts } = await import('../api/wordpress');
-      const wpData = await fetchWpPosts(1, 3);
+      const wpData = await fetchWpPosts(1, 10);
       if (isMounted && wpData && wpData.length > 0) {
-        setBlogPosts(wpData.slice(0, 3).map((p) => ({
+        const sorted = sortPostsByPublishedDate(wpData);
+        setBlogPosts(sorted.slice(0, 3).map((p) => ({
           ...p,
           image: p.image || null
         })));
@@ -157,7 +170,8 @@ export default function HomePage() {
 
     const handleWpPostsUpdated = (e) => {
       if (e.detail && Array.isArray(e.detail) && e.detail.length > 0 && isMounted) {
-        setBlogPosts(e.detail.slice(0, 3).map((p) => ({
+        const sorted = sortPostsByPublishedDate(e.detail);
+        setBlogPosts(sorted.slice(0, 3).map((p) => ({
           ...p,
           image: p.image || null
         })));
