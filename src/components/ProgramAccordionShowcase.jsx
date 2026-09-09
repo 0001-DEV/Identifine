@@ -59,7 +59,7 @@ export default function ProgramAccordionShowcase() {
             >
               {/* Header Row with Title */}
               <div className="flex items-center justify-between gap-1.5 sm:gap-4 shrink-0">
-                <h3 className="text-xs xs:text-sm sm:text-lg md:text-2xl lg:text-[2.25rem] font-galano font-medium tracking-tight text-black leading-snug sm:leading-tight">
+                <h3 className="text-sm xs:text-base sm:text-lg md:text-2xl lg:text-[2.25rem] font-galano font-medium tracking-tight text-black leading-snug sm:leading-tight">
                   {prog.title}
                 </h3>
               </div>

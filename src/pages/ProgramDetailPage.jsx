@@ -67,9 +67,10 @@ const programData = {
         src: img3,
         title: 'Uncover what feels disconnected.',
         desc: 'Spot gaps and inconsistencies between how your organization defines itself and how it is experienced.',
-        color: '#000000',
-        btnBg: '#000000',
-        btnText: '#FFFFFF'
+        color: '#FFFFFF',
+        btnBg: '#FFFFFF',
+        btnText: '#111111',
+        hasGlassBg: true
       },
       {
         src: img4,
@@ -102,7 +103,8 @@ const programData = {
         desc: '',
         color: '#000000',
         btnBg: '#000000',
-        btnText: '#FFFFFF'
+        btnText: '#FFFFFF',
+        hasGlassBg: true
       },
       {
         src: arch3,
@@ -110,7 +112,8 @@ const programData = {
         desc: '',
         color: '#000000',
         btnBg: '#000000',
-        btnText: '#FFFFFF'
+        btnText: '#FFFFFF',
+        hasGlassBg: true
       }
     ]
   },
@@ -285,16 +288,20 @@ export default function ProgramDetailPage() {
                 <div
                   className={`space-y-1 sm:space-y-1.5 transition-all duration-300 ${
                     imgObj.hasGlassBg
-                      ? 'backdrop-blur-md bg-white/25 border border-white/30 rounded-2xl sm:rounded-3xl px-5 sm:px-8 py-3.5 sm:py-5 shadow-lg max-w-xl mx-auto'
+                      ? `backdrop-blur-md ${
+                          textColor === '#FFFFFF'
+                            ? 'bg-white/20 border-white/30'
+                            : 'bg-white/40 border-white/50'
+                        } border rounded-2xl sm:rounded-3xl px-5 sm:px-8 py-3.5 sm:py-5 shadow-xl w-fit max-w-[92vw] sm:max-w-xl mx-auto`
                       : ''
                   } ${
                     textColor === '#000000' || textColor === '#111111' || textColor === '#1A1D23'
                       ? ''
-                      : 'drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]'
+                      : 'drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]'
                   }`}
                 >
                   <h3
-                    className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-galano font-semibold tracking-tight leading-snug max-w-xl mx-auto"
+                    className="text-base xs:text-lg sm:text-2xl md:text-3xl font-galano font-semibold tracking-tight leading-snug max-w-xl mx-auto"
                     style={{ color: textColor }}
                   >
                     {imgObj.title}
