@@ -141,6 +141,8 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
               <img
                 src={card.image}
                 alt={card.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 select-none"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent p-4 sm:p-5 lg:p-6 flex flex-col justify-end">

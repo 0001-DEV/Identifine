@@ -4,39 +4,39 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Import Assets
-import elitePassGold from '../assets/ELITE_PASS_GOLD.png';
-import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.png';
-import elitePassSilver from '../assets/ELITE_PASS_SILVER.png';
-import elitePassGold2 from '../assets/ELITE_PASS_GOLD_2.png';
-import elitePassBlack2 from '../assets/ELITE_PASS_BLACK_MATTE_2.png';
-import elitePassSilver2 from '../assets/ELITE_PASS_SILVER_2.png';
-import postProcessImg from '../assets/Post process 6.jpg';
-import renderOne from '../assets/RENDER 1.png';
+import elitePassGold from '../assets/ELITE_PASS_GOLD.webp';
+import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.webp';
+import elitePassSilver from '../assets/ELITE_PASS_SILVER.webp';
+import elitePassGold2 from '../assets/ELITE_PASS_GOLD_2.webp';
+import elitePassBlack2 from '../assets/ELITE_PASS_BLACK_MATTE_2.webp';
+import elitePassSilver2 from '../assets/ELITE_PASS_SILVER_2.webp';
+import postProcessImg from '../assets/Post process 6.webp';
+import renderOne from '../assets/RENDER 1.webp';
 import heroImg from '../assets/Hero@4x.png';
 import scrollSliderImg from '../assets/Scroll Slider.png';
 import scrollSlideImg from '../assets/Scroll Slide.png';
 import scrollImg from '../assets/Scroll.png';
 import scroll4xImg from '../assets/Scroll4x.png';
 import scrollssImg from '../assets/Scrollss.png';
-import ab1 from '../assets/ab1.png';
-import ab2 from '../assets/ab2.png';
-import ab3 from '../assets/ab3.png';
-import ab4 from '../assets/ab4.png';
-import ab5 from '../assets/ab5.png';
-import ab6 from '../assets/ab6.png';
-import discoverImg from '../assets/Discover.jpg';
-import designImg from '../assets/design.jpg';
+import ab1 from '../assets/ab1.webp';
+import ab2 from '../assets/ab2.webp';
+import ab3 from '../assets/ab3.webp';
+import ab4 from '../assets/ab4.webp';
+import ab5 from '../assets/ab5.webp';
+import ab6 from '../assets/ab6.webp';
+import discoverImg from '../assets/Discover.webp';
+import designImg from '../assets/design.webp';
 import identityImg from '../assets/IDENTITY.jpg';
 import techImg from '../assets/TECH.jpg';
-import deployImg from '../assets/Deploy.jpg';
-import card1Img from '../assets/Card 1.png';
-import img1 from '../assets/1.jpg';
-import img2 from '../assets/2.jpg';
+import deployImg from '../assets/Deploy.webp';
+import card1Img from '../assets/Card 1.webp';
+import img1 from '../assets/1.webp';
+import img2 from '../assets/2.webp';
 import twoDollImg from '../assets/two doll.webp';
-import img4 from '../assets/4.jpg';
-import arch1 from '../assets/arch-1.jpg';
-import arch2 from '../assets/arch-2.jpg';
-import arch3 from '../assets/arch-3.jpg';
+import img4 from '../assets/4.webp';
+import arch1 from '../assets/arch-1.webp';
+import arch2 from '../assets/arch-2.webp';
+import arch3 from '../assets/arch-3.webp';
 import expSlide1 from '../assets/slide 1.webp';
 import expSlide2 from '../assets/slide 2.webp';
 import expSlide3 from '../assets/Slide 3.webp';
@@ -355,6 +355,8 @@ export default function ProgramDetailPage() {
               <img
                 src={imgObj.src}
                 alt={imgObj.title}
+                loading={idx === 0 ? 'eager' : 'lazy'}
+                decoding="async"
                 className="w-full h-full object-cover object-center select-none pointer-events-none"
               />
 

@@ -138,6 +138,7 @@ export default function JourneyStickyStack({ journeySteps }) {
             alt={step.title}
             className="w-full h-full object-cover object-center select-none pointer-events-none"
             loading={idx === 0 ? 'eager' : 'lazy'}
+            decoding="async"
           />
 
           {/* Dark gradient + center-aligned text overlay at bottom */}

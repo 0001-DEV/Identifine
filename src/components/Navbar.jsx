@@ -83,7 +83,7 @@ export default function Navbar() {
           </nav>
 
           {/* Right CTA Buttons (Visible on xl 1280px+ screens) */}
-          <div className="hidden xl:flex items-center gap-4 shrink-0">
+          <div className="hidden xl:flex items-center gap-[26px] shrink-0">
             <a
               href="https://identishare.identifine.com.ng"
               target="_blank"

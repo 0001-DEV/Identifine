@@ -13,16 +13,16 @@ import CataloguePinnedHorizontalDeck from '../components/CataloguePinnedHorizont
 import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.webp';
 import elitePassGold from '../assets/ELITE_PASS_GOLD.webp';
 import elitePassSilver from '../assets/ELITE_PASS_SILVER.webp';
-import blackMatteRender from '../assets/Black matte render 2.png';
-import renderOne from '../assets/RENDER 1.png';
-import postProcessImg from '../assets/Post process 6.jpg';
-import elitePassGold2 from '../assets/ELITE_PASS_GOLD_2.png';
-import elitePassBlack2 from '../assets/ELITE_PASS_BLACK_MATTE_2.png';
-import elitePassSilver2 from '../assets/ELITE_PASS_SILVER_2.png';
-import discoverImg from '../assets/Discover.jpg';
-import designImg from '../assets/design.jpg';
-import deployImg from '../assets/Deploy.jpg';
-import evolveImg from '../assets/Evolve.png';
+import blackMatteRender from '../assets/Black matte render 2.webp';
+import renderOne from '../assets/RENDER 1.webp';
+import postProcessImg from '../assets/Post process 6.webp';
+import elitePassGold2 from '../assets/ELITE_PASS_GOLD_2.webp';
+import elitePassBlack2 from '../assets/ELITE_PASS_BLACK_MATTE_2.webp';
+import elitePassSilver2 from '../assets/ELITE_PASS_SILVER_2.webp';
+import discoverImg from '../assets/Discover.webp';
+import designImg from '../assets/design.webp';
+import deployImg from '../assets/Deploy.webp';
+import evolveImg from '../assets/Evolve.webp';
 import blog3Img from '../assets/blog/blog_3.jpg';
 
 export default function HomePage() {

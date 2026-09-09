@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import heroVideoFile from '../assets/Header_Hero Section.mp4';
-import silverForteImg from '../assets/IDENTIFINE SILVER FORTE.jpg';
+import silverForteImg from '../assets/IDENTIFINE SILVER FORTE.webp';
 
 /**
  * HeroVideoZoom — Lerp Physics Hero Zoom, fully responsive.
