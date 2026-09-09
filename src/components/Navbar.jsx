@@ -52,10 +52,10 @@ export default function Navbar() {
           ? 'py-4 bg-[#EBEAE6]/95 backdrop-blur-md border-b border-[#DCDAD4]/50 shadow-sm' 
           : 'py-6 bg-[#EBEAE6]'
       }`}>
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 flex items-center justify-between gap-4">
           
           {/* Brand Logo */}
-          <NavLink to="/" className="flex items-center group">
+          <NavLink to="/" className="flex items-center group shrink-0">
             <img 
               src={identifineLogo} 
               alt="Identifine Logo" 
@@ -65,14 +65,14 @@ export default function Navbar() {
             />
           </NavLink>
 
-          {/* Desktop Navigation Links (Visible on lg 1024px+ screens) */}
-          <nav className="hidden lg:flex items-center gap-8">
+          {/* Desktop Navigation Links (Visible on xl 1280px+ screens or large screens without squeezing) */}
+          <nav className="hidden xl:flex items-center gap-7 lg:gap-8">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
                 to={link.path}
                 className={({ isActive }) =>
-                  `text-base font-semibold tracking-wide transition-colors ${
+                  `text-base font-semibold tracking-wide transition-colors whitespace-nowrap ${
                     isActive ? 'text-[#E2B857] font-bold' : 'text-[#555555] hover:text-[#E2B857]'
                   }`
                 }
@@ -82,13 +82,13 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right CTA Buttons (Visible on lg 1024px+ screens) */}
-          <div className="hidden lg:flex items-center gap-3.5 ml-auto pl-6">
+          {/* Right CTA Buttons (Visible on xl 1280px+ screens) */}
+          <div className="hidden xl:flex items-center gap-3 shrink-0">
             <a
               href="https://identishare.identifine.com.ng"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center text-sm sm:text-base font-bold px-7 py-3.5 rounded-full border-2 border-[#E2B857] bg-white/70 text-black hover:bg-[#E2B857] hover:text-black shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 cursor-pointer"
+              className="group relative inline-flex items-center justify-center text-sm sm:text-base font-bold px-6 py-3 rounded-full border-2 border-[#E2B857] bg-white/70 text-black hover:bg-[#E2B857] hover:text-black shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 cursor-pointer whitespace-nowrap"
             >
               <span>Identishare</span>
             </a>
@@ -96,16 +96,16 @@ export default function Navbar() {
               href="https://wa.me/2349030001851"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center text-sm sm:text-base font-bold px-7 py-3.5 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
+              className="group relative inline-flex items-center justify-center text-sm sm:text-base font-bold px-6 py-3 rounded-full bg-black text-white shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer whitespace-nowrap"
             >
               <span>Make an Enquiry</span>
             </a>
           </div>
 
-          {/* Mobile / Split-Screen Hamburger Menu Button */}
+          {/* Mobile / Laptop Split-Screen Hamburger Menu Button (Shows up to xl) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg text-black hover:bg-black/5 transition-colors"
+            className="xl:hidden p-2 rounded-lg text-black hover:bg-black/5 transition-colors"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -114,7 +114,7 @@ export default function Navbar() {
 
         {/* Mobile / Split-Screen Menu Drawer */}
         <div 
-          className={`lg:hidden fixed inset-x-0 top-[65px] bg-[#EBEAE6] backdrop-blur-2xl border-b border-[#DCDAD4] shadow-2xl z-50 flex flex-col justify-between overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`xl:hidden fixed inset-x-0 top-[65px] bg-[#EBEAE6] backdrop-blur-2xl border-b border-[#DCDAD4] shadow-2xl z-50 flex flex-col justify-between overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             mobileMenuOpen ? 'max-h-[calc(100vh-65px)] opacity-100 p-6 sm:p-8' : 'max-h-0 opacity-0 px-6 sm:px-8 py-0 pointer-events-none'
           }`}
         >
