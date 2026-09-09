@@ -15,12 +15,22 @@ export default function JourneyStickyStack({ journeySteps }) {
 
       const totalCards = cards.length;
 
-      // Set initial positions: first card visible, subsequent cards completely hidden (autoAlpha: 0) and below
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+      // Calculate distance needed so cards start completely below the viewport (from under, offscreen)
+      const getOffscreenY = () => {
+        if (typeof window === 'undefined') return 1000;
+        const rect = containerRef.current ? containerRef.current.getBoundingClientRect() : null;
+        const pinTop = rect ? rect.top : (isMobile ? 60 : 80);
+        return Math.max(window.innerHeight - pinTop + 80, window.innerHeight);
+      };
+
+      // Set initial positions: first card visible, subsequent cards completely hidden (autoAlpha: 0) and offscreen below
       cards.forEach((card, index) => {
         if (index > 0) {
           gsap.set(card, {
-            yPercent: 100,
-            y: 0,
+            y: getOffscreenY(),
+            yPercent: 0,
             scale: 1,
             rotation: 0,
             autoAlpha: 0,
@@ -29,8 +39,8 @@ export default function JourneyStickyStack({ journeySteps }) {
           });
         } else {
           gsap.set(card, {
-            yPercent: 0,
             y: 0,
+            yPercent: 0,
             scale: 1,
             rotation: 0,
             autoAlpha: 1,
@@ -40,10 +50,9 @@ export default function JourneyStickyStack({ journeySteps }) {
         }
       });
 
-      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
       // Calibrated scroll distance so cards slide crisply and unpin cleanly before the next section appears
-      const scrollPerCard = isMobile ? 360 : 480;
-      const dwellScroll = isMobile ? 70 : 100;
+      const scrollPerCard = isMobile ? 380 : 500;
+      const dwellScroll = isMobile ? 80 : 120;
       const totalScrollDistance = (totalCards - 1) * scrollPerCard + dwellScroll;
 
       // Pin section and animate cards sliding straight up on one another
@@ -63,20 +72,20 @@ export default function JourneyStickyStack({ journeySteps }) {
       cards.forEach((card, index) => {
         if (index === 0) return;
 
-        // Slide incoming card straight up over the previous card.
-        // It becomes visible only during its active slide, keeping upcoming cards completely hidden.
+        // Slide incoming card from under (offscreen below) straight up onto the previous card.
+        // It remains invisible until its active slide step, with full rounded corners and drop shadow.
         tl.fromTo(
           card,
           {
-            yPercent: 100,
-            y: 0,
+            y: () => getOffscreenY(),
+            yPercent: 0,
             rotation: 0,
             scale: 1,
             autoAlpha: 1,
           },
           {
-            yPercent: 0,
             y: 0,
+            yPercent: 0,
             rotation: 0,
             scale: 1,
             autoAlpha: 1,
@@ -108,19 +117,19 @@ export default function JourneyStickyStack({ journeySteps }) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full mx-auto h-[65vh] sm:h-[75vh] min-h-[450px] max-h-[720px] overflow-hidden rounded-2xl sm:rounded-[36px] shadow-2xl"
+      className="relative w-full mx-auto h-[65vh] sm:h-[75vh] min-h-[450px] max-h-[720px]"
     >
       {journeySteps.map((step, idx) => (
         <div
           key={step.key || idx}
           ref={(el) => (cardRefs.current[idx] = el)}
-          className="absolute inset-0 w-full h-full overflow-hidden bg-[#111111] transform-gpu"
+          className="absolute inset-0 w-full h-full overflow-hidden bg-[#111111] transform-gpu shadow-2xl"
           style={{
             zIndex: (idx + 1) * 10,
             borderRadius: 'clamp(16px, 3vw, 36px)',
             visibility: idx === 0 ? 'visible' : 'hidden',
             opacity: idx === 0 ? 1 : 0,
-            transform: idx === 0 ? 'none' : 'translate3d(0, 100%, 0)',
+            transform: idx === 0 ? 'none' : 'translate3d(0, 120vh, 0)',
             willChange: 'transform, opacity',
           }}
         >
