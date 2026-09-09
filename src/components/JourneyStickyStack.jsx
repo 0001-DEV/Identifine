@@ -16,14 +16,14 @@ export default function JourneyStickyStack({ journeySteps }) {
       const totalCards = cards.length;
       const verticalPeekOffset = 24; // Exposure offset so upper part of previous cards remains visible
 
-      // Set initial positions, rotation angles, and full opacity
+      // Set initial positions: first card at 0, subsequent cards waiting below at yPercent: 100 (flat, no rotation or pile offset)
       cards.forEach((card, index) => {
         if (index > 0) {
           gsap.set(card, {
-            yPercent: 110,
+            yPercent: 100,
             y: 0,
             scale: 1,
-            rotation: index % 2 === 1 ? 1.8 : -1.8,
+            rotation: 0,
             opacity: 1,
             transformOrigin: '50% 50%',
             force3D: true,
@@ -47,7 +47,7 @@ export default function JourneyStickyStack({ journeySteps }) {
       const dwellScroll = isMobile ? 70 : 100;
       const totalScrollDistance = (totalCards - 1) * scrollPerCard + dwellScroll;
 
-      // Pin section and animate cards entering the stack seamlessly with snappy zero-lag scrub
+      // Pin section and animate cards sliding straight up on one another
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -64,16 +64,16 @@ export default function JourneyStickyStack({ journeySteps }) {
       cards.forEach((card, index) => {
         if (index === 0) return;
 
-        // Current incoming card slides up and lands with vertical offset & organic tilt
-        const currentRot = index % 2 === 1 ? 1.5 : -1.5;
-        const currentY = index * verticalPeekOffset;
+        const prevCard = cards[index - 1];
 
+        // Incoming card slides straight up from below directly onto the previous one
         tl.to(
           card,
           {
             yPercent: 0,
-            y: currentY,
-            rotation: currentRot,
+            y: 0,
+            rotation: 0,
+            scale: 1,
             opacity: 1,
             ease: 'none',
             duration: 1,
@@ -82,22 +82,13 @@ export default function JourneyStickyStack({ journeySteps }) {
           `step-${index}`
         );
 
-        // Animate all underlying cards to scale, shift up, tilt, and fade lightly
-        for (let i = 0; i < index; i++) {
-          const prevCard = cards[i];
-          const depth = index - i; // distance beneath top card
-          const prevY = i * verticalPeekOffset;
-          const prevScale = Math.max(0.86, 1 - depth * 0.045);
-          const prevRot = (i % 2 === 0 ? -2.8 : 2.8) * (1 + (depth - 1) * 0.4);
-          const prevOpacity = Math.max(0.45, 0.7 - (depth - 1) * 0.12); // Fades lightly as cards get covered
-
+        // Previous card subtly eases underneath for depth
+        if (prevCard) {
           tl.to(
             prevCard,
             {
-              scale: prevScale,
-              rotation: prevRot,
-              y: prevY,
-              opacity: prevOpacity,
+              scale: 0.96,
+              opacity: 0.75,
               ease: 'none',
               duration: 1,
               force3D: true,
@@ -134,9 +125,9 @@ export default function JourneyStickyStack({ journeySteps }) {
           ref={(el) => (cardRefs.current[idx] = el)}
           className="absolute inset-0 w-full h-full overflow-hidden bg-[#111111] transform-gpu"
           style={{
-            zIndex: idx + 10,
+            zIndex: (idx + 1) * 10,
             borderRadius: 'clamp(16px, 3vw, 40px)',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.50)',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.45)',
             willChange: 'transform',
           }}
         >
