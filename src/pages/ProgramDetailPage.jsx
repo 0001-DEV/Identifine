@@ -315,19 +315,19 @@ export default function ProgramDetailPage() {
         ref={galleryRef}
         className="w-full h-screen relative overflow-hidden"
       >
-        {/* Top Slide Progress Indicator & Counter */}
-        <div className="absolute top-4 sm:top-6 left-0 right-0 z-40 pointer-events-none px-4 sm:px-8 max-w-xl mx-auto flex flex-col items-center gap-2">
+        {/* Top Slide Progress Indicator & Counter (Positioned safely below the fixed navbar) */}
+        <div className="absolute top-24 sm:top-28 left-0 right-0 z-40 pointer-events-none px-4 sm:px-8 max-w-md sm:max-w-lg mx-auto flex flex-col items-center gap-2">
           {/* Segmented Line Indicator */}
-          <div className="w-full flex items-center gap-1.5 sm:gap-2.5">
+          <div className="w-full flex items-center gap-1.5 sm:gap-2.5 bg-black/40 backdrop-blur-md p-1.5 sm:p-2 rounded-full border border-white/20 shadow-2xl">
             {program.images.map((_, i) => (
               <div
                 key={i}
-                className="h-1 sm:h-1.5 flex-1 rounded-full overflow-hidden bg-white/25 backdrop-blur-md transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
+                className="h-1.5 sm:h-2 flex-1 rounded-full overflow-hidden bg-white/25 transition-all duration-300"
               >
                 <div
                   className={`h-full rounded-full transition-all duration-500 ease-out ${
                     i === activeSlide
-                      ? 'w-full bg-[#E2B857] shadow-[0_0_10px_#E2B857]'
+                      ? 'w-full bg-[#E2B857] shadow-[0_0_12px_#E2B857]'
                       : i < activeSlide
                       ? 'w-full bg-white/90'
                       : 'w-0 bg-transparent'
@@ -338,12 +338,12 @@ export default function ProgramDetailPage() {
           </div>
 
           {/* Numerical Slide Counter */}
-          <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 shadow-md">
-            <span className="text-[11px] sm:text-xs font-mono font-bold text-[#E2B857]">
-              {String(activeSlide + 1).padStart(2, '0')}
+          <div className="flex items-center gap-2 bg-black/75 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/20 shadow-xl">
+            <span className="text-xs sm:text-sm font-mono font-bold text-[#E2B857] tracking-wider">
+              Slide {String(activeSlide + 1).padStart(2, '0')}
             </span>
-            <span className="text-[10px] sm:text-xs font-mono text-white/50">/</span>
-            <span className="text-[11px] sm:text-xs font-mono font-medium text-white/80">
+            <span className="text-xs font-mono text-white/40">/</span>
+            <span className="text-xs sm:text-sm font-mono font-medium text-white/80 tracking-wider">
               {String(program.images.length).padStart(2, '0')}
             </span>
           </div>
@@ -374,9 +374,7 @@ export default function ProgramDetailPage() {
                   className={`space-y-1 sm:space-y-1.5 transition-all duration-300 ${
                     imgObj.hasGlassBg
                       ? `backdrop-blur-md ${
-                          textColor === '#E2B857'
-                            ? 'bg-black/55 border-[#E2B857]/40 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
-                            : textColor === '#FFFFFF'
+                          textColor === '#FFFFFF' || textColor === '#E2B857'
                             ? 'bg-white/20 border-white/30'
                             : 'bg-white/40 border-white/50'
                         } border rounded-2xl sm:rounded-3xl px-5 sm:px-8 py-3.5 sm:py-5 shadow-xl w-fit max-w-[92vw] sm:max-w-xl mx-auto`
