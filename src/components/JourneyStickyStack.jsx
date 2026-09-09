@@ -17,12 +17,12 @@ export default function JourneyStickyStack({ journeySteps }) {
 
       const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-      // Calculate distance needed so cards start completely below the viewport (from under, offscreen)
+      // Start position: exactly just below the viewport (4px offscreen) so movement is instant on scroll with zero dead-zone
       const getOffscreenY = () => {
         if (typeof window === 'undefined') return 1000;
         const rect = containerRef.current ? containerRef.current.getBoundingClientRect() : null;
         const pinTop = rect ? rect.top : (isMobile ? 60 : 80);
-        return Math.max(window.innerHeight - pinTop + 80, window.innerHeight);
+        return Math.max(window.innerHeight - pinTop + 4, window.innerHeight);
       };
 
       // Set initial positions: first card visible, subsequent cards completely hidden (autoAlpha: 0) and offscreen below
@@ -50,9 +50,9 @@ export default function JourneyStickyStack({ journeySteps }) {
         }
       });
 
-      // Calibrated scroll distance so cards slide crisply and unpin cleanly before the next section appears
-      const scrollPerCard = isMobile ? 380 : 500;
-      const dwellScroll = isMobile ? 80 : 120;
+      // Calibrated scroll distance: snappy and responsive, no dead zones or hanging
+      const scrollPerCard = isMobile ? 320 : 420;
+      const dwellScroll = isMobile ? 30 : 40;
       const totalScrollDistance = (totalCards - 1) * scrollPerCard + dwellScroll;
 
       // Pin section and animate cards sliding straight up on one another
@@ -64,7 +64,7 @@ export default function JourneyStickyStack({ journeySteps }) {
           anticipatePin: 1,
           start: isMobile ? 'top top+=60' : 'top top+=80',
           end: () => `+=${totalScrollDistance}`,
-          scrub: isMobile ? 0.15 : 0.25,
+          scrub: isMobile ? 0.1 : 0.15,
           invalidateOnRefresh: true,
         },
       });
@@ -73,7 +73,7 @@ export default function JourneyStickyStack({ journeySteps }) {
         if (index === 0) return;
 
         // Slide incoming card from under (offscreen below) straight up onto the previous card.
-        // It remains invisible until its active slide step, with full rounded corners and drop shadow.
+        // Zero dead zone: begins visibly entering from bottom of screen immediately.
         tl.fromTo(
           card,
           {
@@ -98,8 +98,8 @@ export default function JourneyStickyStack({ journeySteps }) {
         );
       });
 
-      // Brief dwell hold so 'Evolve' lands first and rests completely before unpinning
-      tl.to({}, { duration: 0.25 }, 'dwell');
+      // Clean unpin buffer so 'Evolve' is fully resting before transitioning
+      tl.to({}, { duration: 0.08 }, 'dwell');
     }, containerRef);
 
     const timer = setTimeout(() => {
@@ -129,14 +129,15 @@ export default function JourneyStickyStack({ journeySteps }) {
             borderRadius: 'clamp(16px, 3vw, 36px)',
             visibility: idx === 0 ? 'visible' : 'hidden',
             opacity: idx === 0 ? 1 : 0,
-            transform: idx === 0 ? 'none' : 'translate3d(0, 120vh, 0)',
-            willChange: 'transform, opacity',
+            transform: idx === 0 ? 'none' : 'translate3d(0, 110vh, 0)',
+            willChange: 'transform',
           }}
         >
           <img
             src={step.image}
             alt={step.title}
-            className="w-full h-full object-cover object-center select-none"
+            className="w-full h-full object-cover object-center select-none pointer-events-none"
+            loading={idx === 0 ? 'eager' : 'lazy'}
           />
 
           {/* Dark gradient + center-aligned text overlay at bottom */}
