@@ -246,8 +246,9 @@ export default function CaseStudyDetailPage() {
                   src={imgSrc}
                   alt={`${study.title} visual ${index + 1}`}
                   className="w-full h-auto object-cover select-none rounded-none"
-                  loading="lazy"
-                  decoding="async"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  fetchpriority={index === 0 ? 'high' : 'auto'}
+                  decoding={index === 0 ? 'sync' : 'async'}
                 />
               </div>
             ))}

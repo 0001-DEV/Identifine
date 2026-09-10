@@ -30,7 +30,14 @@
 }
 
 /* ========================================================================= */
-/* SCROLL REVEAL / RISE FROM BOTTOM ANIMATIONS                              */
+/* PREVENT SCROLLBAR LAYOUT SHIFT (fixes 12-17px content jump on navigation) */
+/* ========================================================================= */
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+
+
 /* ========================================================================= */
 .reveal-on-scroll, .scroll-reveal {
   opacity: 0;
