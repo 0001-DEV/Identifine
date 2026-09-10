@@ -80,7 +80,7 @@ export default function HomePage() {
       id: 'forte-smart',
       title: 'Forte smart card',
       subtitle: 'Carbon Fiber Weave',
-      image: silverForteImg,
+      image: elitePassBlack2,
       description: 'Lightweight carbon fiber structure engineered for high-performance leaders and modern technology executives.'
     },
     {
