@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -63,9 +64,9 @@ const programData = {
         src: img2,
         title: 'Understand what’s working.',
         desc: 'Identify the identity elements that already feel clear, credible, and consistent.',
-        color: '#000000',
-        btnBg: '#000000',
-        btnText: '#FFFFFF',
+        color: '#E2B857',
+        btnBg: '#E2B857',
+        btnText: '#111111',
         hasGlassBg: true
       },
       {
@@ -169,7 +170,14 @@ const programData = {
   },
   'identikare': {
     id: 'identikare',
-    title: 'IDENTIKARE',
+    title: (
+      <>
+        IDENTIKARE
+        <span className="text-[0.55em] align-super font-bold ml-0.5 inline-block select-none">
+          ™
+        </span>
+      </>
+    ),
     subtitle: 'Ongoing care, support and protection to keep your organization\'s identity experience working as intended.',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identikare',
     images: [
@@ -221,6 +229,7 @@ function FourthImageAnimation() {
 
 export default function ProgramDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const activeKey = (id && programData[id]) ? id : 'identity-discovery';
   const program = programData[activeKey];
@@ -228,6 +237,18 @@ export default function ProgramDetailPage() {
   const galleryRef = useRef(null);
   const slideRefs = useRef([]);
   const [activeSlide, setActiveSlide] = useState(0);
+
+  // Preload all program slide images to ensure instantaneous display without lag
+  useEffect(() => {
+    Object.values(programData).forEach((prog) => {
+      prog.images.forEach((item) => {
+        if (item.src) {
+          const img = new Image();
+          img.src = item.src;
+        }
+      });
+    });
+  }, []);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -316,14 +337,26 @@ export default function ProgramDetailPage() {
         ref={galleryRef}
         className="w-full h-screen relative overflow-hidden"
       >
-        {/* Top Slide Progress Indicator: Minimalist tiny line with current number on left and total on right */}
-        <div className="absolute top-24 sm:top-28 left-0 right-0 z-40 pointer-events-none px-6 sm:px-10 max-w-sm sm:max-w-md mx-auto flex items-center justify-center gap-3">
+        {/* Concise Back Button on Each Slide */}
+        <button
+          onClick={() => navigate(`/#our-identity-experience-program?prog=${activeKey}`)}
+          className="absolute top-24 sm:top-28 left-4 sm:left-10 z-50 pointer-events-auto flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-black/60 hover:bg-black/85 text-white/90 hover:text-white border border-white/20 backdrop-blur-md shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 group"
+          aria-label="Back to Our identity experience program section"
+        >
+          <ArrowLeft className="w-4 h-4 text-[#E2B857] group-hover:-translate-x-1 transition-transform" />
+          <span className="text-xs sm:text-sm font-galano font-bold tracking-wider uppercase">
+            Back
+          </span>
+        </button>
+
+        {/* Top Slide Progress Indicator: 2-Digit Padded Counter Style matching Framer Showcase */}
+        <div className="absolute top-24 sm:top-28 left-0 right-0 z-40 pointer-events-none px-6 sm:px-10 max-w-xs sm:max-w-md mx-auto flex items-center justify-center gap-3">
           {/* Current Slide Number (Left) */}
-          <span className="text-xs sm:text-sm font-galano font-bold text-[#E2B857] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] select-none">
-            {activeSlide + 1}
+          <span className="text-xs sm:text-sm font-mono font-bold text-[#E2B857] tracking-widest drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] select-none">
+            {String(activeSlide + 1).padStart(2, '0')}
           </span>
 
-          {/* Tiny Hairline Progress Track */}
+          {/* Hairline Progress Track */}
           <div className="relative flex-1 h-[2px] rounded-full bg-white/30 backdrop-blur-sm overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
             <div
               className="h-full bg-[#E2B857] transition-all duration-500 ease-out shadow-[0_0_8px_#E2B857]"
@@ -334,8 +367,8 @@ export default function ProgramDetailPage() {
           </div>
 
           {/* Total Slides Number (Right) */}
-          <span className="text-xs sm:text-sm font-galano font-semibold text-white/80 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] select-none">
-            {program.images.length}
+          <span className="text-xs sm:text-sm font-mono font-bold text-white/80 tracking-widest drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] select-none">
+            {String(program.images.length).padStart(2, '0')}
           </span>
         </div>
 

@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import identityDiscoveryImg from '../assets/identity-discovery.jpg';
 import identityArchitectureImg from '../assets/identity-architecture.jpg';
 import identityExperienceImg from '../assets/identity Exp.webp';
 import identikareImg from '../assets/identikare.jpeg';
 
 export default function ProgramAccordionShowcase() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const progParam = searchParams.get('prog');
+
   const programs = [
     {
       id: 'identity-discovery',
@@ -33,8 +37,13 @@ export default function ProgramAccordionShowcase() {
     },
   ];
 
-  // First container active by default
-  const [activeId, setActiveId] = useState('identity-discovery');
+  const [activeId, setActiveId] = useState(progParam && programs.some(p => p.id === progParam) ? progParam : 'identity-discovery');
+
+  useEffect(() => {
+    if (progParam && programs.some(p => p.id === progParam)) {
+      setActiveId(progParam);
+    }
+  }, [progParam]);
 
   const toggleProgram = (id) => {
     setActiveId(id);
@@ -60,7 +69,16 @@ export default function ProgramAccordionShowcase() {
               {/* Header Row with Title */}
               <div className="flex items-center justify-between gap-1.5 sm:gap-4 shrink-0">
                 <h3 className="text-sm xs:text-base sm:text-lg md:text-2xl lg:text-[2.25rem] font-galano font-medium tracking-tight text-black leading-snug sm:leading-tight">
-                  {prog.title}
+                  {prog.id === 'identikare' ? (
+                    <>
+                      IDENTIKARE
+                      <span className="text-[0.55em] align-super font-bold ml-0.5 inline-block select-none">
+                        ™
+                      </span>
+                    </>
+                  ) : (
+                    prog.title
+                  )}
                 </h3>
               </div>
 

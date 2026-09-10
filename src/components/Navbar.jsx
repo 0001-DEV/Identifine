@@ -6,24 +6,45 @@ import ConsultationModal from './ConsultationModal';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
   const location = useLocation();
 
+  const isProgramPage = location.pathname.startsWith('/program');
+
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > 20) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
+
+      if (isProgramPage) {
+        if (currentScrollY > 40 && currentScrollY > lastScrollY) {
+          setNavHidden(true);
+        } else if (currentScrollY <= 40 || currentScrollY < lastScrollY - 20) {
+          setNavHidden(false);
+        }
+      } else {
+        setNavHidden(false);
+      }
+
+      lastScrollY = currentScrollY;
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isProgramPage]);
 
   useEffect(() => {
     setMobileMenuOpen(false);
+    setNavHidden(false);
   }, [location]);
 
   useEffect(() => {
@@ -47,7 +68,9 @@ export default function Navbar() {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 transform ${
+        navHidden ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
+      } ${
         scrolled 
           ? 'py-4 bg-[#EBEAE6]/95 backdrop-blur-md border-b border-[#DCDAD4]/50 shadow-sm' 
           : 'py-6 bg-[#EBEAE6]'

@@ -268,7 +268,7 @@ export default function AboutUsPage() {
                 rel="noopener noreferrer"
                 className="group relative inline-flex items-center justify-center text-sm sm:text-base font-semibold px-10 py-5 sm:py-5.5 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[58px]"
               >
-                <span>Contribute to the story</span>
+                <span>Make an enquiry</span>
               </a>
             </div>
           </div>

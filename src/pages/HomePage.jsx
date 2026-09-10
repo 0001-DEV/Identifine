@@ -15,6 +15,7 @@ import elitePassGold from '../assets/ELITE_PASS_GOLD.webp';
 import elitePassSilver from '../assets/ELITE_PASS_SILVER.webp';
 import blackMatteRender from '../assets/Black matte render 2.webp';
 import renderOne from '../assets/RENDER 1.webp';
+import silverForteImg from '../assets/IDENTIFINE SILVER FORTE.webp';
 import postProcessImg from '../assets/Post process 6.webp';
 import elitePassGold2 from '../assets/ELITE_PASS_GOLD_2.webp';
 import elitePassBlack2 from '../assets/ELITE_PASS_BLACK_MATTE_2.webp';
@@ -29,6 +30,28 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [selectedCardModal, setSelectedCardModal] = useState(null);
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
+
+  // Scroll smoothly to "Our identity experience program" 4 cards section when returning from program slides
+  useEffect(() => {
+    const hash = window.location.hash;
+    const search = window.location.search;
+    if (hash.includes('our-identity-experience-program') || search.includes('prog=')) {
+      const scrollToSection = () => {
+        const el = document.getElementById('our-identity-experience-program');
+        if (el) {
+          const y = el.getBoundingClientRect().top + window.scrollY - 110;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      };
+      scrollToSection();
+      const t1 = setTimeout(scrollToSection, 120);
+      const t2 = setTimeout(scrollToSection, 350);
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+      };
+    }
+  }, []);
 
   // Catalogue Cards with Real Assets
   const catalogueCards = [
@@ -57,7 +80,7 @@ export default function HomePage() {
       id: 'forte-smart',
       title: 'Forte smart card',
       subtitle: 'Carbon Fiber Weave',
-      image: blackMatteRender,
+      image: silverForteImg,
       description: 'Lightweight carbon fiber structure engineered for high-performance leaders and modern technology executives.'
     },
     {
@@ -245,7 +268,7 @@ export default function HomePage() {
           </div>
 
           {/* Program Accordion Showcase */}
-          <div>
+          <div id="our-identity-experience-program" className="scroll-mt-32">
             <ProgramAccordionShowcase />
           </div>
 

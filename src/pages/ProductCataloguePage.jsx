@@ -4,23 +4,25 @@ import { ArrowUpRight } from 'lucide-react';
 import starIcon from '../assets/SVG@4x.png';
 
 // Product Assets
-import productHeroImg from '../assets/case-studies/product_catalogue_hero.png';
-import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.png';
-import elitePassGold from '../assets/ELITE_PASS_GOLD.png';
-import elitePassSilver from '../assets/ELITE_PASS_SILVER.png';
-import renderOne from '../assets/RENDER 1.png';
-import postProcessImg from '../assets/Post process 6.jpg';
+import productHeroImg from '../assets/case-studies/product_catalogue_hero.webp';
+import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.webp';
+import elitePassGold from '../assets/ELITE_PASS_GOLD.webp';
+import elitePassSilver from '../assets/ELITE_PASS_SILVER.webp';
+import renderOne from '../assets/RENDER 1.webp';
+import postProcessImg from '../assets/Post process 6.webp';
+import silverForteImg from '../assets/IDENTIFINE SILVER FORTE.webp';
+import blackMatteRender from '../assets/Black matte render 2.webp';
 
 // Partner Case Studies Images
-import rainoilImg from '../assets/case-studies/rainoil.jpg';
-import seplatImg from '../assets/case-studies/seplat.png';
-import revolutionPlusImg from '../assets/case-studies/revolution_plus.png';
-import armImg from '../assets/case-studies/arm.png';
-import sterlingBankImg from '../assets/case-studies/sterling_bank.png';
-import tvcImg from '../assets/case-studies/tvc.jpg';
-import bank78Img from '../assets/case-studies/bank78.jpg';
-import ubaImg from '../assets/case-studies/uba.png';
-import optivaImg from '../assets/case-studies/optiva.png';
+import rainoilImg from '../assets/case-studies/rainoil.webp';
+import seplatImg from '../assets/case-studies/seplat.webp';
+import revolutionPlusImg from '../assets/case-studies/revolution_plus.webp';
+import armImg from '../assets/case-studies/arm.webp';
+import sterlingBankImg from '../assets/case-studies/sterling_bank.webp';
+import tvcImg from '../assets/case-studies/tvc.webp';
+import bank78Img from '../assets/case-studies/bank78.webp';
+import ubaImg from '../assets/case-studies/uba.webp';
+import optivaImg from '../assets/case-studies/optiva.webp';
 
 export const productsData = [
   {
