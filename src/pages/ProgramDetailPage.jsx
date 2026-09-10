@@ -41,6 +41,7 @@ import arch3 from '../assets/arch-3.webp';
 import holdImg from '../assets/hold.webp';
 import chainImg from '../assets/chain.webp';
 import arrowImg from '../assets/arrow.webp';
+import goldhumanImg from '../assets/Goldhuman.webp';
 import expSlide1 from '../assets/slide 1.webp';
 import expSlide2 from '../assets/slide 2.webp';
 import expSlide3 from '../assets/Slide 3.webp';
@@ -111,7 +112,7 @@ const programData = {
         hasGlassBg: true
       },
       {
-        src: arch2,
+        src: goldhumanImg,
         title: 'Define how your organization is represented.',
         desc: 'Establish purposeful principles for how identity should show up across the key places people encounter your organization.',
         color: '#000000',
