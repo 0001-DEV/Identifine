@@ -64,7 +64,8 @@ const programData = {
         src: img2,
         title: 'Understand what’s working.',
         desc: 'Identify the identity elements that already feel clear, credible, and consistent.',
-        color: '#E2B857',
+        color: '#FFFFFF',
+        descColor: '#E2B857',
         btnBg: '#E2B857',
         btnText: '#111111',
         hasGlassBg: true
@@ -374,6 +375,8 @@ export default function ProgramDetailPage() {
 
         {program.images.map((imgObj, idx) => {
           const textColor = imgObj.color || '#FFFFFF';
+          const titleColor = imgObj.titleColor || imgObj.color || '#FFFFFF';
+          const descColor = imgObj.descColor || imgObj.color || '#FFFFFF';
           const btnBg = imgObj.btnBg || imgObj.color || '#E2B857';
           const btnText = imgObj.btnText || (imgObj.color === '#2B2927' ? '#FFFFFF' : '#111111');
 
@@ -412,14 +415,14 @@ export default function ProgramDetailPage() {
                 >
                   <h3
                     className="text-base xs:text-lg sm:text-2xl md:text-3xl font-galano font-semibold tracking-tight leading-snug max-w-xl mx-auto"
-                    style={{ color: textColor }}
+                    style={{ color: titleColor }}
                   >
                     {imgObj.title}
                   </h3>
                   {imgObj.desc && (
                     <p
                       className="text-xs xs:text-sm sm:text-base md:text-lg font-galano font-normal leading-snug max-w-xl mx-auto"
-                      style={{ color: textColor }}
+                      style={{ color: descColor }}
                     >
                       {imgObj.desc}
                     </p>
