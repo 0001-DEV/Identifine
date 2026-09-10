@@ -64,11 +64,13 @@ const programData = {
         src: img2,
         title: 'Understand what’s working.',
         desc: 'Identify the identity elements that already feel clear, credible, and consistent.',
-        color: '#FFFFFF',
+        color: '#000000',
+        titleColor: '#000000',
         descColor: '#E2B857',
-        btnBg: '#E2B857',
-        btnText: '#111111',
-        hasGlassBg: true
+        btnBg: '#000000',
+        btnText: '#FFFFFF',
+        hasGlassBg: true,
+        glassStyle: 'clear'
       },
       {
         src: twoDollImg,
@@ -401,16 +403,14 @@ export default function ProgramDetailPage() {
                 <div
                   className={`space-y-1 sm:space-y-1.5 transition-all duration-300 ${
                     imgObj.hasGlassBg
-                      ? `backdrop-blur-md ${
-                          textColor === '#FFFFFF' || textColor === '#E2B857'
+                      ? `backdrop-blur-xl ${
+                          imgObj.glassStyle === 'clear'
+                            ? 'bg-white/80 border-white/90 shadow-2xl'
+                            : textColor === '#FFFFFF' || textColor === '#E2B857'
                             ? 'bg-white/20 border-white/30'
                             : 'bg-white/40 border-white/50'
                         } border rounded-2xl sm:rounded-3xl px-5 sm:px-8 py-3.5 sm:py-5 shadow-xl w-fit max-w-[92vw] sm:max-w-xl mx-auto`
                       : ''
-                  } ${
-                    textColor === '#000000' || textColor === '#111111' || textColor === '#1A1D23'
-                      ? ''
-                      : 'drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]'
                   }`}
                 >
                   <h3
