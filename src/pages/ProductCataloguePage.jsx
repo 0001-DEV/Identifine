@@ -12,6 +12,7 @@ import renderOne from '../assets/RENDER 1.webp';
 import postProcessImg from '../assets/Post process 6.webp';
 import silverForteImg from '../assets/IDENTIFINE SILVER FORTE.webp';
 import blackMatteRender from '../assets/Black matte render 2.webp';
+import elitePassBlackMatte2 from '../assets/ELITE_PASS_BLACK_MATTE_2.webp';
 
 // Partner Case Studies Images
 import rainoilImg from '../assets/case-studies/rainoil.webp';
@@ -68,7 +69,7 @@ export const productsData = [
     overview: 'Some things never need to shout to be noticed. The Forte was created for organizations that believe confidence is quiet. Its lightweight carbon fiber weave, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
-    image: blackMatteRender
+    image: elitePassBlackMatte2
   },
   {
     id: 'membership-prestige',
