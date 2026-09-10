@@ -38,6 +38,9 @@ import img4 from '../assets/4.webp';
 import arch1 from '../assets/arch-1.webp';
 import arch2 from '../assets/arch-2.webp';
 import arch3 from '../assets/arch-3.webp';
+import holdImg from '../assets/hold.webp';
+import chainImg from '../assets/chain.webp';
+import arrowImg from '../assets/arrow.webp';
 import expSlide1 from '../assets/slide 1.webp';
 import expSlide2 from '../assets/slide 2.webp';
 import expSlide3 from '../assets/Slide 3.webp';
@@ -53,7 +56,7 @@ const programData = {
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Discovery',
     images: [
       {
-        src: img1,
+        src: holdImg,
         title: 'Reveal your identity touchpoints.',
         desc: 'See how your people, credentials, spaces, communication, and interactions express your organization.',
         color: '#EAE5CB',
@@ -73,7 +76,7 @@ const programData = {
         glassStyle: 'clear'
       },
       {
-        src: twoDollImg,
+        src: chainImg,
         title: 'Uncover what feels disconnected.',
         desc: 'Spot gaps and inconsistencies between how your organization defines itself and how it is experienced.',
         color: '#000000',
@@ -117,7 +120,7 @@ const programData = {
         hasGlassBg: true
       },
       {
-        src: arch3,
+        src: arrowImg,
         title: 'Build consistency with purpose.',
         desc: 'Create an identity system that is clearer, more connected, and consistently experienced across the organization.',
         color: '#000000',

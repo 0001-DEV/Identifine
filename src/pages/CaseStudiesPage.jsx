@@ -5,14 +5,14 @@ import CardShowcaseModal from '../components/CardShowcaseModal';
 
 // Case Study Image Assets (Optimized WebP)
 import rainoilImg from '../assets/case-studies/rainoil.webp';
-import seplatImg from '../assets/case-studies/seplat.webp';
+import seplat4Img from '../assets/seplat 4.webp';
 import revolutionPlusImg from '../assets/case-studies/revolution_plus.webp';
 import armImg from '../assets/case-studies/arm.webp';
 import sterlingBankImg from '../assets/case-studies/sterling_bank.webp';
 import tvcImg from '../assets/case-studies/tvc.webp';
 import bank78Img from '../assets/case-studies/bank78.webp';
 import ubaImg from '../assets/case-studies/uba.webp';
-import optivaImg from '../assets/case-studies/optiva.webp';
+import optivaMainImg from '../assets/OPTIVA.webp';
 
 export const caseStudiesData = [
   {
@@ -27,7 +27,7 @@ export const caseStudiesData = [
     id: 'seplat',
     name: 'Seplat',
     category: 'Oil & Gas Exploration',
-    image: seplatImg,
+    image: seplat4Img,
     description: 'Precision aircraft-grade titanium smart cards for C-suite and senior energy executives.',
     stats: 'Enterprise Deployment'
   },
@@ -83,7 +83,7 @@ export const caseStudiesData = [
     id: 'optiva',
     name: 'Optiva',
     category: 'Capital & Investment Architecture',
-    image: optivaImg,
+    image: optivaMainImg,
     description: 'Bespoke corporate identity passes engineered for elite investment management leadership.',
     stats: 'Private Wealth Ecosystem'
   }

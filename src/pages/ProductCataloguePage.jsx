@@ -15,14 +15,14 @@ import blackMatteRender from '../assets/Black matte render 2.webp';
 
 // Partner Case Studies Images
 import rainoilImg from '../assets/case-studies/rainoil.webp';
-import seplatImg from '../assets/case-studies/seplat.webp';
+import seplat4Img from '../assets/seplat 4.webp';
 import revolutionPlusImg from '../assets/case-studies/revolution_plus.webp';
 import armImg from '../assets/case-studies/arm.webp';
 import sterlingBankImg from '../assets/case-studies/sterling_bank.webp';
 import tvcImg from '../assets/case-studies/tvc.webp';
 import bank78Img from '../assets/case-studies/bank78.webp';
 import ubaImg from '../assets/case-studies/uba.webp';
-import optivaImg from '../assets/case-studies/optiva.webp';
+import optivaMainImg from '../assets/OPTIVA.webp';
 
 export const productsData = [
   {
@@ -83,14 +83,14 @@ export const productsData = [
 
 export const partnerCases = [
   { id: 'rainoil', name: 'Rainoil', image: rainoilImg },
-  { id: 'seplat', name: 'Seplat', image: seplatImg },
+  { id: 'seplat', name: 'Seplat', image: seplat4Img },
   { id: 'revolution-plus', name: 'Revolution plus', image: revolutionPlusImg },
   { id: 'arm', name: 'ARM', image: armImg },
   { id: 'sterling-bank', name: 'Sterling bank', image: sterlingBankImg },
   { id: 'tvc', name: 'TVC', image: tvcImg },
   { id: 'bank-78', name: 'Bank 78', image: bank78Img },
   { id: 'uba', name: 'UBA', image: ubaImg },
-  { id: 'optiva', name: 'Optiva', image: optivaImg }
+  { id: 'optiva', name: 'Optiva', image: optivaMainImg }
 ];
 
 export default function ProductCataloguePage() {

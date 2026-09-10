@@ -7,14 +7,20 @@ import rainoil1 from '../assets/case-studies/rainoil_1.webp';
 import rainoil2 from '../assets/case-studies/rainoil_2.webp';
 import rainoil3 from '../assets/case-studies/rainoil_3.webp';
 
-import seplatImg from '../assets/case-studies/seplat.webp';
+import seplatImg from '../assets/seplat.webp';
+import seplat2Img from '../assets/seplat 2.webp';
+import seplat3Img from '../assets/seplat 3.webp';
+
+import optiva1Img from '../assets/OPTIVA1.webp';
+import optiva2Img from '../assets/OPTIVA2.webp';
+import optiva3Img from '../assets/OPTIVA3.webp';
+
 import revPlusImg from '../assets/case-studies/revolution_plus.webp';
 import armImg from '../assets/case-studies/arm.webp';
 import sterlingImg from '../assets/case-studies/sterling_bank.webp';
 import tvcImg from '../assets/case-studies/tvc.webp';
 import bank78Img from '../assets/case-studies/bank78.webp';
 import ubaImg from '../assets/case-studies/uba.webp';
-import optivaImg from '../assets/case-studies/optiva.webp';
 import elitePassBlack from '../assets/ELITE_PASS_BLACK_MATTE.webp';
 import elitePassGold from '../assets/ELITE_PASS_GOLD.webp';
 import elitePassSilver from '../assets/ELITE_PASS_SILVER.webp';
@@ -31,10 +37,79 @@ const caseStudyDetails = {
   },
   'seplat': {
     title: 'Seplat',
-    type: 'Corporate Identity Design, Leadership Pass',
+    type: 'Visual Identity Direction, Touchpoints',
     year: '2026',
-    writeup: 'We partnered with Seplat to engineer precision titanium smart cards and executive credentials for senior leadership across global energy operations.',
-    images: [seplatImg, elitePassSilver, rainoil2],
+    writeup: (
+      <div className="space-y-6 font-galano font-medium text-sm text-[#1f1f1f] leading-relaxed pt-2">
+        <p>
+          One identity. Two systems. One seamless experience. Rethinking the employee credential as more than a card — but as a point where technology, access and organizational identity meet.
+        </p>
+
+        <div className="space-y-1">
+          <h3 className="font-bold text-[#1f1f1f] uppercase tracking-wider text-xs">THE CHALLENGE</h3>
+          <p>
+            Two offices. Two systems. One organization. Seplat Energy had two office environments, each operating on a different access-control system. For employees moving between them, identity came with friction. What should have been a simple act of access required navigating two separate systems — and potentially, two separate credentials. But the problem went deeper. The employee ID was functioning as a utility — a tool to open doors — rather than an expression of the brand itself. In an organization operating at the highest levels of the energy sector, touchpoints should reflect precision, authority and cohesion. The access card was a missed opportunity.
+          </p>
+        </div>
+
+        <div className="space-y-1">
+          <h3 className="font-bold text-[#1f1f1f] uppercase tracking-wider text-xs">THE QUESTION</h3>
+          <p>
+            How do you unify two separate physical security systems into a single employee credential — without changing the underlying infrastructure of either office? And how do you turn that credential into something an employee is proud to carry?
+          </p>
+        </div>
+
+        <div className="space-y-1">
+          <h3 className="font-bold text-[#1f1f1f] uppercase tracking-wider text-xs">THE INSIGHT</h3>
+          <p>
+            An identity card is not just hardware. It is the most frequent physical interaction an employee has with their organization. When designed thoughtfully, it ceases to be a plastic card and becomes an artifact of belonging.
+          </p>
+        </div>
+
+        <div className="space-y-1">
+          <h3 className="font-bold text-[#1f1f1f] uppercase tracking-wider text-xs">THE APPROACH</h3>
+          <p>
+            Identifine approached the challenge not as a card-printing exercise, but as an identity architecture problem. We audited both access control systems to understand their frequencies, protocols and encoding requirements. The solution required embedding dual-chip technology into a single, high-durability substrate — allowing one card to communicate seamlessly across both office environments. But technical integration was only half the assignment. The card itself needed to feel like Seplat Energy: modern, disciplined and premium. We designed a clean, minimalist visual layout that elevated the company’s brand identity, utilizing precision surface finishing and durable materials built for daily, high-use environments.
+          </p>
+        </div>
+
+        <div className="space-y-1">
+          <h3 className="font-bold text-[#1f1f1f] uppercase tracking-wider text-xs">THE SOLUTION</h3>
+          <p>
+            A single, custom-engineered dual-technology smart card that grants frictionless access across all Seplat Energy locations. Paired with a refined visual identity that replaces generic corporate pass design with a sleek, high-grade executive credential.
+          </p>
+        </div>
+
+        <div className="space-y-1">
+          <h3 className="font-bold text-[#1f1f1f] uppercase tracking-wider text-xs">FROM ACCESS CARD TO IDENTITY EXPERIENCE</h3>
+          <p>
+            To complete the ecosystem, Identifine delivered the cards in custom-designed executive packaging — transforming what is normally a administrative handoff into an onboarding moment that communicates value from day one.
+          </p>
+        </div>
+
+        <div className="space-y-1">
+          <h3 className="font-bold text-[#1f1f1f] uppercase tracking-wider text-xs">THE RESULT</h3>
+          <p>
+            Zero friction across offices. One card for every employee. A tangible upgrade to Seplat Energy’s everyday touchpoints.
+          </p>
+        </div>
+
+        <div className="space-y-1">
+          <h3 className="font-bold text-[#1f1f1f] uppercase tracking-wider text-xs">THE BIGGER IDEA</h3>
+          <p>
+            Technology should solve complexity silently. Design should make the solution feel effortless.
+          </p>
+        </div>
+
+        <div className="space-y-1">
+          <h3 className="font-bold text-[#1f1f1f] uppercase tracking-wider text-xs">CLOSING</h3>
+          <p>
+            Identifine exists at the intersection of both — turning everyday corporate objects into expressions of identity, access and precision.
+          </p>
+        </div>
+      </div>
+    ),
+    images: [seplatImg, seplat3Img, seplat2Img],
     nextSlug: 'revolution-plus',
     nextTitle: 'Revolution plus'
   },
@@ -97,7 +172,7 @@ const caseStudyDetails = {
     type: 'Capital & Investment Architecture Pass',
     year: '2026',
     writeup: 'We partnered with Optiva Capital to engineer executive identity cards embodying private wealth stewardship and financial authority.',
-    images: [optivaImg, elitePassBlack, rainoil2],
+    images: [optiva1Img, optiva2Img, optiva3Img],
     nextSlug: 'rainoil',
     nextTitle: 'Rainoil'
   }
@@ -146,9 +221,13 @@ export default function CaseStudyDetailPage() {
               </div>
 
               {/* Project Writeup */}
-              <p className="font-galano font-medium text-sm text-[#1f1f1f] leading-relaxed pt-2">
-                {study.writeup}
-              </p>
+              {typeof study.writeup === 'string' ? (
+                <p className="font-galano font-medium text-sm text-[#1f1f1f] leading-relaxed pt-2">
+                  {study.writeup}
+                </p>
+              ) : (
+                study.writeup
+              )}
             </div>
 
           </div>
