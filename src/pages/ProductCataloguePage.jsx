@@ -68,7 +68,7 @@ export const productsData = [
     overview: 'Some things never need to shout to be noticed. The Forte was created for organizations that believe confidence is quiet. Its lightweight carbon fiber weave, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
-    image: postProcessImg
+    image: blackMatteRender
   },
   {
     id: 'membership-prestige',
