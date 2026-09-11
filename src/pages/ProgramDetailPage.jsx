@@ -46,6 +46,13 @@ import expSlide1 from '../assets/slide 1.webp';
 import expSlide2 from '../assets/slide 2.webp';
 import expSlide3 from '../assets/Slide 3.webp';
 import expSlide4 from '../assets/Slide 4.webp';
+import revealImg from '../assets/reveal.jpg';
+import blackImg from '../assets/black .jpg';
+import printImg from '../assets/print.jpg';
+import idkImg1 from '../assets/1 (3).jpg';
+import idkImg2 from '../assets/2 copy 2.jpg';
+import idkImg3 from '../assets/3 (3).jpg';
+import idkImg4 from '../assets/4 (2).jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,7 +64,7 @@ const programData = {
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identity%20Discovery',
     images: [
       {
-        src: holdImg,
+        src: revealImg,
         title: 'Reveal your identity touchpoints.',
         desc: 'See how your people, credentials, spaces, communication, and interactions express your organization.',
         color: '#EAE5CB',
@@ -121,12 +128,14 @@ const programData = {
         hasGlassBg: true
       },
       {
-        src: arrowImg,
+        src: blackImg,
         title: 'Build consistency with purpose.',
         desc: 'Create an identity system that is clearer, more connected, and consistently experienced across the organization.',
-        color: '#000000',
-        btnBg: '#000000',
-        btnText: '#FFFFFF',
+        color: '#FFFFFF',
+        titleColor: '#FFFFFF',
+        descColor: '#FFFFFF',
+        btnBg: '#FFFFFF',
+        btnText: '#111111',
         hasGlassBg: true
       }
     ]
@@ -147,12 +156,14 @@ const programData = {
         hasGlassBg: true
       },
       {
-        src: expSlide2,
+        src: printImg,
         title: 'Connect every touchpoint.',
         desc: 'Align people, credentials, spaces, systems, and digital experiences so they feel like one organization.',
-        color: '#FFFFFF',
-        btnBg: '#FFFFFF',
-        btnText: '#111111',
+        color: '#000000',
+        titleColor: '#000000',
+        descColor: '#000000',
+        btnBg: '#000000',
+        btnText: '#FFFFFF',
         hasGlassBg: true
       },
       {
@@ -188,11 +199,10 @@ const programData = {
     subtitle: 'Ongoing care, support and protection to keep your organization\'s identity experience working as intended.',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identikare',
     images: [
-      { src: deployImg, title: 'Ongoing Identity Care', desc: 'Continuous support to keep your identity experience current, consistent and dependable.' },
-      { src: ab1, title: 'Credential Replacement', desc: 'Fast, hassle-free replacement of lost or outdated identity credentials.' },
-      { src: ab2, title: 'Identity Updates', desc: 'Keeping digital profiles, credentials, and representations current as roles evolve.' },
-      { src: card1Img, title: 'Maintenance & Support', desc: 'Proactive maintenance of identity systems so they always work as intended.' },
-      { src: ab5, title: 'Identity Protection', desc: 'Safeguarding the integrity of your organization\'s identity experience over time.' }
+      { src: idkImg1, title: 'Ongoing Identity Care', desc: 'Continuous support to keep your identity experience current, consistent and dependable.' },
+      { src: idkImg2, title: 'Credential Replacement', desc: 'Fast, hassle-free replacement of lost or outdated identity credentials.' },
+      { src: idkImg3, title: 'Identity Updates', desc: 'Keeping digital profiles, credentials, and representations current as roles evolve.' },
+      { src: idkImg4, title: 'Maintenance & Support', desc: 'Proactive maintenance of identity systems so they always work as intended.' }
     ]
   }
 };

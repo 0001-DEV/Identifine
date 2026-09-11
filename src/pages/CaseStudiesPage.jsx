@@ -3,15 +3,15 @@ import { NavLink } from 'react-router-dom';
 import starIcon from '../assets/SVG@4x.png';
 import CardShowcaseModal from '../components/CardShowcaseModal';
 
-// Case Study Image Assets (Optimized WebP)
-import rainoilImg from '../assets/case-studies/rainoil.webp';
+// Case Study Image Assets
+import rainoilRender10 from '../assets/RAINOIL_RENDER_POST_PROCESS_10.jpg';
 import seplat4Img from '../assets/seplat 4.webp';
-import revolutionPlusImg from '../assets/case-studies/revolution_plus.webp';
-import armImg from '../assets/case-studies/arm.webp';
-import sterlingBankImg from '../assets/case-studies/sterling_bank.webp';
-import tvcImg from '../assets/case-studies/tvc.webp';
-import bank78Img from '../assets/case-studies/bank78.webp';
-import ubaImg from '../assets/case-studies/uba.webp';
+import adnocPost14 from '../assets/POST 14.jpg';
+import googleNotepad1 from '../assets/NOTEPAD 1.jpg';
+import renaissanceMain from '../assets/case-studies/renaissance_main.png';
+import guinnessRender6 from '../assets/RENDER 6.png';
+import novaMain from '../assets/Nova.jpg';
+import ubaMain from '../assets/case-studies/uba_main.jpg';
 import optivaMainImg from '../assets/OPTIVA.webp';
 
 export const caseStudiesData = [
@@ -19,7 +19,7 @@ export const caseStudiesData = [
     id: 'rainoil',
     name: 'Rainoil',
     category: 'Energy & Downstream Petroleum',
-    image: rainoilImg,
+    image: rainoilRender10,
     description: 'Executive leadership credentials & integrated digital NFC workforce pass architecture.',
     stats: '5,000+ Personnel Cards'
   },
@@ -32,50 +32,50 @@ export const caseStudiesData = [
     stats: 'Enterprise Deployment'
   },
   {
-    id: 'revolution-plus',
-    name: 'Revolution plus',
-    category: 'Real Estate & Infrastructure',
-    image: revolutionPlusImg,
-    description: 'Gold electroplated metal passes creating prestige at major luxury developments.',
-    stats: 'VIP Access Ecosystem'
+    id: 'adnoc',
+    name: 'ADNOC',
+    category: 'Energy & Petrochemicals',
+    image: adnocPost14,
+    description: 'Strategic corporate identity architecture & executive credentials.',
+    stats: 'Global Energy Network'
   },
   {
-    id: 'arm',
-    name: 'ARM',
-    category: 'Asset & Wealth Management',
-    image: armImg,
-    description: 'Executive dual-tone corporate cards reflecting wealth stewardship and financial trust.',
-    stats: 'High-Net-Worth Portfolio'
+    id: 'google',
+    name: 'Google',
+    category: 'Technology & Enterprise Solutions',
+    image: googleNotepad1,
+    description: 'Modern executive physical & digital identity touchpoints with integrated smart verification.',
+    stats: 'Enterprise Ecosystem'
   },
   {
-    id: 'sterling-bank',
-    name: 'Sterling bank',
-    category: 'Commercial Banking',
-    image: sterlingBankImg,
+    id: 'renaissance',
+    name: 'Renaissance',
+    category: 'Energy & Infrastructure',
+    image: renaissanceMain,
     description: 'Unified contactless identity passes engineered for seamless branch and regional headquarters access.',
     stats: 'Nationwide Deployment'
   },
   {
-    id: 'tvc',
-    name: 'TVC',
-    category: 'Media & Broadcasting Network',
-    image: tvcImg,
+    id: 'guinness',
+    name: 'Guinness',
+    category: 'Beverage & Consumer Goods',
+    image: guinnessRender6,
     description: 'High-visibility broadcast media credentials and dynamic studio access verification passes.',
-    stats: 'Live Studio Ecosystem'
+    stats: 'Brand Heritage Ecosystem'
   },
   {
-    id: 'bank-78',
-    name: 'Bank 78',
-    category: 'Next-Gen Fintech',
-    image: bank78Img,
-    description: 'Modern carbon-fiber smart cards enabling contactless digital profile exchange for digital leaders.',
-    stats: 'Smart NFC Provisioning'
+    id: 'nova',
+    name: 'NOVA',
+    category: 'Banking & Financial Services',
+    image: novaMain,
+    description: 'Evolutionary physical identity touchpoints designed around a national banking transformation.',
+    stats: 'Phygital Banking Model'
   },
   {
     id: 'uba',
     name: 'UBA',
     category: 'Pan-African Banking Group',
-    image: ubaImg,
+    image: ubaMain,
     description: 'Executive bespoke passes for international board members across 20 African subsidiaries.',
     stats: 'Continental Reach'
   },

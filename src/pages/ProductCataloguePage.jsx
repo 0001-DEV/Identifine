@@ -15,14 +15,14 @@ import blackMatteRender from '../assets/Black matte render 2.webp';
 import elitePassBlackMatte2 from '../assets/ELITE_PASS_BLACK_MATTE_2.webp';
 
 // Partner Case Studies Images
-import rainoilImg from '../assets/case-studies/rainoil.webp';
+import rainoilRender10 from '../assets/RAINOIL_RENDER_POST_PROCESS_10.jpg';
 import seplat4Img from '../assets/seplat 4.webp';
-import revolutionPlusImg from '../assets/case-studies/revolution_plus.webp';
-import armImg from '../assets/case-studies/arm.webp';
-import sterlingBankImg from '../assets/case-studies/sterling_bank.webp';
-import tvcImg from '../assets/case-studies/tvc.webp';
-import bank78Img from '../assets/case-studies/bank78.webp';
-import ubaImg from '../assets/case-studies/uba.webp';
+import adnocPost14 from '../assets/POST 14.jpg';
+import googleNotepad1 from '../assets/NOTEPAD 1.jpg';
+import renaissanceMain from '../assets/case-studies/renaissance_main.png';
+import guinnessRender6 from '../assets/RENDER 6.png';
+import novaMain from '../assets/Nova.jpg';
+import ubaMain from '../assets/case-studies/uba_main.jpg';
 import optivaMainImg from '../assets/OPTIVA.webp';
 
 export const productsData = [
@@ -83,14 +83,14 @@ export const productsData = [
 ];
 
 export const partnerCases = [
-  { id: 'rainoil', name: 'Rainoil', image: rainoilImg },
+  { id: 'rainoil', name: 'Rainoil', image: rainoilRender10 },
   { id: 'seplat', name: 'Seplat', image: seplat4Img },
-  { id: 'revolution-plus', name: 'Revolution plus', image: revolutionPlusImg },
-  { id: 'arm', name: 'ARM', image: armImg },
-  { id: 'sterling-bank', name: 'Sterling bank', image: sterlingBankImg },
-  { id: 'tvc', name: 'TVC', image: tvcImg },
-  { id: 'bank-78', name: 'Bank 78', image: bank78Img },
-  { id: 'uba', name: 'UBA', image: ubaImg },
+  { id: 'adnoc', name: 'ADNOC', image: adnocPost14 },
+  { id: 'google', name: 'Google', image: googleNotepad1 },
+  { id: 'renaissance', name: 'Renaissance', image: renaissanceMain },
+  { id: 'guinness', name: 'Guinness', image: guinnessRender6 },
+  { id: 'nova', name: 'NOVA', image: novaMain },
+  { id: 'uba', name: 'UBA', image: ubaMain },
   { id: 'optiva', name: 'Optiva', image: optivaMainImg }
 ];
 
