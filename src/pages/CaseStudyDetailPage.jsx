@@ -74,7 +74,7 @@ import ubaRenders3 from '../assets/case-studies/uba_renders_3.jpg';
 import ubaPvc2 from '../assets/case-studies/uba_pvc_2.png';
 
 // Optiva Assets
-import optivaMainImg from '../assets/OPTIVA.webp';
+import optivaPng from '../assets/OPTIVA.png';
 import optivaVideo from '../assets/Optivavideo.mp4';
 import optiva14 from '../assets/14.jpg';
 import optivaNote from '../assets/optivanote.jpg';
@@ -754,6 +754,7 @@ const caseStudyDetails = {
     writeup: optivaWriteup,
     images: [
       optivaVideo,
+      optivaPng,
       optiva14,
       optivaNote,
       optiva1Img,
