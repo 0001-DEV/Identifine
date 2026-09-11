@@ -205,8 +205,8 @@ const programData = {
     images: [
       {
         src: idkImg1,
-        title: 'Ongoing Identity Care',
-        desc: 'Continuous support to keep your identity experience current, consistent and dependable.',
+        title: 'Keep Identity Current',
+        desc: 'Keep employee details, roles, credentials, and digital profiles up to date.',
         color: '#FFFFFF',
         btnBg: '#E2B857',
         btnText: '#111111',
@@ -214,8 +214,8 @@ const programData = {
       },
       {
         src: idkImg2,
-        title: 'Credential Replacement',
-        desc: 'Fast, hassle-free replacement of lost or outdated identity credentials.',
+        title: 'Maintain Every Credential',
+        desc: 'Handle replacements, updates, renewals, and changes as organizational needs evolve.',
         color: '#FFFFFF',
         btnBg: '#E2B857',
         btnText: '#111111',
@@ -223,8 +223,8 @@ const programData = {
       },
       {
         src: idkImg3,
-        title: 'Identity Updates',
-        desc: 'Keeping digital profiles, credentials, and representations current as roles evolve.',
+        title: 'Protect Identity Continuity',
+        desc: 'Ensure identity systems remain secure, dependable, and ready when needed.',
         color: '#FFFFFF',
         btnBg: '#E2B857',
         btnText: '#111111',
@@ -232,8 +232,8 @@ const programData = {
       },
       {
         src: idkImg4,
-        title: 'Maintenance & Support',
-        desc: 'Proactive maintenance of identity systems so they always work as intended.',
+        title: 'Support Every Change',
+        desc: 'Provide ongoing care and support that keeps your organization’s identity experience consistent.',
         color: '#FFFFFF',
         btnBg: '#E2B857',
         btnText: '#111111',
