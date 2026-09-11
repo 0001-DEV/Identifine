@@ -67,10 +67,13 @@ const programData = {
         src: revealImg,
         title: 'Reveal your identity touchpoints.',
         desc: 'See how your people, credentials, spaces, communication, and interactions express your organization.',
-        color: '#EAE5CB',
-        btnBg: '#EAE5CB',
-        btnText: '#111111',
-        hasGlassBg: true
+        color: '#000000',
+        titleColor: '#000000',
+        descColor: '#000000',
+        btnBg: '#000000',
+        btnText: '#FFFFFF',
+        hasGlassBg: true,
+        glassStyle: 'clear'
       },
       {
         src: img2,
