@@ -576,8 +576,7 @@ const caseStudyDetails = {
       adnocPost9,
       adnocPost14,
       adnocRender10,
-      adnocRender14,
-      adnocRender11
+      adnocRender14
     ],
     nextSlug: 'google',
     nextTitle: 'Google'
@@ -595,8 +594,7 @@ const caseStudyDetails = {
       adnocPost9,
       adnocPost14,
       adnocRender10,
-      adnocRender14,
-      adnocRender11
+      adnocRender14
     ],
     nextSlug: 'google',
     nextTitle: 'Google'
@@ -841,7 +839,6 @@ export default function CaseStudyDetailPage() {
                       loop
                       muted
                       playsInline
-                      controls
                       className="w-full h-auto object-cover select-none rounded-none"
                     />
                   ) : (

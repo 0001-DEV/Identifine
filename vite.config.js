@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
 /**
  * Custom quiet proxy plugin for WordPress API
@@ -36,7 +37,20 @@ function wpApiPlugin() {
 }
 
 export default defineConfig({
-  plugins: [react(), wpApiPlugin()],
+  plugins: [
+    react(),
+    wpApiPlugin(),
+    ViteImageOptimizer({
+      // Convert JPG and PNG to WebP
+      jpg: { quality: 85 },
+      jpeg: { quality: 85 },
+      png: { quality: 85 },
+      webp: { lossless: false, quality: 85 },
+      // Convert JPG/PNG assets to WebP format
+      includePublic: true,
+      logStats: true,
+    }),
+  ],
   server: {
     port: 3000,
     open: false

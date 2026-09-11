@@ -69,7 +69,8 @@ const programData = {
         desc: 'See how your people, credentials, spaces, communication, and interactions express your organization.',
         color: '#EAE5CB',
         btnBg: '#EAE5CB',
-        btnText: '#111111'
+        btnText: '#111111',
+        hasGlassBg: true
       },
       {
         src: img2,
@@ -151,9 +152,12 @@ const programData = {
         title: 'Bring identity into the real world.',
         desc: 'Turn your identity strategy into experiences people can see, use, and interact with every day.',
         color: '#000000',
-        btnBg: '#000000',
+        titleColor: '#000000',
+        descColor: '#000000',
+        btnBg: '#111111',
         btnText: '#FFFFFF',
-        hasGlassBg: true
+        hasGlassBg: true,
+        glassStyle: 'clear'
       },
       {
         src: printImg,
@@ -199,10 +203,42 @@ const programData = {
     subtitle: 'Ongoing care, support and protection to keep your organization\'s identity experience working as intended.',
     whatsappLink: 'https://wa.me/2349030001851?text=Hello%20Identifine!%20I%20am%20interested%20in%20Identikare',
     images: [
-      { src: idkImg1, title: 'Ongoing Identity Care', desc: 'Continuous support to keep your identity experience current, consistent and dependable.' },
-      { src: idkImg2, title: 'Credential Replacement', desc: 'Fast, hassle-free replacement of lost or outdated identity credentials.' },
-      { src: idkImg3, title: 'Identity Updates', desc: 'Keeping digital profiles, credentials, and representations current as roles evolve.' },
-      { src: idkImg4, title: 'Maintenance & Support', desc: 'Proactive maintenance of identity systems so they always work as intended.' }
+      {
+        src: idkImg1,
+        title: 'Ongoing Identity Care',
+        desc: 'Continuous support to keep your identity experience current, consistent and dependable.',
+        color: '#FFFFFF',
+        btnBg: '#E2B857',
+        btnText: '#111111',
+        hasGlassBg: true
+      },
+      {
+        src: idkImg2,
+        title: 'Credential Replacement',
+        desc: 'Fast, hassle-free replacement of lost or outdated identity credentials.',
+        color: '#FFFFFF',
+        btnBg: '#E2B857',
+        btnText: '#111111',
+        hasGlassBg: true
+      },
+      {
+        src: idkImg3,
+        title: 'Identity Updates',
+        desc: 'Keeping digital profiles, credentials, and representations current as roles evolve.',
+        color: '#FFFFFF',
+        btnBg: '#E2B857',
+        btnText: '#111111',
+        hasGlassBg: true
+      },
+      {
+        src: idkImg4,
+        title: 'Maintenance & Support',
+        desc: 'Proactive maintenance of identity systems so they always work as intended.',
+        color: '#FFFFFF',
+        btnBg: '#E2B857',
+        btnText: '#111111',
+        hasGlassBg: true
+      }
     ]
   }
 };
@@ -420,7 +456,7 @@ export default function ProgramDetailPage() {
                       ? `backdrop-blur-xl ${
                           imgObj.glassStyle === 'clear'
                             ? 'bg-white/80 border-white/90 shadow-2xl'
-                            : textColor === '#FFFFFF' || textColor === '#E2B857'
+                            : textColor === '#FFFFFF' || textColor === '#E2B857' || textColor === '#EAE5CB'
                             ? 'bg-white/20 border-white/30'
                             : 'bg-white/40 border-white/50'
                         } border rounded-2xl sm:rounded-3xl px-5 sm:px-8 py-3.5 sm:py-5 shadow-xl w-fit max-w-[92vw] sm:max-w-xl mx-auto`
