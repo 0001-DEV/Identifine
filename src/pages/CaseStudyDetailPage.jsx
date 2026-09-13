@@ -711,8 +711,8 @@ const caseStudyDetails = {
       novaNotepad103,
       novaA
     ],
-    nextSlug: 'uba',
-    nextTitle: 'UBA'
+    nextSlug: 'rainoil',
+    nextTitle: 'Rainoil'
   },
   // Legacy alias for bank-78
   'bank-78': {
@@ -728,8 +728,8 @@ const caseStudyDetails = {
       novaNotepad103,
       novaA
     ],
-    nextSlug: 'uba',
-    nextTitle: 'UBA'
+    nextSlug: 'rainoil',
+    nextTitle: 'Rainoil'
   },
   'uba': {
     title: 'UBA',
@@ -755,14 +755,14 @@ const caseStudyDetails = {
     images: [
       optivaVideo,
       optivaPng,
+      optiva3Img,
+      optiva1Img,
       optiva14,
       optivaNote,
-      optiva1Img,
-      optiva2Img,
-      optiva3Img
+      optiva2Img
     ],
-    nextSlug: 'rainoil',
-    nextTitle: 'Rainoil'
+    nextSlug: 'nova',
+    nextTitle: 'NOVA Bank'
   }
 };
 

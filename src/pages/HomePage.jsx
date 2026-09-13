@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import HeroVideoZoom from '../components/HeroVideoZoom';
+import HeroSection from '../components/HeroSection';
 import CompanyLogosMarquee from '../components/CompanyLogosMarquee';
 import IdentityQuiz from '../components/IdentityQuiz';
 import CardShowcaseModal from '../components/CardShowcaseModal';
@@ -211,38 +211,12 @@ export default function HomePage() {
   return (
     <div className="w-full home-page">
 
-      {/* 1. HERO SECTION (Height min-h-[95vh], pt-48 sm:pt-64 pb-[300px]) */}
-      <section className="bg-[#EBEAE6] pt-48 sm:pt-64 pb-32 px-6 sm:px-12 text-center flex flex-col items-center justify-center relative min-h-[95vh] overflow-hidden">
-        <div className="max-w-[840px] w-full mx-auto space-y-12 min-h-[301px] flex flex-col justify-center items-center">
-
-          <h1 className="animate-hero-fade-1 mt-2 sm:mt-4 text-4xl sm:text-7xl lg:text-[5.25rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.2] text-center">
-            Every organization has an <em className="font-swarsh italic font-normal text-[#111111] px-1.5">identity</em>, only few intentionally designed it
-          </h1>
-
-          <p className="animate-hero-fade-2 text-base sm:text-lg text-[#555555] max-w-2xl mx-auto leading-relaxed font-medium">
-            We help organizations transform identity from an administrative necessity into a strategic organizational capability.
-          </p>
-
-          <div className="pt-4">
-            <a
-              href="https://wa.me/2349030001851"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center text-xs sm:text-base font-bold px-5 py-3 sm:px-8 sm:py-4 rounded-full bg-black text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
-            >
-              <span>Make an Enquiry</span>
-            </a>
-          </div>
-        </div>
-
-      </section>
-
-      {/* Full Width Scroll Zoom Video Section */}
-      <HeroVideoZoom />
+      {/* 1. HERO SECTION WITH SCROLL-SHRINK VIDEO INTO HEADLINE */}
+      <HeroSection />
 
 
       {/* 2. DEFINE HOW YOUR ORGANIZATION IS EXPERIENCED */}
-      <section className="bg-[#EBEAE6] pt-4 pb-20 px-3 xs:px-4 sm:px-8 lg:px-12 overflow-hidden relative z-10">
+      <section className="bg-[#EBEAE6] pt-[42px] -mt-16 sm:-mt-24 lg:-mt-28 pb-20 px-3 xs:px-4 sm:px-8 lg:px-12 overflow-hidden relative z-10">
         <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
 
           <div className="text-center max-w-4xl mx-auto space-y-3 sm:space-y-4">

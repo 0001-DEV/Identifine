@@ -254,7 +254,17 @@ export default function AboutUsPage() {
                 They talked about Culture. Leadership. Consistency. Trust. They asked how every employee could reflect the same standard of excellence, how every visitor experience could reinforce their brand, and how every interaction could communicate who they truly are. That was our turning point.
               </p>
               <p className="font-normal animate-typewriter-text [animation-delay:0.95s]">
-                We realized organizations don't have an ID card problem. They have an identity challenge, because identity isn't a product. It's an experience. It's felt through people, workplaces, processes, technology, and every moment that shapes perception. The card is simply one expression of that bigger story. That realization transformed Identifine. Today, we help organizations intentionally design how their identity is represented, experienced, and managed. Our premium credentials, smart NFC technology, executive identity solutions, and branded touchpoints work together as one integrated identity ecosystem, helping organizations build clarity, consistency, trust, and distinction at every level.
+                We realized organizations don't have an ID card problem. They have an identity challenge, because identity isn't a product. It's an experience. It's felt through people, workplaces, processes, technology, and every moment that shapes perception. The card is simply one expression of that bigger story. That realization transformed Identifine. Today, we help organizations intentionally design how their identity is represented, experienced, and{' '}
+                <a
+                  href="https://identishare.identifine.com.ng/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#E2B857] text-[#111111] px-1.5 py-0.5 rounded font-medium hover:brightness-110 transition-all inline-block hover:scale-105 cursor-pointer"
+                  title="Identishare"
+                >
+                  managed
+                </a>
+                . Our premium credentials, smart NFC technology, executive identity solutions, and branded touchpoints work together as one integrated identity ecosystem, helping organizations build clarity, consistency, trust, and distinction at every level.
               </p>
               <p className="font-normal animate-typewriter-text [animation-delay:1.35s]">
                 Through our Identity Transformation Journey, Discover. Design. Deploy. Evolve., and our 5P Identity Framework spanning Purpose, People, Places, Processes, and Presence, we help organizations turn identity into a strategic advantage, because every organization tells a story. The question is whether that story is being told by design... or by default.

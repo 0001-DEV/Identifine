@@ -16,6 +16,22 @@ import optivaMainImg from '../assets/OPTIVA.webp';
 
 export const caseStudiesData = [
   {
+    id: 'optiva',
+    name: 'Optiva',
+    category: 'Capital & Investment Architecture',
+    image: optivaMainImg,
+    description: 'Bespoke corporate identity passes engineered for elite investment management leadership.',
+    stats: 'Private Wealth Ecosystem'
+  },
+  {
+    id: 'nova',
+    name: 'NOVA',
+    category: 'Banking & Financial Services',
+    image: novaMain,
+    description: 'Evolutionary physical identity touchpoints designed around a national banking transformation.',
+    stats: 'Phygital Banking Model'
+  },
+  {
     id: 'rainoil',
     name: 'Rainoil',
     category: 'Energy & Downstream Petroleum',
@@ -64,28 +80,12 @@ export const caseStudiesData = [
     stats: 'Brand Heritage Ecosystem'
   },
   {
-    id: 'nova',
-    name: 'NOVA',
-    category: 'Banking & Financial Services',
-    image: novaMain,
-    description: 'Evolutionary physical identity touchpoints designed around a national banking transformation.',
-    stats: 'Phygital Banking Model'
-  },
-  {
     id: 'uba',
     name: 'UBA',
     category: 'Pan-African Banking Group',
     image: ubaMain,
     description: 'Executive bespoke passes for international board members across 20 African subsidiaries.',
     stats: 'Continental Reach'
-  },
-  {
-    id: 'optiva',
-    name: 'Optiva',
-    category: 'Capital & Investment Architecture',
-    image: optivaMainImg,
-    description: 'Bespoke corporate identity passes engineered for elite investment management leadership.',
-    stats: 'Private Wealth Ecosystem'
   }
 ];
 

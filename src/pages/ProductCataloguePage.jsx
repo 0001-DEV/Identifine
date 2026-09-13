@@ -75,7 +75,53 @@ export const productsData = [
     id: 'membership-prestige',
     title: 'Membership prestige',
     subtitle: 'Gunmetal VIP Access',
-    overview: 'Some things never need to shout to be noticed. The Membership Prestige was created for organizations that believe confidence is quiet. Its deep gunmetal finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    overview: (
+      <div className="space-y-6 text-[#222222]">
+        <p className="font-swarsh italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
+          Belonging, Made Tangible
+        </p>
+        <p>
+          A membership card should not disappear into a wallet the moment it has served its administrative purpose.
+        </p>
+        <p>
+          It should carry the character of the organization.
+        </p>
+        <p>
+          It should reflect the value of the relationship.
+        </p>
+        <p>
+          It should remind the member that they are part of something—and make it easier for them to experience the benefits of that connection.
+        </p>
+        <p>
+          Membership Prestige is designed for organizations ready to move beyond the ordinary membership card.
+        </p>
+        <div className="space-y-1 font-medium text-[#111111]">
+          <p>Beyond eligibility.</p>
+          <p>Beyond access.</p>
+          <p>Beyond identification.</p>
+        </div>
+        <p>
+          Toward a membership experience built around recognition, belonging, privilege and participation.
+        </p>
+        <p>
+          Because the future of membership is not simply about proving that someone belongs.
+        </p>
+        <p>
+          It is about helping them experience what belonging means.
+        </p>
+        <div className="pt-2 space-y-1">
+          <p className="font-galano font-semibold text-xl sm:text-2xl text-[#111111]">
+            Membership Prestige
+          </p>
+          <p className="text-base sm:text-lg text-[#555555]">
+            The new standard of membership identity.
+          </p>
+          <p className="font-medium text-[#111111]">
+            From proof of membership to participation in membership.
+          </p>
+        </div>
+      </div>
+    ),
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
     image: renderOne
@@ -83,15 +129,15 @@ export const productsData = [
 ];
 
 export const partnerCases = [
+  { id: 'optiva', name: 'Optiva', image: optivaMainImg },
+  { id: 'nova', name: 'NOVA', image: novaMain },
   { id: 'rainoil', name: 'Rainoil', image: rainoilRender10 },
   { id: 'seplat', name: 'Seplat', image: seplat4Img },
   { id: 'adnoc', name: 'ADNOC', image: adnocPost14 },
   { id: 'google', name: 'Google', image: googleNotepad1 },
   { id: 'renaissance', name: 'Renaissance', image: renaissanceMain },
   { id: 'guinness', name: 'Guinness', image: guinnessRender6 },
-  { id: 'nova', name: 'NOVA', image: novaMain },
-  { id: 'uba', name: 'UBA', image: ubaMain },
-  { id: 'optiva', name: 'Optiva', image: optivaMainImg }
+  { id: 'uba', name: 'UBA', image: ubaMain }
 ];
 
 export default function ProductCataloguePage() {
@@ -179,9 +225,15 @@ export default function ProductCataloguePage() {
 
           {/* Narrative Content, Specs & Actions (Indented 200px from Left Margin) */}
           <div className="animate-hero-fade-3 lg:ml-[200px] space-y-8 flex-1 mt-6 lg:mt-0">
-            <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl">
-              {activeProduct.overview}
-            </p>
+            {typeof activeProduct.overview === 'string' ? (
+              <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl whitespace-pre-line">
+                {activeProduct.overview}
+              </p>
+            ) : (
+              <div className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl">
+                {activeProduct.overview}
+              </div>
+            )}
 
             {/* Specs List (Category & Features stacked in separate rows as Framer Nova) */}
             <div className="space-y-1 max-w-5xl pt-2">
