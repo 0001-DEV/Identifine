@@ -76,10 +76,10 @@ import ubaRenders3 from '../assets/case-studies/uba_renders_3.jpg';
 import ubaPvc2 from '../assets/case-studies/uba_pvc_2.png';
 
 // Optiva Assets
-import optivaPng from '../assets/OPTIVA.png';
+import optivaPng from '../assets/OPTIVA.webp';
 import optivaVideo from '../assets/Optivavideo.mp4';
-import optiva14 from '../assets/14.jpg';
-import optivaNote from '../assets/optivanote.jpg';
+import optiva14 from '../assets/14.webp';
+import optivaNote from '../assets/optivanote.webp';
 import optiva1Img from '../assets/OPTIVA1.webp';
 import optiva2Img from '../assets/OPTIVA2.webp';
 import optiva3Img from '../assets/OPTIVA3.webp';

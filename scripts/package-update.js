@@ -34,9 +34,10 @@ try {
     const isDiscoveryAsset = /^[1-4]-/.test(file);
     const isArchAsset = lower.startsWith('arch-');
     const isWebpAsset = lower.endsWith('.webp');
+    const isMedia = lower.endsWith('.mp4') || lower.endsWith('.webm');
     const isSmallIcon = (lower.endsWith('.png') || lower.endsWith('.webp')) && stat.size < 400 * 1024;
 
-    if (isCode || isIdentityAsset || isDiscoveryAsset || isArchAsset || isWebpAsset || isSmallIcon) {
+    if (isCode || isIdentityAsset || isDiscoveryAsset || isArchAsset || isWebpAsset || isMedia || isSmallIcon) {
       fs.copyFileSync(fullPath, path.join(tempDir, 'assets', file));
     }
   }
