@@ -4,6 +4,13 @@
 
 DirectoryIndex index.html index.php
 
+<IfModule mod_mime.c>
+  AddType application/javascript .js .mjs
+  AddType text/css .css
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -27,10 +34,14 @@ DirectoryIndex index.html index.php
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-# 5. WordPress REST API → route to WordPress index.php (NOT React)
+  # 5. WordPress REST API → route to WordPress index.php (NOT React)
   RewriteRule ^wp-json/ /index.php [L]
 
-  # 6. All other routes → React SPA
+  # 6. Never rewrite missing /assets/ files to index.html (prevents MIME type errors)
+  RewriteCond %{REQUEST_URI} ^/assets/ [NC]
+  RewriteRule ^ - [R=404,L]
+
+  # 7. All other routes → React SPA
   RewriteRule . /index.html [L]
 </IfModule>
 
