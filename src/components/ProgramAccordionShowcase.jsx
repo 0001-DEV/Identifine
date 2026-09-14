@@ -51,8 +51,8 @@ export default function ProgramAccordionShowcase() {
 
   return (
     <div className="grid grid-cols-2 gap-2.5 xs:gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-stretch max-w-7xl mx-auto py-3 sm:py-6">
-      {/* VERTICAL TEXT CONTAINERS — same fixed height as the image panel */}
-      <div className="col-span-1 flex flex-col gap-1.5 xs:gap-2 sm:gap-4 lg:gap-6 h-[420px] xs:h-[460px] sm:h-[510px] lg:h-[580px] w-full overflow-hidden font-galano">
+      {/* VERTICAL TEXT CONTAINERS */}
+      <div className="col-span-1 flex flex-col gap-1.5 xs:gap-2 sm:gap-4 lg:gap-6 h-[280px] xs:h-[320px] sm:h-[480px] lg:h-[560px] w-full overflow-hidden font-galano">
         {programs.map((prog) => {
           const isOpen = activeId === prog.id;
           return (
@@ -149,7 +149,7 @@ export default function ProgramAccordionShowcase() {
       </div>
 
       {/* DYNAMIC IMAGE (RIGHT COLUMN) */}
-      <div className="col-span-1 relative w-full h-[420px] xs:h-[460px] sm:h-[510px] lg:h-[580px] rounded-xl xs:rounded-2xl lg:rounded-3xl overflow-hidden border border-[#DCDAD4] shadow-md sm:shadow-2xl bg-transparent">
+      <div className="col-span-1 relative w-full h-[280px] xs:h-[320px] sm:h-[480px] lg:h-[560px] rounded-xl xs:rounded-2xl lg:rounded-3xl overflow-hidden border border-[#DCDAD4] shadow-md sm:shadow-2xl bg-transparent">
         {programs.map((prog) => {
           const isActive = activeId === prog.id;
           return (

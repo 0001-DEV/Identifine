@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
 import starIcon from '../assets/SVG@4x.png';
+import barakatImg from '../assets/Barakat.webp';
+import barakat2Img from '../assets/Barakat 2.webp';
+import dmtImg from '../assets/DMT.webp';
+import dmt2Img from '../assets/DMT 2.webp';
+import joshImg from '../assets/Josh.webp';
+import nathanielImg from '../assets/nath.webp';
 
 // High-res Filled Solid Social Media Icons
 function FilledInstagram({ className = "w-4 h-4" }) {
@@ -122,7 +128,7 @@ export default function AboutUsPage() {
       id: 'josh-i',
       name: 'Josh Itorobong',
       role: 'Creative Director',
-      image: 'https://framerusercontent.com/images/48WyQJeURdcPunobsncnaBihT9k.jpg',
+      image: joshImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
         { icon: FilledTwitter, href: 'https://x.com/' },
@@ -153,7 +159,7 @@ export default function AboutUsPage() {
       id: 'dmt',
       name: 'DMT',
       role: 'Brand Identity Designer',
-      image: 'https://framerusercontent.com/images/7lajaR92ZTGup0dTaH2WDxEb0Dk.jpg',
+      image: dmt2Img,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
         { icon: FilledTwitter, href: 'https://x.com/' },
@@ -164,7 +170,7 @@ export default function AboutUsPage() {
       id: 'barakat',
       name: 'Barakat',
       role: 'Motion Designer',
-      image: 'https://framerusercontent.com/images/l90peC6TbXGmtp1UQjahjzCyg.jpg',
+      image: barakat2Img,
       socials: [
         { icon: FilledTwitter, href: 'https://x.com/' },
         { icon: FilledFacebook, href: 'https://www.facebook.com/' }
@@ -174,7 +180,7 @@ export default function AboutUsPage() {
       id: 'nathaniel',
       name: 'Nathaniel Aremu',
       role: '3D Artist',
-      image: 'https://framerusercontent.com/images/0xC6c3pgBLh7pCoQS4AJP6eqUU.jpg',
+      image: nathanielImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
         { icon: FilledFacebook, href: 'https://www.facebook.com/' }
@@ -404,6 +410,8 @@ export default function AboutUsPage() {
                 src="https://framerusercontent.com/images/Dj4ocCol5pMn5REI6UxlIzJllk.jpg"
                 alt="Debo Atiba"
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
@@ -505,10 +513,10 @@ export default function AboutUsPage() {
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-2 overflow-hidden">
-                    <img className="inline-block h-7 w-7 rounded-full ring-2 ring-[#222222] object-cover" src="https://framerusercontent.com/images/jm0dvrhBRn67BN7gXkLvk9Ymi4.jpg" alt="" />
-                    <img className="inline-block h-7 w-7 rounded-full ring-2 ring-[#222222] object-cover" src="https://framerusercontent.com/images/rvVsRZjAKkiA0nvOxWWVXzG9L6s.jpg" alt="" />
-                    <img className="inline-block h-7 w-7 rounded-full ring-2 ring-[#222222] object-cover" src="https://framerusercontent.com/images/nSZJQpCu25uRO9lrT3cjUnyKmk.jpg" alt="" />
-                    <img className="inline-block h-7 w-7 rounded-full ring-2 ring-[#222222] object-cover" src="https://framerusercontent.com/images/OmhA69HM1VbnEMV63I5CAKdlNlk.jpg" alt="" />
+                    <img className="inline-block h-7 w-7 rounded-full ring-2 ring-[#222222] object-cover" loading="lazy" decoding="async" src="https://framerusercontent.com/images/jm0dvrhBRn67BN7gXkLvk9Ymi4.jpg" alt="" />
+                    <img className="inline-block h-7 w-7 rounded-full ring-2 ring-[#222222] object-cover" loading="lazy" decoding="async" src="https://framerusercontent.com/images/rvVsRZjAKkiA0nvOxWWVXzG9L6s.jpg" alt="" />
+                    <img className="inline-block h-7 w-7 rounded-full ring-2 ring-[#222222] object-cover" loading="lazy" decoding="async" src="https://framerusercontent.com/images/nSZJQpCu25uRO9lrT3cjUnyKmk.jpg" alt="" />
+                    <img className="inline-block h-7 w-7 rounded-full ring-2 ring-[#222222] object-cover" loading="lazy" decoding="async" src="https://framerusercontent.com/images/OmhA69HM1VbnEMV63I5CAKdlNlk.jpg" alt="" />
                   </div>
                   <span className="text-sm sm:text-base font-galano font-semibold text-white">Clients worldwide</span>
                 </div>

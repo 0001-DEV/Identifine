@@ -216,7 +216,7 @@ export default function HomePage() {
 
 
       {/* 2. DEFINE HOW YOUR ORGANIZATION IS EXPERIENCED */}
-      <section className="bg-[#EBEAE6] pt-[42px] -mt-16 sm:-mt-24 lg:-mt-28 pb-20 px-3 xs:px-4 sm:px-8 lg:px-12 overflow-hidden relative z-10">
+      <section className="bg-[#EBEAE6] pt-8 sm:pt-[42px] -mt-10 sm:-mt-20 lg:-mt-28 pb-16 sm:pb-20 px-3 xs:px-4 sm:px-8 lg:px-12 overflow-hidden relative z-10">
         <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
 
           <div className="text-center max-w-4xl mx-auto space-y-3 sm:space-y-4">
@@ -287,7 +287,7 @@ export default function HomePage() {
         </div>
 
         {/* Sticky Stacking Cards */}
-        <div className="mt-16 mx-0 lg:mx-[200px]">
+        <div className="mt-12 sm:mt-16 mx-0 lg:mx-[200px]">
           <JourneyStickyStack journeySteps={journeySteps} />
         </div>
 
@@ -343,10 +343,12 @@ export default function HomePage() {
                   {/* Inside Container - Dedicated Left Space: Featured Image */}
                   <div className="w-full sm:w-44 h-36 sm:h-32 rounded-xl overflow-hidden bg-[#1a1a1a] relative border border-[#222222] shrink-0">
                     {post.image ? (
-                      <img
+                       <img
                         src={post.image}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
+                        loading="lazy"
+                        decoding="async"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">

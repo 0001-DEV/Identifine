@@ -56,9 +56,9 @@ import guinnessRender7 from '../assets/RENDER 7.jpg';
 import guinnessRender3 from '../assets/RENDER 3.png';
 
 // NOVA Assets
-import novaMain from '../assets/Nova.jpg';
+import novaMain from '../assets/Nova.webp';
 import novaVideo from '../assets/Novavideo.mp4';
-import novaCard2 from '../assets/Card 2.jpg';
+import novaCard2 from '../assets/Card 2.webp';
 import novaCard5 from '../assets/Card 5.jpg';
 import novaCard8 from '../assets/Card 8.jpg';
 import novaNotepad103 from '../assets/Notepad 1 03.jpg';

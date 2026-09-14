@@ -10,7 +10,8 @@ import adnocPost14 from '../assets/POST 14.jpg';
 import googleNotepad1 from '../assets/NOTEPAD 1.jpg';
 import renaissanceMain from '../assets/case-studies/renaissance_main.png';
 import guinnessRender6 from '../assets/RENDER 6.png';
-import novaMain from '../assets/Nova.jpg';
+import novaMain from '../assets/Nova.webp';
+import novaCard2 from '../assets/Card 2.webp';
 import ubaMain from '../assets/case-studies/uba_main.jpg';
 import optivaMainImg from '../assets/OPTIVA.webp';
 
@@ -27,7 +28,7 @@ export const caseStudiesData = [
     id: 'nova',
     name: 'NOVA',
     category: 'Banking & Financial Services',
-    image: novaMain,
+    image: novaCard2,
     description: 'Evolutionary physical identity touchpoints designed around a national banking transformation.',
     stats: 'Phygital Banking Model'
   },

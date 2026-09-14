@@ -81,7 +81,7 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
   return (
     <section
       ref={containerRef}
-      className="relative z-10 bg-black text-white w-full h-[100dvh] min-h-[500px] max-h-[1080px] flex flex-col justify-center py-4 sm:py-6 lg:py-8 overflow-hidden border-t border-white/10 select-none gap-3 sm:gap-6 lg:gap-8"
+      className="relative z-10 bg-black text-white w-full h-[100dvh] min-h-[480px] max-h-[1080px] flex flex-col justify-center py-3 sm:py-6 lg:py-8 overflow-hidden border-t border-white/10 select-none gap-2 sm:gap-5 lg:gap-8"
     >
       <div className="max-w-7xl mx-auto space-y-3 sm:space-y-4 px-4 sm:px-8 lg:px-12 w-full shrink-0">
 
@@ -96,7 +96,7 @@ export default function CataloguePinnedHorizontalDeck({ catalogueCards, onSelect
             </span>
           </div>
 
-          <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-[2.75rem] xl:text-[3.25rem] font-galano font-medium leading-tight text-[#E2B857] max-w-4xl mx-auto">
+          <h2 className="text-lg xs:text-xl sm:text-3xl md:text-4xl lg:text-[2.75rem] xl:text-[3.25rem] font-galano font-medium leading-tight text-[#E2B857] max-w-4xl mx-auto">
             Create an <em className="font-swarsh italic font-normal text-[#E2B857]">identity</em> so irresistible it becomes a <em className="font-swarsh italic font-normal text-[#E2B857]">culture</em>.
           </h2>
 

@@ -461,6 +461,9 @@ export default function BlogPage() {
                   src={featuredPost.image}
                   alt={featuredPost.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
                 />
               </div>
 
@@ -505,6 +508,8 @@ export default function BlogPage() {
                       src={article.image}
                       alt={article.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out select-none"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
 

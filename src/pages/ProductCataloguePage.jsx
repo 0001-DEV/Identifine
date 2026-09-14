@@ -21,7 +21,7 @@ import adnocPost14 from '../assets/POST 14.jpg';
 import googleNotepad1 from '../assets/NOTEPAD 1.jpg';
 import renaissanceMain from '../assets/case-studies/renaissance_main.png';
 import guinnessRender6 from '../assets/RENDER 6.png';
-import novaMain from '../assets/Nova.jpg';
+import novaMain from '../assets/Nova.webp';
 import ubaMain from '../assets/case-studies/uba_main.jpg';
 import optivaMainImg from '../assets/OPTIVA.webp';
 
@@ -76,8 +76,8 @@ export const productsData = [
     title: 'Membership prestige',
     subtitle: 'Gunmetal VIP Access',
     overview: (
-      <div className="space-y-6 text-[#222222]">
-        <p className="font-swarsh italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
+      <div className="space-y-6 font-galano font-normal text-lg sm:text-2xl text-[#222222] leading-relaxed">
+        <p className="font-galano font-bold italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
           Belonging, Made Tangible
         </p>
         <p>
@@ -95,7 +95,7 @@ export const productsData = [
         <p>
           Membership Prestige is designed for organizations ready to move beyond the ordinary membership card.
         </p>
-        <div className="space-y-1 font-medium text-[#111111]">
+        <div className="space-y-1">
           <p>Beyond eligibility.</p>
           <p>Beyond access.</p>
           <p>Beyond identification.</p>
@@ -110,13 +110,13 @@ export const productsData = [
           It is about helping them experience what belonging means.
         </p>
         <div className="pt-2 space-y-1">
-          <p className="font-galano font-semibold text-xl sm:text-2xl text-[#111111]">
+          <p>
             Membership Prestige
           </p>
-          <p className="text-base sm:text-lg text-[#555555]">
+          <p>
             The new standard of membership identity.
           </p>
-          <p className="font-medium text-[#111111]">
+          <p>
             From proof of membership to participation in membership.
           </p>
         </div>
@@ -185,6 +185,9 @@ export default function ProductCataloguePage() {
           src={activeProduct.image}
           alt={activeProduct.title}
           className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-1000 ease-out select-none"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
         />
 
         {/* Bottom Gradient Overlay for High Contrast Text */}
@@ -278,6 +281,8 @@ export default function ProductCataloguePage() {
                       src={partner.image}
                       alt={partner.name}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 select-none rounded-none"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
 

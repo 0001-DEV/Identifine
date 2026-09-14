@@ -13,10 +13,14 @@ export default function HeroSection() {
   const videoRef      = useRef(null);
 
   const [slotSize, setSlotSize] = useState({ width: 110, height: 52 });
+  const [slotProgress, setSlotProgress] = useState(0);
+  const [shortScreen, setShortScreen] = useState(false);
 
   useEffect(() => {
     const upd = () => {
       const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      setShortScreen(vh < 600);
       if (vw < 480)       setSlotSize({ width: 50,  height: 26 });
       else if (vw < 640)  setSlotSize({ width: 64,  height: 33 });
       else if (vw < 1024) setSlotSize({ width: 88,  height: 44 });
@@ -93,6 +97,9 @@ export default function HeroSection() {
       const s = r.height - window.innerHeight;
       if (s <= 0) return;
       targetP = Math.max(0, Math.min(1, -r.top / s));
+      // Slot opens from 0→1 as scroll progress goes from 0.35→0.82
+      const sp = Math.max(0, Math.min(1, (targetP - 0.35) / (0.82 - 0.35)));
+      setSlotProgress(sp);
       kick();
     };
 
@@ -135,14 +142,14 @@ export default function HeroSection() {
       <div
         ref={stickyRef}
         className="sticky top-0 left-0 w-full z-30"
-        style={{ minHeight: '100svh' }}
+        style={{ minHeight: '100dvh' }}
       >
         <div
           ref={flowWrapRef}
           className="flex flex-col items-center w-full h-full"
           style={{
-            paddingTop:    'clamp(92px, 11vh, 112px)',
-            paddingBottom: 'clamp(8px, 1vh, 14px)',
+            paddingTop:    shortScreen ? 'clamp(70px, 8vh, 88px)' : 'clamp(92px, 11vh, 112px)',
+            paddingBottom: shortScreen ? '4px' : 'clamp(8px, 1vh, 14px)',
             paddingLeft:   'clamp(20px, 4vw, 60px)',
             paddingRight:  'clamp(20px, 4vw, 60px)',
             willChange:    'transform',
@@ -152,7 +159,7 @@ export default function HeroSection() {
           <div
             ref={heroAnchorRef}
             aria-hidden="true"
-            className="w-full shrink-0 pointer-events-none select-none h-[320px] sm:h-[480px] lg:h-[762px]"
+            className={`w-full shrink-0 pointer-events-none select-none ${shortScreen ? 'h-[200px] sm:h-[300px] lg:h-[560px]' : 'h-[320px] sm:h-[480px] lg:h-[762px]'}`}
             style={{
               opacity:   0,
               maxWidth:  '78%',
@@ -163,7 +170,7 @@ export default function HeroSection() {
           {/* Text: LEFT headline | RIGHT subheading */}
           <div
             ref={contentRef}
-            className="w-full flex flex-col lg:flex-row lg:items-start lg:justify-between lg:gap-10 z-10 mt-10 sm:mt-14 lg:mt-16 gap-3 sm:gap-4 shrink-0"
+            className="w-full flex flex-col lg:flex-row lg:items-end lg:justify-between lg:gap-10 z-10 mt-10 sm:mt-14 lg:mt-16 gap-3 sm:gap-4 shrink-0"
             style={{ willChange: 'transform' }}
           >
             {/* LEFT */}
@@ -175,9 +182,13 @@ export default function HeroSection() {
                   aria-hidden="true"
                   className="inline-block align-middle mx-1.5 sm:mx-2 shrink-0"
                   style={{
-                    width: `${slotSize.width}px`, height: `${slotSize.height}px`,
-                    verticalAlign: 'middle', background: 'transparent',
+                    width:  `${slotSize.width  * slotProgress}px`,
+                    height: `${slotSize.height}px`,
+                    verticalAlign: 'middle',
+                    background: 'transparent',
                     borderRadius: `${slotSize.height / 2}px`,
+                    overflow: 'hidden',
+                    transition: 'width 0.05s linear',
                   }}
                 />
                 <span>organization</span>
@@ -189,9 +200,9 @@ export default function HeroSection() {
               , only few intentionally designed it
             </h1>
 
-            {/* RIGHT — subheading, right-aligned */}
-            <div className="flex flex-col items-center lg:items-end lg:pt-1 lg:w-[42%] lg:ml-auto lg:pl-8 translate-y-[12px]">
-              <p className="text-sm sm:text-base lg:text-[1.18rem] xl:text-[1.22rem] text-[#555555] leading-relaxed font-medium text-center lg:text-right">
+            {/* RIGHT — subheading aligned to bottom of h1 */}
+            <div className="flex flex-col items-center lg:items-end lg:w-[42%] lg:ml-auto lg:pl-20 pb-[0.18em]">
+              <p className="text-sm sm:text-base lg:text-[1.18rem] xl:text-[1.22rem] text-[#555555] leading-relaxed font-medium text-left">
                 We help organizations transform identity from an administrative necessity into a
                 strategic organizational capability.
               </p>

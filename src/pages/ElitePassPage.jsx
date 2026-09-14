@@ -104,6 +104,8 @@ export default function ElitePassPage() {
           src={pass.image}
           alt={pass.fullTitle}
           className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:scale-110 transition-transform duration-700 ease-out"
+          loading="lazy"
+          decoding="async"
           onError={(e) => {
             const img = e.currentTarget;
             const src = img.src;

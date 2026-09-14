@@ -299,6 +299,9 @@ export default function BlogDetailPage() {
               src={article.image}
               alt={article.title}
               className="w-full h-auto max-h-[700px] sm:max-h-[850px] object-cover rounded-none select-none"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
             />
           </div>
         )}
@@ -363,6 +366,8 @@ export default function BlogDetailPage() {
                     src={story.image || starIcon}
                     alt={story.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="flex items-center gap-2 text-xs font-galano text-[#666666]">
