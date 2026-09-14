@@ -41,8 +41,12 @@ try {
     }
   }
 
-  // Create zip using built-in tar
+  // Create zip using built-in tar (root with assets/, index.html, etc.)
   execSync(`tar.exe -a -c -f "${zipFile}" -C "${tempDir}" .`);
+
+  // Create assets-only zip for users uploading solely into their assets directory
+  const assetsZipFile = path.join(rootDir, 'cpanel_assets_only.zip');
+  execSync(`tar.exe -a -c -f "${assetsZipFile}" -C "${path.join(tempDir, 'assets')}" .`);
 
   // Sync unzipped folder cpanel_upload_files for direct non-zipped upload
   const unzippedDir = path.join(rootDir, 'cpanel_upload_files');
@@ -52,9 +56,11 @@ try {
   fs.rmSync(tempDir, { recursive: true, force: true });
 
   const stats = fs.statSync(zipFile);
+  const assetStats = fs.statSync(assetsZipFile);
   console.log(`\n✓ Successfully created: cpanel_update_only.zip (${(stats.size / 1024).toFixed(1)} KB)`);
+  console.log(`✓ Successfully created: cpanel_assets_only.zip (${(assetStats.size / 1024).toFixed(1)} KB)`);
   console.log(`✓ Successfully updated unzipped directory: d:/Identifine/cpanel_upload_files`);
-  console.log(`Ready to upload to public_html in cPanel!\n`);
+  console.log(`Ready to upload to public_html or assets/ in cPanel!\n`);
 } catch (err) {
   console.error('Error packaging update:', err);
   process.exit(1);

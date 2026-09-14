@@ -11,6 +11,8 @@ import rainoilRender9 from '../assets/RAINOIL_RENDER_POST_PROCESS_9.jpg';
 import rainoilRender11 from '../assets/RAINOIL_RENDER_POST_PROCESS_11.jpg';
 
 // Seplat Assets
+import seplatBImg from '../assets/seplatb.webp';
+import seplatAImg from '../assets/seplata.webp';
 import seplatImg from '../assets/seplat.webp';
 import seplat2Img from '../assets/seplat 2.webp';
 import seplat3Img from '../assets/seplat 3.webp';
@@ -554,6 +556,8 @@ const caseStudyDetails = {
       </div>
     ),
     images: [
+      seplatBImg,
+      seplatAImg,
       seplatImg,
       seplat3Img,
       seplat2Img,

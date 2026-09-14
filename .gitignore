@@ -38,4 +38,6 @@ scratch/
 .temp_patch/
 cpanel_upload_files/
 
-
+# Raw heavy uncompressed assets
+src/assets/seplata.png
+src/assets/seplatb.jpeg
