@@ -3,13 +3,13 @@ import { NavLink } from 'react-router-dom';
 import CardShowcaseModal from '../components/CardShowcaseModal';
 
 // User's exact render assets from src/assets
-import blackMatteImg from '../assets/ELITE_PASS_BLACK_MATTE.png';
-import goldImg from '../assets/ELITE_PASS_GOLD.png';
-import render1Img from '../assets/RENDER 1.png';
-import blackMatte2Img from '../assets/ELITE_PASS_BLACK_MATTE_2.png';
-import silverImg from '../assets/ELITE_PASS_SILVER.png';
-import gunMetalImg from '../assets/Black matte render 2.png';
-import elitePassJpg from '../assets/Elitepass.jpg';
+import blackMatteImg from '../assets/ELITE_PASS_BLACK_MATTE.webp';
+import goldImg from '../assets/ELITE_PASS_GOLD.webp';
+import render1Img from '../assets/RENDER 1.webp';
+import blackMatte2Img from '../assets/ELITE_PASS_BLACK_MATTE_2.webp';
+import silverImg from '../assets/ELITE_PASS_SILVER.webp';
+import gunMetalImg from '../assets/Black matte render 2.webp';
+import elitePassJpg from '../assets/Elitepass.webp';
 
 export default function ElitePassPage() {
   const [selectedPass, setSelectedPass] = useState(null);

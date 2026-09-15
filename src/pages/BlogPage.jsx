@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import starIcon from '../assets/SVG@4x.png';
+import starIcon from '../assets/SVG@4x.webp';
 import { fetchWpPosts } from '../api/wordpress';
 
 // Local Blog Images from Framer Site
-import blog1Img from '../assets/blog/blog_1.jpg';
-import blog2Img from '../assets/blog/blog_2.jpg';
-import blog3Img from '../assets/blog/blog_3.jpg';
-import blog4Img from '../assets/blog/blog_4.jpg';
-import blog5Img from '../assets/blog/blog_5.jpg';
+import blog1Img from '../assets/blog/blog_1.webp';
+import blog2Img from '../assets/blog/blog_2.webp';
+import blog3Img from '../assets/blog/blog_3.webp';
+import blog4Img from '../assets/blog/blog_4.webp';
+import blog5Img from '../assets/blog/blog_5.webp';
 
 export const blogPostsData = [
   {

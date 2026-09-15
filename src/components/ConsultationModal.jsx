@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Sparkles, Send, CheckCircle2, ArrowRight } from 'lucide-react';
-import starIcon from '../assets/SVG@4x.png';
+import starIcon from '../assets/SVG@4x.webp';
 
 export default function ConsultationModal({ isOpen, onClose }) {
   const [step, setStep] = useState(1);

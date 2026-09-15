@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import starIcon from '../assets/SVG@4x.png';
+import starIcon from '../assets/SVG@4x.webp';
 import CardShowcaseModal from '../components/CardShowcaseModal';
 
 // Case Study Image Assets
-import rainoilRender10 from '../assets/RAINOIL_RENDER_POST_PROCESS_10.jpg';
+import rainoilRender10 from '../assets/RAINOIL_RENDER_POST_PROCESS_10.webp';
 import seplat4Img from '../assets/seplat 4.webp';
-import adnocPost14 from '../assets/POST 14.jpg';
-import googleNotepad1 from '../assets/NOTEPAD 1.jpg';
-import renaissanceMain from '../assets/case-studies/renaissance_main.png';
-import guinnessRender6 from '../assets/RENDER 6.png';
+import adnocPost14 from '../assets/POST 14.webp';
+import googleNotepad1 from '../assets/NOTEPAD 1.webp';
+import renaissanceMain from '../assets/case-studies/renaissance_main.webp';
+import guinnessRender6 from '../assets/RENDER 6.webp';
 import novaMain from '../assets/Nova.webp';
 import novaCard2 from '../assets/Card 2.webp';
-import ubaMain from '../assets/case-studies/uba_main.jpg';
+import ubaMain from '../assets/case-studies/uba_main.webp';
 import optivaMainImg from '../assets/OPTIVA.webp';
 
 export const caseStudiesData = [

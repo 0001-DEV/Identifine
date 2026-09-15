@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { CheckCircle2, RotateCcw, ArrowRight, ArrowLeft } from 'lucide-react';
 
 // Import Asset Images for Quiz Right Column Showcase (que4, que8, que1, que7, que5, work desktop 1 webp, que2, que6)
-import que4Img from '../assets/QUE4.png';
-import que8Img from '../assets/QUE8.png';
-import que1Img from '../assets/QUE1.png';
-import que7Img from '../assets/QUE7.png';
-import que5Img from '../assets/QUE5.png';
-import workDesktop1Img from '../assets/work-desktop-1.webp.png';
-import que2Img from '../assets/QUE2.png';
-import que6Img from '../assets/QUE6.png';
+import que4Img from '../assets/QUE4.webp';
+import que8Img from '../assets/QUE8.webp';
+import que1Img from '../assets/QUE1.webp';
+import que7Img from '../assets/QUE7.webp';
+import que5Img from '../assets/QUE5.webp';
+import workDesktop1Img from '../assets/work-desktop-1.webp.webp';
+import que2Img from '../assets/QUE2.webp';
+import que6Img from '../assets/QUE6.webp';
 
 export default function IdentityQuiz() {
   const [currentStep, setCurrentStep] = useState(0);

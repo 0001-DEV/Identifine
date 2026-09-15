@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import starIcon from '../assets/SVG@4x.png';
+import starIcon from '../assets/SVG@4x.webp';
 
 export default function TermsPage() {
   return (

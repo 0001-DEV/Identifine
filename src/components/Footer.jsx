@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Linkedin, Twitter, Instagram, ArrowUpRight } from 'lucide-react';
-import identifineLogo from '../assets/identifine_logo.png';
+import identifineLogo from '../assets/identifine_logo.webp';
 
 function IdentifineWhiteTextLogo({ className = "h-[100px] w-auto" }) {
   const [dataUrl, setDataUrl] = useState(null);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import identifineLogo from '../assets/identifine_logo.png';
+import identifineLogo from '../assets/identifine_logo.webp';
 import ConsultationModal from './ConsultationModal';
 
 export default function Navbar() {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import identityDiscoveryImg from '../assets/identity-discovery.jpg';
-import identityArchitectureImg from '../assets/identity-architecture.jpg';
+import identityDiscoveryImg from '../assets/identity-discovery.webp';
+import identityArchitectureImg from '../assets/identity-architecture.webp';
 import identityExperienceImg from '../assets/identity Exp.webp';
-import identikareImg from '../assets/identikare.jpeg';
+import identikareImg from '../assets/identikare.webp';
 
 export default function ProgramAccordionShowcase() {
   const location = useLocation();

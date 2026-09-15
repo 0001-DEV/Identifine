@@ -6,7 +6,7 @@ import CompanyLogosMarquee from '../components/CompanyLogosMarquee';
 import IdentityQuiz from '../components/IdentityQuiz';
 import CardShowcaseModal from '../components/CardShowcaseModal';
 import ConsultationModal from '../components/ConsultationModal';
-import starIcon from '../assets/SVG@4x.png';
+import starIcon from '../assets/SVG@4x.webp';
 import JourneyStickyStack from '../components/JourneyStickyStack';
 import ProgramAccordionShowcase from '../components/ProgramAccordionShowcase';
 import CataloguePinnedHorizontalDeck from '../components/CataloguePinnedHorizontalDeck';
@@ -24,7 +24,7 @@ import discoverImg from '../assets/Discover.webp';
 import designImg from '../assets/design.webp';
 import deployImg from '../assets/Deploy.webp';
 import evolveImg from '../assets/Evolve.webp';
-import blog3Img from '../assets/blog/blog_3.jpg';
+import blog3Img from '../assets/blog/blog_3.webp';
 
 export default function HomePage() {
   const navigate = useNavigate();

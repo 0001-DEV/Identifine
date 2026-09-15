@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // Import User's 15 Actual Client Logo Image Assets
-import eunisellLogo from '../assets/eunisell_logo.png';
-import firstAllyLogo from '../assets/First-Ally-Group-Logos-02.png';
-import falconLogo from '../assets/iogc-removebg-preview (1).png';
-import guinnessLogo from '../assets/guiness nig.png';
-import ikejaLogo from '../assets/ikeja-electricity-prepaid-nigeria-bill.png';
-import inveraLogo from '../assets/Invera_Horizontal_FullColor_light_RGB_nopadding.png';
+import eunisellLogo from '../assets/eunisell_logo.webp';
+import firstAllyLogo from '../assets/First-Ally-Group-Logos-02.webp';
+import falconLogo from '../assets/iogc-removebg-preview (1).webp';
+import guinnessLogo from '../assets/guiness nig.webp';
+import ikejaLogo from '../assets/ikeja-electricity-prepaid-nigeria-bill.webp';
+import inveraLogo from '../assets/Invera_Horizontal_FullColor_light_RGB_nopadding.webp';
 import lotusLogo from '../assets/lotus.webp';
-import mateeLogo from '../assets/matee-removebg-preview.png';
-import necaLogo from '../assets/neca (1).png';
-import rainoilLogo from '../assets/rainoil (1).png';
-import renaissanceLogo from '../assets/renaissance-africa-aew (1).png';
-import revPlusLogo from '../assets/revolution_plus__1_-removebg-preview.png';
-import seplatLogo from '../assets/seplat (1) (2).png';
-import tvcLogo from '../assets/tvc.png';
-import tolaramLogo from '../assets/Tolaram_Group_logo (1).png';
-import animatedCounterImg from '../assets/AnimatedCounter.png';
+import mateeLogo from '../assets/matee-removebg-preview.webp';
+import necaLogo from '../assets/neca (1).webp';
+import rainoilLogo from '../assets/rainoil (1).webp';
+import renaissanceLogo from '../assets/renaissance-africa-aew (1).webp';
+import revPlusLogo from '../assets/revolution_plus__1_-removebg-preview.webp';
+import seplatLogo from '../assets/seplat (1) (2).webp';
+import tvcLogo from '../assets/tvc.webp';
+import tolaramLogo from '../assets/Tolaram_Group_logo (1).webp';
+import animatedCounterImg from '../assets/AnimatedCounter.webp';
 
 function AnimatedNumber() {
   const [count, setCount] = useState(0);

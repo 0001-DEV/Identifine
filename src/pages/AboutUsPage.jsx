@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
-import starIcon from '../assets/SVG@4x.png';
+import starIcon from '../assets/SVG@4x.webp';
 import barakatImg from '../assets/Barakat.webp';
 import barakat2Img from '../assets/Barakat 2.webp';
 import dmtImg from '../assets/DMT.webp';

@@ -3,12 +3,12 @@ import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 
 // Rainoil Assets
-import rainoilRender10 from '../assets/RAINOIL_RENDER_POST_PROCESS_10.jpg';
-import rainoilRender7 from '../assets/RAINOIL_RENDER_POST_PROCESS_7.jpg';
-import rainoilCompiled1 from '../assets/RAINOIL_COMPILED_RENDER_1.jpg';
-import rainoilRender8 from '../assets/RAINOIL_RENDER_POST_PROCESS_8.jpg';
-import rainoilRender9 from '../assets/RAINOIL_RENDER_POST_PROCESS_9.jpg';
-import rainoilRender11 from '../assets/RAINOIL_RENDER_POST_PROCESS_11.jpg';
+import rainoilRender10 from '../assets/RAINOIL_RENDER_POST_PROCESS_10.webp';
+import rainoilRender7 from '../assets/RAINOIL_RENDER_POST_PROCESS_7.webp';
+import rainoilCompiled1 from '../assets/RAINOIL_COMPILED_RENDER_1.webp';
+import rainoilRender8 from '../assets/RAINOIL_RENDER_POST_PROCESS_8.webp';
+import rainoilRender9 from '../assets/RAINOIL_RENDER_POST_PROCESS_9.webp';
+import rainoilRender11 from '../assets/RAINOIL_RENDER_POST_PROCESS_11.webp';
 
 // Seplat Assets
 import seplatBImg from '../assets/seplatb.webp';
@@ -16,64 +16,64 @@ import seplatAImg from '../assets/seplata.webp';
 import seplatImg from '../assets/seplat.webp';
 import seplat2Img from '../assets/seplat 2.webp';
 import seplat3Img from '../assets/seplat 3.webp';
-import seplatRender1 from '../assets/RENDER 1.jpg';
-import seplatRender8 from '../assets/RENDER 8.jpg';
-import seplatRender11 from '../assets/RENDER 11.jpg';
+import seplatRender1 from '../assets/RENDER 1.webp';
+import seplatRender8 from '../assets/RENDER 8.webp';
+import seplatRender11 from '../assets/RENDER 11.webp';
 
 // ADNOC Assets
-import adnocPost14 from '../assets/POST 14.jpg';
-import adnocPost2 from '../assets/POST 2.jpg';
-import adnocPost5 from '../assets/POST 5.jpg';
-import adnocPost8 from '../assets/POST 8.jpg';
-import adnocPost9 from '../assets/POST 9.jpg';
-import adnocRender10 from '../assets/RENDER 10.jpg';
-import adnocRender14 from '../assets/RENDER 14.jpg';
-import adnocRender11 from '../assets/RENDER 11.jpg';
+import adnocPost14 from '../assets/POST 14.webp';
+import adnocPost2 from '../assets/POST 2.webp';
+import adnocPost5 from '../assets/POST 5.webp';
+import adnocPost8 from '../assets/POST 8.webp';
+import adnocPost9 from '../assets/POST 9.webp';
+import adnocRender10 from '../assets/RENDER 10.webp';
+import adnocRender14 from '../assets/RENDER 14.webp';
+import adnocRender11 from '../assets/RENDER 11.webp';
 
 // Google Assets
-import googleNotepad1 from '../assets/NOTEPAD 1.jpg';
-import googleWithScanCode from '../assets/GOOGLE WITH SCAN CODE.jpg';
-import googleNotepad2 from '../assets/NOTEPAD 2.jpg';
-import googlePostProcess8 from '../assets/POST PROCESS 8.jpg';
-import googlePostProcess5 from '../assets/POST PROCESS 5.jpg';
-import googleNotepad6 from '../assets/NOTEPAD 6.jpg';
-import googleNotepad3 from '../assets/NOTEPAD 3.jpg';
+import googleNotepad1 from '../assets/NOTEPAD 1.webp';
+import googleWithScanCode from '../assets/GOOGLE WITH SCAN CODE.webp';
+import googleNotepad2 from '../assets/NOTEPAD 2.webp';
+import googlePostProcess8 from '../assets/POST PROCESS 8.webp';
+import googlePostProcess5 from '../assets/POST PROCESS 5.webp';
+import googleNotepad6 from '../assets/NOTEPAD 6.webp';
+import googleNotepad3 from '../assets/NOTEPAD 3.webp';
 
 // Renaissance Assets
-import renaissanceMain from '../assets/case-studies/renaissance_main.png';
-import renRender11 from '../assets/case-studies/renaissance_render_11.jpg';
-import renColorEdit from '../assets/case-studies/renaissance_color_edit.jpg';
-import renRender34 from '../assets/case-studies/renaissance_render_34.jpg';
-import renRender33 from '../assets/case-studies/renaissance_render_33.jpg';
-import renRender9 from '../assets/case-studies/renaissance_render_9.jpg';
-import renRender12 from '../assets/case-studies/renaissance_render_12.jpg';
+import renaissanceMain from '../assets/case-studies/renaissance_main.webp';
+import renRender11 from '../assets/case-studies/renaissance_render_11.webp';
+import renColorEdit from '../assets/case-studies/renaissance_color_edit.webp';
+import renRender34 from '../assets/case-studies/renaissance_render_34.webp';
+import renRender33 from '../assets/case-studies/renaissance_render_33.webp';
+import renRender9 from '../assets/case-studies/renaissance_render_9.webp';
+import renRender12 from '../assets/case-studies/renaissance_render_12.webp';
 
 // Guinness Assets
-import guinnessRender6 from '../assets/RENDER 6.png';
-import guinnessRender8Copy from '../assets/RENDER 8 copy.jpg';
-import guinnessRender5 from '../assets/RENDER 5.jpg';
-import guinnessRender14Png from '../assets/RENDER 14.png';
-import guinnessRender19 from '../assets/RENDER 19.jpg';
-import guinnessRender7 from '../assets/RENDER 7.jpg';
-import guinnessRender3 from '../assets/RENDER 3.png';
+import guinnessRender6 from '../assets/RENDER 6.webp';
+import guinnessRender8Copy from '../assets/RENDER 8 copy.webp';
+import guinnessRender5 from '../assets/RENDER 5.webp';
+import guinnessRender14Png from '../assets/RENDER 14.webp';
+import guinnessRender19 from '../assets/RENDER 19.webp';
+import guinnessRender7 from '../assets/RENDER 7.webp';
+import guinnessRender3 from '../assets/RENDER 3.webp';
 
 // NOVA Assets
 import novaMain from '../assets/Nova.webp';
 import novaVideo from '../assets/Novavideo.mp4';
 import novaCard2 from '../assets/Card 2.webp';
-import novaCard5 from '../assets/Card 5.jpg';
-import novaCard8 from '../assets/Card 8.jpg';
-import novaNotepad103 from '../assets/Notepad 1 03.jpg';
-import novaA from '../assets/Nova a.jpg';
+import novaCard5 from '../assets/Card 5.webp';
+import novaCard8 from '../assets/Card 8.webp';
+import novaNotepad103 from '../assets/Notepad 1 03.webp';
+import novaA from '../assets/Nova a.webp';
 
 // UBA Assets
-import ubaMain from '../assets/case-studies/uba_main.jpg';
-import uba1Alt from '../assets/case-studies/uba_1_alt.jpg';
-import uba1 from '../assets/case-studies/uba_1.jpg';
-import ubaStacked from '../assets/case-studies/uba_stacked.jpg';
-import ubaRenders2 from '../assets/case-studies/uba_renders_2.png';
-import ubaRenders3 from '../assets/case-studies/uba_renders_3.jpg';
-import ubaPvc2 from '../assets/case-studies/uba_pvc_2.png';
+import ubaMain from '../assets/case-studies/uba_main.webp';
+import uba1Alt from '../assets/case-studies/uba_1_alt.webp';
+import uba1 from '../assets/case-studies/uba_1.webp';
+import ubaStacked from '../assets/case-studies/uba_stacked.webp';
+import ubaRenders2 from '../assets/case-studies/uba_renders_2.webp';
+import ubaRenders3 from '../assets/case-studies/uba_renders_3.webp';
+import ubaPvc2 from '../assets/case-studies/uba_pvc_2.webp';
 
 // Optiva Assets
 import optivaPng from '../assets/OPTIVA.webp';

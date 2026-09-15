@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, NavLink } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import starIcon from '../assets/SVG@4x.png';
+import starIcon from '../assets/SVG@4x.webp';
 
 // Product Assets
 import productHeroImg from '../assets/case-studies/product_catalogue_hero.webp';
@@ -15,14 +15,14 @@ import blackMatteRender from '../assets/Black matte render 2.webp';
 import elitePassBlackMatte2 from '../assets/ELITE_PASS_BLACK_MATTE_2.webp';
 
 // Partner Case Studies Images
-import rainoilRender10 from '../assets/RAINOIL_RENDER_POST_PROCESS_10.jpg';
+import rainoilRender10 from '../assets/RAINOIL_RENDER_POST_PROCESS_10.webp';
 import seplat4Img from '../assets/seplat 4.webp';
-import adnocPost14 from '../assets/POST 14.jpg';
-import googleNotepad1 from '../assets/NOTEPAD 1.jpg';
-import renaissanceMain from '../assets/case-studies/renaissance_main.png';
-import guinnessRender6 from '../assets/RENDER 6.png';
+import adnocPost14 from '../assets/POST 14.webp';
+import googleNotepad1 from '../assets/NOTEPAD 1.webp';
+import renaissanceMain from '../assets/case-studies/renaissance_main.webp';
+import guinnessRender6 from '../assets/RENDER 6.webp';
 import novaMain from '../assets/Nova.webp';
-import ubaMain from '../assets/case-studies/uba_main.jpg';
+import ubaMain from '../assets/case-studies/uba_main.webp';
 import optivaMainImg from '../assets/OPTIVA.webp';
 
 export const productsData = [
