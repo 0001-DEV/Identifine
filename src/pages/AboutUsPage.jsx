@@ -7,6 +7,8 @@ import dmtImg from '../assets/DMT.webp';
 import dmt2Img from '../assets/DMT 2.webp';
 import joshImg from '../assets/Josh.webp';
 import nathanielImg from '../assets/nath.webp';
+import zinoImg from '../assets/Zino.webp';
+import josh2Img from '../assets/josh 2.webp';
 
 // High-res Filled Solid Social Media Icons
 function FilledInstagram({ className = "w-4 h-4" }) {
@@ -139,7 +141,7 @@ export default function AboutUsPage() {
       id: 'josh-o',
       name: 'Josh Oladele',
       role: 'Brand Identity Strategist',
-      image: 'https://framerusercontent.com/images/GpLKgye5A02eHS42pPFoeFUcxI.jpg',
+      image: josh2Img,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
         { icon: FilledFacebook, href: 'https://www.facebook.com/' }
@@ -149,7 +151,7 @@ export default function AboutUsPage() {
       id: 'zino',
       name: 'Zino Amayido',
       role: 'Brand Identity Designer',
-      image: 'https://framerusercontent.com/images/qJFzuq7AyZaTeFF1fJXIeGhCDD8.jpg',
+      image: zinoImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
         { icon: FilledTwitter, href: 'https://x.com/' }
@@ -157,7 +159,7 @@ export default function AboutUsPage() {
     },
     {
       id: 'dmt',
-      name: 'DMT',
+      name: 'Ogunniran Damilola',
       role: 'Brand Identity Designer',
       image: dmt2Img,
       socials: [
@@ -168,7 +170,7 @@ export default function AboutUsPage() {
     },
     {
       id: 'barakat',
-      name: 'Barakat',
+      name: 'Olorunlogbon Barakat',
       role: 'Motion Designer',
       image: barakat2Img,
       socials: [

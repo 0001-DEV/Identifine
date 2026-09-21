@@ -15,7 +15,7 @@ import blackMatteRender from '../assets/Black matte render 2.webp';
 import elitePassBlackMatte2 from '../assets/ELITE_PASS_BLACK_MATTE_2.webp';
 
 // Partner Case Studies Images
-import rainoilRender10 from '../assets/RAINOIL_RENDER_POST_PROCESS_10.webp';
+import palton1Img from '../assets/palton1.webp';
 import seplat4Img from '../assets/seplat 4.webp';
 import adnocPost14 from '../assets/POST 14.webp';
 import googleNotepad1 from '../assets/NOTEPAD 1.webp';
@@ -131,7 +131,7 @@ export const productsData = [
 export const partnerCases = [
   { id: 'optiva', name: 'Optiva', image: optivaMainImg },
   { id: 'nova', name: 'NOVA', image: novaMain },
-  { id: 'rainoil', name: 'Rainoil', image: rainoilRender10 },
+  { id: 'palton-morgan', name: 'Palton Morgan', image: palton1Img },
   { id: 'seplat', name: 'Seplat', image: seplat4Img },
   { id: 'adnoc', name: 'ADNOC', image: adnocPost14 },
   { id: 'google', name: 'Google', image: googleNotepad1 },

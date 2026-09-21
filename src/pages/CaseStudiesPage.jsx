@@ -4,7 +4,7 @@ import starIcon from '../assets/SVG@4x.webp';
 import CardShowcaseModal from '../components/CardShowcaseModal';
 
 // Case Study Image Assets
-import rainoilRender10 from '../assets/RAINOIL_RENDER_POST_PROCESS_10.webp';
+import palton1Img from '../assets/palton1.webp';
 import seplat4Img from '../assets/seplat 4.webp';
 import adnocPost14 from '../assets/POST 14.webp';
 import googleNotepad1 from '../assets/NOTEPAD 1.webp';
@@ -33,12 +33,12 @@ export const caseStudiesData = [
     stats: 'Phygital Banking Model'
   },
   {
-    id: 'rainoil',
-    name: 'Rainoil',
-    category: 'Energy & Downstream Petroleum',
-    image: rainoilRender10,
-    description: 'Executive leadership credentials & integrated digital NFC workforce pass architecture.',
-    stats: '5,000+ Personnel Cards'
+    id: 'palton-morgan',
+    name: 'Palton Morgan',
+    category: 'Real Estate & Property Development',
+    image: palton1Img,
+    description: 'Premium corporate identity credentials and executive passes for a leading real estate and property development firm.',
+    stats: 'Executive Identity System'
   },
   {
     id: 'seplat',

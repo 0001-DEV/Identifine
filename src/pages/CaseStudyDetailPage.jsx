@@ -2,13 +2,11 @@ import React from 'react';
 import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 
-// Rainoil Assets
-import rainoilRender10 from '../assets/RAINOIL_RENDER_POST_PROCESS_10.webp';
-import rainoilRender7 from '../assets/RAINOIL_RENDER_POST_PROCESS_7.webp';
-import rainoilCompiled1 from '../assets/RAINOIL_COMPILED_RENDER_1.webp';
-import rainoilRender8 from '../assets/RAINOIL_RENDER_POST_PROCESS_8.webp';
-import rainoilRender9 from '../assets/RAINOIL_RENDER_POST_PROCESS_9.webp';
-import rainoilRender11 from '../assets/RAINOIL_RENDER_POST_PROCESS_11.webp';
+// Palton Morgan Assets
+import palton1Img from '../assets/palton1.webp';
+import palton2Img from '../assets/palton2.webp';
+import palton3Img from '../assets/palton3.webp';
+import palton4Img from '../assets/palton4.webp';
 
 // Seplat Assets
 import seplatBImg from '../assets/seplatb.webp';
@@ -466,17 +464,16 @@ const optivaWriteup = (
 );
 
 const caseStudyDetails = {
-  'rainoil': {
-    title: 'Rainoil',
-    type: 'Visual Identity Direction, Touchpoints',
+  'palton-morgan': {
+    title: 'Palton Morgan',
+    type: 'Real Estate & Property Development, Executive Identity',
     year: '2026',
-    writeup: 'We partnered with Rainoil to provide visual identity direction for their latest campaign. The campaign features a mix of innovative design elements and striking imagery.',
+    writeup: 'We partnered with Palton Morgan to design and deliver premium corporate identity credentials and executive passes befitting a leading real estate and property development firm.',
     images: [
-      rainoilRender7,
-      rainoilCompiled1,
-      rainoilRender8,
-      rainoilRender9,
-      rainoilRender11
+      palton1Img,
+      palton2Img,
+      palton3Img,
+      palton4Img
     ],
     nextSlug: 'seplat',
     nextTitle: 'Seplat'
@@ -715,8 +712,8 @@ const caseStudyDetails = {
       novaNotepad103,
       novaA
     ],
-    nextSlug: 'rainoil',
-    nextTitle: 'Rainoil'
+    nextSlug: 'palton-morgan',
+    nextTitle: 'Palton Morgan'
   },
   // Legacy alias for bank-78
   'bank-78': {
@@ -732,8 +729,8 @@ const caseStudyDetails = {
       novaNotepad103,
       novaA
     ],
-    nextSlug: 'rainoil',
-    nextTitle: 'Rainoil'
+    nextSlug: 'palton-morgan',
+    nextTitle: 'Palton Morgan'
   },
   'uba': {
     title: 'UBA',
@@ -774,8 +771,8 @@ export default function CaseStudyDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const currentSlug = id || 'rainoil';
-  const study = caseStudyDetails[currentSlug] || caseStudyDetails['rainoil'];
+  const currentSlug = id || 'palton-morgan';
+  const study = caseStudyDetails[currentSlug] || caseStudyDetails['palton-morgan'];
 
   return (
     <div className="bg-[#EBEAE6] text-[#1f1f1f] min-h-screen pt-36 sm:pt-48 pb-28 px-6 sm:px-12 lg:px-16 selection:bg-[#E2B857] selection:text-black font-sans">

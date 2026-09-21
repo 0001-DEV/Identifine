@@ -40,7 +40,7 @@ export default function IdentityQuiz() {
     {
       id: 'challenge',
       queNum: 'Que 1',
-      title: "What's your comapny's biggest identity challenge?",
+      title: "What's your company's biggest identity challenge?",
       options: [
         'Building trust',
         'Managing people',
