@@ -30,7 +30,35 @@ export const productsData = [
     id: 'du-plex',
     title: 'Du-plex smart card',
     subtitle: 'Hybrid Dual-Tone Finish',
-    overview: 'Some things never need to shout to be noticed. The Du-plex was created for organizations that believe confidence is quiet. Its deep, dual-layer finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    overview: (
+      <div className="space-y-6 font-galano font-normal text-lg sm:text-2xl text-[#222222] leading-relaxed">
+        <p className="font-galano font-bold italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
+          Two functions. One identity.
+        </p>
+        <p>
+          Some things never need to shout to be noticed.
+        </p>
+        <p>
+          Du-plex was created for organizations that believe identity should work harder.
+        </p>
+        <p>
+          Designed as a two-in-one identity credential, it brings together two essential functions in one refined card — reducing the clutter of multiple credentials while creating a more unified identity experience.
+        </p>
+        <p>
+          Its dual-layer construction gives the card depth, distinction and a premium tactile presence. But its real value lies beneath the finish: one credential, designed to do more.
+        </p>
+        <p>
+          Because an identity card should not simply tell people who you are.
+        </p>
+        <p className="font-medium text-[#111111]">
+          It should make identity work for you.
+        </p>
+        <div className="pt-2 space-y-1 font-semibold text-[#111111]">
+          <p>Du-plex.</p>
+          <p>Two functions. One identity.</p>
+        </div>
+      </div>
+    ),
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
     image: elitePassBlack
@@ -48,7 +76,47 @@ export const productsData = [
     id: 'de-titan',
     title: 'De-titan smart card',
     subtitle: 'Aircraft Titanium Alloy',
-    overview: 'Some things never need to shout to be noticed. The De-titan was created for organizations that believe confidence is quiet. Its aerospace titanium structure, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    overview: (
+      <div className="space-y-6 font-galano font-normal text-lg sm:text-2xl text-[#222222] leading-relaxed">
+        <p className="font-galano font-bold italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
+          One Identity. Three Possibilities.
+        </p>
+        <p>
+          Some things should simply work better.
+        </p>
+        <p>
+          De-TITAN was created for organizations that believe identity should be simpler, smarter and more connected.
+        </p>
+        <p>
+          Why carry an ID card, a business card and an access card when one credential can bring them together?
+        </p>
+        <p>
+          De-TITAN combines three everyday identity functions in one thoughtfully designed credential — giving people fewer cards to carry, fewer touchpoints to manage and a more seamless way to identify, connect and gain access.
+        </p>
+        <p>
+          It is a small change with a meaningful effect.
+        </p>
+        <div className="space-y-1 font-medium text-[#111111]">
+          <p>Less clutter.</p>
+          <p>Less duplication.</p>
+          <p>More convenience.</p>
+          <p>One identity.</p>
+        </div>
+        <p>
+          Because modern identity should not make people carry more just to do more.
+        </p>
+        <div className="space-y-1">
+          <p className="font-semibold text-[#111111]">De-TITAN.</p>
+          <p>Three functions.</p>
+          <p>One credential.</p>
+          <p>A simpler way to carry identity.</p>
+        </div>
+        <div className="pt-2 space-y-1 font-semibold text-[#111111]">
+          <p>DE-TITAN</p>
+          <p className="italic">One Identity. Three Possibilities.</p>
+        </div>
+      </div>
+    ),
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
     image: elitePassSilver
@@ -57,7 +125,44 @@ export const productsData = [
     id: 'gold-metal',
     title: 'Gold metal card',
     subtitle: '24K Electroplated Brass',
-    overview: 'Some things never need to shout to be noticed. The Gold Metal was created for organizations that believe confidence is quiet. Its 24K electroplated finish, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    overview: (
+      <div className="space-y-6 font-galano font-normal text-lg sm:text-2xl text-[#222222] leading-relaxed">
+        <p className="font-galano font-bold italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
+          Recognition, Made Tangible
+        </p>
+        <p>
+          Some introductions are remembered long after the conversation ends.
+        </p>
+        <p>
+          Gold Metal is an expression of Elite Pass for those who understand that a business card is more than a way to exchange contact details. It is often the first physical expression of who you are, what you represent and the level at which you operate.
+        </p>
+        <p>
+          Finished in 24K electroplating and refined with deliberate craftsmanship, Gold Metal gives professional identity a distinctive presence — one that feels as considered as the person carrying it.
+        </p>
+        <p>
+          But its value is not simply in what it is made of.
+        </p>
+        <p className="font-medium text-[#111111]">
+          It is in what it represents.
+        </p>
+        <div className="space-y-1 font-medium text-[#111111]">
+          <p>Recognition.</p>
+          <p>Presence.</p>
+          <p>Distinction.</p>
+          <p>Connection.</p>
+        </div>
+        <p>
+          Because when your name represents an organization, a reputation or a body of work, the card you hand over should carry more than your details.
+        </p>
+        <p className="font-medium text-[#111111]">
+          It should carry your presence.
+        </p>
+        <div className="pt-2 space-y-1 font-semibold text-[#111111]">
+          <p>Elite Pass Gold Metal.</p>
+          <p className="italic">Recognition, made tangible.</p>
+        </div>
+      </div>
+    ),
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
     image: elitePassGold
@@ -66,7 +171,48 @@ export const productsData = [
     id: 'forte-smart',
     title: 'Forte smart card',
     subtitle: 'Carbon Fiber Weave',
-    overview: 'Some things never need to shout to be noticed. The Forte was created for organizations that believe confidence is quiet. Its lightweight carbon fiber weave, premium feel, and refined craftsmanship transform an everyday ID card into a statement of professionalism and trust. The moment it leaves the wallet or rests on a lanyard, it communicates intention. It says your brand values quality, your people belong, and every detail matters. Because an identity card should do more than identify. It should represent the standard your organization stands for.',
+    overview: (
+      <div className="space-y-6 font-galano font-normal text-lg sm:text-2xl text-[#222222] leading-relaxed">
+        <p className="font-galano font-bold italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
+          Membership, Made Simpler
+        </p>
+        <p>
+          Some things should not have to be carried separately.
+        </p>
+        <p>
+          Forte was created for organizations that believe membership should be as seamless as belonging.
+        </p>
+        <p>
+          More than an ID card, Forte brings four essential functions into one intelligent credential — identification, membership, access and payment.
+        </p>
+        <p>
+          For clubs, associations and membership communities, that means one card can serve as the member’s identity, proof of belonging, access credential and means of making authorized purchases within the membership ecosystem.
+        </p>
+        <div className="space-y-1 font-medium text-[#111111]">
+          <p>No juggling multiple cards.</p>
+          <p>No unnecessary duplication.</p>
+          <p>Less administrative complexity.</p>
+          <p>A simpler experience for both the member and the organization.</p>
+        </div>
+        <p>
+          And because Forte is designed to work within an organization’s chosen systems and processes, its possibilities can extend wherever membership, access and transactions intersect.
+        </p>
+        <p>
+          It is not simply about putting more functions into a card.
+        </p>
+        <p className="font-medium text-[#111111]">
+          It is about taking the complexity out of identity.
+        </p>
+        <p>
+          Because when people belong to a community, their experience of that belonging should not be fragmented across different credentials.
+        </p>
+        <div className="pt-2 space-y-1 font-semibold text-[#111111]">
+          <p>Forte.</p>
+          <p>Four functions. One credential.</p>
+          <p className="italic">Membership, made simpler.</p>
+        </div>
+      </div>
+    ),
     category: 'Executive Level',
     features: 'NFC, QR code, Access, Exclusive packaging',
     image: elitePassBlackMatte2

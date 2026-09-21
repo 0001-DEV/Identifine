@@ -60,28 +60,28 @@ export default function HomePage() {
       title: 'Du-plex smart card',
       subtitle: 'Hybrid Dual-Tone Finish',
       image: elitePassBlack,
-      description: 'Ultra-durable hybrid smart pass engineered for executive teams wanting fast NFC sharing & sleek dual-tone aesthetic.'
+      description: 'Two functions. One identity. Designed as a two-in-one credential bringing together two essential functions in one refined card.'
     },
     {
       id: 'de-titan',
       title: 'De-titan smart card',
       subtitle: 'Aircraft Titanium Alloy',
       image: elitePassSilver,
-      description: 'Forged from high-density titanium metal. Unmatched weight, tactile luxury, and instant NFC profile transmission.'
+      description: 'One Identity. Three Possibilities. Combines three everyday identity functions into one thoughtfully designed credential.'
     },
     {
       id: 'gold-metal',
       title: 'Gold metal card',
       subtitle: '24K Electroplated Brass',
       image: elitePassGold,
-      description: 'Statement gold metal card designed for ultra-high-net-worth identity presentation and VIP access credentials.'
+      description: 'Recognition, made tangible. Finished in 24K electroplating and refined with deliberate craftsmanship.'
     },
     {
       id: 'forte-smart',
       title: 'Forte smart card',
       subtitle: 'Carbon Fiber Weave',
       image: elitePassBlack2,
-      description: 'Lightweight carbon fiber structure engineered for high-performance leaders and modern technology executives.'
+      description: 'Four functions. One credential. Membership, made simpler.'
     },
     {
       id: 'membership-prestige',
