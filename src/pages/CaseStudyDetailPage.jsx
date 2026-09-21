@@ -62,7 +62,7 @@ import novaCard2 from '../assets/Card 2.webp';
 import novaCard5 from '../assets/Card 5.webp';
 import novaCard8 from '../assets/Card 8.webp';
 import novaNotepad103 from '../assets/Notepad 1 03.webp';
-import novaA from '../assets/Nova a.webp';
+import novanewImg from '../assets/novanew.webp';
 
 // UBA Assets
 import ubaMain from '../assets/case-studies/uba_main.webp';
@@ -558,7 +558,6 @@ const caseStudyDetails = {
       seplatImg,
       seplat3Img,
       seplat2Img,
-      seplatRender1,
       seplatRender8,
       seplatRender11
     ],
@@ -710,7 +709,7 @@ const caseStudyDetails = {
       novaCard5,
       novaCard8,
       novaNotepad103,
-      novaA
+      novanewImg
     ],
     nextSlug: 'palton-morgan',
     nextTitle: 'Palton Morgan'
@@ -727,7 +726,7 @@ const caseStudyDetails = {
       novaCard5,
       novaCard8,
       novaNotepad103,
-      novaA
+      novanewImg
     ],
     nextSlug: 'palton-morgan',
     nextTitle: 'Palton Morgan'
@@ -759,8 +758,7 @@ const caseStudyDetails = {
       optiva3Img,
       optiva1Img,
       optiva14,
-      optivaNote,
-      optiva2Img
+      optivaNote
     ],
     nextSlug: 'nova',
     nextTitle: 'NOVA Bank'

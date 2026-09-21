@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import heroVideoFile from '../assets/Header_Hero Section.mp4';
-import silverForteImg from '../assets/IDENTIFINE SILVER FORTE.webp';
 
 export default function HeroSection() {
   const containerRef  = useRef(null);
@@ -234,7 +233,6 @@ export default function HeroSection() {
           <video
             ref={videoRef}
             autoPlay muted loop playsInline preload="metadata"
-            poster={silverForteImg}
             className="w-full h-full object-cover block"
           >
             <source src={heroVideoFile} type="video/mp4" />

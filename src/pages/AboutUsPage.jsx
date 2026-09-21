@@ -127,9 +127,9 @@ export default function AboutUsPage() {
       ]
     },
     {
-      id: 'josh-i',
-      name: 'Josh Itorobong',
-      role: 'Creative Director',
+      id: 'omotosho-paul',
+      name: 'Omotosho Paul',
+      role: 'Digital Strategist',
       image: joshImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
@@ -138,9 +138,9 @@ export default function AboutUsPage() {
       ]
     },
     {
-      id: 'josh-o',
-      name: 'Josh Oladele',
-      role: 'Brand Identity Strategist',
+      id: 'joy-akosa',
+      name: 'Joy Akosa',
+      role: 'Brand Communications',
       image: josh2Img,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
@@ -148,9 +148,9 @@ export default function AboutUsPage() {
       ]
     },
     {
-      id: 'zino',
-      name: 'Zino Amayido',
-      role: 'Brand Identity Designer',
+      id: 'adegbotemi-alao',
+      name: 'Adegbotemi Alao',
+      role: 'IT Lead',
       image: zinoImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
@@ -158,9 +158,9 @@ export default function AboutUsPage() {
       ]
     },
     {
-      id: 'dmt',
-      name: 'Ogunniran Damilola',
-      role: 'Brand Identity Designer',
+      id: 'love-olaoye',
+      name: 'Love Olaoye',
+      role: 'Web Developer',
       image: dmt2Img,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
@@ -169,9 +169,9 @@ export default function AboutUsPage() {
       ]
     },
     {
-      id: 'barakat',
-      name: 'Olorunlogbon Barakat',
-      role: 'Motion Designer',
+      id: 'bisola-olaleye',
+      name: 'Bisola Olaleye',
+      role: 'IT Operations',
       image: barakat2Img,
       socials: [
         { icon: FilledTwitter, href: 'https://x.com/' },
@@ -179,9 +179,9 @@ export default function AboutUsPage() {
       ]
     },
     {
-      id: 'nathaniel',
-      name: 'Nathaniel Aremu',
-      role: '3D Artist',
+      id: 'seun-ilesanmi',
+      name: 'Seun Ilesanmi',
+      role: 'Web Designer',
       image: nathanielImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
