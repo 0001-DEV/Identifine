@@ -9,6 +9,7 @@ import joshImg from '../assets/Josh.webp';
 import nathanielImg from '../assets/nath.webp';
 import zinoImg from '../assets/Zino.webp';
 import josh2Img from '../assets/josh 2.webp';
+import ceoImg from '../assets/CEO.webp';
 
 // High-res Filled Solid Social Media Icons
 function FilledInstagram({ className = "w-4 h-4" }) {
@@ -118,7 +119,7 @@ export default function AboutUsPage() {
       id: 'debo',
       name: 'Debo Atiba',
       role: 'Founder & CEO',
-      image: 'https://framerusercontent.com/images/cLch6kcbrpx7WPsMJPFoTfqRaGE.jpg',
+      image: ceoImg,
       featured: true,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
