@@ -35,11 +35,49 @@ function wpApiPlugin() {
     }
   };
 }
+/**
+ * Custom sitemap proxy plugin
+ * Forwards all sitemap XML requests to the live WordPress/RankMath backend
+ * so that localhost:3000/sitemap_index.xml works identically to production.
+ */
+function wpSitemapPlugin() {
+  const SITEMAP_PATTERN = /^\/((sitemap_index|sitemap|[a-z0-9_-]+-sitemap\d*)\.xml)$/i;
+
+  return {
+    name: 'wp-sitemap-proxy',
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        if (!SITEMAP_PATTERN.test(req.url)) return next();
+
+        const targetUrl = `https://identifine.com.ng${req.url}`;
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 10000);
+
+        try {
+          const wpRes = await fetch(targetUrl, { signal: controller.signal });
+          clearTimeout(timer);
+
+          res.statusCode = wpRes.status;
+          res.setHeader('Content-Type', wpRes.headers.get('content-type') || 'application/xml');
+
+          const arrayBuffer = await wpRes.arrayBuffer();
+          res.end(Buffer.from(arrayBuffer));
+        } catch (err) {
+          clearTimeout(timer);
+          res.statusCode = 503;
+          res.setHeader('Content-Type', 'text/plain');
+          res.end(`Sitemap proxy error: ${err.message}`);
+        }
+      });
+    }
+  };
+}
 
 export default defineConfig({
   plugins: [
     react(),
     wpApiPlugin(),
+    wpSitemapPlugin(),
     ViteImageOptimizer({
       // Convert JPG and PNG to WebP
       jpg: { quality: 85 },

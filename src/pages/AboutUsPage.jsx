@@ -3,12 +3,18 @@ import { ChevronDown, Check } from 'lucide-react';
 import starIcon from '../assets/SVG@4x.webp';
 import barakatImg from '../assets/Barakat.webp';
 import barakat2Img from '../assets/Barakat 2.webp';
+import barakatJpgImg from '../assets/Barakat.jpg.webp';
 import dmtImg from '../assets/DMT.webp';
 import dmt2Img from '../assets/DMT 2.webp';
 import joshImg from '../assets/Josh.webp';
 import nathanielImg from '../assets/nath.webp';
 import zinoImg from '../assets/Zino.webp';
 import josh2Img from '../assets/josh 2.webp';
+import joyImg from '../assets/Joy.jpg.webp';
+import loveImg from '../assets/Love.jpg.webp';
+import paulImg from '../assets/Paul.jpg.webp';
+import seunImg from '../assets/Seun.jpg.webp';
+import gbotemiImg from '../assets/Gbotemi.jpg.webp';
 import ceoImg from '../assets/CEO.webp';
 
 // High-res Filled Solid Social Media Icons
@@ -131,7 +137,7 @@ export default function AboutUsPage() {
       id: 'omotosho-paul',
       name: 'Omotosho Paul',
       role: 'Digital Strategist',
-      image: joshImg,
+      image: paulImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
         { icon: FilledTwitter, href: 'https://x.com/' },
@@ -142,7 +148,7 @@ export default function AboutUsPage() {
       id: 'joy-akosa',
       name: 'Joy Akosa',
       role: 'Brand Communications',
-      image: josh2Img,
+      image: joyImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
         { icon: FilledFacebook, href: 'https://www.facebook.com/' }
@@ -152,7 +158,7 @@ export default function AboutUsPage() {
       id: 'adegbotemi-alao',
       name: 'Adegbotemi Alao',
       role: 'IT Lead',
-      image: zinoImg,
+      image: gbotemiImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
         { icon: FilledTwitter, href: 'https://x.com/' }
@@ -162,7 +168,7 @@ export default function AboutUsPage() {
       id: 'love-olaoye',
       name: 'Love Olaoye',
       role: 'Web Developer',
-      image: dmt2Img,
+      image: loveImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
         { icon: FilledTwitter, href: 'https://x.com/' },
@@ -170,10 +176,10 @@ export default function AboutUsPage() {
       ]
     },
     {
-      id: 'bisola-olaleye',
-      name: 'Bisola Olaleye',
+      id: 'damilola-ogunniran',
+      name: 'Damilola Ogunniran',
       role: 'IT Operations',
-      image: barakat2Img,
+      image: dmtImg,
       socials: [
         { icon: FilledTwitter, href: 'https://x.com/' },
         { icon: FilledFacebook, href: 'https://www.facebook.com/' }
@@ -183,7 +189,7 @@ export default function AboutUsPage() {
       id: 'seun-ilesanmi',
       name: 'Seun Ilesanmi',
       role: 'Web Designer',
-      image: nathanielImg,
+      image: seunImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
         { icon: FilledFacebook, href: 'https://www.facebook.com/' }
