@@ -173,19 +173,36 @@ export default function HeroSection() {
             style={{ willChange: 'transform' }}
           >
             {/* LEFT */}
-            <h1 className="text-[1.6rem] xs:text-[1.8rem] sm:text-4xl lg:text-[3.5rem] xl:text-[4.2rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.15] sm:leading-[1.16] text-center lg:text-left shrink-0 lg:max-w-[56%]">
-              We help organizations transform{' '}
+            <h1 className="text-[1.25rem] xs:text-[1.4rem] sm:text-[1.7rem] lg:text-[2.5rem] xl:text-[3rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.18] sm:leading-[1.2] text-center lg:text-left shrink-0 lg:max-w-[58%]">
+              <span className="inline-flex items-center align-middle whitespace-nowrap">
+                <span>We help</span>
+                <span
+                  ref={slotRef}
+                  aria-hidden="true"
+                  className="inline-block align-middle mx-1.5 sm:mx-2 shrink-0"
+                  style={{
+                    width:  `${slotSize.width  * slotProgress}px`,
+                    height: `${slotSize.height}px`,
+                    verticalAlign: 'middle',
+                    background: 'transparent',
+                    borderRadius: `${slotSize.height / 2}px`,
+                    overflow: 'hidden',
+                    transition: 'width 0.05s linear',
+                  }}
+                />
+                <span>organizations</span>
+              </span>{' '}
+              transform{' '}
               <em className="font-swarsh italic font-normal text-[#111111] px-0.5 sm:px-1">
                 identity
               </em>{' '}
               from an administrative necessity into a strategic organizational capability.
             </h1>
 
-            {/* RIGHT — subheading aligned to bottom of h1 */}
-            <div className="flex flex-col items-center lg:items-end lg:w-[42%] lg:ml-auto lg:pl-20 pb-[0.18em]">
-              <p className="text-sm sm:text-base lg:text-[1.18rem] xl:text-[1.22rem] text-[#555555] leading-relaxed font-medium text-left">
-                We help organizations transform identity from an administrative necessity into a
-                strategic organizational capability.
+            {/* RIGHT — supporting tagline aligned to bottom of h1 */}
+            <div className="flex flex-col items-center lg:items-end lg:w-[40%] lg:ml-auto lg:pl-20 pb-[0.18em]">
+              <p className="text-sm sm:text-base lg:text-[1.1rem] xl:text-[1.18rem] text-[#555555] leading-relaxed font-medium text-left">
+                Because every organization tells a story. The question is whether that story is being told by design — or by default.
               </p>
             </div>
           </div>
