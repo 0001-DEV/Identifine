@@ -157,7 +157,7 @@ export default function AboutUsPage() {
     {
       id: 'adegbotemi-alao',
       name: 'Adegbotemi Alao',
-      role: 'IT Lead',
+      role: 'I.T Technical and Marketing Specialist',
       image: gbotemiImg,
       socials: [
         { icon: FilledInstagram, href: 'https://www.instagram.com/' },
@@ -178,7 +178,7 @@ export default function AboutUsPage() {
     {
       id: 'damilola-ogunniran',
       name: 'Damilola Ogunniran',
-      role: 'IT Operations',
+      role: 'Brand Strategist',
       image: dmtImg,
       socials: [
         { icon: FilledTwitter, href: 'https://x.com/' },
