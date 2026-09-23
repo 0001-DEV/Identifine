@@ -757,8 +757,6 @@ const caseStudyDetails = {
       optivaPng,
       optiva3Img,
       optiva1Img,
-      optiva14,
-      optivaNote
     ],
     nextSlug: 'nova',
     nextTitle: 'NOVA Bank'
@@ -826,11 +824,12 @@ export default function CaseStudyDetailPage() {
             
             {study.images.map((imgSrc, index) => {
               const isVideo = typeof imgSrc === 'string' && (imgSrc.endsWith('.mp4') || imgSrc.includes('.mp4'));
+              const isLast = index === study.images.length - 1;
 
               return (
                 <div
                   key={index}
-                  className="w-full rounded-none overflow-hidden bg-[#FBFBFA] border border-[#E5E5E5] shadow-sm"
+                  className="relative w-full rounded-none overflow-hidden bg-[#FBFBFA] border border-[#E5E5E5] shadow-sm"
                 >
                   {isVideo ? (
                     <video
@@ -850,6 +849,52 @@ export default function CaseStudyDetailPage() {
                       fetchpriority={index === 0 ? 'high' : 'auto'}
                       decoding={index === 0 ? 'sync' : 'async'}
                     />
+                  )}
+
+                  {/* CR8 View More Button — bottom-right of last image */}
+                  {isLast && (
+                    <a
+                      href="https://www.cr8.com.ng"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group absolute bottom-5 right-5 z-20"
+                      style={{ textDecoration: 'none' }}
+                    >
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          background: '#111111',
+                          color: '#FFFFFF',
+                          fontFamily: 'inherit',
+                          fontSize: '0.72rem',
+                          fontWeight: 600,
+                          letterSpacing: '0.08em',
+                          textTransform: 'uppercase',
+                          padding: '10px 18px',
+                          borderRadius: '4px',
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.35)',
+                          transition: 'background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease',
+                          animation: 'cr8-pulse 2.4s ease-in-out infinite',
+                          cursor: 'pointer',
+                          whiteSpace: 'nowrap',
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.background = '#E2B857'; e.currentTarget.style.color = '#111'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(226,184,87,0.45)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = '#111111'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.35)'; }}
+                      >
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
+                          <path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" transform="rotate(180 12 12)"/>
+                        </svg>
+                        View more products on CR8
+                      </span>
+                      <style>{`
+                        @keyframes cr8-pulse {
+                          0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.35); }
+                          50% { box-shadow: 0 4px 28px rgba(226,184,87,0.5), 0 0 0 3px rgba(226,184,87,0.15); }
+                        }
+                      `}</style>
+                    </a>
                   )}
                 </div>
               );

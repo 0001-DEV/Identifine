@@ -174,29 +174,11 @@ export default function HeroSection() {
           >
             {/* LEFT */}
             <h1 className="text-[1.6rem] xs:text-[1.8rem] sm:text-4xl lg:text-[3.5rem] xl:text-[4.2rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.15] sm:leading-[1.16] text-center lg:text-left shrink-0 lg:max-w-[56%]">
-              <span className="inline-flex items-center align-middle whitespace-nowrap">
-                <span>Every</span>
-                <span
-                  ref={slotRef}
-                  aria-hidden="true"
-                  className="inline-block align-middle mx-1.5 sm:mx-2 shrink-0"
-                  style={{
-                    width:  `${slotSize.width  * slotProgress}px`,
-                    height: `${slotSize.height}px`,
-                    verticalAlign: 'middle',
-                    background: 'transparent',
-                    borderRadius: `${slotSize.height / 2}px`,
-                    overflow: 'hidden',
-                    transition: 'width 0.05s linear',
-                  }}
-                />
-                <span>organization</span>
-              </span>{' '}
-              <span>has an</span>{' '}
+              We help organizations transform{' '}
               <em className="font-swarsh italic font-normal text-[#111111] px-0.5 sm:px-1">
                 identity
-              </em>
-              , only few intentionally designed it
+              </em>{' '}
+              from an administrative necessity into a strategic organizational capability.
             </h1>
 
             {/* RIGHT — subheading aligned to bottom of h1 */}
