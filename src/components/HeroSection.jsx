@@ -202,7 +202,7 @@ export default function HeroSection() {
             {/* RIGHT — supporting tagline aligned to bottom of h1 */}
             <div className="flex flex-col items-center lg:items-end lg:w-[40%] lg:ml-auto lg:pl-20 pb-[0.18em]">
               <p className="text-sm sm:text-base lg:text-[1.1rem] xl:text-[1.18rem] text-[#555555] leading-relaxed font-medium text-left">
-                Because every organization tells a story. The question is whether that story is being told by design — or by default.
+                We help organizations transform identity from an administrative necessity into a strategic organizational capability.
               </p>
             </div>
           </div>
