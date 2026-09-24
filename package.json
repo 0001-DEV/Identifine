@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:patch": "vite build && node scripts/package-update.js",
+    "build:code-only": "vite build && node scripts/package-code-only.js",
     "preview": "vite preview"
   },
   "dependencies": {

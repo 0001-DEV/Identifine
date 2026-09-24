@@ -37,6 +37,7 @@ framer_data.json
 scratch/
 .temp_patch/
 cpanel_upload_files/
+cpanel_code_changes_only/
 
 # Raw heavy uncompressed assets
 src/assets/seplata.png
