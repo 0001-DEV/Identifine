@@ -31,8 +31,8 @@ export const productsData = [
     title: 'Du-plex smart card',
     subtitle: 'Hybrid Dual-Tone Finish',
     overview: (
-      <div className="space-y-6 font-galano font-normal text-lg sm:text-2xl text-[#222222] leading-relaxed">
-        <p className="font-galano font-bold italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
+      <div className="space-y-5 font-galano font-normal text-base sm:text-lg md:text-xl text-[#222222] leading-relaxed">
+        <p className="font-galano font-bold italic text-xl sm:text-2xl lg:text-3xl text-[#111111]">
           Two functions. One identity.
         </p>
         <p>
@@ -77,8 +77,8 @@ export const productsData = [
     title: 'De-titan smart card',
     subtitle: 'Aircraft Titanium Alloy',
     overview: (
-      <div className="space-y-6 font-galano font-normal text-lg sm:text-2xl text-[#222222] leading-relaxed">
-        <p className="font-galano font-bold italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
+      <div className="space-y-5 font-galano font-normal text-base sm:text-lg md:text-xl text-[#222222] leading-relaxed">
+        <p className="font-galano font-bold italic text-xl sm:text-2xl lg:text-3xl text-[#111111]">
           One Identity. Three Possibilities.
         </p>
         <p>
@@ -126,8 +126,8 @@ export const productsData = [
     title: 'Gold metal card',
     subtitle: '24K Electroplated Brass',
     overview: (
-      <div className="space-y-6 font-galano font-normal text-lg sm:text-2xl text-[#222222] leading-relaxed">
-        <p className="font-galano font-bold italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
+      <div className="space-y-5 font-galano font-normal text-base sm:text-lg md:text-xl text-[#222222] leading-relaxed">
+        <p className="font-galano font-bold italic text-xl sm:text-2xl lg:text-3xl text-[#111111]">
           Recognition, Made Tangible
         </p>
         <p>
@@ -172,8 +172,8 @@ export const productsData = [
     title: 'Forte smart card',
     subtitle: 'Carbon Fiber Weave',
     overview: (
-      <div className="space-y-6 font-galano font-normal text-lg sm:text-2xl text-[#222222] leading-relaxed">
-        <p className="font-galano font-bold italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
+      <div className="space-y-5 font-galano font-normal text-base sm:text-lg md:text-xl text-[#222222] leading-relaxed">
+        <p className="font-galano font-bold italic text-xl sm:text-2xl lg:text-3xl text-[#111111]">
           Membership, Made Simpler
         </p>
         <p>
@@ -222,8 +222,8 @@ export const productsData = [
     title: 'Membership prestige',
     subtitle: 'Gunmetal VIP Access',
     overview: (
-      <div className="space-y-6 font-galano font-normal text-lg sm:text-2xl text-[#222222] leading-relaxed">
-        <p className="font-galano font-bold italic text-2xl sm:text-3xl lg:text-4xl text-[#111111]">
+      <div className="space-y-5 font-galano font-normal text-base sm:text-lg md:text-xl text-[#222222] leading-relaxed">
+        <p className="font-galano font-bold italic text-xl sm:text-2xl lg:text-3xl text-[#111111]">
           Belonging, Made Tangible
         </p>
         <p>
@@ -365,7 +365,7 @@ export default function ProductCataloguePage() {
                 className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain brightness-0 shrink-0"
               />
               <span
-                className="font-galano font-normal text-[#555555] text-xs sm:text-base uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
+                className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase tracking-[2px] sm:tracking-[3px] whitespace-nowrap"
               >
                 overview
               </span>
@@ -375,22 +375,22 @@ export default function ProductCataloguePage() {
           {/* Narrative Content, Specs & Actions (Indented 200px from Left Margin) */}
           <div className="animate-hero-fade-3 lg:ml-[200px] space-y-8 flex-1 mt-6 lg:mt-0">
             {typeof activeProduct.overview === 'string' ? (
-              <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl whitespace-pre-line">
+              <p className="text-base sm:text-lg md:text-xl text-[#222222] leading-relaxed font-normal max-w-5xl whitespace-pre-line">
                 {activeProduct.overview}
               </p>
             ) : (
-              <div className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl">
+              <div className="text-base sm:text-lg md:text-xl text-[#222222] leading-relaxed font-normal max-w-5xl">
                 {activeProduct.overview}
               </div>
             )}
 
             {/* Specs List (Category & Features stacked in separate rows as Framer Nova) */}
             <div className="space-y-1 max-w-5xl pt-2">
-              <div className="py-4 border-b border-[#DCDAD4] flex items-center justify-between text-base sm:text-lg">
+              <div className="py-3.5 sm:py-4 border-b border-[#DCDAD4] flex items-center justify-between text-sm sm:text-base">
                 <span className="font-galano font-medium text-[#737378]">Category:</span>
                 <span className="font-galano font-semibold text-[#111111]">{activeProduct.category}</span>
               </div>
-              <div className="py-4 border-b border-[#DCDAD4] flex items-center justify-between text-base sm:text-lg">
+              <div className="py-3.5 sm:py-4 border-b border-[#DCDAD4] flex items-center justify-between text-sm sm:text-base">
                 <span className="font-galano font-medium text-[#737378]">Features:</span>
                 <span className="font-galano font-semibold text-[#111111] text-right">{activeProduct.features}</span>
               </div>
@@ -405,7 +405,7 @@ export default function ProductCataloguePage() {
         <div className="space-y-10 text-left">
 
           <div className="w-full">
-            <h2 className="text-2xl sm:text-3xl lg:text-[2.5rem] font-galano font-medium text-[#111111] leading-tight tracking-tight whitespace-nowrap">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-galano font-medium text-[#111111] leading-tight tracking-tight">
               Partners using our {activeProduct.title} flagship
             </h2>
           </div>

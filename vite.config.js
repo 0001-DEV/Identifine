@@ -61,7 +61,11 @@ function wpSitemapPlugin() {
           res.setHeader('Content-Type', wpRes.headers.get('content-type') || 'application/xml');
 
           const arrayBuffer = await wpRes.arrayBuffer();
-          res.end(Buffer.from(arrayBuffer));
+          // Strip XSL stylesheet reference — it points to the live domain and
+          // causes Chrome to show a blank page on localhost when it can't load.
+          let xml = Buffer.from(arrayBuffer).toString('utf-8');
+          xml = xml.replace(/<\?xml-stylesheet[^?]*\?>\s*/i, '');
+          res.end(Buffer.from(xml, 'utf-8'));
         } catch (err) {
           clearTimeout(timer);
           res.statusCode = 503;

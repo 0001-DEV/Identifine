@@ -41,11 +41,12 @@ DirectoryIndex index.html index.php
   RewriteCond %{REQUEST_URI} ^/assets/ [NC]
   RewriteRule ^ - [R=404,L]
 
-  # 7. Sitemap XML → WordPress (RankMath generates these dynamically via PHP)
+  # 7. Sitemap XML + XSL stylesheet → WordPress (RankMath generates these dynamically via PHP)
   RewriteRule ^sitemap_index\.xml$ /index.php [L]
   RewriteRule ^sitemap\.xml$ /index.php [L]
   RewriteRule ^[a-z0-9_-]+-sitemap\.xml$ /index.php [L]
   RewriteRule ^[a-z0-9_-]+-sitemap([0-9]+)?\.xml$ /index.php [L]
+  RewriteRule ^main-sitemap\.xsl$ /index.php [L]
 
   # 8. All other routes → React SPA
   RewriteRule . /index.html [L]

@@ -189,7 +189,7 @@ export default function ElitePassDetailPage() {
                 className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain brightness-0 shrink-0"
               />
               <span
-                className="font-galano font-normal text-[#555555] text-xs sm:text-base uppercase tracking-[2px] sm:tracking-[4px] whitespace-nowrap"
+                className="font-galano font-normal text-[#555555] text-xs sm:text-sm uppercase tracking-[2px] sm:tracking-[3px] whitespace-nowrap"
               >
                 overview
               </span>
@@ -198,19 +198,19 @@ export default function ElitePassDetailPage() {
 
           {/* Narrative Content, Specs & Actions (Indented 200px from Left Margin) */}
           <div className="animate-hero-fade-3 lg:ml-[200px] space-y-8 flex-1 mt-6 lg:mt-0">
-            <p className="text-lg sm:text-2xl text-[#222222] leading-relaxed font-normal max-w-5xl whitespace-pre-line">
+            <p className="text-base sm:text-lg md:text-xl text-[#222222] leading-relaxed font-normal max-w-5xl whitespace-pre-line">
               {item.writeup}
             </p>
 
             {/* Specs List (Category & Features stacked in separate rows as Framer Nova) */}
             <div className="space-y-1 max-w-5xl pt-2">
-              <div className="py-3.5 sm:py-4 border-b border-[#DCDAD4] flex items-start sm:items-center justify-between gap-8 sm:gap-14 text-xs sm:text-lg">
-                <span className="font-galano font-medium text-[#737378] text-xs sm:text-lg shrink-0">Category:</span>
-                <span className="font-galano font-semibold text-[#111111] text-right text-xs sm:text-lg leading-snug sm:leading-normal pl-4">{item.category}</span>
+              <div className="py-3.5 sm:py-4 border-b border-[#DCDAD4] flex items-start sm:items-center justify-between gap-8 sm:gap-14 text-xs sm:text-base">
+                <span className="font-galano font-medium text-[#737378] text-xs sm:text-base shrink-0">Category:</span>
+                <span className="font-galano font-semibold text-[#111111] text-right text-xs sm:text-base leading-snug sm:leading-normal pl-4">{item.category}</span>
               </div>
-              <div className="py-3.5 sm:py-4 border-b border-[#DCDAD4] flex items-start sm:items-center justify-between gap-8 sm:gap-14 text-xs sm:text-lg">
-                <span className="font-galano font-medium text-[#737378] text-xs sm:text-lg shrink-0">Features:</span>
-                <span className="font-galano font-semibold text-[#111111] text-right text-xs sm:text-lg leading-snug sm:leading-normal pl-4">{item.features}</span>
+              <div className="py-3.5 sm:py-4 border-b border-[#DCDAD4] flex items-start sm:items-center justify-between gap-8 sm:gap-14 text-xs sm:text-base">
+                <span className="font-galano font-medium text-[#737378] text-xs sm:text-base shrink-0">Features:</span>
+                <span className="font-galano font-semibold text-[#111111] text-right text-xs sm:text-base leading-snug sm:leading-normal pl-4">{item.features}</span>
               </div>
             </div>
 
