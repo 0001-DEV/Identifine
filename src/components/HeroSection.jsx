@@ -175,7 +175,7 @@ export default function HeroSection() {
             {/* LEFT */}
             <h1 className="text-[1.25rem] xs:text-[1.4rem] sm:text-[1.7rem] lg:text-[2.5rem] xl:text-[3rem] font-galano font-medium tracking-tight text-[#111111] leading-[1.18] sm:leading-[1.2] text-center lg:text-left shrink-0 lg:max-w-[58%]">
               <span className="inline-flex items-center align-middle whitespace-nowrap">
-                <span>We help</span>
+                <span>Every</span>
                 <span
                   ref={slotRef}
                   aria-hidden="true"
@@ -190,19 +190,19 @@ export default function HeroSection() {
                     transition: 'width 0.05s linear',
                   }}
                 />
-                <span>organizations</span>
+                <span>organization</span>
               </span>{' '}
-              transform{' '}
+              has an{' '}
               <em className="font-swarsh italic font-normal text-[#111111] px-0.5 sm:px-1">
                 identity
-              </em>{' '}
-              from an administrative necessity into a strategic organizational capability.
+              </em>
+              , only few intentionally designed it.
             </h1>
 
             {/* RIGHT — supporting tagline aligned to bottom of h1 */}
-            <div className="flex flex-col items-center lg:items-end lg:w-[40%] lg:ml-auto lg:pl-20 pb-[0.18em]">
+            <div className="flex flex-col items-center lg:items-end lg:w-[40%] lg:ml-auto lg:pl-16 xl:pl-20 pb-[0.18em]">
               <p className="text-sm sm:text-base lg:text-[1.1rem] xl:text-[1.18rem] text-[#555555] leading-relaxed font-medium text-left">
-                We help organizations transform identity from an administrative necessity into a strategic organizational capability.
+                We help organizations design smarter identity systems that make identification, access and connection simpler, more secure and more meaningful.
               </p>
             </div>
           </div>
